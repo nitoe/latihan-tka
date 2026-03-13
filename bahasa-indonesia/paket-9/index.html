@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan TKA Bahasa Indonesia – Paket 9</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1e429f;
+            --primary-light: #ebf5ff;
+            --success: #057a55;
+            --success-light: #def7ec;
+            --danger: #e02424;
+            --danger-light: #fde8e8;
+            --text: #1f2a37;
+            --text-muted: #6b7280;
+            --bg: #f0f4ff;
+            --white: #ffffff;
+            --border: #d1d5db;
+            --radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: clamp(14px, 3.5vw, 16px);
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        input,
+        textarea,
+        select,
+        button,
+        .allow-select {
+            user-select: auto !important;
+        }
+
+        body *::selection {
+            background: transparent;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 0 14px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(26, 86, 219, 0.4);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .brand-name {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            font-weight: 700;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sub-brand {
+            font-size: clamp(0.6rem, 2.2vw, 0.7rem);
+            opacity: 0.8;
+            font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .user-chip {
+            display: none;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: clamp(0.65rem, 2.2vw, 0.78rem);
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            max-width: 110px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .timer-chip {
+            display: none;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: 800;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+        }
+
+        .font-controls {
+            display: flex;
+            gap: 3px;
+        }
+
+        .font-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.6rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .font-btn:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .page {
+            padding: 16px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .page-narrow {
+            padding: 16px;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: clamp(16px, 4vw, 28px);
+            border: 1px solid rgba(209, 213, 219, 0.6);
+            margin-bottom: 16px;
+        }
+
+        .card-header {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .card-sub {
+            color: var(--text-muted);
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 700;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            margin-bottom: 5px;
+        }
+
+        .form-label span {
+            color: var(--danger);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(0.85rem, 3.5vw, 1rem);
+            color: var(--text);
+            background: var(--white);
+            -webkit-appearance: none;
+            transition: border-color 0.15s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.1);
+        }
+
+        .email-hint {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 8px;
+            padding: 9px 12px;
+            margin-top: 6px;
+            font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+            color: #92400e;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 11px 18px;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: clamp(0.82rem, 3vw, 0.95rem);
+            cursor: pointer;
+            transition: all 0.15s;
+            touch-action: manipulation;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:active {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1.5px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .btn-outline:active {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:active {
+            background: #c81e1e;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .rule-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .rule-num {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .rule-text {
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            line-height: 1.65;
+            padding-top: 3px;
+        }
+
+        .rule-text strong {
+            color: var(--primary-dark);
+        }
+
+        .paket-badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .level-badge {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+            border-radius: 6px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            margin-left: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .q-item {
+            display: none;
+        }
+
+        .q-item.active-q {
+            display: block;
+            animation: qSlide 0.2s ease-out;
+        }
+
+        @keyframes qSlide {
+            from {
+                opacity: 0;
+                transform: translateX(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0)
+            }
+        }
+
+        .q-category {
+            display: inline-block;
+            font-size: clamp(0.65rem, 2.5vw, 0.75rem);
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .stimulus {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-left: 4px solid var(--primary);
+            padding: clamp(12px, 3vw, 18px);
+            margin-bottom: 16px;
+            border-radius: 8px;
+            line-height: 1.8;
+            font-size: clamp(0.82rem, 3vw, 0.93rem);
+        }
+
+        .stim-title {
+            font-weight: 800;
+            color: var(--primary-dark);
+            font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            border-bottom: 1.5px dashed #e5e7eb;
+        }
+
+        .stimulus p {
+            margin-bottom: 12px;
+        }
+
+        .stimulus p:last-child {
+            margin-bottom: 0;
+        }
+
+        .stimulus em {
+            font-style: italic;
+            color: #374151;
+        }
+
+        .stimulus strong {
+            font-weight: 800;
+        }
+
+        .stimulus ul {
+            margin-left: 1.4rem;
+            margin-top: 8px;
+        }
+
+        .stimulus ul li {
+            margin-bottom: 8px;
+            line-height: 1.75;
+        }
+
+        .stimulus ol {
+            margin-left: 1.4rem;
+            margin-top: 8px;
+        }
+
+        .stimulus ol li {
+            margin-bottom: 8px;
+            line-height: 1.75;
+        }
+
+        .stimulus blockquote {
+            border-left: 3px solid #d1d5db;
+            padding-left: 14px;
+            margin: 12px 0;
+            color: #4b5563;
+            font-style: italic;
+        }
+
+        .stim-img-wrap {
+            text-align: center;
+            margin: 14px 0;
+        }
+
+        .stim-img-wrap img {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        }
+
+        .stim-img-caption {
+            font-size: 0.72rem;
+            color: #9ca3af;
+            margin-top: 5px;
+        }
+
+        .stim-img-placeholder {
+            background: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 24px;
+            color: #6b7280;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .q-text {
+            font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 14px;
+            line-height: 1.65;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: clamp(0.82rem, 3vw, 0.93rem);
+            color: #374151;
+            line-height: 1.55;
+            touch-action: manipulation;
+        }
+
+        .option-label:active {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .option-label input {
+            margin-top: 3px;
+            transform: scale(1.15);
+            flex-shrink: 0;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            font-size: clamp(0.75rem, 3vw, 0.88rem);
+        }
+
+        .matrix-table th {
+            background: #f3f4f6;
+            padding: clamp(8px, 2vw, 12px);
+            font-weight: 800;
+        }
+
+        .matrix-table td {
+            border: 1px solid #e5e7eb;
+            padding: clamp(8px, 2vw, 12px);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .matrix-table td:first-child {
+            text-align: left;
+            padding-left: clamp(10px, 2.5vw, 16px);
+        }
+
+        .quiz-nav-bar {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.07);
+            z-index: 90;
+            padding: 10px 14px;
+        }
+
+        .quiz-nav-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .q-indicator {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: clamp(0.75rem, 2.8vw, 0.9rem);
+            background: var(--primary-light);
+            padding: 5px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .quiz-nav-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .nav-toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-light);
+            border: 1px solid #bfdbfe;
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .answered-count {
+            font-size: clamp(0.7rem, 2.8vw, 0.8rem);
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .drawer-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 200;
+        }
+
+        .drawer-overlay.show {
+            display: block;
+        }
+
+        .nav-drawer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15);
+            z-index: 201;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-drawer.open {
+            transform: translateY(0);
+        }
+
+        .drawer-handle {
+            width: 36px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin: 10px auto 0;
+            flex-shrink: 0;
+        }
+
+        .drawer-header {
+            padding: 10px 16px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .drawer-title {
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .drawer-close {
+            background: var(--bg);
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .drawer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+            gap: 6px;
+            padding: 10px 12px;
+            overflow-y: auto;
+        }
+
+        .nav-btn {
+            aspect-ratio: 1;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            touch-action: manipulation;
+            min-height: 36px;
+            max-height: 40px;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.9);
+        }
+
+        .nav-btn.current {
+            border: 2.5px solid var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .nav-btn.answered {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .nav-btn.answered.current {
+            border: 2.5px solid var(--primary-dark);
+        }
+
+        .drawer-footer {
+            padding: 10px 14px 14px;
+            border-top: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .result-hero {
+            text-align: center;
+            padding: 20px 16px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, white 80%);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+        }
+
+        .score-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            border: 5px solid var(--primary);
+            background: white;
+            box-shadow: 0 4px 16px rgba(26, 86, 219, 0.15);
+        }
+
+        .score-circle.lulus {
+            border-color: var(--success);
+        }
+
+        .score-num {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(1.8rem, 6vw, 2.4rem);
+            font-weight: 800;
+            color: var(--primary-dark);
+            line-height: 1;
+        }
+
+        .score-circle.lulus .score-num {
+            color: var(--success);
+        }
+
+        .score-lbl {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .result-status {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            font-weight: 700;
+        }
+
+        .result-desc {
+            color: var(--text-muted);
+            font-size: clamp(0.78rem, 3vw, 0.9rem);
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .result-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .meta-box {
+            background: var(--bg);
+            padding: 10px 12px;
+            border-radius: 8px;
+        }
+
+        .meta-lbl {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .meta-val {
+            font-weight: 800;
+            font-size: clamp(0.82rem, 3vw, 0.92rem);
+        }
+
+        .comp-bar {
+            margin-bottom: 12px;
+        }
+
+        .comp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5px;
+            gap: 8px;
+        }
+
+        .comp-name {
+            font-weight: 700;
+            font-size: clamp(0.75rem, 3vw, 0.85rem);
+            flex: 1;
+        }
+
+        .comp-score {
+            font-weight: 800;
+            font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+            white-space: nowrap;
+        }
+
+        .bar-track {
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .bar-tuntas {
+            background: linear-gradient(90deg, #059669, #34d399);
+        }
+
+        .bar-belum {
+            background: linear-gradient(90deg, #dc2626, #f87171);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 16px 0;
+        }
+
+        .section-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(0.95rem, 3.5vw, 1.05rem);
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+        }
+
+        .email-status {
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-top: 14px;
+            font-size: clamp(0.78rem, 3vw, 0.88rem);
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .es-sending {
+            background: #eff6ff;
+            color: var(--primary);
+            border: 1px solid #bfdbfe;
+        }
+
+        .es-sent {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid #a7f3d0;
+        }
+
+        .es-error {
+            background: var(--danger-light);
+            color: var(--danger);
+            border: 1px solid #fca5a5;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(3px);
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            padding: 16px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: clamp(20px, 5vw, 28px);
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal h3 {
+            font-family: 'Baloo 2', cursive;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            font-size: clamp(1.1rem, 4vw, 1.25rem);
+        }
+
+        .modal p {
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            line-height: 1.6;
+            font-size: clamp(0.82rem, 3vw, 0.93rem);
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-btns .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            margin: 12px auto;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @media (max-width:380px) {
+            .sub-brand {
+                display: none;
+            }
+
+            .font-controls {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false;" ondragstart="return false;">
+
+    <div class="header">
+        <div class="header-brand">
+            <span class="logo">📖</span>
+            <div>
+                <div class="brand-name">Latihan TKA · Bahasa Indonesia</div>
+                <div class="sub-brand">SD Muhammadiyah 01 Kukusan · Kelas 6</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-chip" id="user-chip"></div>
+            <div class="timer-chip" id="timer-chip">00:00</div>
+            <div class="font-controls">
+                <button class="font-btn" onclick="App.changeFontSize(-1)">A−</button>
+                <button class="font-btn" onclick="App.changeFontSize(1)">A+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="slide-login" class="slide active">
+        <div class="page-narrow">
+            <div class="card" style="margin-top:8px;">
+                <div class="paket-badge">📖 Bahasa Indonesia · Paket 9 <span class="level-badge">⬆ Tingkat Lanjut</span></div>
+                <div class="card-header">Selamat Datang! 👋</div>
+                <div class="card-sub">Isi data berikut sebelum memulai latihan soal</div>
+                <div class="form-group">
+                    <label class="form-label">Nama Lengkap Siswa <span>*</span></label>
+                    <input type="text" id="inp-nama" class="form-control allow-select" placeholder="Tulis nama siswa...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Kelas <span>*</span></label>
+                    <select id="inp-kelas" class="form-control allow-select">
+                        <option value="">-- Pilih Kelas --</option>
+                        <option value="6A">6A</option>
+                        <option value="6B">6B</option>
+                        <option value="6C">6C</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Orang Tua <span>*</span></label>
+                    <input type="email" id="inp-email" class="form-control allow-select" placeholder="email@orangtua.com">
+                    <div class="email-hint">📧 Laporan hasil latihan dikirim otomatis ke email ini setelah selesai.</div>
+                </div>
+                <button class="btn btn-primary btn-full" onclick="App.login()" style="margin-top:10px;">Lanjut ke Petunjuk →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PETUNJUK -->
+    <div id="slide-rules" class="slide">
+        <div class="page-narrow">
+            <div class="card" style="margin-top:8px;">
+                <div class="paket-badge">📖 Bahasa Indonesia · Paket 9 <span class="level-badge">⬆ Tingkat Lanjut</span></div>
+                <div class="card-header">📋 Petunjuk Pengerjaan</div>
+                <div class="card-sub">Bahasa Indonesia · 30 soal · Waktu bebas · Teks lebih panjang & kompleks</div>
+                <div class="rule-item">
+                    <div class="rule-num">1</div>
+                    <div class="rule-text"><strong>Teks lebih panjang dari paket sebelumnya</strong> — Baca seluruh teks dengan teliti sebelum menjawab. Beberapa soal memerlukan pemahaman lintas paragraf.</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">2</div>
+                    <div class="rule-text"><strong>Pilihan jawaban lebih mirip satu sama lain</strong> — Perhatikan perbedaan halus antar pilihan. Jawaban yang sebagian benar belum tentu jawaban terbaik.</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">3</div>
+                    <div class="rule-text"><strong>Amati grafik dan visual secara menyeluruh</strong> — Baca judul, label sumbu, legenda, dan catatan kaki sebelum menjawab soal berbasis gambar.</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">4</div>
+                    <div class="rule-text"><strong>Navigasi soal</strong> — Ketuk <em>"Lihat Semua Soal"</em> untuk melompat ke nomor mana saja. Kotak <span style="background:var(--success);color:white;padding:1px 7px;border-radius:4px;font-size:0.75rem;">hijau</span> = sudah dijawab.</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">5</div>
+                    <div class="rule-text"><strong>Laporan ke orang tua</strong> — Setelah klik "Kumpulkan", laporan nilai dikirim otomatis ke email orang tua.</div>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:20px;gap:10px;flex-wrap:wrap;">
+                    <button class="btn btn-outline" onclick="App.showSlide('login')">← Kembali</button>
+                    <button class="btn btn-primary" onclick="App.startExam()">Mulai Mengerjakan →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="slide-quiz" class="slide">
+        <div class="page" id="quiz-container" style="padding-bottom:4px;"></div>
+        <div class="quiz-nav-bar">
+            <div class="quiz-nav-top">
+                <button class="btn btn-outline" id="btn-prev" onclick="App.move(-1)">← Sebelumnya</button>
+                <div class="q-indicator" id="q-indicator">Soal 1 / 30</div>
+                <button class="btn btn-primary" id="btn-next" onclick="App.move(1)">Selanjutnya →</button>
+            </div>
+            <div class="quiz-nav-bottom">
+                <button class="nav-toggle-btn" onclick="App.openDrawer()">📋 Lihat Semua Soal</button>
+                <span class="answered-count" id="answered-count">0 / 30 dijawab</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- HASIL -->
+    <div id="slide-result" class="slide">
+        <div class="page-narrow">
+            <div class="card" style="margin-top:8px;">
+                <div class="result-hero">
+                    <div class="score-circle" id="score-circle">
+                        <div class="score-num" id="score-num">--</div>
+                        <div class="score-lbl">NILAI</div>
+                    </div>
+                    <div class="result-status" id="result-status">Menghitung...</div>
+                    <div class="result-desc" id="result-desc"></div>
+                </div>
+                <div class="result-meta" id="result-meta"></div>
+                <div class="section-title">📊 Capaian per Kompetensi</div>
+                <div id="result-bars"></div>
+                <div id="email-status-box"></div>
+                <div class="divider"></div>
+                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                    <button class="btn btn-outline" onclick="App.retryExam()">🔄 Coba Lagi</button>
+                    <button class="btn btn-primary" onclick="App.showSlide('login')">📝 Mulai Baru</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="drawer-overlay" id="drawer-overlay" onclick="App.closeDrawer()"></div>
+    <div class="nav-drawer" id="nav-drawer">
+        <div class="drawer-handle"></div>
+        <div class="drawer-header">
+            <span class="drawer-title">Navigasi Soal</span>
+            <button class="drawer-close" onclick="App.closeDrawer()">✕</button>
+        </div>
+        <div class="drawer-grid" id="nav-grid"></div>
+        <div class="drawer-footer">
+            <button class="btn btn-danger btn-full" onclick="App.closeDrawer();App.confirmFinish();">✅ Selesai & Kumpulkan</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="modal-confirm" style="display:none;">
+        <div class="modal">
+            <h3>⚠️ Yakin Selesai?</h3>
+            <p id="modal-confirm-text"></p>
+            <div class="modal-btns">
+                <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Periksa Lagi</button>
+                <button class="btn btn-danger" onclick="App.submitExam()">Ya, Kumpulkan!</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="modal-loading" style="display:none;">
+        <div class="modal">
+            <h3>⏳ Memproses Nilai...</h3>
+            <div class="spinner"></div>
+            <p>Jangan tutup halaman ini.</p>
+        </div>
+    </div>
+
+    <script>
+        const EMAILJS_CONFIG = {
+            PUBLIC_KEY: "xOghGdjMfoGLAB-CE",
+            SERVICE_ID: "service_03pdwdr",
+            TEMPLATE_ID: "template_hi8a1k9"
+        };
+
+        /* ══════════════════════════════════════════════════════════
+           IMAGE ASSETS — Paket 9
+           Ganti URL di bawah setelah upload gambar ke hosting.
+           Soal 13–15: Grafik garis (line chart) perubahan suhu
+           Soal 16–18: Teks prosedur dengan diagram langkah
+           ══════════════════════════════════════════════════════════ */
+        const IMG = {
+            grafik_suhu: "https://i.postimg.cc/qvqV2wsk/bi_p9_grafik_suhu.png",
+            prosedur: "https://i.postimg.cc/2StpGWGR/bi_p9_prosedur.png"
+        };
+
+        /* ══════════════════════════════════════════════════════════
+           STIMULUS PAKET 9 — Teks lebih panjang (5–6 paragraf),
+           kosakata lebih kaya, argumen lebih berlapis,
+           konflik batin tokoh lebih kompleks
+           ══════════════════════════════════════════════════════════ */
+        const S = {
+
+            cahaya_bintang: `<div class="stimulus"><div class="stim-title">Teks Informasi · Cahaya yang Telah Mati: Paradoks Waktu dalam Astronomi</div>
+<p>Ketika kamu menatap langit malam yang cerah dan melihat bintang-bintang berkelip, kamu menyaksikan peristiwa yang jauh lebih mengejutkan dari yang tampak: kamu sedang melihat ke masa lalu. Cahaya bergerak dengan kecepatan sekitar 300.000 kilometer per detik — kecepatan tertinggi yang diketahui alam semesta. Namun bahkan dengan kecepatan segitu, cahaya masih membutuhkan waktu untuk menempuh jarak antariksa yang luar biasa jauhnya. Bintang terdekat dari matahari kita, Proxima Centauri, berjarak 4,2 tahun cahaya — artinya cahaya yang kamu lihat dari bintang itu hari ini sudah melakukan perjalanan selama 4,2 tahun sebelum sampai ke matamu.</p>
+<p>Konsekuensi dari fakta ini jauh lebih menggelisahkan daripada yang kita sadari sehari-hari. Bintang-bintang yang kita lihat di langit mungkin sudah tidak ada. Beberapa di antara titik-titik cahaya yang tampak hidup dan stabil itu sebenarnya adalah "hantu kosmik" — sisa cahaya dari bintang yang sudah meledak dan musnah ribuan, jutaan, bahkan miliaran tahun yang lalu. Karena cahaya itu baru sampai ke bumi sekarang, kita tidak bisa membedakan mana bintang yang masih ada dan mana yang sudah tidak ada hanya dengan melihat.</p>
+<p>Para astronom menggunakan fenomena ini bukan sebagai hambatan, melainkan sebagai keunggulan. Dengan mempelajari cahaya dari galaksi yang sangat jauh, para ilmuwan sebenarnya sedang mempelajari kondisi alam semesta miliaran tahun lalu — seperti memiliki mesin waktu yang hanya bisa melihat ke belakang. Teleskop luar angkasa James Webb, yang mulai beroperasi penuh pada tahun 2022, dirancang khusus untuk "melihat" ke masa-masa paling awal alam semesta, menangkap cahaya dari galaksi yang terbentuk hanya beberapa ratus juta tahun setelah Dentuman Besar.</p>
+<p>Ada satu konsekuensi lebih dekat yang sering dilupakan: matahari sendiri pun kita lihat dalam kondisi delapan menit lalu. Cahaya matahari membutuhkan sekitar 8,3 menit untuk sampai ke bumi. Artinya jika matahari tiba-tiba padam sekarang, kita baru akan menyadarinya delapan menit kemudian ketika kegelapan mendadak menyelimuti bumi. Begitu pula bulan — cahaya yang memantul dari bulan butuh sekitar 1,3 detik untuk mencapai mata kita.</p>
+<p>Paradoks ini mengundang pertanyaan yang lebih dalam: apa arti "sekarang" ketika kita berbicara tentang objek yang sangat jauh? Dua pengamat di lokasi berbeda yang melihat bintang yang sama sebenarnya menyaksikan cahaya yang meninggalkan sumber yang sama, tetapi tiba pada waktu yang sedikit berbeda. Fisika modern — khususnya teori relativitas Einstein — mengajarkan bahwa "saat ini" adalah konsep yang bergantung pada posisi dan kecepatan pengamat, bukan sesuatu yang universal dan mutlak. Langit malam, dengan seluruh kegemilangannya, adalah pengingat yang paling indah bahwa waktu bukanlah sungai yang mengalir lurus ke satu arah bagi semua orang.</p></div>`,
+
+            nilai_yang_turun: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Angka di Atas Kertas</div>
+<p>Amplop cokelat itu sudah tiga hari berada di dalam tas Mira tanpa dibuka. Ia tahu isinya — rapor semester tiga — dan ia tahu mengapa ia belum bisa membukanya. Nilai matematikanya turun delapan poin dari semester lalu. Ia sudah melihat nilai itu di layar komputer sekolah sebelum rapor dicetak, diam-diam, saat Bu Susi lupa menutup browser. Jadi bukan ketidaktahuan yang membuatnya menunda. Melainkan sesuatu yang lebih sulit dijelaskan.</p>
+<p>Ayah Mira adalah kepala divisi di sebuah perusahaan asuransi. Ia bicara tentang angka-angka dengan cara yang membuat angka terasa seperti satu-satunya bahasa yang berlaku di alam semesta. Nilai ujian Mira selama ini tidak pernah jatuh di bawah delapan puluh lima, dan setiap kali ia membawa pulang hasil yang bagus, ada sesuatu di wajah Ayah yang terasa seperti udara segar di ruangan pengap. Mira menyimpan perasaan itu dengan hati-hati, seperti mengumpulkan perangko.</p>
+<p>Malam itu Ayah duduk di meja kerja sambil membuka laptop. Mira berdiri di ambang pintu selama hampir dua menit sebelum akhirnya masuk dan meletakkan amplop itu di samping cangkir kopi Ayah. "Rapor, Yah," katanya, lalu berbalik hendak pergi. "Mira." Suara itu bukan pertanyaan. Ia berbalik. Ayah sudah membuka amplop dan sedang membaca dengan cermat.</p>
+<p>Diam yang terjadi selanjutnya terasa sangat panjang. Mira menghitung ubin lantai — ada enam belas buah dari tempatnya berdiri ke ujung meja Ayah. "Semester ini matematikamu turun." Bukan tuduhan, bukan pertanyaan. Sebuah pernyataan yang diucapkan dengan nada yang sama seperti ketika Ayah membaca laporan keuangan. "Iya, Yah. Materi persamaan linear sulit. Aku sedang belajar lebih." Itu benar. Sebagian.</p>
+<p>Ayah menutup rapor. Ia tidak langsung menjawab. Ia berdiri, berjalan ke dapur, mengisi ulang kopinya, lalu kembali. Baru kemudian ia berkata: "Kamu tahu apa yang membuatku bangga bukan soal nilai delapan puluh lima atau tujuh puluh tujuh. Yang membuatku bangga adalah kamu tahu di mana kamu kesulitan, dan kamu tidak berpura-pura tidak." Ia mengembalikan amplop itu ke tangan Mira. "Ajari aku apa itu persamaan linear. Mungkin aku bisa membantu."</p>
+<p>Mira memandang amplop itu di tangannya. Lalu ia duduk di kursi sebelah Ayah, membuka buku matematikanya, dan mulai menjelaskan. Dan entah mengapa, itulah malam yang paling ia kenang dari seluruh semester tiga — bukan karena nilainya buruk, bukan pula karena nilainya bagus, tapi karena untuk pertama kalinya ia merasa bahwa bersama Ayah, ia boleh tidak tahu sesuatu.</p></div>`,
+
+            cuaca_ekstrem: `<div class="stimulus"><div class="stim-title">Teks Informasi · Cuaca Ekstrem dan Perubahan Iklim: Hubungan yang Lebih Rumit dari Kelihatannya</div>
+<p>Setiap kali terjadi banjir besar, kekeringan parah, atau gelombang panas yang memecahkan rekor, pertanyaan yang muncul di berbagai tempat adalah: "Apakah ini akibat perubahan iklim?" Jawabannya tidak sesederhana ya atau tidak — dan memahami mengapa jawaban itu kompleks justru lebih penting dari sekadar mengangguk setuju atau menggeleng.</p>
+<p>Perubahan iklim tidak menciptakan cuaca ekstrem dari nol. Banjir, kekeringan, badai, dan gelombang panas sudah ada jauh sebelum era industrialisasi. Yang dilakukan perubahan iklim adalah mengubah <em>probabilitas</em> dan <em>intensitas</em> peristiwa-peristiwa itu. Para ilmuwan menggunakan analisis yang disebut "attribution science" — ilmu atribusi — untuk menghitung berapa persen lebih besar kemungkinan sebuah peristiwa cuaca ekstrem terjadi di dunia yang sudah menghangat dibandingkan dunia sebelum era industri. Hasilnya sering mengejutkan: gelombang panas yang melanda Eropa pada 2019, misalnya, diperkirakan lima kali lebih mungkin terjadi karena perubahan iklim yang sudah berlangsung.</p>
+<p>Ada mekanisme fisika yang menjelaskan ini. Atmosfer yang lebih hangat mampu menampung lebih banyak uap air — kira-kira 7% lebih banyak untuk setiap kenaikan satu derajat Celsius. Uap air yang lebih banyak berarti hujan yang lebih lebat ketika hujan akhirnya turun, sekaligus kekeringan yang lebih parah di wilayah yang sudah panas ketika hujan tidak turun. Perubahan iklim pada dasarnya memperburuk <em>ketidakmerataan</em> distribusi air di bumi — yang basah semakin basah, yang kering semakin kering.</p>
+<p>Selain itu, lautan yang lebih hangat memberikan lebih banyak energi kepada badai tropis, membuat badai-badai itu berpotensi lebih kuat dan membawa curah hujan yang lebih tinggi saat menyentuh daratan. Kenaikan permukaan laut akibat mencairnya es kutub juga berarti bahwa banjir pesisir yang dulu terjadi sekali dalam 100 tahun kini terjadi jauh lebih sering di banyak tempat — bukan karena badai lebih sering datang, tapi karena permukaan laut yang lebih tinggi membuat dampaknya berlipat.</p>
+<p>Yang mempersulit pemahaman publik adalah bahwa cuaca bersifat lokal dan jangka pendek, sementara iklim bersifat global dan jangka panjang. Musim dingin yang sangat parah di satu tempat tidak membantah tren pemanasan global, karena iklim diukur dari rata-rata suhu selama puluhan tahun di seluruh permukaan bumi. Satu peristiwa cuaca ekstrem tidak bisa dijadikan bukti tunggal perubahan iklim, dan tidak adanya satu peristiwa tidak bisa dijadikan bukti bahwa perubahan iklim tidak terjadi. Memahami perbedaan antara cuaca dan iklim adalah kunci untuk tidak tersesat dalam perdebatan yang sering lebih panas dari suhu bumi itu sendiri.</p></div>`,
+
+            keputusan_ketua: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Suara Mayoritas</div>
+<p>Pemungutan suara itu menghasilkan tujuh banding lima: proposal untuk menggunakan dana kelas membeli dekorasi panggung perpisahan menang tipis atas usulan Arya untuk menyumbangkan sebagian dana ke panti asuhan. Sebagai ketua kelas, Arya seharusnya mengumumkan hasilnya dan menutup rapat. Tapi ada sesuatu yang membuatnya duduk diam selama hampir satu menit penuh, padahal seluruh kelas sedang menunggu.</p>
+<p>Ia sudah menduga hasilnya. Proposal dekorasi datang dari Karin — populer, pandai berbicara, dan punya kemampuan memvisualisasikan impian yang membuat orang lain ikut terbawa. Usulan Arya sendiri terasa terlalu formal, terlalu dewasa, dan ia tahu itu. Ia tidak pandai menjual ide. Yang tidak ia duga adalah betapa kekalahan itu terasa seperti sesuatu yang bukan sekadar soal perpisahan atau panti asuhan.</p>
+<p>"Hasilnya tujuh banding lima," kata Arya akhirnya. "Dekorasi menang." Beberapa teman bersorak kecil. Karin tersenyum ke arahnya — senyum yang tulus, bukan senyum kemenangan. "Tapi sebelum kita tutup, aku mau usul satu hal." Arya mengambil napas. "Bagaimana kalau kita alokasikan dua puluh persen dari sisa dana — bukan dari total dana — untuk sumbangan? Kita tetap bisa punya pentas perpisahan yang bagus, dan kita tetap bisa melakukan sesuatu yang bertahan setelah malam itu selesai."</p>
+<p>Keheningan selama tiga detik. Lalu Karin mengangkat tangan. "Aku setuju." Satu per satu tangan terangkat — kali ini bukan tujuh banding lima. Hampir semua tangan. Seseorang di baris belakang berkata pelan, "Kenapa tadi enggak diusul begini dari awal?" Arya tidak menjawab. Tapi dalam hatinya ia tahu jawabannya: karena ia tidak mau terlihat sedang mencari kompromi sebelum kalah. Dan sekarang ia menyesali itu — bukan karena hasilnya berbeda, tapi karena ia baru sadar bahwa mencari titik temu bukan tanda kelemahan.</p>
+<p>Rapat ditutup pukul tiga lewat dua puluh menit. Arya membereskan catatan rapatnya dengan lambat. Karin berhenti di sebelahnya. "Tadi bagus," katanya. Arya melirik. "Proposalmu kalah." "Tapi idemu yang kedua menang," jawab Karin. "Dan itu yang lebih penting dari hasilnya." Arya meletakkan catatan itu ke dalam tas, memikirkan kalimat itu cukup lama untuk memutuskan bahwa ia setuju — meski dengan cara yang masih belum sepenuhnya ia mengerti.</p></div>`,
+
+            grafik_suhu_teks: `<div class="stimulus"><div class="stim-title">Grafik Data · Tren Suhu Rata-Rata Tahunan Kota Besar Indonesia (1990–2023)</div>
+<div class="stim-img-wrap" id="img-grafik-suhu-wrap">
+  <img src="${IMG.grafik_suhu}" alt="Grafik garis tren suhu rata-rata tahunan kota besar Indonesia" onerror="document.getElementById('img-grafik-suhu-wrap').innerHTML='<div class=\\'stim-img-placeholder\\'>🖼️ Gambar grafik suhu belum tersedia.<br>Paste URL gambar pada bagian IMG di dalam kode.</div>'">
+  <div class="stim-img-caption">📌 Grafik: Tren Suhu Rata-Rata Tahunan — digunakan pada Soal 13, 14, 15</div>
+</div>
+<p>Grafik garis di atas menampilkan tren suhu rata-rata tahunan (dalam °C) untuk tiga kota besar di Indonesia dari tahun 1990 hingga 2023. Data bersumber dari BMKG (Badan Meteorologi, Klimatologi, dan Geofisika).</p>
+<ul>
+  <li><strong>Jakarta:</strong> suhu rata-rata 1990 = 27,2°C → 2023 = 28,9°C (naik 1,7°C dalam 33 tahun). Tren naik konsisten, dengan lonjakan lebih tajam setelah tahun 2010.</li>
+  <li><strong>Surabaya:</strong> suhu rata-rata 1990 = 27,8°C → 2023 = 29,1°C (naik 1,3°C dalam 33 tahun). Kenaikan lebih bertahap, tanpa lonjakan tajam.</li>
+  <li><strong>Medan:</strong> suhu rata-rata 1990 = 26,5°C → 2023 = 27,6°C (naik 1,1°C dalam 33 tahun). Kenaikan paling lambat di antara tiga kota, dengan beberapa tahun yang relatif datar.</li>
+</ul>
+<p><em>Catatan grafik: Garis putus-putus horizontal menunjukkan ambang batas suhu 28,5°C — suhu di mana risiko kesehatan akibat panas mulai meningkat secara signifikan menurut standar WHO.</em></p></div>`,
+
+            prosedur_kompos: `<div class="stimulus"><div class="stim-title">Teks Prosedur + Diagram · Cara Membuat Pupuk Kompos dari Sampah Dapur</div>
+<div class="stim-img-wrap" id="img-prosedur-wrap">
+  <img src="${IMG.prosedur}" alt="Diagram langkah membuat pupuk kompos dari sampah dapur" onerror="document.getElementById('img-prosedur-wrap').innerHTML='<div class=\\'stim-img-placeholder\\'>🖼️ Gambar diagram prosedur belum tersedia.<br>Paste URL gambar pada bagian IMG di dalam kode.</div>'">
+  <div class="stim-img-caption">📌 Gambar: Diagram Prosedur Pembuatan Kompos — digunakan pada Soal 16, 17, 18</div>
+</div>
+<p><strong>Bahan yang diperlukan:</strong> sisa sayuran, kulit buah, ampas kopi/teh, daun kering, tanah secukupnya, wadah/ember berlubang, air.</p>
+<p><strong>Langkah-langkah (sesuai diagram):</strong></p>
+<ol>
+  <li><strong>Pisahkan sampah organik</strong> dari sampah plastik dan berbahaya. Potong bahan menjadi bagian kecil (maks. 5 cm) agar lebih cepat terurai.</li>
+  <li><strong>Lapisi dasar wadah</strong> dengan tanah setebal 5 cm, lalu tambahkan lapisan bahan organik hijau (sisa sayuran, ampas kopi) setebal 10 cm.</li>
+  <li><strong>Tambahkan lapisan cokelat</strong> (daun kering, kardus robek, serbuk kayu) setebal 10 cm di atas lapisan hijau. Rasio ideal: 1 bagian hijau : 2 bagian cokelat.</li>
+  <li><strong>Siram secukupnya</strong> — campuran harus lembap seperti spons yang diperas, tidak basah kuyup dan tidak terlalu kering.</li>
+  <li><strong>Aduk setiap 3–5 hari</strong> untuk memastikan oksigen masuk ke seluruh bagian tumpukan dan mempercepat proses penguraian.</li>
+  <li><strong>Tunggu 4–8 minggu.</strong> Kompos siap digunakan ketika berwarna cokelat gelap, berbau seperti tanah hutan, dan tidak lagi terlihat bahan aslinya.</li>
+</ol>
+<p><em>⚠️ Jangan masukkan: daging, ikan, produk susu, minyak goreng, atau sampah yang mengandung bahan kimia — karena dapat mengundang hama dan menghasilkan bau tidak sedap yang mengganggu proses penguraian.</em></p></div>`,
+
+            bahasa_daerah: `<div class="stimulus"><div class="stim-title">Teks Informasi · Kepunahan Bahasa: Ketika Sebuah Cara Memandang Dunia Ikut Hilang</div>
+<p>UNESCO memperkirakan bahwa dari sekitar 7.000 bahasa yang masih ada di dunia saat ini, setengahnya akan punah pada akhir abad ini. Setiap dua minggu, rata-rata satu bahasa mati — biasanya bersama dengan penutur terakhirnya yang sudah tua dan tidak memiliki penerus. Indonesia sendiri adalah rumah bagi lebih dari 700 bahasa daerah — terbanyak kedua di dunia setelah Papua Nugini — dan sebagian besar dari mereka dalam kondisi kritis karena hanya dituturkan oleh segelintir orang lanjut usia.</p>
+<p>Kepunahan bahasa sering dianggap sebagai urusan linguistik semata — masalah para ahli bahasa yang sibuk dengan kamus dan tata bahasa. Pandangan ini keliru secara mendasar. Bahasa bukan sekadar alat komunikasi; ia adalah sistem pengetahuan yang dikembangkan selama berabad-abad oleh sebuah komunitas untuk memahami dan mendeskripsikan dunia mereka. Ketika sebuah bahasa mati, turut musnah pula seluruh sistem pengetahuan yang tidak pernah ditranslasikan ke bahasa lain — nama-nama tanaman obat beserta cara penggunaannya, terminologi navigasi bintang yang dikembangkan nelayan selama generasi, konsep-konsep tentang hubungan antar-manusia yang tidak memiliki padanan kata dalam bahasa manapun.</p>
+<p>Para ilmuwan telah menemukan bahwa beberapa bahasa yang hampir punah menyimpan pengetahuan ekologis yang belum terdokumentasi di mana pun. Sebuah studi di Amazon menemukan bahwa masyarakat adat yang berbicara dalam bahasa lokal mereka mampu mengidentifikasi spesies tanaman dua hingga tiga kali lebih banyak dibandingkan peneliti botani eksternal yang menggunakan terminologi ilmiah standar. Pengetahuan itu tersimpan bukan dalam buku, melainkan dalam kata-kata dan ungkapan yang hanya ada dalam bahasa tersebut.</p>
+<p>Di Indonesia, upaya revitalisasi bahasa daerah menghadapi tantangan yang berlapis. Generasi muda di perkotaan sering merasa bahwa bahasa daerah tidak relevan dengan dunia kerja dan pergaulan modern. Bahasa Indonesia sudah cukup, dan bahasa Inggris adalah aset karir. Argumen ini masuk akal di tingkat individu, namun berbahaya di tingkat kolektif: ketika seluruh generasi mengambil keputusan yang sama, hasilnya adalah kepunahan yang masif dan permanen.</p>
+<p>Mendokumentasikan bahasa yang terancam punah adalah langkah awal yang krusial — merekam kosakata, tata bahasa, cerita rakyat, dan lagu-lagu sebelum penutur terakhirnya pergi. Namun dokumentasi saja tidak mencegah kepunahan. Yang bisa mencegahnya hanyalah penggunaan aktif — dan itu membutuhkan keputusan sadar dari orang-orang muda untuk menggunakan bahasa warisan mereka, tidak hanya sebagai identitas budaya, tetapi sebagai cara nyata berkomunikasi dalam kehidupan sehari-hari. Setiap kata dalam bahasa daerah yang diucapkan dengan bangga adalah tindakan pelestarian yang tidak bisa digantikan oleh program pemerintah manapun.</p></div>`,
+
+            surat_untuk_masa_depan: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Dua Puluh Tahun dari Sekarang</div>
+<p>Tugas bahasa Indonesia itu terasa seperti lelucon pada awalnya: tulis surat kepada dirimu sendiri di masa depan, dua puluh tahun dari sekarang. Bu Indah menjelaskan bahwa surat itu akan disimpan di perpustakaan sekolah dalam amplop tersegel selama satu tahun, lalu dikembalikan kepada siswa sebelum kelulusan. Bukan dua puluh tahun yang sesungguhnya — tapi latihan berpikir tentang siapa diri mereka dan siapa yang ingin mereka jadikan.</p>
+<p>Galih duduk di depan kertas kosong itu selama dua belas menit penuh sebelum menulis kalimat pertama. Masalahnya bukan ia tidak tahu apa yang ingin ia tulis — masalahnya adalah ia tahu terlalu banyak, dan semua yang ingin ia tulis terasa dangkal begitu keluar dari pikirannya ke atas kertas. <em>"Semoga kamu sukses"</em> — klise. <em>"Jaga kesehatanmu"</em> — basi. <em>"Tetaplah menjadi dirimu sendiri"</em> — apa artinya itu, sebenarnya?</p>
+<p>Ia akhirnya mulai menulis tentang hal-hal yang konkret: tentang kucing kampung yang selalu tidur di bawah pohon mangga di halaman belakang rumah, tentang bau tanah setelah hujan pertama musim kemarau yang ia tidak punya nama untuknya, tentang cara Ibu menyeduh teh — dua kantong teh, air panas dituang pelan-pelan, lalu diaduk tujuh putaran searah jarum jam persis seperti yang diajarkan neneknya. Ia menulis hal-hal yang ia takut lupakan, bukan hal-hal yang ia harap capai.</p>
+<p>Di bagian akhir, ia menulis: <em>"Aku tidak tahu kamu menjadi apa. Dan mungkin itu tidak perlu aku tahu sekarang. Yang aku ingin tanyakan padamu adalah: hal-hal kecil yang kutulis tadi — kucing itu, bau hujan itu, cara Ibu menyeduh teh itu — apakah kamu masih mengingatnya? Kalau iya, maka apa pun yang terjadi di antara dua puluh tahun ini, aku rasa kamu tidak terlalu jauh dari dirimu yang sekarang."</em></p>
+<p>Bu Indah membaca beberapa surat di depan kelas tanpa menyebut nama. Surat Galih dibacakan yang terakhir. Ketika Bu Indah selesai, kelas hening beberapa detik. Seseorang di baris depan bertanya, "Itu siapa yang nulis?" Bu Indah menggeleng tersenyum. Galih tidak mengaku. Tapi ia memperhatikan bahwa tiga temannya yang tadinya sudah selesai menulis, kembali membuka lembar baru — dan mulai menulis dari awal.</p></div>`,
+
+            kecerdasan_buatan: `<div class="stimulus"><div class="stim-title">Teks Informasi · Kecerdasan Buatan di Kehidupan Sehari-Hari: Lebih Dekat dari yang Kamu Kira</div>
+<p>Ketika orang-orang membicarakan kecerdasan buatan atau <em>artificial intelligence</em> (AI), bayangan yang muncul sering kali adalah robot humanoid dari film fiksi ilmiah, atau komputer raksasa yang suatu hari akan mengambil alih dunia. Kenyataannya jauh lebih membumi dan — dalam banyak hal — lebih mengejutkan: AI sudah ada di dalam kantong bajumu, di layanan streaming yang kamu tonton, di sistem yang memutuskan apakah orang tuamu mendapat pinjaman bank, dan di algoritma yang menentukan berita apa yang muncul pertama kali di ponselmu setiap pagi.</p>
+<p>AI modern bekerja melalui proses yang disebut <em>machine learning</em> — pembelajaran mesin. Berbeda dari program komputer konvensional yang mengikuti aturan yang ditetapkan secara eksplisit oleh programmer, sistem machine learning "belajar" dari contoh. Jika kamu ingin membuat sistem AI yang bisa mengenali foto kucing, kamu tidak perlu menulis aturan tentang apa itu kucing — kamu cukup memberikan jutaan foto kucing dan bukan-kucing kepada sistem, dan sistem itu akan menemukan sendiri pola-pola yang membedakan keduanya. Semakin banyak data, semakin baik kemampuan pengenalan itu.</p>
+<p>Namun kekuatan ini datang bersama kelemahan yang serius. Sistem AI belajar dari data masa lalu, yang berarti ia juga belajar dari bias yang ada di data itu. Jika data pelatihan mencerminkan ketidakadilan yang ada di masyarakat — misalnya bahwa orang dari kelompok tertentu lebih sering ditolak pinjamannya — maka sistem AI yang dilatih dari data itu akan mereproduksi dan bahkan memperkuat ketidakadilan tersebut, dengan kecepatan dan skala yang jauh lebih besar. Ini bukan masalah teknis semata; ini masalah etika dan keadilan sosial yang belum memiliki solusi yang memuaskan.</p>
+<p>Ada juga pertanyaan tentang transparansi. Banyak sistem AI modern — terutama yang berbasis <em>deep learning</em> — bekerja dengan cara yang tidak bisa dijelaskan bahkan oleh pembuatnya sendiri. Para ilmuwan bisa melihat masukan dan keluarannya, tapi proses di antaranya berlangsung dalam jaringan yang sangat kompleks dan sering disebut "kotak hitam." Ketika sebuah sistem AI menolak aplikasi kerja seseorang atau merekomendasikan hukuman yang lebih berat untuk seseorang di pengadilan, tidak selalu ada cara untuk menjelaskan kepada orang itu mengapa keputusan tersebut diambil.</p>
+<p>Ini bukan alasan untuk takut pada AI atau menolaknya sepenuhnya. AI telah membantu dokter mendeteksi kanker lebih awal, membantu ilmuwan memahami protein yang selama puluhan tahun tidak bisa dipecahkan, dan membantu jutaan orang dengan disabilitas mengakses informasi dan layanan yang sebelumnya tidak terjangkau. Tantangannya bukan memilih antara menggunakan atau tidak menggunakan AI — tantangannya adalah memastikan bahwa teknologi yang sangat kuat ini dikembangkan dan digunakan dengan cara yang adil, transparan, dan berpihak pada kepentingan semua orang, bukan hanya mereka yang sudah memiliki kekuasaan dan sumber daya.</p></div>`,
+
+            kakak_adik: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Giliran Terakhir</div>
+<p>Rafi adalah kakak yang sempurna menurut standar yang ditetapkan oleh nilai rapor, piala yang berjejer di rak kayu, dan komentar tetangga yang tidak pernah berhenti membandingkan. Zaki, adiknya, adalah siswa rata-rata yang lebih suka menghabiskan sore hari menggambar peta kota-kota imajiner di buku sketsanya daripada mengulang pelajaran. Mereka berbagi kamar selama dua belas tahun tanpa pernah benar-benar membicarakan hal yang penting.</p>
+<p>Krisis itu datang dalam bentuk tugas membuat peta pikiran untuk pelajaran IPS — peta pikiran tentang sistem pemerintahan Indonesia. Rafi, yang biasanya tidak membutuhkan bantuan siapapun, duduk di meja belajar dengan ekspresi yang tidak biasa selama hampir satu jam tanpa hasil yang memuaskan. Peta pikirannya terasa seperti daftar kata-kata yang dihubungkan oleh garis lurus yang kaku.</p>
+<p>"Boleh aku lihat?" suara Zaki terdengar dari balik buku sketsanya. Rafi menoleh — hampir menolak, tapi sesuatu menghentikannya. Ia membalik kertas itu dan mendorong ke sisi meja Zaki. Zaki memperhatikannya selama hampir dua menit tanpa bicara. Lalu ia mengambil pensil warna dari kotaknya dan mulai menggambar. Bukan mencoret pekerjaan Rafi — melainkan menggambar di lembar baru, sambil sesekali merujuk ke lembar yang sudah ada.</p>
+<p>Yang keluar adalah sesuatu yang tidak pernah terpikirkan oleh Rafi: peta pikiran yang terasa seperti peta kota — dengan pusat pemerintahan digambar seperti alun-alun, lembaga-lembaga pemerintahan seperti gedung-gedung di sekitarnya, hubungan antar-lembaga seperti jalan yang menghubungkan, dan fungsi masing-masing seperti papan nama toko. Informasinya persis sama dengan yang ada di buku pelajaran. Tapi cara menyajikannya membuat semuanya tiba-tiba masuk akal.</p>
+<p>"Kamu bisa buat seperti ini?" kata Rafi. Bukan pertanyaan yang sopan — lebih seperti kalimat yang keluar sebelum sempat disaring. Zaki mengangkat bahu. "Aku selalu nggak bisa hafalin nama-nama yang banyak kalau tidak ada gambarnya." Rafi diam sebentu. Dua belas tahun berbagi kamar. Dua belas tahun tidak tahu ini.</p>
+<p>Tugas itu dikumpulkan dengan nama Rafi, tapi ada bagian dari peta pikiran itu yang cara berpikirnya jelas bukan cara berpikir Rafi — dan gurunya memberi komentar tertulis di pojok kiri bawah: <em>"Cara visualisasinya sangat kreatif! Pertahankan."</em> Rafi membaca komentar itu dua kali, lalu meletakkan kertas itu di atas meja Zaki sebelum tidur. Di bawah komentar guru, Rafi menulis dengan huruf kecil: <em>Ini hak kamu.</em></p></div>`
+
+        };
+
+        /* ══════════════════════════════════════════════════════════
+           SOAL PAKET 9 — Tingkat kesulitan ditingkatkan:
+           · Teks 5–6 paragraf, lebih padat dan berlapis
+           · Pilihan jawaban subtil — distractor lebih mirip jawaban benar
+           · Lebih banyak soal lintas-paragraf (bukan hanya satu paragraf)
+           · pgk-cat diperluas ke 3 baris untuk soal tertentu
+           · Soal evaluasi menuntut penilaian atas argumen pengarang
+           ══════════════════════════════════════════════════════════ */
+        const SOAL = [
+
+            /* ── Tema 1: Cahaya Bintang ── */
+            {
+                id: 1,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.cahaya_bintang,
+                q: "Menurut teks, apa perbedaan mendasar antara cara pandang ilmuwan dan cara pandang orang awam tentang fakta bahwa cahaya bintang membutuhkan waktu lama untuk sampai ke bumi?",
+                opt: [
+                    "Ilmuwan menganggap fakta ini sebagai keterbatasan, sementara orang awam menganggapnya sebagai keunggulan teknologi teleskop",
+                    "Ilmuwan menggunakan fakta ini sebagai keunggulan untuk mempelajari kondisi alam semesta di masa lampau, sementara orang awam sering tidak menyadari implikasinya sama sekali",
+                    "Ilmuwan ingin mempercepat cahaya agar bisa melihat bintang dalam kondisi terkini, sementara orang awam puas dengan apa yang bisa dilihat",
+                    "Ilmuwan dan orang awam sama-sama menganggap fakta ini mengejutkan, namun ilmuwan memiliki alat yang lebih baik untuk mengukurnya"
+                ],
+                ans: "Ilmuwan menggunakan fakta ini sebagai keunggulan untuk mempelajari kondisi alam semesta di masa lampau, sementara orang awam sering tidak menyadari implikasinya sama sekali"
+            },
+
+            {
+                id: 2,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.cahaya_bintang,
+                q: "Penulis menyebut beberapa bintang yang kita lihat sebagai 'hantu kosmik.' Mengapa analogi 'hantu' lebih tepat daripada misalnya 'kenangan' atau 'foto lama'?",
+                opt: [
+                    "Karena bintang-bintang itu bercahaya seperti hantu yang bersinar dalam kegelapan, sehingga analoginya secara visual lebih akurat",
+                    "Karena 'hantu' mengandung makna sesuatu yang tampak nyata dan hadir padahal sebenarnya sudah tidak ada — persis kondisi bintang yang sudah musnah namun cahayanya masih kita lihat",
+                    "Karena para astronom menggunakan istilah 'ghost star' dalam bahasa Inggris sehingga penulis menerjemahkannya secara harfiah",
+                    "Karena 'foto lama' dan 'kenangan' menyiratkan bahwa kita memilih untuk mengingat, sementara cahaya bintang datang tanpa pilihan"
+                ],
+                ans: "Karena 'hantu' mengandung makna sesuatu yang tampak nyata dan hadir padahal sebenarnya sudah tidak ada — persis kondisi bintang yang sudah musnah namun cahayanya masih kita lihat"
+            },
+
+            {
+                id: 3,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk-cat",
+                score: 2,
+                stim: S.cahaya_bintang,
+                q: "Berdasarkan keseluruhan teks, tentukan apakah pernyataan berikut DAPAT DISIMPULKAN, TIDAK DAPAT DISIMPULKAN, atau BERTENTANGAN dengan isi teks!",
+                rows: [
+                    "Teleskop James Webb dirancang untuk mengamati kondisi alam semesta yang sangat tua, bukan yang terkini.",
+                    "Fakta bahwa kita melihat matahari dalam kondisi 8 menit lalu berarti kita tidak mungkin mengetahui kondisi matahari saat ini.",
+                    "Teori relativitas Einstein memperkuat gagasan bahwa waktu bersifat universal dan sama bagi semua pengamat di alam semesta."
+                ],
+                cols: ["Dapat Disimpulkan", "Tidak Dapat / Bertentangan"],
+                ans: ["Dapat Disimpulkan", "Dapat Disimpulkan", "Tidak Dapat / Bertentangan"]
+            },
+
+            /* ── Tema 2: Nilai yang Turun ── */
+            {
+                id: 4,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.nilai_yang_turun,
+                q: "Mira menyimpan perasaan ketika Ayah melihat nilainya bagus 'seperti mengumpulkan perangko.' Apa yang dimaksud penulis dengan analogi ini?",
+                opt: [
+                    "Bahwa Mira mengoleksi pengalaman bersama Ayah secara sistematis dan teratur seperti mengatur koleksi perangko",
+                    "Bahwa perasaan itu langka, berharga, dan dikumpulkan dengan hati-hati karena tidak selalu mudah didapat — seperti perangko edisi terbatas",
+                    "Bahwa Mira sudah terbiasa menerima pujian dari Ayah sehingga perasaan itu terasa biasa seperti mengumpulkan benda sehari-hari",
+                    "Bahwa hubungan Mira dan Ayah bersifat formal dan dingin, seperti transaksi antara kolektor dan penjual perangko"
+                ],
+                ans: "Bahwa perasaan itu langka, berharga, dan dikumpulkan dengan hati-hati karena tidak selalu mudah didapat — seperti perangko edisi terbatas"
+            },
+
+            {
+                id: 5,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.nilai_yang_turun,
+                q: "Mira mengatakan 'Materi persamaan linear sulit. Aku sedang belajar lebih.' dan kemudian penulis menambahkan 'Itu benar. Sebagian.' Apa yang disembunyikan Mira dalam pernyataannya kepada Ayah?",
+                opt: [
+                    "Bahwa ia sebenarnya sudah mengintip nilai itu sebelumnya di komputer sekolah dan sudah tahu nilainya buruk sejak awal",
+                    "Bahwa nilainya turun bukan hanya karena kesulitan materi, tetapi juga mungkin ada faktor lain yang tidak ia ceritakan kepada Ayah",
+                    "Bahwa ia berbohong kepada Ayah tentang belajar lebih, karena sebenarnya ia tidak melakukan usaha tambahan apapun",
+                    "Bahwa ia tidak menyukai guru matematikanya dan merasa cara mengajarnya tidak efektif, tapi tidak berani mengatakannya"
+                ],
+                ans: "Bahwa nilainya turun bukan hanya karena kesulitan materi, tetapi juga mungkin ada faktor lain yang tidak ia ceritakan kepada Ayah"
+            },
+
+            {
+                id: 6,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk",
+                score: 2,
+                stim: S.nilai_yang_turun,
+                q: "Pilih DUA pernyataan yang paling tepat menggambarkan perkembangan hubungan Mira dan Ayah sepanjang cerita ini!",
+                opt: [
+                    "Hubungan mereka bergeser dari berbasis pencapaian (nilai sebagai ukuran kebanggan) menuju berbasis kepercayaan (boleh tidak tahu dan belajar bersama)",
+                    "Ayah menunjukkan bahwa ia selama ini tidak peduli dengan nilai Mira, melainkan hanya dengan cara Mira menghadapi kegagalan",
+                    "Mira belajar bahwa menyembunyikan kesulitan dari orang tua adalah strategi yang efektif untuk menghindari konflik",
+                    "Malam itu menjadi bermakna bukan karena nilainya diperbaiki, melainkan karena Mira merasa bebas untuk menunjukkan ketidaktahuannya tanpa takut dihakimi"
+                ],
+                ans: ["Hubungan mereka bergeser dari berbasis pencapaian (nilai sebagai ukuran kebanggan) menuju berbasis kepercayaan (boleh tidak tahu dan belajar bersama)", "Malam itu menjadi bermakna bukan karena nilainya diperbaiki, melainkan karena Mira merasa bebas untuk menunjukkan ketidaktahuannya tanpa takut dihakimi"]
+            },
+
+            /* ── Tema 3: Cuaca Ekstrem ── */
+            {
+                id: 7,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.cuaca_ekstrem,
+                q: "Menurut teks, apa yang sebenarnya diubah oleh perubahan iklim terhadap cuaca ekstrem — dan apa yang TIDAK diubahnya?",
+                opt: [
+                    "Perubahan iklim menciptakan jenis cuaca ekstrem baru yang sebelumnya tidak pernah ada; yang tidak diubahnya adalah intensitas badai di daerah kutub",
+                    "Perubahan iklim mengubah probabilitas dan intensitas cuaca ekstrem yang sudah ada sebelumnya; yang tidak diubahnya adalah jenis-jenis cuaca itu sendiri",
+                    "Perubahan iklim mengubah musim sehingga hujan terjadi di musim kemarau; yang tidak diubahnya adalah suhu rata-rata laut global",
+                    "Perubahan iklim mengubah arah angin dan arus laut; yang tidak diubahnya adalah jumlah curah hujan tahunan di daerah tropis"
+                ],
+                ans: "Perubahan iklim mengubah probabilitas dan intensitas cuaca ekstrem yang sudah ada sebelumnya; yang tidak diubahnya adalah jenis-jenis cuaca itu sendiri"
+            },
+
+            {
+                id: 8,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.cuaca_ekstrem,
+                q: "Penulis menjelaskan bahwa atmosfer yang lebih hangat mampu menampung lebih banyak uap air. Berdasarkan logika ini, mengapa perubahan iklim bisa menyebabkan KEDUA kondisi — banjir lebih parah DAN kekeringan lebih parah — secara bersamaan di tempat yang berbeda?",
+                opt: [
+                    "Karena iklim yang hangat membuat angin bertiup lebih kencang sehingga awan terkonsentrasi hanya di beberapa wilayah",
+                    "Karena uap air yang lebih banyak berarti hujan yang jauh lebih lebat saat akhirnya turun di wilayah basah, sekaligus penguapan lebih cepat di wilayah kering sehingga kekeringan memburuk",
+                    "Karena negara-negara industri membuang lebih banyak polutan ke atmosfer yang menghalangi hujan di wilayah berkembang",
+                    "Karena lautan yang menghangat menyerap lebih banyak air sehingga wilayah pedalaman kekurangan sumber air, sementara wilayah pesisir banjir"
+                ],
+                ans: "Karena uap air yang lebih banyak berarti hujan yang jauh lebih lebat saat akhirnya turun di wilayah basah, sekaligus penguapan lebih cepat di wilayah kering sehingga kekeringan memburuk"
+            },
+
+            {
+                id: 9,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk-cat",
+                score: 2,
+                stim: S.cuaca_ekstrem,
+                q: "Berdasarkan keseluruhan teks, tentukan apakah pernyataan berikut SESUAI, TIDAK SESUAI, atau TIDAK DAPAT DINILAI berdasarkan isi teks!",
+                rows: [
+                    "Musim dingin parah yang melanda suatu wilayah tertentu tidak cukup untuk membuktikan bahwa pemanasan global tidak terjadi.",
+                    "Ilmu atribusi memungkinkan para ilmuwan menghitung seberapa besar peran perubahan iklim dalam suatu peristiwa cuaca ekstrem tertentu.",
+                    "Gelombang panas di Indonesia lebih berbahaya dibandingkan gelombang panas di Eropa karena kelembapan udaranya yang lebih tinggi."
+                ],
+                cols: ["Sesuai / Dapat Disimpulkan", "Tidak Sesuai / Tidak Dapat Dinilai"],
+                ans: ["Sesuai / Dapat Disimpulkan", "Sesuai / Dapat Disimpulkan", "Tidak Sesuai / Tidak Dapat Dinilai"]
+            },
+
+            /* ── Tema 4: Keputusan Ketua ── */
+            {
+                id: 10,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.keputusan_ketua,
+                q: "Mengapa Arya tidak langsung mengusulkan kompromi dua puluh persen sejak awal, sebelum pemungutan suara dilakukan?",
+                opt: [
+                    "Karena ia tidak memikirkan ide kompromi itu sampai setelah hasil pemungutan suara diumumkan",
+                    "Karena ia tidak ingin terlihat sedang mencari jalan tengah sebelum kalah — ia mengakui sendiri bahwa itu adalah keputusan yang ia sesali",
+                    "Karena aturan rapat kelas tidak mengizinkan anggota mengusulkan lebih dari satu proposal dalam satu sesi",
+                    "Karena Karin sudah berjanji kepadanya sebelum rapat bahwa proposal dekorasi akan mencakup komponen sumbangan"
+                ],
+                ans: "Karena ia tidak ingin terlihat sedang mencari jalan tengah sebelum kalah — ia mengakui sendiri bahwa itu adalah keputusan yang ia sesali"
+            },
+
+            {
+                id: 11,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.keputusan_ketua,
+                q: "Karin berkata: 'Proposalmu kalah. Tapi idemu yang kedua menang — dan itu yang lebih penting dari hasilnya.' Apa yang Karin coba sampaikan kepada Arya melalui kalimat ini?",
+                opt: [
+                    "Bahwa dalam demokrasi, suara mayoritas selalu menghasilkan keputusan yang lebih baik dari keputusan satu orang",
+                    "Bahwa kemampuan menemukan solusi yang mengintegrasikan kepentingan berbeda pihak lebih berharga daripada memenangkan perdebatan itu sendiri",
+                    "Bahwa Arya seharusnya lebih bersyukur karena meskipun kalah suara, usulan keduanya diterima oleh semua orang",
+                    "Bahwa kepemimpinan yang baik tidak memerlukan kemenangan dalam setiap pemungutan suara"
+                ],
+                ans: "Bahwa kemampuan menemukan solusi yang mengintegrasikan kepentingan berbeda pihak lebih berharga daripada memenangkan perdebatan itu sendiri"
+            },
+
+            {
+                id: 12,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pg",
+                score: 1,
+                stim: S.keputusan_ketua,
+                q: "Penulis menggambarkan Arya 'memikirkan kalimat itu cukup lama untuk memutuskan bahwa ia setuju — meski dengan cara yang masih belum sepenuhnya ia mengerti.' Apa makna dari detail ini dalam konteks perkembangan karakter Arya?",
+                opt: [
+                    "Bahwa Arya sebenarnya tidak setuju dengan Karin tetapi terlalu lelah untuk berdebat lebih lanjut",
+                    "Bahwa Arya sedang mengalami pertumbuhan pemahaman yang autentik — ia mulai merasakan kebenarannya sebelum bisa mengartikulasikannya secara penuh, yang lebih nyata daripada pemahaman instan",
+                    "Bahwa Arya adalah karakter yang lambat berpikir dan memerlukan waktu lebih lama dari rata-rata untuk mencerna informasi baru",
+                    "Bahwa penulis ingin menunjukkan bahwa pelajaran kepemimpinan tidak bisa dipahami oleh siswa sekolah dasar dalam satu peristiwa saja"
+                ],
+                ans: "Bahwa Arya sedang mengalami pertumbuhan pemahaman yang autentik — ia mulai merasakan kebenarannya sebelum bisa mengartikulasikannya secara penuh, yang lebih nyata daripada pemahaman instan"
+            },
+
+            /* ── Tema 5: Grafik Suhu (dengan gambar) ── */
+            {
+                id: 13,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.grafik_suhu_teks,
+                q: "Berdasarkan data dalam grafik, kota mana yang melewati ambang batas suhu 28,5°C paling awal, dan apa implikasinya menurut catatan grafik?",
+                opt: [
+                    "Medan melewatinya paling awal karena suhunya naik paling konsisten; implikasinya adalah risiko kesehatan akibat panas meningkat lebih dulu di sana",
+                    "Surabaya melewatinya paling awal karena sudah mulai dari suhu yang lebih tinggi di 1990; implikasinya adalah penduduk Surabaya sudah lebih lama terpapar risiko kesehatan akibat panas",
+                    "Jakarta melewatinya bersamaan dengan Surabaya karena keduanya sudah di atas 28,5°C di tahun 2023; implikasinya sulit ditentukan tanpa melihat tahun persisnya dari grafik",
+                    "Ketiga kota belum melewati 28,5°C sama sekali karena suhu tertinggi yang tercatat adalah 29,1°C di Surabaya"
+                ],
+                ans: "Surabaya melewatinya paling awal karena sudah mulai dari suhu yang lebih tinggi di 1990; implikasinya adalah penduduk Surabaya sudah lebih lama terpapar risiko kesehatan akibat panas"
+            },
+
+            {
+                id: 14,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.grafik_suhu_teks,
+                q: "Jakarta menunjukkan 'lonjakan lebih tajam setelah tahun 2010' sementara Surabaya menunjukkan 'kenaikan lebih bertahap.' Jika tren ini berlanjut dengan laju yang sama, apa yang paling mungkin terjadi dalam 20 tahun ke depan?",
+                opt: [
+                    "Jakarta akan memiliki suhu rata-rata yang sama dengan Surabaya karena tren keduanya saling mendekati",
+                    "Selisih suhu antara Jakarta dan kota-kota lain akan semakin besar jika laju lonjakan Jakarta tidak melambat, menjadikan Jakarta berpotensi menghadapi risiko kesehatan lebih berat",
+                    "Medan akan menyusul Jakarta dan Surabaya karena kota-kota yang lebih dingin biasanya mengalami kenaikan suhu lebih cepat",
+                    "Surabaya akan tetap menjadi kota terpanas karena titik awalnya sudah paling tinggi dibandingkan dua kota lainnya"
+                ],
+                ans: "Selisih suhu antara Jakarta dan kota-kota lain akan semakin besar jika laju lonjakan Jakarta tidak melambat, menjadikan Jakarta berpotensi menghadapi risiko kesehatan lebih berat"
+            },
+
+            {
+                id: 15,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk-cat",
+                score: 2,
+                stim: S.grafik_suhu_teks,
+                q: "Berdasarkan data grafik dan catatan yang menyertainya, tentukan apakah pernyataan berikut VALID (didukung data), TIDAK VALID, atau TIDAK CUKUP DATA untuk dinilai!",
+                rows: [
+                    "Ketiga kota menunjukkan tren kenaikan suhu selama 33 tahun pengamatan, meskipun dengan laju yang berbeda-beda.",
+                    "Penduduk Jakarta menghadapi risiko kesehatan akibat panas yang lebih besar dibandingkan penduduk Medan di tahun 2023.",
+                    "Kenaikan suhu di tiga kota ini disebabkan secara langsung oleh pertumbuhan penduduk dan perluasan area perkotaan."
+                ],
+                cols: ["Valid / Didukung Data", "Tidak Valid / Tidak Cukup Data"],
+                ans: ["Valid / Didukung Data", "Valid / Didukung Data", "Tidak Valid / Tidak Cukup Data"]
+            },
+
+            /* ── Tema 6: Prosedur Kompos (dengan gambar) ── */
+            {
+                id: 16,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.prosedur_kompos,
+                q: "Menurut teks prosedur, apa tujuan dari rasio ideal '1 bagian hijau : 2 bagian cokelat' dalam pembuatan kompos?",
+                opt: [
+                    "Agar kompos memiliki warna yang merata antara hijau dan cokelat sehingga mudah dibedakan dari tanah biasa",
+                    "Agar proses penguraian berlangsung optimal — bahan hijau menyediakan nitrogen, bahan cokelat menyediakan karbon, dan keseimbangan keduanya mendukung kerja mikroorganisme pengurai",
+                    "Agar bau kompos tidak terlalu kuat karena bahan cokelat bersifat penetral aroma yang lebih efektif",
+                    "Agar berat kompos tidak terlalu berat sehingga mudah dipindahkan ke wadah lain saat proses pengadukan"
+                ],
+                ans: "Agar proses penguraian berlangsung optimal — bahan hijau menyediakan nitrogen, bahan cokelat menyediakan karbon, dan keseimbangan keduanya mendukung kerja mikroorganisme pengurai"
+            },
+
+            {
+                id: 17,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.prosedur_kompos,
+                q: "Prosedur menyebutkan bahwa kompos harus diaduk setiap 3–5 hari. Berdasarkan logika teks, mengapa pengadukan secara teratur lebih efektif daripada membiarkan tumpukan diam selama 4–8 minggu penuh?",
+                opt: [
+                    "Karena tanpa pengadukan, mikroorganisme akan mati karena tidak mendapat sumber makanan yang cukup",
+                    "Karena pengadukan memastikan oksigen terdistribusi ke seluruh bagian tumpukan, yang dibutuhkan oleh mikroorganisme aerobik pengurai untuk bekerja secara merata dan efisien",
+                    "Karena tanpa pengadukan, air akan menggenang di dasar wadah dan membuat seluruh kompos membusuk tidak sempurna",
+                    "Karena pengadukan membantu mengeluarkan gas beracun yang dihasilkan selama proses penguraian agar tidak meracuni tumpukan"
+                ],
+                ans: "Karena pengadukan memastikan oksigen terdistribusi ke seluruh bagian tumpukan, yang dibutuhkan oleh mikroorganisme aerobik pengurai untuk bekerja secara merata dan efisien"
+            },
+
+            {
+                id: 18,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk-cat",
+                score: 2,
+                stim: S.prosedur_kompos,
+                q: "Seorang siswa mencoba membuat kompos tetapi menghadapi beberapa masalah. Berdasarkan teks prosedur, tentukan apakah setiap situasi berikut menunjukkan LANGKAH BENAR atau KESALAHAN PROSEDUR!",
+                rows: [
+                    "Siswa memasukkan sisa ikan goreng dan tulang ayam ke dalam tumpukan kompos agar kompos lebih kaya nutrisi.",
+                    "Siswa menyiram tumpukan kompos setiap hari hingga airnya menggenang di dasar wadah agar bahan organik cepat basah dan terurai.",
+                    "Siswa memotong sayuran menjadi potongan kecil sebelum memasukkannya ke dalam wadah kompos."
+                ],
+                cols: ["Langkah Benar", "Kesalahan Prosedur"],
+                ans: ["Kesalahan Prosedur", "Kesalahan Prosedur", "Langkah Benar"]
+            },
+
+            /* ── Tema 7: Bahasa Daerah ── */
+            {
+                id: 19,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.bahasa_daerah,
+                q: "Menurut teks, mengapa kepunahan sebuah bahasa lebih dari sekadar kehilangan alat komunikasi?",
+                opt: [
+                    "Karena kepunahan bahasa berarti hilangnya identitas budaya suatu suku bangsa yang tidak bisa digantikan oleh bahasa nasional manapun",
+                    "Karena bersama bahasa yang punah turut musnah sistem pengetahuan ekologis, terminologi khusus, dan konsep-konsep yang tidak memiliki padanan dalam bahasa lain",
+                    "Karena bahasa yang punah meninggalkan kekosongan linguistik yang sulit diisi oleh bahasa-bahasa yang lebih dominan secara global",
+                    "Karena penutur bahasa yang punah kehilangan kesempatan ekonomi karena tidak ada lagi pasar untuk produk budaya dalam bahasa tersebut"
+                ],
+                ans: "Karena bersama bahasa yang punah turut musnah sistem pengetahuan ekologis, terminologi khusus, dan konsep-konsep yang tidak memiliki padanan dalam bahasa lain"
+            },
+
+            {
+                id: 20,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.bahasa_daerah,
+                q: "Penulis menyebut bahwa keputusan individu untuk tidak menggunakan bahasa daerah 'masuk akal di tingkat individu, namun berbahaya di tingkat kolektif.' Apa paradoks yang coba diungkapkan penulis di sini?",
+                opt: [
+                    "Bahwa individu yang rasional secara kolektif bisa menghasilkan hasil yang merugikan semua pihak — seperti ketika semua orang memilih hal yang paling menguntungkan dirinya, hasilnya justru merugikan seluruh komunitas",
+                    "Bahwa pemerintah seharusnya melarang penggunaan bahasa asing agar bahasa daerah bisa bertahan, meskipun ini merugikan individu secara ekonomi",
+                    "Bahwa generasi muda tidak cukup cerdas untuk memahami nilai bahasa daerah sehingga perlu dididik secara khusus oleh para ahli bahasa",
+                    "Bahwa bahasa Inggris dan bahasa Indonesia sebenarnya tidak cukup untuk berkomunikasi dalam semua konteks kehidupan sehari-hari"
+                ],
+                ans: "Bahwa individu yang rasional secara kolektif bisa menghasilkan hasil yang merugikan semua pihak — seperti ketika semua orang memilih hal yang paling menguntungkan dirinya, hasilnya justru merugikan seluruh komunitas"
+            },
+
+            {
+                id: 21,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk",
+                score: 2,
+                stim: S.bahasa_daerah,
+                q: "Pilih DUA pernyataan yang paling tepat menggambarkan posisi dan argumen penulis dalam teks ini!",
+                opt: [
+                    "Penulis berpendapat bahwa dokumentasi bahasa saja tidak cukup — penggunaan aktif oleh generasi muda adalah kunci pencegahan kepunahan yang sesungguhnya",
+                    "Penulis menyiratkan bahwa kepunahan bahasa daerah adalah konsekuensi yang tidak bisa dihindari dari modernisasi dan globalisasi",
+                    "Penulis menggunakan data ilmiah tentang pengetahuan ekologis sebagai bukti bahwa nilai bahasa daerah melampaui sekadar identitas budaya",
+                    "Penulis mengkritik pemerintah Indonesia secara langsung atas kurangnya program pelestarian bahasa daerah yang efektif"
+                ],
+                ans: ["Penulis berpendapat bahwa dokumentasi bahasa saja tidak cukup — penggunaan aktif oleh generasi muda adalah kunci pencegahan kepunahan yang sesungguhnya", "Penulis menggunakan data ilmiah tentang pengetahuan ekologis sebagai bukti bahwa nilai bahasa daerah melampaui sekadar identitas budaya"]
+            },
+
+            /* ── Tema 8: Surat untuk Masa Depan ── */
+            {
+                id: 22,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.surat_untuk_masa_depan,
+                q: "Mengapa Galih akhirnya memilih menulis tentang hal-hal konkret dan indrawi alih-alih menulis tentang cita-cita dan harapan untuk masa depannya?",
+                opt: [
+                    "Karena Bu Indah secara eksplisit meminta siswa menulis tentang pengalaman indrawi yang berkesan, bukan tentang rencana karir",
+                    "Karena semua hal besar yang ingin ia tulis terasa klise dan dangkal di atas kertas, sedangkan hal-hal kecil yang ia takut lupakan justru terasa lebih jujur dan bermakna",
+                    "Karena Galih adalah siswa yang tidak punya cita-cita yang jelas sehingga lebih mudah menulis tentang hal yang sudah dialaminya",
+                    "Karena ia ingin tulisannya dibacakan di depan kelas oleh Bu Indah sehingga memilih konten yang lebih menarik secara naratif"
+                ],
+                ans: "Karena semua hal besar yang ingin ia tulis terasa klise dan dangkal di atas kertas, sedangkan hal-hal kecil yang ia takut lupakan justru terasa lebih jujur dan bermakna"
+            },
+
+            {
+                id: 23,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.surat_untuk_masa_depan,
+                q: "Pertanyaan yang Galih tulis untuk dirinya di masa depan — 'apakah kamu masih mengingat hal-hal kecil itu?' — secara implisit mengungkapkan teori tentang identitas pribadi yang bagaimana?",
+                opt: [
+                    "Bahwa identitas seseorang terbentuk dari pencapaian besar yang ia raih, bukan dari memori sehari-hari yang tidak berarti",
+                    "Bahwa identitas yang autentik terhubung pada hal-hal konkret dan kecil yang membentuk pengalaman hidup — dan jika kita masih mengingatnya, berarti kita belum kehilangan diri sendiri di tengah perubahan hidup",
+                    "Bahwa masa depan seseorang tidak bisa diprediksi sehingga lebih baik fokus pada masa kini dan tidak merencanakan apa-apa",
+                    "Bahwa kenangan masa kecil selalu lebih bermakna dari pencapaian dewasa sehingga perlu dijaga dengan cara menuliskannya"
+                ],
+                ans: "Bahwa identitas yang autentik terhubung pada hal-hal konkret dan kecil yang membentuk pengalaman hidup — dan jika kita masih mengingatnya, berarti kita belum kehilangan diri sendiri di tengah perubahan hidup"
+            },
+
+            {
+                id: 24,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk-cat",
+                score: 2,
+                stim: S.surat_untuk_masa_depan,
+                q: "Berdasarkan cerita, tentukan apakah pernyataan berikut tentang pengaruh surat Galih SESUAI atau TIDAK SESUAI!",
+                rows: [
+                    "Surat Galih memiliki pengaruh nyata terhadap teman-temannya meskipun ia tidak mengungkapkan jati dirinya sebagai penulisnya.",
+                    "Teman-teman Galih yang membuka lembaran baru untuk menulis ulang menunjukkan bahwa surat itu membuat mereka mempertanyakan kembali apa yang sesungguhnya ingin mereka tulis.",
+                    "Pengaruh surat Galih hanya terasa bagi teman-teman yang sudah dekat dengannya dan mengenali gaya tulisannya."
+                ],
+                cols: ["Sesuai", "Tidak Sesuai"],
+                ans: ["Sesuai", "Sesuai", "Tidak Sesuai"]
+            },
+
+            /* ── Tema 9: Kecerdasan Buatan ── */
+            {
+                id: 25,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.kecerdasan_buatan,
+                q: "Penulis menyebut banyak sistem AI modern sebagai 'kotak hitam.' Apa yang dimaksud dengan istilah ini dalam konteks teks?",
+                opt: [
+                    "Sistem AI yang hanya bisa diakses oleh perusahaan besar karena memerlukan perangkat keras yang sangat mahal",
+                    "Sistem AI yang cara kerjanya di dalam — proses antara masukan dan keluaran — tidak bisa dijelaskan bahkan oleh pembuatnya sendiri",
+                    "Sistem AI yang dirancang khusus untuk tujuan rahasia militer atau pemerintah dan tidak boleh diketahui publik",
+                    "Sistem AI yang memerlukan data dalam jumlah sangat besar sehingga pemrosesan berlangsung di server tersembunyi"
+                ],
+                ans: "Sistem AI yang cara kerjanya di dalam — proses antara masukan dan keluaran — tidak bisa dijelaskan bahkan oleh pembuatnya sendiri"
+            },
+
+            {
+                id: 26,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.kecerdasan_buatan,
+                q: "Penulis berpendapat bahwa AI yang belajar dari data masa lalu dapat 'mereproduksi dan bahkan memperkuat' ketidakadilan yang ada. Mengapa AI berpotensi MEMPERKUAT — bukan hanya mereproduksi — ketidakadilan tersebut?",
+                opt: [
+                    "Karena sistem AI diprogram secara sengaja oleh pengembangnya untuk mendiskriminasi kelompok tertentu demi keuntungan perusahaan",
+                    "Karena AI beroperasi dengan kecepatan dan skala yang jauh melebihi manusia, sehingga pola diskriminatif yang ada dalam data diterapkan kepada jauh lebih banyak orang dalam waktu yang jauh lebih singkat",
+                    "Karena AI tidak memiliki empati sehingga tidak bisa mempertimbangkan konteks sosial ketika membuat keputusan yang mempengaruhi manusia",
+                    "Karena perusahaan teknologi tidak diwajibkan oleh hukum untuk menjelaskan cara kerja sistem AI yang mereka buat"
+                ],
+                ans: "Karena AI beroperasi dengan kecepatan dan skala yang jauh melebihi manusia, sehingga pola diskriminatif yang ada dalam data diterapkan kepada jauh lebih banyak orang dalam waktu yang jauh lebih singkat"
+            },
+
+            {
+                id: 27,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk",
+                score: 2,
+                stim: S.kecerdasan_buatan,
+                q: "Pilih DUA pernyataan yang paling tepat menggambarkan sikap penulis terhadap AI berdasarkan paragraf terakhir teks!",
+                opt: [
+                    "Penulis bersikap seimbang: mengakui manfaat nyata AI sekaligus menyerukan pengembangannya yang bertanggung jawab dan adil",
+                    "Penulis menyimpulkan bahwa kekhawatiran tentang bias AI seharusnya membuat masyarakat menghentikan penggunaan teknologi ini",
+                    "Penulis menekankan bahwa tantangan utama AI bukan soal memakai atau tidak memakai, melainkan soal memastikannya digunakan demi kepentingan semua orang",
+                    "Penulis berpendapat bahwa pemerintah adalah satu-satunya pihak yang bisa memastikan AI digunakan secara etis dan adil"
+                ],
+                ans: ["Penulis bersikap seimbang: mengakui manfaat nyata AI sekaligus menyerukan pengembangannya yang bertanggung jawab dan adil", "Penulis menekankan bahwa tantangan utama AI bukan soal memakai atau tidak memakai, melainkan soal memastikannya digunakan demi kepentingan semua orang"]
+            },
+
+            /* ── Tema 10: Kakak Adik ── */
+            {
+                id: 28,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.kakak_adik,
+                q: "Apa keistimewaan peta pikiran yang dibuat Zaki yang membedakannya secara mendasar dari peta pikiran Rafi?",
+                opt: [
+                    "Peta pikiran Zaki lebih lengkap dan akurat secara konten karena Zaki rajin membaca buku pelajaran",
+                    "Peta pikiran Zaki menggunakan pendekatan spasial-visual — menggambarkan sistem pemerintahan seperti peta kota — sehingga hubungan antar-informasi terasa hidup dan mudah dipahami",
+                    "Peta pikiran Zaki menggunakan lebih banyak warna dan gambar sehingga secara visual lebih menarik dari peta Rafi yang hitam-putih",
+                    "Peta pikiran Zaki lebih ringkas dan padat karena menghilangkan detail yang tidak perlu dari versi Rafi yang terlalu panjang"
+                ],
+                ans: "Peta pikiran Zaki menggunakan pendekatan spasial-visual — menggambarkan sistem pemerintahan seperti peta kota — sehingga hubungan antar-informasi terasa hidup dan mudah dipahami"
+            },
+
+            {
+                id: 29,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.kakak_adik,
+                q: "Rafi menulis 'Ini hak kamu' di bawah komentar guru sebelum meletakkan kertas itu di meja Zaki. Apa yang tindakan ini ungkapkan tentang perkembangan karakter Rafi sepanjang cerita?",
+                opt: [
+                    "Rafi merasa bersalah karena menggunakan pekerjaan Zaki tanpa izin, dan ini adalah cara meminta maaf secara tidak langsung",
+                    "Rafi memutuskan untuk tidak lagi mengerjakan tugas sekolah karena menyadari Zaki lebih pintar darinya",
+                    "Rafi menyadari bahwa kecerdasan hadir dalam berbagai bentuk, dan kecerdasan visual-spasial Zaki memiliki nilai yang setara — bahkan layak mendapat pengakuan yang selama ini ia lupakan",
+                    "Rafi ingin Zaki mengikuti lomba atau kompetisi desain menggunakan keterampilan yang ditemukannya secara tidak sengaja"
+                ],
+                ans: "Rafi menyadari bahwa kecerdasan hadir dalam berbagai bentuk, dan kecerdasan visual-spasial Zaki memiliki nilai yang setara — bahkan layak mendapat pengakuan yang selama ini ia lupakan"
+            },
+
+            {
+                id: 30,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk-cat",
+                score: 2,
+                stim: S.kakak_adik,
+                q: "Berdasarkan keseluruhan cerita, tentukan apakah pernyataan berikut SESUAI atau TIDAK SESUAI dengan tema dan nilai yang disampaikan penulis!",
+                rows: [
+                    "Standar keberhasilan yang sempit (nilai rapor, piala) bisa menyebabkan kemampuan nyata seseorang tidak terlihat selama bertahun-tahun, bahkan oleh orang yang paling dekat dengannya.",
+                    "Kecerdasan seseorang paling tepat diukur dari nilai akademis karena itu adalah standar yang objektif dan dapat diverifikasi.",
+                    "Pengakuan yang tulus terhadap kemampuan orang lain, meskipun datang terlambat dan tanpa kata-kata besar, memiliki dampak yang bermakna."
+                ],
+                cols: ["Sesuai", "Tidak Sesuai"],
+                ans: ["Sesuai", "Tidak Sesuai", "Sesuai"]
+            }
+        ];
+
+        /* ══ APP ENGINE ══ */
+        const App = {
+            state: {
+                nama: '',
+                kelas: '',
+                email: '',
+                answers: {},
+                order: []
+            },
+            currIdx: 0,
+            timerInt: null,
+            elapsed: 0,
+            fontMult: 1,
+
+            init() {
+                this.fontMult = parseFloat(localStorage.getItem('tka_bi_font') || '1');
+                this.applyFont(this.fontMult);
+                emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+            },
+
+            login() {
+                const nama = document.getElementById('inp-nama').value.trim();
+                const kelas = document.getElementById('inp-kelas').value;
+                const email = document.getElementById('inp-email').value.trim();
+                if (!nama) {
+                    alert('Nama siswa wajib diisi!');
+                    return;
+                }
+                if (!kelas) {
+                    alert('Kelas wajib dipilih!');
+                    return;
+                }
+                if (!email || !email.includes('@')) {
+                    alert('Format email orang tua tidak valid!');
+                    return;
+                }
+                Object.assign(this.state, {
+                    nama,
+                    kelas,
+                    email
+                });
+                this.showSlide('rules');
+            },
+
+            startExam() {
+                this.state.answers = {};
+                this.state.order = Array.from({
+                    length: SOAL.length
+                }, (_, i) => i);
+                for (let i = SOAL.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [this.state.order[i], this.state.order[j]] = [this.state.order[j], this.state.order[i]];
+                }
+                this.currIdx = 0;
+                this.elapsed = 0;
+                clearInterval(this.timerInt);
+                this.timerInt = setInterval(() => {
+                    this.elapsed++;
+                    const m = String(Math.floor(this.elapsed / 60)).padStart(2, '0');
+                    const s = String(this.elapsed % 60).padStart(2, '0');
+                    document.getElementById('timer-chip').textContent = `${m}:${s}`;
+                }, 1000);
+                document.getElementById('user-chip').textContent = this.state.nama;
+                document.getElementById('user-chip').style.display = 'block';
+                document.getElementById('timer-chip').style.display = 'block';
+                this.renderQuestions();
+                this.renderNavGrid();
+                this.showSlide('quiz');
+                this.goTo(0);
+            },
+
+            renderQuestions() {
+                const box = document.getElementById('quiz-container');
+                box.innerHTML = '';
+                this.state.order.forEach((qi, i) => {
+                    const s = SOAL[qi];
+                    let html = `<div id="qi-${i}" class="q-item" data-qid="${s.id}">
+        <span class="q-category">${s.cat}</span>
+        ${s.stim||''}
+        <p class="q-text">${i+1}. ${s.q}</p>`;
+                    if (s.type === 'pg') {
+                        s.opt.forEach((o, oi) => html += `<label class="option-label"><input type="radio" name="a_${s.id}" value="${o}" onchange="App.saveAns(${s.id},${oi},${qi})"> ${o}</label>`);
+                    } else if (s.type === 'pgk') {
+                        s.opt.forEach((o, oi) => html += `<label class="option-label"><input type="checkbox" name="a_${s.id}" value="${o}" onchange="App.saveMulti(${s.id},${oi},${qi})"> ${o}</label>`);
+                    } else if (s.type === 'pgk-cat') {
+                        html += `<table class="matrix-table"><tr><th style="text-align:left;">Pernyataan</th><th>${s.cols[0]}</th><th>${s.cols[1]}</th></tr>`;
+                        s.rows.forEach((r, ri) => html += `<tr><td>${r}</td><td><input type="radio" name="mx_${s.id}_${ri}" onchange="App.saveMx(${s.id},${ri},'${s.cols[0]}')"></td><td><input type="radio" name="mx_${s.id}_${ri}" onchange="App.saveMx(${s.id},${ri},'${s.cols[1]}')"></td></tr>`);
+                        html += `</table>`;
+                    }
+                    html += `</div>`;
+                    box.innerHTML += html;
+                });
+            },
+
+            renderNavGrid() {
+                const g = document.getElementById('nav-grid');
+                g.innerHTML = '';
+                this.state.order.forEach((qi, i) => g.innerHTML += `<div id="nb-${i}" class="nav-btn" onclick="App.goTo(${i});App.closeDrawer();">${i+1}</div>`);
+                document.getElementById('answered-count').textContent = `0 / ${SOAL.length} dijawab`;
+            },
+
+            goTo(idx) {
+                if (idx < 0 || idx >= SOAL.length) return;
+                this.currIdx = idx;
+                document.querySelectorAll('.q-item').forEach(e => e.classList.remove('active-q'));
+                document.getElementById(`qi-${idx}`).classList.add('active-q');
+                document.getElementById('q-indicator').textContent = `Soal ${idx+1} / ${SOAL.length}`;
+                document.getElementById('btn-prev').disabled = (idx === 0);
+                const nBtn = document.getElementById('btn-next');
+                if (idx === SOAL.length - 1) {
+                    nBtn.textContent = '✅ Selesai';
+                    nBtn.onclick = () => this.confirmFinish();
+                    nBtn.className = 'btn btn-danger';
+                } else {
+                    nBtn.textContent = 'Selanjutnya →';
+                    nBtn.onclick = () => this.move(1);
+                    nBtn.className = 'btn btn-primary';
+                }
+                this.restoreVisual(idx);
+                this.updateNavUI();
+                const el = document.getElementById(`qi-${idx}`);
+                if (el) {
+                    const top = el.getBoundingClientRect().top + window.scrollY - 64;
+                    window.scrollTo({
+                        top: Math.max(0, top),
+                        behavior: 'smooth'
+                    });
+                }
+            },
+
+            move(step) {
+                this.goTo(this.currIdx + step);
+            },
+
+            saveAns(qid, oi, qi) {
+                this.state.answers[qid] = SOAL[qi].opt[oi];
+                this.updateNavUI();
+            },
+            saveMulti(qid, oi, qi) {
+                const val = SOAL[qi].opt[oi];
+                let c = this.state.answers[qid] || [];
+                c = c.includes(val) ? c.filter(x => x !== val) : [...c, val];
+                this.state.answers[qid] = c;
+                this.updateNavUI();
+            },
+            saveMx(qid, ri, val) {
+                let c = this.state.answers[qid] || [];
+                c[ri] = val;
+                this.state.answers[qid] = c;
+                this.updateNavUI();
+            },
+
+            checkFilled(qid) {
+                const v = this.state.answers[qid];
+                if (!v) return false;
+                return Array.isArray(v) ? v.filter(Boolean).length > 0 : true;
+            },
+
+            restoreVisual(idx) {
+                const s = SOAL[this.state.order[idx]];
+                const ans = this.state.answers[s.id];
+                if (!ans) return;
+                if (s.type === 'pg') {
+                    const el = document.querySelector(`input[name="a_${s.id}"][value="${CSS.escape(ans)}"]`);
+                    if (el) el.checked = true;
+                } else if (s.type === 'pgk') {
+                    ans.forEach(v => {
+                        const el = document.querySelector(`input[name="a_${s.id}"][value="${CSS.escape(v)}"]`);
+                        if (el) el.checked = true;
+                    });
+                } else if (s.type === 'pgk-cat') {
+                    ans.forEach((v, ri) => {
+                        if (v) {
+                            const inputs = document.querySelectorAll(`input[name="mx_${s.id}_${ri}"]`);
+                            inputs.forEach(inp => {
+                                if (inp.getAttribute('onchange') && inp.getAttribute('onchange').includes(`'${v}'`)) inp.checked = true;
+                            });
+                        }
+                    });
+                }
+            },
+
+            updateNavUI() {
+                let answered = 0;
+                this.state.order.forEach((qi, i) => {
+                    const filled = this.checkFilled(SOAL[qi].id);
+                    if (filled) answered++;
+                    const el = document.getElementById(`nb-${i}`);
+                    if (el) el.className = 'nav-btn' + (i === this.currIdx ? ' current' : '') + (filled ? ' answered' : '');
+                });
+                const c = document.getElementById('answered-count');
+                if (c) c.textContent = `${answered} / ${SOAL.length} dijawab`;
+            },
+
+            openDrawer() {
+                document.getElementById('nav-drawer').classList.add('open');
+                document.getElementById('drawer-overlay').classList.add('show');
+            },
+            closeDrawer() {
+                document.getElementById('nav-drawer').classList.remove('open');
+                document.getElementById('drawer-overlay').classList.remove('show');
+            },
+
+            confirmFinish() {
+                const unanswered = SOAL.filter(s => !this.checkFilled(s.id)).length;
+                document.getElementById('modal-confirm-text').textContent = unanswered > 0 ?
+                    `Masih ada ${unanswered} soal yang belum dijawab. Yakin ingin mengumpulkan?` :
+                    `Semua soal telah dijawab. Yakin ingin mengumpulkan?`;
+                document.getElementById('modal-confirm').style.display = 'flex';
+            },
+
+            submitExam() {
+                document.getElementById('modal-confirm').style.display = 'none';
+                document.getElementById('modal-loading').style.display = 'flex';
+                clearInterval(this.timerInt);
+                const stats = {};
+                let totS = 0,
+                    totM = 0;
+                SOAL.forEach(s => {
+                    if (!stats[s.cat]) stats[s.cat] = {
+                        s: 0,
+                        m: 0
+                    };
+                    stats[s.cat].m += s.score;
+                    totM += s.score;
+                    const u = this.state.answers[s.id];
+                    let pt = 0;
+                    if (u) {
+                        if (s.type === 'pg' && u === s.ans) pt = s.score;
+                        else if (s.type === 'pgk' && JSON.stringify([...u].sort()) === JSON.stringify([...s.ans].sort())) pt = s.score;
+                        else if (s.type === 'pgk-cat') {
+                            let m = 0;
+                            s.ans.forEach((k, i) => {
+                                if (u[i] === k) m++;
+                            });
+                            pt = (m / s.rows.length) * s.score;
+                        }
+                    }
+                    stats[s.cat].s += pt;
+                    totS += pt;
+                });
+                const final = Math.round((totS / totM) * 100);
+                const tuntas = final >= 70;
+                const kompData = {};
+                const notTuntas = [];
+                for (const cat in stats) {
+                    const p = stats[cat].m > 0 ? Math.round((stats[cat].s / stats[cat].m) * 100) : 0;
+                    kompData[cat] = {
+                        skor: p,
+                        tuntas: p >= 70
+                    };
+                    if (p < 70) notTuntas.push(cat);
+                }
+                const desc = notTuntas.length === 0 ?
+                    '🎉 Selamat! Kamu telah menguasai semua kompetensi.' :
+                    '📌 Perlu bimbingan lebih lanjut pada: ' + notTuntas.join(', ') + '.';
+                document.getElementById('modal-loading').style.display = 'none';
+                this.showResult(final, tuntas, desc, kompData);
+                this.sendEmail(final, tuntas, desc, kompData);
+            },
+
+            showResult(score, tuntas, desc, kompData) {
+                this.showSlide('result');
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                const circle = document.getElementById('score-circle');
+                circle.className = 'score-circle' + (tuntas ? ' lulus' : '');
+                document.getElementById('score-num').textContent = score;
+                document.getElementById('result-status').textContent = tuntas ? '🎉 Tuntas!' : '📚 Perlu Bimbingan';
+                document.getElementById('result-desc').textContent = desc;
+                const em = Math.floor(this.elapsed / 60),
+                    es = this.elapsed % 60;
+                document.getElementById('result-meta').innerHTML = `
+      <div class="meta-box"><div class="meta-lbl">Siswa</div><div class="meta-val">${this.state.nama}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Kelas</div><div class="meta-val">${this.state.kelas}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Durasi</div><div class="meta-val">${em} mnt ${es} dtk</div></div>
+      <div class="meta-box"><div class="meta-lbl">Tanggal</div><div class="meta-val">${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}</div></div>`;
+                let barsHTML = '';
+                for (const cat in kompData) {
+                    const d = kompData[cat];
+                    barsHTML += `<div class="comp-bar">
+        <div class="comp-header">
+          <span class="comp-name">${cat}</span>
+          <span class="comp-score" style="color:${d.tuntas?'var(--success)':'var(--danger)'}">
+            ${d.skor}% — ${d.tuntas?'✅ Tuntas':'⚠️ Perlu Bimbingan'}
+          </span>
+        </div>
+        <div class="bar-track"><div class="bar-fill ${d.tuntas?'bar-tuntas':'bar-belum'}" style="width:0%" data-w="${d.skor}%"></div></div>
+      </div>`;
+                }
+                document.getElementById('result-bars').innerHTML = barsHTML;
+                setTimeout(() => document.querySelectorAll('.bar-fill').forEach(el => {
+                    el.style.width = el.dataset.w;
+                }), 200);
+            },
+
+            sendEmail(score, tuntas, desc, kompData) {
+                const box = document.getElementById('email-status-box');
+                box.innerHTML = `<div class="email-status es-sending">✉️ Sedang mengirim laporan ke <strong>${this.state.email}</strong>...</div>`;
+                let rows = '';
+                for (const cat in kompData) {
+                    const d = kompData[cat];
+                    rows += `<tr><td style="padding:8px 14px;border:1px solid #e5e7eb;">${cat}</td>
+        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;font-weight:700;">${d.skor}%</td>
+        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;color:${d.tuntas?'#057a55':'#e02424'};font-weight:700;">${d.tuntas?'✅ Tuntas':'⚠️ Perlu Bimbingan'}</td></tr>`;
+                }
+                const detailHtml = `<table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <tr style="background:#1e3a8a;color:white;">
+        <th style="padding:10px 14px;text-align:left;">Kompetensi</th>
+        <th style="padding:10px;">Skor</th><th style="padding:10px;">Status</th>
+      </tr>${rows}</table>`;
+                const em = Math.floor(this.elapsed / 60),
+                    es = this.elapsed % 60;
+                emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, {
+                    to_email: this.state.email,
+                    nama_siswa: this.state.nama,
+                    kelas: this.state.kelas,
+                    skor: score,
+                    status: tuntas ? 'TUNTAS ✅' : 'Perlu Bimbingan 📚',
+                    tanggal: new Date().toLocaleString('id-ID', {
+                        weekday: 'long',
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }),
+                    durasi: `${em} menit ${es} detik`,
+                    detail_html: detailHtml,
+                    kesimpulan: desc
+                }).then(() => {
+                    box.innerHTML = `<div class="email-status es-sent">✅ Laporan berhasil dikirim ke <strong>${this.state.email}</strong>. Minta orang tua cek kotak masuk email.</div>`;
+                }).catch(err => {
+                    box.innerHTML = `<div class="email-status es-error">❌ Gagal mengirim email. Periksa koneksi internet.<br><small>${err.text||JSON.stringify(err)}</small></div>`;
+                });
+            },
+
+            retryExam() {
+                this.state.answers = {};
+                this.showSlide('rules');
+                window.scrollTo({
+                    top: 0
+                });
+            },
+
+            showSlide(id) {
+                document.querySelectorAll('.slide').forEach(e => e.classList.remove('active'));
+                document.getElementById('slide-' + id).classList.add('active');
+                if (id !== 'quiz') {
+                    document.getElementById('user-chip').style.display = 'none';
+                    document.getElementById('timer-chip').style.display = 'none';
+                }
+                if (id === 'login') clearInterval(this.timerInt);
+                window.scrollTo({
+                    top: 0
+                });
+            },
+
+            applyFont(m) {
+                document.querySelectorAll('.stimulus,.q-text,.option-label,.matrix-table').forEach(el => {
+                    el.style.fontSize = `${m}rem`;
+                });
+            },
+            changeFontSize(step) {
+                this.fontMult = Math.max(0.8, Math.min(1.6, this.fontMult + step * 0.1));
+                this.applyFont(this.fontMult);
+                localStorage.setItem('tka_bi_font', this.fontMult);
+            }
+        };
+
+        window.onload = () => App.init();
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && ['u', 's'].includes(e.key.toLowerCase())) e.preventDefault();
+        });
+        document.addEventListener('selectstart', e => {
+            if (!['INPUT', 'TEXTAREA'].includes(e.target.tagName) && !e.target.classList.contains('allow-select')) e.preventDefault();
+        });
+    </script>
+</body>
+
+</html>
