@@ -1,1 +1,1454 @@
+<!DOCTYPE html>
+<html lang="id">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Sekolah Pendidikan Pancasila - SD Muhammadiyah 01 Kukusan</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #334155;
+            --bg: #f1f5f9;
+            --border: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- LAYOUT --- */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            background: white;
+        }
+
+        /* HEADER */
+        .header {
+            height: 64px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 50;
+            flex-shrink: 0;
+        }
+
+        .header-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .timer-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-family: monospace;
+            font-size: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* WORKSPACE */
+        .workspace {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .main-stage {
+            flex: 1;
+            position: relative;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* SLIDES */
+        .slide {
+            display: none !important;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide.active {
+            display: flex !important;
+            flex-direction: column;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .center-content-wrapper {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 32px;
+            margin-bottom: 20px;
+            border-top: 5px solid var(--primary);
+        }
+
+        /* QUIZ AREA */
+        .quiz-scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: 80px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .nav-bar-fixed {
+            flex-shrink: 0;
+            background: white;
+            padding: 16px 24px;
+            border-top: 1px solid #e2e8f0;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 40;
+        }
+
+        /* SOAL */
+        .question-item {
+            display: none;
+        }
+
+        .question-item.active-q {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .stimulus-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 24px;
+            border-radius: 8px;
+        }
+
+        .stimulus-head {
+            font-weight: 800;
+            color: var(--primary);
+            border-bottom: 2px dashed #e2e8f0;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .visual-frame {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .q-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tag-cat {
+            display: inline-block;
+            font-size: 0.75rem;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .opt-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            color: #475569;
+        }
+
+        .opt-label:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .opt-label input {
+            margin-top: 4px;
+            transform: scale(1.2);
+            flex-shrink: 0;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 320px;
+        }
+
+        .matrix-table th,
+        .matrix-table td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+        }
+
+        .matrix-table th {
+            background: #f1f5f9;
+            text-align: center;
+        }
+
+        .matrix-table td {
+            text-align: center;
+        }
+
+        .matrix-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        /* SIDEBAR */
+        .side-panel {
+            width: 300px;
+            background: white;
+            border-left: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            z-index: 40;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* TOMBOL NOMOR */
+        .nav-num {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+
+        .nav-num:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        /* FIX: Current active (border biru) */
+        .nav-num.current {
+            border: 2px solid var(--primary);
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            color: var(--primary);
+        }
+
+        /* FIX: Filled (Warna Hijau Menang) */
+        .nav-num.filled {
+            background-color: var(--success) !important;
+            color: white !important;
+            border-color: var(--success) !important;
+        }
+
+        .nav-num.filled.current {
+            border: 3px solid #1e3a8a !important;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            background: #172554;
+        }
+
+        .btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+        }
+
+        .btn-outline:hover {
+            background: #f8fafc;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        /* CHART */
+        .chart-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .chart-lbl {
+            width: 200px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: right;
+            padding-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .chart-track {
+            flex: 1;
+            background: #e2e8f0;
+            height: 16px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .chart-fill {
+            height: 100%;
+            transition: width 1s ease-out;
+        }
+
+        .chart-val {
+            width: 50px;
+            padding-left: 10px;
+            font-weight: 700;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        /* PIN INPUT */
+        .pin-input-wrap { position: relative; margin-bottom: 10px; }
+        .pin-input-wrap svg {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+            color: #94a3b8; pointer-events: none;
+        }
+        #inp-pin {
+            width: 100%; padding: 14px 14px 14px 44px;
+            border: 1.5px solid var(--border); border-radius: 8px;
+            font-size: 1.1rem; font-weight: 700; letter-spacing: .15em;
+            font-family: monospace; color: var(--text);
+            transition: border-color .2s;
+        }
+        #inp-pin:focus { border-color: var(--primary); }
+        #inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+        #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+
+        /* GAMBAR SOAL */
+        .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+
+        /* TABEL MATRIKS — wrapper scroll horizontal agar tidak overflow di HP */
+        .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+        /* LOADING SPINNER */
+        @keyframes spin  { 0%   { transform: rotate(0deg);   } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+        @media (max-width: 768px) {
+            .workspace {
+                flex-direction: column;
+            }
+
+            .side-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #e2e8f0;
+                order: 2;
+            }
+
+            .nav-grid {
+                max-height: 120px;
+                padding: 10px;
+            }
+
+            .chart-lbl {
+                width: 130px;
+                font-size: 0.78rem;
+            }
+
+            .header-title {
+                font-size: 1rem;
+            }
+        }
+
+        /* MathJax specific */
+        mjx-container {
+            font-size: 1.1em !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="header">
+            <div class="header-title">Ujian Sekolah Pendidikan Pancasila</div>
+            <div style="display:flex; align-items:center; gap:15px;">
+                <div id="user-badge" style="display:none; font-size:0.85rem; background:rgba(255,255,255,0.1); padding:5px 12px; border-radius:20px;">Siswa</div>
+                <div class="timer-box" id="timer-display">--:--</div>
+            </div>
+        </div>
+        <div class="workspace">
+            <div class="main-stage">
+                <!-- ① SLIDE PIN ──────────────────────────────────── -->
+                <div id="slide-pin" class="slide active">
+                    <div class="center-content-wrapper">
+                        <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+                            <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+                            <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+                            <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">
+                                Masukkan PIN dari guru untuk membuka<br>
+                                <strong>Uji Coba Ujian Pendidikan Pancasila</strong>
+                            </p>
+                            <div class="pin-input-wrap">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2.2"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                                <input type="password" id="inp-pin"
+                                       placeholder="PIN ujian…"
+                                       maxlength="30" autocomplete="off"
+                                       onkeydown="if(event.key==='Enter') app.checkPin()">
+                            </div>
+                            <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+                            <button class="btn" style="width:100%" onclick="app.checkPin()">
+                                Buka Ujian →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ② SLIDE LOGIN ────────────────────────────────── -->
+                <div id="slide-login" class="slide">
+                    <div class="center-content-wrapper">
+                        <div class="card" style="max-width: 450px; margin: 0 auto; text-align: center;">
+                            <h2 style="color:var(--primary); margin-top:0;">Selamat Datang</h2>
+                            <p style="color:#64748b; margin-bottom:30px;">Ujian Sekolah Pendidikan Pancasila (Fase C)</p>
+                            <div style="text-align:left;">
+                                <label>Nama Lengkap</label>
+                                <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+                                <label>Kelas</label>
+                                <select id="inpKelas">
+                                    <option value="">-- Pilih Kelas --</option>
+                                    <option value="6A">Kelas 6A</option>
+                                    <option value="6B">Kelas 6B</option>
+                                </select>
+                            </div>
+                            <button class="btn" id="btn-login" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+                            <div id="resume-alert" style="display:none; margin-top:20px; padding:10px; background:#eff6ff; color:#1d4ed8; border-radius:8px; cursor:pointer; font-size:0.9rem;" onclick="app.resume()">
+                                🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ③ SLIDE PETUNJUK ─────────────────────────────── -->
+                <div id="slide-rules" class="slide">
+                    <div class="center-content-wrapper">
+                        <div class="card" style="max-width: 700px; margin: 0 auto;">
+                            <h2 style="margin-top:0; border-bottom:1px solid #e2e8f0; padding-bottom:15px; color:var(--primary);">Petunjuk Pengerjaan</h2>
+                            <div style="line-height:1.8; color:#334155;">
+                                <p>1. <strong>Waktu:</strong> Waktu pengerjaan soal ujian adalah 90 Menit.</p>
+                                <p>2. <strong>Soal:</strong> 40 butir soal Pendidikan Pancasila (Sesi 1 & 2).</p>
+                                <p>3. <strong>Tips:</strong> Bacalah studi kasus dengan teliti sebelum menjawab.</p>
+                                <p>4. <strong>Tips:</strong> Perhatikan konteks kewargaan dalam setiap soal.</p>
+                            </div>
+                            <div style="margin-top:30px; text-align:right;">
+                                <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ④ SLIDE KUIS ──────────────────────────────────── -->
+                <div id="slide-quiz" class="slide">
+                    <div id="quiz-scroll" class="quiz-scroll-area">
+                        <div id="quiz-container"></div>
+                    </div>
+                    <div class="nav-bar-fixed">
+                        <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+                        <span class="q-indicator" id="q-indicator" style="font-weight:700; color:var(--primary);">Soal 1 / 40</span>
+                        <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+                    </div>
+                </div>
+                <!-- ⑤ SLIDE HASIL ─────────────────────────────────── -->
+                <div id="slide-result" class="slide">
+                    <div class="center-content-wrapper">
+                        <div class="card" style="max-width: 600px; margin: 0 auto; text-align:center;">
+                            <div style="font-size:4rem; margin-bottom:10px;">🎉</div>
+                            <h2 style="color:var(--primary); margin:0;">Ujian Selesai!</h2>
+                            <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
+                            <div id="result-content" style="text-align:left; margin-top:30px; border-top:1px solid #e2e8f0; padding-top:20px;">
+                                <p style="text-align:center; color:#64748b;">Sedang memproses nilai...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="side-panel" id="sidebar" style="display:none;">
+                <div style="padding:15px 20px; font-weight:700; color:#334155; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+                    <span>Navigasi Soal</span>
+                    <span style="font-size:0.8rem; background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:10px;">40 Butir</span>
+                </div>
+                <div class="nav-grid" id="nav-grid"></div>
+                <div style="padding:20px; border-top:1px solid #e2e8f0; margin-top:auto; background:#f8fafc;">
+                    <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Selesai Ujian</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-confirm" class="overlay">
+        <div class="modal">
+            <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+            <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:25px;">
+                <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Cek Lagi</button>
+                <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LOADING ──────────────────────────────────────── -->
+    <div id="modal-loading" class="overlay">
+        <div class="modal">
+            <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+            <div style="width:40px; height:40px; border:4px solid #e2e8f0; border-top:4px solid var(--primary); border-radius:50%; margin:10px auto; animation:spin 1s linear infinite;"></div>
+            <p>Mohon jangan tutup halaman ini.</p>
+        </div>
+    </div>
+
+    <script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  PIN: Pp24RP  |  HASH: lihat PIN_HASH di bawah
+//  Untuk mengganti PIN, jalankan di browser console:
+//    hashPin("PIN_BARU").then(h => console.log(h))
+//  lalu salin hasilnya ke PIN_HASH.
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    STORAGE_KEY: "US_2026_PANCASILA",
+    DURATION:    90 * 60,
+    PIN_HASH:    "b586f438e635e234"  // PIN: Pp24RP
+};
+
+// ── Fungsi hash (SHA-256, 16 karakter) ──────────────────
+async function hashPin(pin) {
+    const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('').slice(0, 16);
+}
+window.hashPin = hashPin; // expose ke console browser
+
+        // --- IMAGE_ASSETS ---
+        const IMAGE_ASSETS = {
+            "lambang_sila": "https://i.ibb.co.com/ZjRR2B9/img-1-lambang-sila.png",
+            "peta_wilayah": "https://i.ibb.co.com/DgjSh9NM/img-2-peta-wilayah.png"
+        };
+        function getImg(key, altText = "Ilustrasi Soal") {
+            const url = IMAGE_ASSETS[key];
+            if (!url) return `<div class="no-img" style="background:#fef3c7; padding:15px; border-radius:8px; text-align:center; border:1px solid #f59e0b;">⚠️ Gambar tidak tersedia</div>`;
+            return `<img src="${url}" alt="${altText}" class="stimulus-img" loading="eager">`;
+        }
+        // --- QUESTIONS ---
+        const QUESTIONS = [{
+                id: 1,
+                cat: "Pancasila",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Pemilihan Ketua Kelas</div><p>Dalam sebuah pemilihan ketua kelas 6, terdapat tiga calon kandidat yang masing-masing memiliki keunggulan berbeda. Proses pemilihan dilakukan dengan voting rahasia. Namun, sebelum pengumuman hasil, salah satu calon merasa kalah dan mengajak teman-temannya untuk tidak mengakui hasil pemilihan tersebut. Situasi ini menimbulkan ketegangan di dalam kelas. Beberapa siswa mulai memihak pada calon tertentu tanpa mempertimbangkan aturan yang telah disepakati bersama sebelumnya. Guru kelas kemudian memanggil perwakilan siswa untuk menyelesaikan masalah ini dengan mengutamakan kepentingan bersama daripada kepentingan golongan atau pribadi.</p></div>",
+                q: "Berdasarkan kasus tersebut, sila keberapa yang paling dominan dilanggar oleh siswa yang tidak mengakui hasil pemilihan?",
+                opt: ["Sila Pertama, karena tidak beriman", "Sila Kedua, karena tidak manusiawi", "Sila Ketiga, karena mengancam persatuan", "Sila Keempat, karena menolak musyawarah"],
+                ans: "Sila Keempat, karena menolak musyawarah"
+            },
+            {
+                id: 2,
+                cat: "Pancasila",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Aturan Sekolah</div><p>SD Muhammadiyah 01 Kukusan memiliki aturan bahwa setiap siswa wajib mengikuti upacara bendera setiap hari Senin. Aturan ini dibuat berdasarkan kesepakatan dewan guru dan komite sekolah demi menanamkan nilai nasionalisme. Suatu hari, seorang siswa bertanya mengapa aturan ini harus dipatuhi oleh semua warga sekolah tanpa terkecuali. Guru menjelaskan bahwa aturan sekolah merupakan cerminan dari aturan yang lebih besar di tingkat negara. Kepatuhan terhadap aturan sekolah adalah latihan dasar untuk menjadi warga negara yang baik dan menghormati konstitusi negara yang menjadi fondasi hukum bagi seluruh peraturan di bawahnya.</p></div>",
+                q: "Mengapa Pancasila disebut sebagai dasar negara berdasarkan penjelasan guru tersebut?",
+                opt: ["Karena Pancasila dibuat oleh para pahlawan", "Karena Pancasila menjadi fondasi hukum negara", "Karena Pancasila berisi lima sila yang indah", "Karena Pancasila diajarkan di setiap sekolah"],
+                ans: "Karena Pancasila menjadi fondasi hukum negara"
+            },
+            {
+                id: 3,
+                cat: "Pancasila",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Kerja Kelompok</div><p>Dalam pelajaran IPAS, siswa kelas 6 diminta bekerja dalam kelompok untuk membuat makalah tentang lingkungan. Andi adalah siswa yang sangat pandai, sedangkan Budi kurang memahami materi. Saat pembagian tugas, Andi ingin mengerjakan semua bagian sendiri agar nilainya maksimal. Namun, guru mengingatkan bahwa tujuan kerja kelompok adalah belajar bersama. Andi akhirnya menyadari bahwa membantu teman memahami materi justru lebih penting daripada sekadar mendapatkan nilai sempurna seorang diri. Ia kemudian membagi tugas secara adil dan membimbing Budi.</p></div>",
+                q: "Sikap teladan apa yang ditunjukkan Andi setelah diingatkan guru?",
+                opt: ["Mengutamakan kepentingan bangsa di atas pribadi", "Mengutamakan kepentingan pribadi di atas bangsa", "Mengutamakan kepentingan kelompok saja", "Mengutamakan kepentingan guru saja"],
+                ans: "Mengutamakan kepentingan bangsa di atas pribadi"
+            },
+            {
+                id: 4,
+                cat: "Pancasila",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Lingkungan Masyarakat</div><p>Di lingkungan perumahan tempat tinggal Rina, terdapat berbagai macam perilaku warga sehari-hari. Ada yang rutin mengikuti kerja bakti, ada yang selalu membantu tetangga yang sakit, dan ada juga yang selalu antre dengan tertib saat membeli sembako di warung. Namun, terdapat juga warga yang sering membuang sampah sembarangan dan tidak peduli dengan kebersihan lingkungan. Rina mengamati bahwa perilaku warga yang positif mencerminkan nilai-nilai luhur yang dianut bangsa Indonesia sebagai pedoman dalam bersikap dan bertingkah laku di masyarakat.</p></div>",
+                q: "Perilaku mana yang paling sesuai dengan Pancasila sebagai pandangan hidup bangsa?",
+                opt: ["Membuang sampah sembarangan di sungai", "Berbicara keras saat rapat warga", "Membantu tetangga yang sedang sakit", "Tidak mengikuti kerja bakti rutin"],
+                ans: "Membantu tetangga yang sedang sakit"
+            },
+            {
+                id: 5,
+                cat: "Pancasila",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Sejarah Kelahiran Pancasila</div><p>Para sejarawan mencatat tiga peristiwa penting dalam proses kelahiran Pancasila sebagai dasar negara. Pertama, diadakan sidang BPUPK untuk membahas dasar negara. Kedua, dibentuk Panitia Sembilan yang menghasilkan Piagam Jakarta. Ketiga, terjadi perubahan pada sila pertama Piagam Jakarta sebelum pengesahan akhir pada tanggal 18 Agustus 1945. Urutan peristiwa ini sangat penting untuk dipahami agar kita menghargai proses panjang para pendiri bangsa dalam merumuskan dasar negara yang bisa diterima oleh semua golongan.</p></div>",
+                q: "Urutkan kronologi peristiwa kelahiran Pancasila secara benar!",
+                opt: ["Pengesahan - Sidang BPUPK - Piagam Jakarta", "Sidang BPUPK - Piagam Jakarta - Pengesahan", "Piagam Jakarta - Pengesahan - Sidang BPUPK", "Sidang BPUPK - Pengesahan - Piagam Jakarta"],
+                ans: "Sidang BPUPK - Piagam Jakarta - Pengesahan"
+            },
+            {
+                id: 6,
+                cat: "Pancasila",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Konflik Teman</div><p>Siti dan Dayu bertengkar karena Dayu tanpa izin meminjam pensil Siti dan membuatnya patah. Siti merasa sangat marah dan ingin membalas dengan mengambil barang Dayu juga. Namun, mereka teringat pesan guru tentang kemanusiaan yang adil dan beradab. Akhirnya, Dayu meminta maaf dengan tulus dan mengganti pensil tersebut. Siti memaafkan Dayu dan mereka kembali berteman baik. Konflik selesai tanpa kekerasan dan saling menyakiti perasaan.</p></div>",
+                q: "Tindakan penyelesaian konflik tersebut mencerminkan sila keberapa?",
+                opt: ["Sila Pertama, karena berdoa bersama", "Sila Kedua, karena kemanusiaan yang adil", "Sila Ketiga, karena persatuan Indonesia", "Sila Kelima, karena keadilan sosial"],
+                ans: "Sila Kedua, karena kemanusiaan yang adil"
+            },
+            {
+                id: 7,
+                cat: "Pancasila",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Lambang Sila Pancasila</div><div class='visual-frame'>${getImg("lambang_sila", "Lambang Sila Pancasila")}</div><p>Perhatikan gambar lambang sila Pancasila di atas. Lambang tersebut menggambarkan nilai-nilai luhur yang harus diterapkan dalam kehidupan sehari-hari, khususnya di lingkungan sekolah dimana siswa berinteraksi dengan teman dan guru.</p></div>`,
+                q: "Pilih LEBIH DARI SATU perilaku yang sesuai dengan makna lambang tersebut di sekolah!",
+                opt: ["Menghormati teman yang sedang beribadah", "Melaksanakan piket kelas dengan tanggung jawab", "Bermusyawarah memilih ketua kelas", "Menghargai pendapat teman saat diskusi"],
+                ans: ["Menghormati teman yang sedang beribadah", "Menghargai pendapat teman saat diskusi"]
+            },
+            {
+                id: 8,
+                cat: "Pancasila",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Kerja Bakti</div><p>Warga RT 05 mengadakan kegiatan kerja bakti membersihkan selokan dan jalan lingkungan. Kegiatan ini diikuti oleh bapak-bapak, ibu-ibu, hingga anak-anak remaja. Mereka bekerja sama tanpa membedakan suku, agama, atau status sosial. Semua bahu-membahu mengangkat sampah dan membersihkan saluran air agar tidak banjir saat musim hujan. Suasana terlihat guyub dan rukun sepanjang kegiatan berlangsung.</p></div>",
+                q: "Pilih LEBIH DARI SATU sila Pancasila yang terkandung dalam kegiatan tersebut!",
+                opt: ["Sila Ketiga, karena adanya persatuan", "Sila Kedua, karena kemanusiaan yang adil", "Sila Kelima, karena keadilan sosial", "Sila Keempat, karena musyawarah mufakat"],
+                ans: ["Sila Ketiga, karena adanya persatuan", "Sila Kelima, karena keadilan sosial"]
+            },
+            {
+                id: 9,
+                cat: "Pancasila",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Tokoh Perumus</div><p>Para tokoh perumus Pancasila seperti Ir. Soekarno, Drs. Mohammad Hatta, dan Mr. Muhammad Yamin menunjukkan sikap yang luar biasa selama sidang BPUPK. Mereka rela meninggalkan keluarga demi menghadiri sidang. Mereka juga bersedia menerima pendapat orang lain meskipun berbeda dengan pendapat pribadinya. Semua dilakukan demi tercapainya kesepakatan dasar negara untuk kemerdekaan Indonesia.</p></div>",
+                q: "Pilih LEBIH DARI SATU sikap yang mencerminkan rela berkorban demi bangsa!",
+                opt: ["Menghadiri sidang meski jauh dari keluarga", "Menerima pendapat orang lain yang berbeda", "Memaksakan pendapat pribadi agar menang", "Pulang ke rumah saat sidang berlangsung"],
+                ans: ["Menghadiri sidang meski jauh dari keluarga", "Menerima pendapat orang lain yang berbeda"]
+            },
+            {
+                id: 10,
+                cat: "Pancasila",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Fungsi Pancasila</div><p>Disajikan 3 pernyataan tentang fungsi Pancasila dalam kehidupan bernegara dan bermasyarakat. Siswa harus menganalisis fungsi masing-masing pernyataan.</p></div>",
+                q: "Klasifikasikan setiap pernyataan apakah berfungsi sebagai Dasar Negara atau Pandangan Hidup!",
+                rows: ["Pancasila sebagai sumber hukum", "Pancasila sebagai pedoman perilaku", "Pancasila sebagai fondasi konstitusi"],
+                cols: ["Dasar Negara", "Pandangan Hidup"],
+                ans: ["Dasar Negara", "Pandangan Hidup", "Dasar Negara"]
+            },
+            {
+                id: 11,
+                cat: "UUD 1945",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Fasilitas Sekolah</div><p>Siswa kelas 6 ingin menggunakan laboratorium komputer untuk belajar mengetik. Namun, guru menjelaskan bahwa sebelum menggunakan fasilitas tersebut, siswa harus menjaga kebersihan ruangan dan mematikan komputer setelah selesai. Hak untuk menggunakan fasilitas sekolah tidak dapat dipisahkan dari kewajiban untuk merawatnya. Jika siswa hanya menuntut hak tanpa mau melakukan kewajiban, maka fasilitas sekolah akan cepat rusak.</p></div>",
+                q: "Apa kewajiban yang harus dipenuhi sebelum menuntut hak menggunakan laboratorium?",
+                opt: ["Membayar uang sewa laboratorium", "Menjaga kebersihan dan merawat alat", "Mengizinkan teman lain menggunakannya", "Melapor kepada kepala sekolah dulu"],
+                ans: "Menjaga kebersihan dan merawat alat"
+            },
+            {
+                id: 12,
+                cat: "UUD 1945",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Lalu Lintas</div><p>Seorang pengendara sepeda motor menerobos lampu merah saat sedang terburu-buru ke kantor. Tindakan tersebut melanggar aturan lalu lintas yang berlaku. Polisi kemudian menegur dan memberikan tilang kepada pengendara tersebut. Sanksi ini diberikan agar pengendara jera dan tidak mengulangi perbuatannya yang dapat membahayakan diri sendiri dan orang lain di jalan raya.</p></div>",
+                q: "Jenis norma apa yang dilanggar oleh pengendara tersebut?",
+                opt: ["Norma Agama, karena berdosa", "Norma Kesusilaan, karena tidak hati-hati", "Norma Hukum, karena ada sanksi tegas", "Norma Kesopanan, karena tidak tertib"],
+                ans: "Norma Hukum, karena ada sanksi tegas"
+            },
+            {
+                id: 13,
+                cat: "UUD 1945",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Pemilihan Ketua Kelas</div><p>Dalam pemilihan ketua kelas, terjadi perbedaan pendapat yang tajam antara dua kelompok siswa. Kelompok A mendukung Andi, sedangkan Kelompok B mendukung Budi. Suasana menjadi panas dan hampir terjadi pertengkaran. Guru kelas kemudian menyarankan untuk melakukan voting jika musyawarah tidak mencapai mufakat. Akhirnya, semua pihak menerima hasil voting dengan lapang dada.</p></div>",
+                q: "Sikap terbaik sesuai prinsip musyawarah untuk mufakat adalah...",
+                opt: ["Memaksakan kehendak kelompok sendiri", "Menerima hasil keputusan bersama", "Mogok belajar jika tidak menang", "Membubarkan kelas karena beda pendapat"],
+                ans: "Menerima hasil keputusan bersama"
+            },
+            {
+                id: 14,
+                cat: "UUD 1945",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Pembukaan UUD 1945</div><p>Pembukaan Undang-Undang Dasar Negara Republik Indonesia tahun 1945 terdiri dari empat alinea. Setiap alinea memiliki makna dan tujuan tertentu. Pada alinea keempat, tercantum tujuan negara Indonesia yang ingin dicapai, yaitu melindungi segenap bangsa, memajukan kesejahteraan umum, mencerdaskan kehidupan bangsa, dan ikut melaksanakan ketertiban dunia.</p></div>",
+                q: "Di alinea berapakah tercantum tujuan negara Indonesia?",
+                opt: ["Alinea Pertama", "Alinea Kedua", "Alinea Ketiga", "Alinea Keempat"],
+                ans: "Alinea Keempat"
+            },
+            {
+                id: 15,
+                cat: "UUD 1945",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Jadwal Piket</div><p>Kelas 6 telah menyepakati jadwal piket kebersihan melalui musyawarah. Semua siswa setuju untuk melaksanakan tugas sesuai jadwal yang telah ditentukan. Namun, pada hari Senin, Rina tidak melaksanakan piket sesuai jadwal dengan alasan sakit tanpa memberitahu guru. Tindakan Rina dapat mengganggu kebersihan kelas dan merugikan teman satu kelompok piketnya.</p></div>",
+                q: "Apa konsekuensi jika Rina tidak melaksanakan kesepakatan tersebut?",
+                opt: ["Kelas menjadi lebih bersih dari sebelumnya", "Teman sekelompok harus bekerja lebih berat", "Guru akan memberikan hadiah kepada Rina", "Jadwal piket akan dihapus selamanya"],
+                ans: "Teman sekelompok harus bekerja lebih berat"
+            },
+            {
+                id: 16,
+                cat: "UUD 1945",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Hak Siswa</div><p>Sebagai seorang siswa di sekolah, terdapat beberapa hal yang harus diterima dan didapatkan untuk menunjang proses belajar mengajar. Hal-hal ini dijamin keberadaannya agar siswa dapat berkembang dengan optimal baik secara akademik maupun non-akademik sesuai dengan potensi yang dimiliki.</p></div>",
+                q: "Pilih LEBIH DARI SATU pernyataan yang merupakan hak siswa di sekolah!",
+                opt: ["Mendapatkan pengajaran dari guru", "Menggunakan fasilitas perpustakaan", "Membayar uang sekolah tepat waktu", "Mematuhi tata tertib sekolah"],
+                ans: ["Mendapatkan pengajaran dari guru", "Menggunakan fasilitas perpustakaan"]
+            },
+            {
+                id: 17,
+                cat: "UUD 1945",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Lingkungan Perumahan</div><p>Warga negara memiliki tanggung jawab terhadap lingkungan tempat tinggalnya. Beberapa perilaku dapat dilakukan untuk menjaga kelestarian dan kenyamanan lingkungan perumahan agar tetap asri dan sehat untuk ditinggali bersama-sama oleh seluruh warga.</p></div>",
+                q: "Pilih LEBIH DARI SATU perilaku kewajiban warga dalam menjaga lingkungan!",
+                opt: ["Membuang sampah pada tempatnya", "Mengikuti kegiatan ronda malam", "Meminta uang jajan kepada orang tua", "Tidur siang di rumah sendiri"],
+                ans: ["Membuang sampah pada tempatnya", "Mengikuti kegiatan ronda malam"]
+            },
+            {
+                id: 18,
+                cat: "UUD 1945",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Proses Musyawarah</div><p>Disajikan 3 tahapan kegiatan musyawarah. Siswa harus menentukan kesesuaian tahapan tersebut dengan tata cara musyawarah yang benar.</p></div>",
+                q: "Klasifikasikan setiap tahapan apakah Sesuai atau Tidak Sesuai!",
+                rows: ["Mengajukan pendapat dengan sopan", "Memotong pembicaraan orang lain", "Menerima keputusan dengan lapang dada"],
+                cols: ["Sesuai", "Tidak Sesuai"],
+                ans: ["Sesuai", "Tidak Sesuai", "Sesuai"]
+            },
+            {
+                id: 19,
+                cat: "UUD 1945",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Jenis Norma</div><p>Disajikan 3 kasus pelanggaran aturan. Siswa harus mengklasifikasikan jenis norma yang dilanggar berdasarkan kasus tersebut.</p></div>",
+                q: "Klasifikasikan setiap kasus berdasarkan Jenis Norma yang dilanggar!",
+                rows: ["Berbohong kepada orang tua", "Mencuri barang teman", "Tidak memakai helm saat berkendara"],
+                cols: ["Kesusilaan", "Hukum"],
+                ans: ["Kesusilaan", "Hukum", "Hukum"]
+            },
+            {
+                id: 20,
+                cat: "UUD 1945",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Hak dan Kewajiban</div><p>Disajikan 3 pernyataan sikap warga negara. Siswa harus mengklasifikasikan apakah termasuk Hak atau Kewajiban.</p></div>",
+                q: "Klasifikasikan setiap pernyataan apakah Hak atau Kewajiban!",
+                rows: ["Menerima bantuan bencana alam", "Membayar pajak tepat waktu", "Mendapatkan pendidikan layak"],
+                cols: ["Hak", "Kewajiban"],
+                ans: ["Hak", "Kewajiban", "Hak"]
+            },
+            {
+                id: 21,
+                cat: "Bhinneka Tunggal Ika",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Kelas Beragam</div><p>Kelas 6 SD Muhammadiyah 01 Kukusan terdiri dari siswa dengan berbagai latar belakang suku. Ada yang berasal dari Jawa, Sunda, Batak, dan Bali. Pada suatu hari, Made menceritakan tentang tradisi Ngaben di Bali yang mungkin terdengar asing bagi teman-temannya yang berasal dari suku lain. Beberapa siswa mendengarkan dengan penuh rasa ingin tahu, namun ada juga yang mengejek karena merasa tradisi tersebut aneh.</p></div>",
+                q: "Sikap paling tepat saat teman menceritakan tradisi suku mereka adalah...",
+                opt: ["Mengejek karena terdengar aneh", "Mendengarkan dengan hormat dan tanya", "Diam saja tanpa memperhatikan", "Pulang ke rumah karena bosan"],
+                ans: "Mendengarkan dengan hormat dan tanya"
+            },
+            {
+                id: 22,
+                cat: "Bhinneka Tunggal Ika",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Permainan Tradisional</div><p>Saat ini, banyak anak lebih memilih bermain game di gadget daripada bermain permainan tradisional seperti gobak sodor atau congklak. Permainan tradisional mulai ditinggalkan dan jarang dimainkan oleh generasi muda. Padahal, permainan tersebut mengandung nilai kebersamaan dan kearifan lokal yang tinggi. Jika dibiarkan, budaya permainan tradisional ini bisa punah dan hilang dari kekayaan bangsa.</p></div>",
+                q: "Tindakan siswa yang paling efektif untuk melestarikan budaya tersebut?",
+                opt: ["Membeli gadget terbaru", "Mengajarkan teman bermain tradisional", "Menonton video game saja", "Melarang teman bermain gadget"],
+                ans: "Mengajarkan teman bermain tradisional"
+            },
+            {
+                id: 23,
+                cat: "Bhinneka Tunggal Ika",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Konflik Budaya</div><p>Di sebuah sekolah, terjadi konflik antara dua siswa karena perbedaan pendapat mengenai cara merayakan hari besar agama mereka. Satu siswa ingin merayakan dengan cara A, sedangkan siswa lain menginginkan cara B. Pertengkaran semakin memanas dan melibatkan teman-teman sekelas lainnya. Situasi ini mengganggu ketertiban dan kenyamanan belajar di sekolah.</p></div>",
+                q: "Langkah penyelesaian konflik yang sesuai semboyan Bhinneka Tunggal Ika?",
+                opt: ["Memaksakan cara sendiri agar menang", "Saling menghargai cara masing-masing", "Melaporkan ke polisi segera", "Tidak mau berteman lagi selamanya"],
+                ans: "Saling menghargai cara masing-masing"
+            },
+            {
+                id: 24,
+                cat: "Bhinneka Tunggal Ika",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Kegiatan Bersama</div><p>Siswa kelas 6 mengadakan kegiatan bakti sosial membersihkan masjid dan gereja di lingkungan sekolah. Kegiatan ini diikuti oleh siswa dari berbagai agama tanpa membedakan keyakinan. Mereka bekerja sama membersihkan tempat ibadah masing-masing tetangga sebagai wujud toleransi dan kerukunan dalam keberagaman agama yang ada di masyarakat.</p></div>",
+                q: "Makna semboyan Bhinneka Tunggal Ika berdasarkan ilustrasi tersebut?",
+                opt: ["Berbeda-beda tetapi tetap satu jua", "Sama semua tanpa ada perbedaan", "Harus satu agama agar rukun", "Tidak perlu berteman beda agama"],
+                ans: "Berbeda-beda tetapi tetap satu jua"
+            },
+            {
+                id: 25,
+                cat: "Bhinneka Tunggal Ika",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Kekayaan Budaya</div><p>Sekolah mengadakan festival budaya dimana setiap siswa mengenakan pakaian adat dari daerah asalnya. Suasana sekolah menjadi sangat warna-warni dan indah. Siswa dapat belajar tentang berbagai macam pakaian adat, tarian, dan lagu daerah dari teman-temannya. Hal ini membuat mereka semakin mencintai budaya bangsa sendiri.</p></div>",
+                q: "Manfaat utama memiliki teman beragam budaya bagi perkembangan diri?",
+                opt: ["Menjadi bingung memilih teman", "Menambah wawasan dan pengetahuan", "Harus membeli banyak baju adat", "Tidak bisa bermain bersama lagi"],
+                ans: "Menambah wawasan dan pengetahuan"
+            },
+            {
+                id: 26,
+                cat: "Bhinneka Tunggal Ika",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Teman Beda Agama</div><p>Andi beragama Islam, sedangkan Budi beragama Kristen. Mereka berteman sangat akrab sejak kecil. Saat Idul Fitri, Budi mengucapkan selamat kepada Andi. Saat Natal, Andi juga mengucapkan selamat kepada Budi. Mereka saling menghormati saat masing-masing sedang beribadah.</p></div>",
+                q: "Pilih LEBIH DARI SATU perilaku yang menunjukkan sikap menghormati!",
+                opt: ["Mengucapkan selamat hari raya", "Mengganggu saat teman beribadah", "Menghormati saat teman beribadah", "Melarang teman beribadah"],
+                ans: ["Mengucapkan selamat hari raya", "Menghormati saat teman beribadah"]
+            },
+            {
+                id: 27,
+                cat: "Bhinneka Tunggal Ika",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Ekstrakurikuler</div><p>SD Muhammadiyah 01 Kukusan memiliki berbagai kegiatan ekstrakurikuler untuk mengembangkan bakat siswa. Beberapa kegiatan berkaitan langsung dengan pelestarian budaya nasional dan daerah agar tidak tergerus oleh zaman dan tetap dikenal oleh generasi muda.</p></div>",
+                q: "Pilih LEBIH DARI SATU kegiatan yang berkontribusi pada pelestarian budaya!",
+                opt: ["Ekstrakurikuler Tari Daerah", "Ekstrakurikuler Pramuka", "Ekstrakurikuler Karate", "Ekstrakurikuler Membatik"],
+                ans: ["Ekstrakurikuler Tari Daerah", "Ekstrakurikuler Membatik"]
+            },
+            {
+                id: 28,
+                cat: "Bhinneka Tunggal Ika",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Teman Baru</div><p>Di kelas 6 masuk seorang siswa pindahan bernama Wayan. Ia berasal dari Bali dan berbicara dengan logat Bali yang khas. Ia juga memiliki kebiasaan membawa bekal makanan khas daerahnya. Teman-teman sekelas mengamati perbedaan-perbedaan yang dimiliki Wayan dibandingkan dengan siswa lainnya.</p></div>",
+                q: "Pilih LEBIH DARI SATU unsur keberagaman yang terlihat dari Wayan!",
+                opt: ["Asal daerah atau suku bangsa", "Logat bahasa daerah", "Warna sepatu yang dipakai", "Tinggi badan Wayan"],
+                ans: ["Asal daerah atau suku bangsa", "Logat bahasa daerah"]
+            },
+            {
+                id: 29,
+                cat: "Bhinneka Tunggal Ika",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Sikap Terhadap Agama Lain</div><p>Disajikan 3 pernyataan sikap terhadap perayaan hari besar agama lain. Siswa harus mengklasifikasikan sikap tersebut.</p></div>",
+                q: "Klasifikasikan setiap sikap apakah Toleran atau Intoleran!",
+                rows: ["Mengucapkan selamat hari raya", "Melarang pembangunan rumah ibadah", "Ikut menjaga keamanan saat ibadah"],
+                cols: ["Toleran", "Intoleran"],
+                ans: ["Toleran", "Intoleran", "Toleran"]
+            },
+            {
+                id: 30,
+                cat: "Bhinneka Tunggal Ika",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Jenis Budaya</div><p>Disajikan 3 contoh budaya yang ada di Indonesia. Siswa harus mengklasifikasikan apakah termasuk Budaya Lokal atau Budaya Nasional.</p></div>",
+                q: "Klasifikasikan setiap budaya apakah Lokal atau Nasional!",
+                rows: ["Tarian Saman dari Aceh", "Bahasa Indonesia", "Lagu Indonesia Raya"],
+                cols: ["Budaya Lokal", "Budaya Nasional"],
+                ans: ["Budaya Lokal", "Budaya Nasional", "Budaya Nasional"]
+            },
+            {
+                id: 31,
+                cat: "NKRI",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Wilayah Administrasi</div><p>Rina tinggal di Kota Surakarta. Saat mengisi formulir data diri, Rina harus menuliskan nama provinsi tempat tinggalnya. Ia mengetahui bahwa Kota Surakarta merupakan bagian dari wilayah administrasi provinsi tertentu di Pulau Jawa. Mengetahui hal ini penting agar Rina memahami posisinya dalam struktur wilayah Negara Kesatuan Republik Indonesia.</p></div>",
+                q: "Provinsi mana yang menjadi wilayah administrasi Kota Surakarta?",
+                opt: ["Jawa Tengah", "Jawa Timur", "Jawa Barat", "Daerah Istimewa Yogyakarta"],
+                ans: "Jawa Tengah"
+            },
+            {
+                id: 32,
+                cat: "NKRI",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Kerja Bakti Kampung</div><p>Warga kampung bersih-bersih selokan agar tidak banjir. Kegiatan ini dilakukan secara sukarela tanpa paksaan. Semua warga ikut serta mulai dari anak-anak hingga orang tua. Mereka menyadari bahwa menjaga lingkungan adalah cara mencintai tanah air dan mencegah bencana yang bisa merugikan negara.</p></div>",
+                q: "Mengapa kegiatan tersebut disebut sebagai wujud bela negara?",
+                opt: ["Karena menggunakan senjata perang", "Karena menjaga keutuhan lingkungan", "Karena mendapat uang dari pemerintah", "Karena diperintahkan oleh polisi"],
+                ans: "Karena menjaga keutuhan lingkungan"
+            },
+            {
+                id: 33,
+                cat: "NKRI",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Media Sosial</div><p>Di media sosial, beredar berita bohong yang dapat memecah belah persatuan bangsa. Beberapa orang terprovokasi dan saling menyerang di kolom komentar. Sebagai siswa warga NKRI, kita harus bijak dalam menyikapi informasi tersebut agar tidak terpecah belah.</p></div>",
+                q: "Sikap siswa sebagai warga NKRI untuk menjaga persatuan?",
+                opt: ["Menyebarkan berita tersebut", "Memeriksa kebenaran berita dulu", "Ikut menyerang di kolom komentar", "Membuat berita bohong baru"],
+                ans: "Memeriksa kebenaran berita dulu"
+            },
+            {
+                id: 34,
+                cat: "NKRI",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Peta Wilayah Indonesia</div><div class='visual-frame'>${getImg("peta_wilayah", "Peta Wilayah")}</div><p>Perhatikan peta sederhana wilayah Indonesia di atas. Indonesia terdiri dari ribuan pulau yang terbentang dari Sabang sampai Merauke. Setiap wilayah memiliki pemerintahan daerah masing-masing.</p></div>`,
+                q: "Pernyataan yang benar tentang posisi kabupaten dalam NKRI?",
+                opt: ["Kabupaten lebih besar dari provinsi", "Kabupaten bagian dari provinsi", "Kabupaten sama dengan negara", "Kabupaten tidak ada di Indonesia"],
+                ans: "Kabupaten bagian dari provinsi"
+            },
+            {
+                id: 35,
+                cat: "NKRI",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Persatuan Kelas</div><p>Kelas 6 sedang mempersiapkan lomba kebersihan antar kelas. Semua siswa bekerja sama membersihkan kelas tanpa membedakan teman dekat atau tidak. Mereka sadar bahwa jika kelas mereka kotor, nama sekolah akan tercemar. Kerjasama ini menunjukkan nilai kebersamaan yang kuat.</p></div>",
+                q: "Manfaat gotong royong yang paling langsung berkaitan dengan persatuan?",
+                opt: ["Kelas menjadi bersih dan rapi", "Mendapat hadiah dari guru", "Tidak perlu belajar hari ini", "Bisa pulang lebih cepat"],
+                ans: "Kelas menjadi bersih dan rapi"
+            },
+            {
+                id: 36,
+                cat: "NKRI",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Bela Negara</div><p>Bela negara tidak harus selalu mengangkat senjata. Siswa dapat melakukan bela negara sesuai dengan kemampuan dan usia mereka melalui kegiatan sehari-hari yang positif dan bermanfaat bagi diri sendiri maupun orang lain.</p></div>",
+                q: "Pilih LEBIH DARI SATU perilaku yang merupakan wujud bela negara siswa!",
+                opt: ["Belajar dengan rajin dan tekun", "Mengikuti upacara bendera", "Berkelahi dengan teman sekolah", "Membuang sampah sembarangan"],
+                ans: ["Belajar dengan rajin dan tekun", "Mengikuti upacara bendera"]
+            },
+            {
+                id: 37,
+                cat: "NKRI",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Musyawarah Warga</div><p>Dalam musyawarah warga, terjadi perbedaan pendapat mengenai pembangunan taman bermain. Beberapa warga setuju, beberapa tidak. Namun, mereka tetap duduk bersama dan mencari solusi terbaik tanpa saling memusuhi.</p></div>",
+                q: "Pilih LEBIH DARI SATU sikap yang mendukung persatuan NKRI!",
+                opt: ["Menerima keputusan bersama", "Menghargai pendapat berbeda", "Memaksakan kehendak sendiri", "Mogok tidak hadir rapat"],
+                ans: ["Menerima keputusan bersama", "Menghargai pendapat berbeda"]
+            },
+            {
+                id: 38,
+                cat: "NKRI",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Studi Kasus: Struktur Wilayah</div><p>Indonesia memiliki struktur wilayah administrasi yang berlapis mulai dari tingkat pusat hingga tingkat terbawah. Setiap tingkatan memiliki peran dan fungsi masing-masing dalam pemerintahan.</p></div>",
+                q: "Pilih LEBIH DARI SATU urutan wilayah yang benar dari terbesar!",
+                opt: ["Provinsi - Kabupaten - Kecamatan", "Negara - Provinsi - Kabupaten", "Kecamatan - Provinsi - Kabupaten", "Desa - Kabupaten - Provinsi"],
+                ans: ["Provinsi - Kabupaten - Kecamatan", "Negara - Provinsi - Kabupaten"]
+            },
+            {
+                id: 39,
+                cat: "NKRI",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Bela Negara</div><p>Disajikan 3 kegiatan. Siswa harus mengklasifikasikan apakah termasuk Bela Negara Fisik atau Non-Fisik.</p></div>",
+                q: "Klasifikasikan setiap kegiatan apakah Fisik atau Non-Fisik!",
+                rows: ["Mengangkat senjata perang", "Belajar pintar di sekolah", "Melestarikan budaya daerah"],
+                cols: ["Fisik", "Non-Fisik"],
+                ans: ["Fisik", "Non-Fisik", "Non-Fisik"]
+            },
+            {
+                id: 40,
+                cat: "NKRI",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Tingkat Administrasi</div><p>Disajikan 3 nama wilayah. Siswa harus mengklasifikasikan apakah termasuk Lingkungan Terkecil atau Lingkungan Lebih Luas.</p></div>",
+                q: "Klasifikasikan setiap wilayah apakah Terkecil atau Lebih Luas!",
+                rows: ["RT/RW", "Desa/Kelurahan", "Kabupaten/Kota"],
+                cols: ["Lingkungan Terkecil", "Lingkungan Lebih Luas"],
+                ans: ["Lingkungan Terkecil", "Lingkungan Terkecil", "Lingkungan Lebih Luas"]
+            }
+        ];
+        const app = {
+            session: {
+                nama: "",
+                kelas: "",
+                answers: {},
+                startTime: 0
+            },
+            currIdx: 0,
+            timerInt: null,
+            _hasSavedSession: false,
+
+            // ── INIT ──────────────────────────────────────────────
+            init: function() {
+                this.showSlide('pin');
+                try {
+                    if (localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession = true;
+                } catch (e) {}
+            },
+
+            // ── CEK PIN ───────────────────────────────────────────
+            checkPin: async function() {
+                const inp = document.getElementById('inp-pin');
+                const val = inp.value.trim();
+                if (!val) return;
+                const h = await hashPin(val);
+                if (h === CONFIG.PIN_HASH) {
+                    this.showSlide('login');
+                    if (this._hasSavedSession)
+                        document.getElementById('resume-alert').style.display = 'block';
+                } else {
+                    inp.classList.add('error');
+                    document.getElementById('pin-err').style.display = 'block';
+                    inp.value = '';
+                    setTimeout(() => inp.classList.remove('error'), 400);
+                }
+            },
+            // ── LOGIN ─────────────────────────────────────────────
+            login: function() {
+                const n = document.getElementById('inpNama').value.trim();
+                const k = document.getElementById('inpKelas').value;
+                if (!n || !k) {
+                    alert("Harap isi nama lengkap dan pilih kelas!");
+                    return;
+                }
+                this.session.nama  = n;
+                this.session.kelas = k;
+                this.showSlide('rules');
+            },
+            // ── RESUME SESI TERSIMPAN ─────────────────────────────
+            resume: function() {
+                try {
+                    this.session = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY));
+                    this.renderSidebar();
+                    this.startExam(true);
+                } catch (e) {
+                    alert("Sesi tersimpan rusak. Silakan mulai ujian baru.");
+                }
+            },
+            startExam: function(isRes = false) {
+                if (!isRes) {
+                    this.session.startTime = Date.now();
+                    this.save();
+                }
+                document.getElementById('user-badge').innerText = this.session.nama;
+                document.getElementById('user-badge').style.display = 'block';
+                document.getElementById('sidebar').style.display = 'flex';
+                this.renderQuestions();
+                this.renderSidebar();
+                this.showSlide('quiz');
+                this.goToQ(0);
+                this.startTimer();
+            },
+            showSlide: function(id) {
+                document.querySelectorAll('.slide').forEach(e => e.classList.remove('active'));
+                document.getElementById('slide-' + id).classList.add('active');
+            },
+            // ── RENDER SOAL ───────────────────────────────────────
+            // pgk-cat: header dan radio button dibuat dinamis
+            // sesuai panjang q.cols (mendukung 2 dan 3 kolom)
+            renderQuestions: function() {
+                const box = document.getElementById('quiz-container');
+                box.innerHTML = "";
+                QUESTIONS.forEach((q, i) => {
+                    let h = `<div id="q-item-${i}" class="question-item">
+                        <div class="tag-cat">${q.cat}</div>
+                        ${q.stim || ""}
+                        <div class="q-text">${i + 1}. ${q.q}</div>`;
+
+                    if (q.type === 'pg') {
+                        q.opt.forEach((o, oi) =>
+                            h += `<label class="opt-label">
+                                    <input type="radio" name="ans_${q.id}" value="${oi}"
+                                           onchange="app.saveAns(${q.id},${oi})"> ${o}
+                                  </label>`
+                        );
+                    } else if (q.type === 'pgk') {
+                        h += `<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">
+                                ☑ Boleh memilih lebih dari satu jawaban
+                              </p>`;
+                        q.opt.forEach((o, oi) =>
+                            h += `<label class="opt-label">
+                                    <input type="checkbox" value="${oi}"
+                                           onchange="app.saveMulti(${q.id},${oi})"> ${o}
+                                  </label>`
+                        );
+                    } else if (q.type === 'pgk-cat') {
+                        h += `<div class="matrix-wrapper"><table class="matrix-table">
+                                <tr><th>Pernyataan</th>`;
+                        q.cols.forEach(c => h += `<th>${c}</th>`);
+                        h += `</tr>`;
+                        q.rows.forEach((r, ri) => {
+                            h += `<tr><td>${r}</td>`;
+                            q.cols.forEach(c =>
+                                h += `<td><input type="radio"
+                                            name="mx_${q.id}_${ri}"
+                                            value="${c}"
+                                            onchange="app.saveMx(${q.id},${ri},'${c}')">
+                                      </td>`
+                            );
+                            h += `</tr>`;
+                        });
+                        h += `</table></div>`;
+                    }
+
+                    h += `</div>`;
+                    box.innerHTML += h;
+                });
+
+                if (window.MathJax && MathJax.typesetPromise)
+                    MathJax.typesetPromise([box]).catch(() => {});
+            },
+            // ── NAVIGASI SOAL ─────────────────────────────────────
+            goToQ: function(idx) {
+                if (idx < 0 || idx >= QUESTIONS.length) return;
+                this.currIdx = idx;
+
+                // Scroll area ujian kembali ke atas
+                const qs = document.getElementById('quiz-scroll');
+                if (qs) qs.scrollTop = 0;
+
+                document.querySelectorAll('.question-item').forEach(e => e.classList.remove('active-q'));
+                document.getElementById(`q-item-${idx}`).classList.add('active-q');
+                document.getElementById('q-indicator').innerText = `Soal ${idx + 1} / 40`;
+                document.getElementById('btn-prev').disabled = (idx === 0);
+
+                const nBtn = document.getElementById('btn-next');
+                if (idx === QUESTIONS.length - 1) {
+                    nBtn.innerText = "Selesai";
+                    nBtn.onclick   = () => this.confirmFinish();
+                    nBtn.classList.add('btn-danger');
+                } else {
+                    nBtn.innerText = "Selanjutnya";
+                    nBtn.onclick   = () => this.move(1);
+                    nBtn.classList.remove('btn-danger');
+                }
+
+                this.restoreVisual(idx);
+                this.updateSidebarUI();
+
+                if (window.MathJax && MathJax.typesetPromise) {
+                    const activeQ = document.getElementById(`q-item-${idx}`);
+                    if (activeQ) MathJax.typesetPromise([activeQ]).catch(() => {});
+                }
+            },
+            move: function(step) {
+                this.goToQ(this.currIdx + step);
+            },
+            saveAns: function(qid, optIdx) {
+                this.session.answers[qid] = optIdx;
+                this.save();
+                this.updateSidebarUI();
+            },
+            saveMulti: function(qid, optIdx) {
+                let c = this.session.answers[qid] || [];
+                if (c.includes(optIdx)) c = c.filter(x => x !== optIdx);
+                else c.push(optIdx);
+                this.session.answers[qid] = c;
+                this.save();
+                this.updateSidebarUI();
+            },
+            saveMx: function(qid, rix, v) {
+                let c = this.session.answers[qid] || [];
+                c[rix] = v;
+                this.session.answers[qid] = c;
+                this.save();
+                this.updateSidebarUI();
+            },
+            save: function() {
+                try {
+                    localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.session));
+                } catch (e) {
+                    console.error('Save error:', e);
+                }
+            },
+            renderSidebar: function() {
+                let g = document.getElementById('nav-grid');
+                g.innerHTML = "";
+                QUESTIONS.forEach((q, i) => g.innerHTML += `<div id="nav-num-${i}" class="nav-num" onclick="app.goToQ(${i})">${i+1}</div>`);
+            },
+            checkFilled: function(qid) {
+                let val = this.session.answers[qid];
+                if (val === undefined || val === null) return false;
+                if (Array.isArray(val)) {
+                    return val.filter(v => v !== undefined && v !== null).length > 0;
+                }
+                return true;
+            },
+            updateSidebarUI: function() {
+                QUESTIONS.forEach((q, i) => {
+                    const el = document.getElementById(`nav-num-${i}`);
+                    if (!el) return;
+                    if (i === this.currIdx) el.classList.add('current');
+                    else el.classList.remove('current');
+                    if (this.checkFilled(q.id)) el.classList.add('filled');
+                    else el.classList.remove('filled');
+                });
+            },
+            // ── RESTORE VISUAL (setelah navigasi / resume) ────────
+            restoreVisual: function(idx) {
+                const q   = QUESTIONS[idx];
+                const ans = this.session.answers[q.id];
+                if (ans === undefined || ans === null) return;
+
+                if (q.type === 'pg') {
+                    const el = document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);
+                    if (el) el.checked = true;
+                } else if (q.type === 'pgk' && Array.isArray(ans)) {
+                    ans.forEach(v => {
+                        const el = document.querySelector(`#q-item-${idx} input[value="${v}"]`);
+                        if (el) el.checked = true;
+                    });
+                } else if (q.type === 'pgk-cat' && Array.isArray(ans)) {
+                    ans.forEach((v, ri) => {
+                        if (!v) return;
+                        const el = document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);
+                        if (el) el.checked = true;
+                    });
+                }
+            },
+            startTimer: function() {
+                clearInterval(this.timerInt);
+                this.timerInt = setInterval(() => {
+                    let rem = CONFIG.DURATION - Math.floor((Date.now() - this.session.startTime) / 1000);
+                    if (rem <= 0) {
+                        clearInterval(this.timerInt);
+                        this.submitExam();
+                    }
+                    let m = Math.floor(rem / 60).toString().padStart(2, '0'),
+                        s = (rem % 60).toString().padStart(2, '0');
+                    document.getElementById('timer-display').innerText = `${m}:${s}`;
+                }, 1000);
+            },
+            confirmFinish: function() {
+                document.getElementById('modal-confirm').style.display = 'flex';
+            },
+            // ── HITUNG & KIRIM NILAI ──────────────────────────────
+            submitExam: function() {
+                document.getElementById('modal-confirm').style.display = 'none';
+                document.getElementById('modal-loading').style.display = 'flex';
+                clearInterval(this.timerInt);
+
+                const cats = ["Pancasila", "UUD 1945", "Bhinneka Tunggal Ika", "NKRI"];
+                const stats = {};
+                cats.forEach(c => { stats[c] = { s: 0, m: 0 }; });
+                let totS = 0, totM = 0;
+
+                QUESTIONS.forEach(q => {
+                    stats[q.cat].m += q.score;
+                    totM += q.score;
+                    const u = this.session.answers[q.id];
+                    let pt = 0;
+
+                    if (u !== undefined && u !== null) {
+                        if (q.type === 'pg') {
+                            if (u == q.opt.indexOf(q.ans)) pt = q.score;
+                        } else if (q.type === 'pgk' && Array.isArray(u) && Array.isArray(q.ans)) {
+                            const userAns    = u.map(i => q.opt[i]).sort();
+                            const correctAns = [...q.ans].sort();
+                            if (JSON.stringify(userAns) === JSON.stringify(correctAns)) pt = q.score;
+                        } else if (q.type === 'pgk-cat' && Array.isArray(u)) {
+                            let match = 0;
+                            q.ans.forEach((k, i) => { if (u[i] === k) match++; });
+                            pt = (match / q.rows.length) * q.score;
+                        }
+                    }
+
+                    stats[q.cat].s += pt;
+                    totS += pt;
+                });
+
+                const final = Math.round((totS / totM) * 100);
+                let summ = {}, cht = "", nts = [];
+
+                cats.forEach(c => {
+                    const p = stats[c].m > 0 ? Math.round((stats[c].s / stats[c].m) * 100) : 0;
+                    summ[c] = { skor: p, tuntas: p >= 70,
+                                label: p >= 70 ? "Tuntas" : "Perlu Bimbingan" };
+                    if (p < 70) nts.push(c);
+                    cht += `<div class="chart-row">
+                        <div class="chart-lbl">${c}</div>
+                        <div class="chart-track">
+                            <div class="chart-fill"
+                                 style="width:${p}%;background:${p >= 70 ? '#16a34a' : '#dc2626'}">
+                            </div>
+                        </div>
+                        <div class="chart-val">${p}%</div>
+                    </div>`;
+                });
+
+                const desc = nts.length === 0
+                    ? "Selamat! Tuntas semua elemen."
+                    : "Perlu belajar lagi di: " + nts.join(", ");
+
+                this.showSlide('result');
+                document.getElementById('modal-loading').style.display = 'none';
+                document.getElementById('result-content').innerHTML = `
+                    <h3>Nilai Akhir:
+                        <span style="color:var(--primary);font-size:2.5rem;">${final}</span>
+                    </h3>
+                    <div style="background:#f1f5f9;padding:15px;border-radius:8px;margin-bottom:20px;">
+                        ${desc}
+                    </div>
+                    <h4>Capaian per Elemen:</h4>
+                    ${cht}`;
+
+                // Kirim ke Google Apps Script
+                fetch(CONFIG.SCRIPT_URL, {
+                    method:  'POST',
+                    mode:    'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({
+                        action:         "submit_exam",
+                        mapel:          "Pendidikan Pancasila",
+                        nama:           this.session.nama,
+                        kelas:          this.session.kelas,
+                        skor:           final,
+                        deskripsi:      desc,
+                        jawaban:        this.session.answers,
+                        ringkasanNilai: summ
+                    })
+                }).then(() => {
+                    try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
+                });
+            }
+        };
+        window.onload = () => app.init();
+    </script>
+</body>
+
+</html>
