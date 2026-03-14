@@ -1,1 +1,1046 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kisi-Kisi Ujian Sekolah 2025/2026 – SD Muhammadiyah 01 Kukusan</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: clamp(14px, 3.5vw, 16px); scroll-behavior: smooth; }
 
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.7;
+      color: #222;
+      background: #f5f5f5;
+    }
+
+    /* ── NAV ── */
+    .topnav {
+      background: #1a5c35;
+      color: #fff;
+      padding: 0 16px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topnav a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.82rem; font-weight: 600; }
+    .topnav a:hover { color: #fff; text-decoration: underline; }
+    .topnav-sep { color: rgba(255,255,255,0.4); }
+    .topnav-crumb { font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7); }
+
+    /* ── HEADER ── */
+    .page-header {
+      background: #1a5c35;
+      color: #fff;
+      padding: 28px 20px 24px;
+      text-align: center;
+      border-bottom: 3px solid #f5a623;
+    }
+    .page-header h1 { font-size: clamp(1.2rem, 4vw, 1.6rem); font-weight: 700; }
+    .page-header p { margin-top: 4px; font-size: 0.88rem; opacity: 0.85; }
+
+    /* ── INTRO BOX ── */
+    .intro {
+      max-width: 860px;
+      margin: 20px auto;
+      padding: 0 16px;
+    }
+
+    .notice {
+      border-left: 4px solid #c47f00;
+      background: #fdf6e3;
+      padding: 14px 16px;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.88rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .notice strong { display: block; margin-bottom: 4px; color: #c47f00; }
+
+    /* ── FORMAT LEGEND ── */
+    .format-legend {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin-bottom: 24px;
+      font-size: 0.84rem;
+    }
+    .format-legend h3 { font-size: 0.88rem; font-weight: 700; margin-bottom: 10px; color: #1a5c35; }
+    .format-items { display: flex; flex-wrap: wrap; gap: 10px 24px; }
+    .format-item { display: flex; flex-direction: column; gap: 2px; }
+    .format-item strong { color: #1a5c35; }
+    .format-item span { font-size: 0.8rem; color: #555; }
+
+    /* ── ACCORDION ── */
+    .accordion-list { display: flex; flex-direction: column; gap: 8px; }
+
+    details {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    details[open] { border-color: #1a5c35; }
+
+    summary {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::marker { display: none; }
+
+    details[open] summary { border-bottom: 1px solid #e0e0e0; background: #f0faf4; }
+
+    .summary-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      background: #1a5c35;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .summary-main { flex: 1; }
+    .summary-title { font-weight: 700; font-size: 0.97rem; color: #222; }
+    .summary-sub { font-size: 0.78rem; color: #666; margin-top: 1px; }
+
+    .summary-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: #e8f5ed;
+      color: #1a5c35;
+      padding: 3px 10px;
+      border-radius: 12px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .chevron {
+      color: #999;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    details[open] .chevron { transform: rotate(90deg); }
+
+    /* ── DETAIL CONTENT ── */
+    .detail-body { padding: 20px 16px; }
+
+    .sesi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 580px) { .sesi-grid { grid-template-columns: 1fr; } }
+
+    .sesi-card {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .sesi-header {
+      background: #1a5c35;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .sesi-body { padding: 12px; }
+
+    .sesi-elemen {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1a5c35;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 6px;
+    }
+
+    .topic-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .topic-list li {
+      padding: 4px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 0.84rem;
+      color: #333;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+    .topic-list li:last-child { border-bottom: none; }
+    .topic-list li::before { content: '–'; color: #1a5c35; font-weight: 700; flex-shrink: 0; }
+
+    /* ── FORMAT BAR ── */
+    .format-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      background: #f9f9f9;
+      border-radius: 5px;
+      border: 1px solid #eee;
+    }
+
+    .format-bar-label { font-size: 0.78rem; font-weight: 700; color: #555; width: 100%; margin-bottom: 2px; }
+
+    .format-pill {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+    .pill-a { background: #e3f0ff; color: #1a5a9a; }
+    .pill-b { background: #fff0e3; color: #9a4a00; }
+    .pill-c { background: #f0e3ff; color: #5a1a9a; }
+    .pill-total { background: #e8f5ed; color: #1a5c35; font-weight: 700; }
+
+    /* ── TIPS BOX ── */
+    .tips-box {
+      border-left: 4px solid #2a70b8;
+      background: #edf4fb;
+      padding: 12px 14px;
+      border-radius: 0 4px 4px 0;
+      margin-top: 4px;
+    }
+    .tips-box strong { display: block; font-size: 0.84rem; margin-bottom: 6px; color: #2a70b8; }
+    .tips-list { list-style: none; padding: 0; }
+    .tips-list li {
+      font-size: 0.84rem;
+      color: #333;
+      padding: 3px 0 3px 16px;
+      position: relative;
+    }
+    .tips-list li::before { content: '✓'; position: absolute; left: 0; color: #2a70b8; font-weight: 700; }
+
+    /* ── SECTION DIVIDER ── */
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #999;
+      padding: 4px 0 8px;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 14px;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      text-align: center;
+      padding: 20px 16px;
+      font-size: 0.78rem;
+      color: #888;
+      border-top: 1px solid #ddd;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="../../">← Beranda</a>
+    <span class="topnav-sep">/</span>
+    <a href="../">Ujian Sekolah</a>
+    <span class="topnav-sep">/</span>
+    <span class="topnav-crumb">Kisi-Kisi</span>
+  </nav>
+
+  <header class="page-header">
+    <h1>Kisi-Kisi Ujian Sekolah 2025/2026</h1>
+    <p>SD Muhammadiyah 01 Kukusan &nbsp;·&nbsp; Panduan Belajar untuk Orang Tua & Siswa</p>
+  </header>
+
+  <main class="intro">
+
+    <div class="notice">
+      <strong>Tentang Kisi-Kisi Ini</strong>
+      Halaman ini menyajikan <strong>lingkup materi dan konsep kunci</strong> yang akan diujikan — bukan soal yang sesungguhnya. Tujuannya adalah membantu siswa dan orang tua mengetahui <em>apa yang perlu dipelajari</em>, bukan menghafal soal. Semua ujian tertulis berbasis komputer di Lab Komputer, 40 soal pilihan ganda, durasi 90 menit per sesi.
+    </div>
+
+    <div class="format-legend">
+      <h3>Format Soal yang Digunakan</h3>
+      <div class="format-items">
+        <div class="format-item">
+          <strong>PG Tunggal (A)</strong>
+          <span>Pilih satu jawaban benar dari 4 pilihan</span>
+        </div>
+        <div class="format-item">
+          <strong>PG Kompleks (B)</strong>
+          <span>Pilih <em>satu atau lebih</em> jawaban benar dari beberapa pernyataan</span>
+        </div>
+        <div class="format-item">
+          <strong>PG Kategori (C)</strong>
+          <span>Cocokkan/kelompokkan beberapa item ke dalam kategori yang tepat</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         ACCORDION
+    ═══════════════════════════════════════════════════ -->
+    <div class="accordion-list">
+
+      <!-- 1. MATEMATIKA -->
+      <details>
+        <summary>
+          <div class="summary-icon">📐</div>
+          <div class="summary-main">
+            <div class="summary-title">Matematika</div>
+            <div class="summary-sub">2 Sesi · 35 Soal Total · Ujian Hari ke-5 (8 Mei 2026)</div>
+          </div>
+          <div class="summary-badge">35 Soal</div>
+          <span class="chevron">›</span>
+        </summary>
+        <div class="detail-body">
+
+          <div class="format-bar">
+            <div class="format-bar-label">Distribusi Format Soal</div>
+            <span class="format-pill pill-a">PG Tunggal (A): 18 soal</span>
+            <span class="format-pill pill-b">PG Kompleks (B): 10 soal</span>
+            <span class="format-pill pill-c">PG Kategori (C): 7 soal</span>
+            <span class="format-pill pill-total">Total: 35 soal</span>
+          </div>
+
+          <div class="sesi-grid">
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 1 · Soal 1–18 · Bilangan & Aljabar</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Nilai tempat bilangan cacah hingga ratusan ribu (komposisi & dekomposisi)</li>
+                  <li>Operasi hitung dengan uang: penjumlahan, pengurangan, total biaya, kembalian</li>
+                  <li>KPK dan FPB dalam masalah kontekstual (jadwal berulang, pembagian kelompok)</li>
+                  <li>Pecahan biasa, campuran, dan desimal: membandingkan, mengurutkan, mengubah bentuk</li>
+                  <li>Operasi penjumlahan, pengurangan, perkalian, dan pembagian pecahan dengan bilangan asli</li>
+                  <li>Bilangan desimal (satu angka di belakang koma) dalam konteks pengukuran</li>
+                  <li>Estimasi/taksiran hasil operasi hitung</li>
+                  <li>Kalimat matematika terbuka: menemukan nilai yang belum diketahui (konsep variabel)</li>
+                  <li>Pola bilangan membesar dan mengecil: mengidentifikasi aturan dan melanjutkan pola</li>
+                  <li>Rasio satuan dan proporsi dalam masalah sehari-hari (resep masakan, skala, harga)</li>
+                  <li>Sifat operasi hitung: komutatif, asosiatif, dan distributif</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 2 · Soal 19–35 · Pengukuran, Geometri & Data</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Luas bangun datar: segitiga, segiempat, segi banyak, dan gabungannya</li>
+                  <li>Keliling berbagai bangun datar dalam konteks nyata (panjang pagar, bingkai)</li>
+                  <li>Besar sudut pada bangun datar dan sudut yang terbentuk dari dua garis berpotongan</li>
+                  <li>Volume kubus dan balok dalam masalah sehari-hari (bak mandi, kotak)</li>
+                  <li>Jaring-jaring bangun ruang: mengidentifikasi mana yang valid</li>
+                  <li>Visualisasi spasial bangun ruang: tampak depan, atas, dan samping</li>
+                  <li>Karakteristik dan perbandingan bangun datar vs bangun ruang</li>
+                  <li>Menentukan lokasi pada peta/sistem koordinat berpetak</li>
+                  <li>Durasi waktu: menghitung lama suatu kegiatan berlangsung</li>
+                  <li>Membaca dan menganalisis data dari diagram batang, piktogram, dan tabel frekuensi</li>
+                  <li>Menghitung rata-rata (mean) dari data tunggal</li>
+                  <li>Peluang kejadian: pasti, mungkin, tidak mungkin; kejadian yang lebih besar/kecil</li>
+                  <li>Menginterpretasikan tren dari grafik dan menyimpulkan data</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <strong>Tips Belajar Matematika</strong>
+            <ul class="tips-list">
+              <li>Latih soal cerita — hampir semua soal dikemas dalam konteks kehidupan nyata (belanja, jadwal, masak), bukan rumus polos</li>
+              <li>Pastikan hafal cara mengubah pecahan biasa ↔ campuran ↔ desimal karena ketiganya muncul di sesi 1</li>
+              <li>Untuk geometri, latih membayangkan bentuk 3D dari berbagai sudut pandang (tampak depan, samping, atas)</li>
+              <li>Latih membaca grafik batang dan tabel: tidak cukup hanya membaca angka, tapi juga menyimpulkan tren</li>
+              <li>Soal pola bilangan — cari dulu aturannya (dikali, ditambah, selang-seling) sebelum melanjutkan</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <!-- 2. BAHASA INDONESIA -->
+      <details>
+        <summary>
+          <div class="summary-icon">📝</div>
+          <div class="summary-main">
+            <div class="summary-title">Bahasa Indonesia</div>
+            <div class="summary-sub">2 Sesi · 40 Soal Total · Ujian Hari ke-2 (5 Mei 2026)</div>
+          </div>
+          <div class="summary-badge">40 Soal</div>
+          <span class="chevron">›</span>
+        </summary>
+        <div class="detail-body">
+
+          <div class="format-bar">
+            <div class="format-bar-label">Distribusi Format Soal</div>
+            <span class="format-pill pill-a">PG Tunggal (A): 18 soal</span>
+            <span class="format-pill pill-b">PG Kompleks (B): 12 soal</span>
+            <span class="format-pill pill-c">PG Kategori (C): 10 soal</span>
+            <span class="format-pill pill-total">Total: 40 soal</span>
+          </div>
+
+          <div class="sesi-grid">
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 1 · Soal 1–20 · Menyimak, Membaca & Memirsa</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Menentukan ide pokok dan ide pendukung dalam teks nonsastra</li>
+                  <li>Menyimpulkan informasi tersirat dari teks (yang tidak ditulis langsung)</li>
+                  <li>Membaca dan menafsirkan teks visual: grafik batang, tabel, diagram</li>
+                  <li>Mengidentifikasi nilai moral dari teks sastra (cerpen, cerita rakyat)</li>
+                  <li>Menganalisis watak tokoh berdasarkan dialog dan tindakannya</li>
+                  <li>Memahami teks aural (transkrip pidato, pengumuman, puisi dibacakan): tujuan dan isi</li>
+                  <li>Mengidentifikasi amanat/pesan dari puisi yang dibacakan</li>
+                  <li>Menganalisis kalimat persuasif dalam iklan layanan masyarakat</li>
+                  <li>Memahami makna kata sulit berdasarkan konteks kalimat (kosakata kontekstual)</li>
+                  <li>Menganalisis hubungan sebab-akibat dalam teks prosedur</li>
+                  <li>Memilah fakta dan opini dalam teks pendapat/argumentasi</li>
+                  <li>Mengidentifikasi nilai kearifan lokal dan nilai budaya dalam cerita rakyat</li>
+                  <li>Struktur teks narasi: orientasi, komplikasi, dan resolusi</li>
+                  <li>Makna simbolik (konotatif) vs makna sebenarnya (denotatif) dalam puisi dan cerita</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 2 · Soal 21–40 · Berbicara & Menulis</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Struktur presentasi: pembukaan, isi, dan penutup yang sistematis</li>
+                  <li>Bahasa tubuh dan intonasi yang tepat saat presentasi</li>
+                  <li>Menilai efektivitas kalimat pembuka presentasi</li>
+                  <li>Fungsi media visual (slide) dalam mendukung presentasi</li>
+                  <li>Kesantunan berbahasa dalam tanya jawab forum formal</li>
+                  <li>Kalimat kompleks: penggunaan konjungsi sebab-akibat yang tepat</li>
+                  <li>Pemilihan kosakata kreatif (majas personifikasi, pilihan kata dalam puisi/cerpen)</li>
+                  <li>Struktur teks narasi dalam menulis: melengkapi dan menganalisis</li>
+                  <li>Teks prosedur: urutan langkah yang logis</li>
+                  <li>Pengembangan paragraf: kalimat utama dan kalimat penjelas yang relevan</li>
+                  <li>Ejaan dan tanda baca sesuai EYD (huruf kapital, koma, titik)</li>
+                  <li>Makna denotatif vs konotatif dalam konteks kalimat menulis</li>
+                  <li>Membedakan teks deskripsi dan teks eksposisi</li>
+                  <li>Adaptasi bahasa sesuai audiens: formal vs non-formal</li>
+                  <li>Menyunting teks: mengidentifikasi kesalahan ejaan, diksi, dan struktur kalimat</li>
+                  <li>Koherensi teks: kalimat penghubung antarparagraf</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <strong>Tips Belajar Bahasa Indonesia</strong>
+            <ul class="tips-list">
+              <li>Semua soal berbasis teks — siswa harus menemukan jawaban dari teks yang disajikan, bukan dari pengetahuan umum</li>
+              <li>Latih membedakan fakta (bisa dibuktikan) dan opini (pendapat seseorang) dalam paragraf</li>
+              <li>Hafalkan dan pahami istilah kebahasaan: ide pokok, amanat, watak tokoh, denotatif, konotatif, teks aural</li>
+              <li>Untuk sesi 2, latih menyunting tulisan: cari kesalahan ejaan, tanda baca, dan struktur kalimat pada teks yang diberikan</li>
+              <li>Sesi menyimak disajikan sebagai transkrip tertulis di soal — latih membaca cepat dan menemukan informasi kunci</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <!-- 3. IPAS -->
+      <details>
+        <summary>
+          <div class="summary-icon">🔬</div>
+          <div class="summary-main">
+            <div class="summary-title">IPAS (Ilmu Pengetahuan Alam & Sosial)</div>
+            <div class="summary-sub">2 Sesi · 40 Soal Total · Ujian Hari ke-4 (7 Mei 2026)</div>
+          </div>
+          <div class="summary-badge">40 Soal</div>
+          <span class="chevron">›</span>
+        </summary>
+        <div class="detail-body">
+
+          <div class="format-bar">
+            <div class="format-bar-label">Distribusi Format Soal</div>
+            <span class="format-pill pill-a">PG Tunggal (A): 18 soal</span>
+            <span class="format-pill pill-b">PG Kompleks (B): 14 soal</span>
+            <span class="format-pill pill-c">PG Kategori (C): 8 soal</span>
+            <span class="format-pill pill-total">Total: 40 soal</span>
+          </div>
+
+          <div class="sesi-grid">
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 1 · Soal 1–20 · Pemahaman IPAS & Keterampilan Proses</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Sistem organ tubuh manusia: hubungan gaya hidup dan kesehatan organ (pernapasan, peredaran darah, pencernaan)</li>
+                  <li>Ekosistem: komponen biotik & abiotik, interaksi, rantai makanan, dan dampak jika satu komponen hilang</li>
+                  <li>Gelombang cahaya: sifat-sifat cahaya (pemantulan, pembiasan, penguraian) dalam peristiwa sehari-hari</li>
+                  <li>Gelombang bunyi: sifat bunyi merambat melalui berbagai medium (padat, cair, gas)</li>
+                  <li>Sumber energi terbarukan dan tidak terbarukan: jenis, manfaat, dan potensi lokal</li>
+                  <li>Penghematan energi listrik dalam kehidupan sehari-hari</li>
+                  <li>Sistem tata surya: rotasi dan revolusi bumi, dampaknya (siang/malam, musim, gerak semu)</li>
+                  <li>Letak dan kondisi geografis Indonesia menggunakan peta</li>
+                  <li>Sejarah perjuangan pahlawan lokal: nilai-nilai yang dapat diteladani</li>
+                  <li>Kearifan lokal dan pengaruhnya terhadap kelestarian lingkungan</li>
+                  <li>Kegiatan ekonomi: produksi, distribusi, dan konsumsi dalam kehidupan masyarakat</li>
+                  <li>Keterampilan proses: menganalisis data dari tabel/grafik eksperimen, menyimpulkan, mengomunikasikan hasil</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 2 · Soal 21–40 · Pemahaman Pendalaman & Proses Ilmiah</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Kondisi geografis Indonesia dan kaitannya dengan mata pencaharian penduduk</li>
+                  <li>Perjuangan pahlawan lokal: sumber sejarah (artefak, foto, cerita rakyat) dan relevansinya kini</li>
+                  <li>Keanekaragaman budaya nasional: budaya lokal vs nasional, warisan budaya</li>
+                  <li>Rantai distribusi barang: dari produsen ke konsumen, peran masing-masing pelaku</li>
+                  <li>Kelangkaan sebagai masalah ekonomi</li>
+                  <li>Pencegahan penyakit melalui pola hidup sehat dan pola makan bergizi</li>
+                  <li>Keseimbangan ekosistem: dampak tindakan manusia terhadap lingkungan (reboisasi, pembakaran)</li>
+                  <li>Mitigasi perubahan iklim: aktivitas yang berkontribusi positif</li>
+                  <li>Nilai-nilai kearifan lokal dalam pelestarian lingkungan (Sasi laut, Subak, dll.)</li>
+                  <li>Peta digital vs konvensional: penggunaan yang tepat sesuai kebutuhan</li>
+                  <li>Klasifikasi planet: planet dalam dan planet luar berdasarkan posisi terhadap sabuk asteroid</li>
+                  <li>Keterampilan proses ilmiah: merencanakan penyelidikan (variabel tetap dan berubah), mengevaluasi, merefleksi hasil</li>
+                  <li>Cara mengomunikasikan hasil penyelidikan: tabel, grafik, video, poster infografis</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <strong>Tips Belajar IPAS</strong>
+            <ul class="tips-list">
+              <li>IPAS Fase C tidak menguji hafalan definisi — fokus pada <em>hubungan antar konsep</em> (misal: kalau komponen A hilang, apa yang terjadi pada B?)</li>
+              <li>Latih membaca tabel dan grafik eksperimen: bukan sekadar membaca angka, tapi menyimpulkan tren dan hubungan</li>
+              <li>Pelajari perbedaan energi terbarukan dan tidak terbarukan beserta contoh nyata yang ada di sekitar kita</li>
+              <li>Untuk IPAS Sosial: pahami konsep produksi–distribusi–konsumsi menggunakan contoh kegiatan sehari-hari</li>
+              <li>Keterampilan proses: pahami langkah-langkah metode ilmiah (pertanyaan → hipotesis → penyelidikan → data → kesimpulan → refleksi)</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <!-- 4. PENDIDIKAN PANCASILA -->
+      <details>
+        <summary>
+          <div class="summary-icon">🦅</div>
+          <div class="summary-main">
+            <div class="summary-title">Pendidikan Pancasila</div>
+            <div class="summary-sub">2 Sesi · 40 Soal Total · Ujian Hari ke-1 (4 Mei 2026)</div>
+          </div>
+          <div class="summary-badge">40 Soal</div>
+          <span class="chevron">›</span>
+        </summary>
+        <div class="detail-body">
+
+          <div class="format-bar">
+            <div class="format-bar-label">Distribusi Format Soal</div>
+            <span class="format-pill pill-a">PG Tunggal (A): 18 soal</span>
+            <span class="format-pill pill-b">PG Kompleks (B): 12 soal</span>
+            <span class="format-pill pill-c">PG Kategori (C): 10 soal</span>
+            <span class="format-pill pill-total">Total: 40 soal</span>
+          </div>
+
+          <div class="sesi-grid">
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 1 · Soal 1–20 · Pancasila & UUD 1945</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Sila-sila Pancasila sebagai satu kesatuan: menganalisis keterkaitan antar sila dalam kasus nyata</li>
+                  <li>Pancasila sebagai dasar negara dan pandangan hidup bangsa: perbedaan dan fungsinya</li>
+                  <li>Kronologi sejarah kelahiran Pancasila: BPUPK, Piagam Jakarta, pengesahan Pancasila</li>
+                  <li>Meneladani sikap para perumus Pancasila (rela berkorban, mengutamakan kepentingan bangsa)</li>
+                  <li>Implementasi nilai-nilai sila Pancasila dalam konteks kehidupan sekolah dan keluarga</li>
+                  <li>Makna simbol/lambang setiap sila Pancasila</li>
+                  <li>Hak dan kewajiban warga negara: keseimbangan dalam konteks sekolah dan lingkungan</li>
+                  <li>Norma: jenis norma (agama, kesusilaan, kesopanan, hukum) dan sanksinya</li>
+                  <li>Musyawarah untuk mufakat: prinsip, tahapan, dan implementasi dalam kesepakatan bersama</li>
+                  <li>Pembukaan UUD 1945: alinea dan tujuan negara yang terkandung di dalamnya</li>
+                  <li>Konsekuensi dari aturan bersama yang tidak dipatuhi</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 2 · Soal 21–40 · Bhinneka Tunggal Ika & NKRI</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Sikap menghormati dan melestarikan keberagaman budaya (suku, agama, bahasa, adat)</li>
+                  <li>Tindakan nyata melestarikan budaya lokal di lingkungan sekolah dan rumah</li>
+                  <li>Penyelesaian konflik akibat perbedaan sesuai semboyan Bhinneka Tunggal Ika</li>
+                  <li>Makna semboyan Bhinneka Tunggal Ika dalam konteks kehidupan nyata</li>
+                  <li>Manfaat keberagaman: dampak positif berteman dengan orang yang berbeda latar belakang</li>
+                  <li>Membedakan sikap toleran dan intoleran terhadap perbedaan agama dan budaya</li>
+                  <li>Membedakan budaya lokal dan budaya nasional</li>
+                  <li>Wilayah administrasi NKRI: kabupaten/kota, provinsi, dan urutannya</li>
+                  <li>Bela negara non-fisik: gotong royong, belajar dengan sungguh, melestarikan budaya</li>
+                  <li>Menjaga persatuan NKRI dalam kehidupan sehari-hari: sikap terhadap perbedaan pendapat</li>
+                  <li>Membedakan bela negara fisik dan non-fisik</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <strong>Tips Belajar Pendidikan Pancasila</strong>
+            <ul class="tips-list">
+              <li>Soal tidak menanyakan "Apa bunyi sila ke-2?" — melainkan "Kasus ini mencerminkan/melanggar sila ke berapa dan mengapa?"</li>
+              <li>Hafalkan istilah kewargaan: hak, kewajiban, norma, musyawarah, mufakat, dasar negara, pandangan hidup</li>
+              <li>Pahami urutan wilayah administrasi dari yang terkecil: RT/RW → Desa/Kelurahan → Kecamatan → Kabupaten/Kota → Provinsi → NKRI</li>
+              <li>Untuk Bhinneka Tunggal Ika, fokus pada <em>tindakan nyata</em> melestarikan, bukan sekadar tahu ada perbedaan</li>
+              <li>Konteks soal selalu dekat dengan kehidupan siswa: kelas, rumah, lingkungan perumahan — bukan politik nasional</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <!-- 5. BAHASA INGGRIS -->
+      <details>
+        <summary>
+          <div class="summary-icon">🌐</div>
+          <div class="summary-main">
+            <div class="summary-title">Bahasa Inggris</div>
+            <div class="summary-sub">2 Sesi · 40 Soal Total · Ujian Hari ke-1 (4 Mei 2026)</div>
+          </div>
+          <div class="summary-badge">40 Soal</div>
+          <span class="chevron">›</span>
+        </summary>
+        <div class="detail-body">
+
+          <div class="format-bar">
+            <div class="format-bar-label">Distribusi Format Soal</div>
+            <span class="format-pill pill-a">PG Tunggal (A): 18 soal</span>
+            <span class="format-pill pill-b">PG Kompleks (B): 13 soal</span>
+            <span class="format-pill pill-c">PG Kategori (C): 9 soal</span>
+            <span class="format-pill pill-total">Total: 40 soal</span>
+          </div>
+
+          <div class="sesi-grid">
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 1 · Soal 1–20 · Listening-Speaking & Reading-Viewing</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Merespons sapaan, perkenalan, dan instruksi lisan sederhana</li>
+                  <li>Menentukan ide pokok dari teks deskriptif pendek</li>
+                  <li>Menemukan informasi rinci dalam teks jadwal, tabel, atau pengumuman</li>
+                  <li>Mengidentifikasi fungsi sosial ungkapan (permintaan maaf, penawaran bantuan, persetujuan)</li>
+                  <li>Memahami makna tanda/notice/warning dalam kehidupan sehari-hari</li>
+                  <li>Merespons pertanyaan WH- (who, what, where, when, why, how)</li>
+                  <li>Mengidentifikasi ciri-ciri teks deskriptif dari sebuah objek</li>
+                  <li>Mengidentifikasi langkah-langkah dalam teks prosedur sederhana</li>
+                  <li>Membedakan ungkapan yang menunjukkan persetujuan (agreement)</li>
+                  <li>Mengidentifikasi informasi dalam iklan produk (harga, manfaat, cara pemesanan)</li>
+                  <li>Membedakan sapaan formal dan informal sesuai situasi</li>
+                  <li>Membedakan jenis teks: undangan (invitation) vs pengumuman (announcement)</li>
+                  <li>Mengidentifikasi kata dengan bunyi vokal yang sama (pronunciation)</li>
+                  <li>Makna kata dalam konteks: literal vs figurative (misal: kata "run" dalam berbagai kalimat)</li>
+                  <li>Melengkapi dialog rumpang agar menjadi percakapan yang koheren</li>
+                  <li>Menyimpulkan pesan moral dari teks naratif pendek</li>
+                  <li>Membaca informasi dari teks multimodal (poster dengan gambar dan teks)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 2 · Soal 21–40 · Writing-Presenting & Reading (Pendalaman)</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Struktur surat pribadi: opening, body, closing dan urutannya</li>
+                  <li>Mengidentifikasi ciri kebahasaan teks deskriptif vs teks naratif</li>
+                  <li>Menulis caption yang tepat untuk sebuah gambar/foto</li>
+                  <li>Melengkapi cerita rumpang dengan kata yang paling koheren</li>
+                  <li>Mengidentifikasi bagian pembuka (opening) dari sebuah pidato/presentasi</li>
+                  <li>Memahami informasi penting dalam email (waktu, tempat, tujuan)</li>
+                  <li>Melengkapi dialog tertulis secara logis</li>
+                  <li>Mengidentifikasi kalimat yang struktur tata bahasanya benar dan efektif</li>
+                  <li>Membaca dan mengambil informasi dari brosur wisata</li>
+                  <li>Mengidentifikasi ide pokok dan ide pendukung dalam paragraf</li>
+                  <li>Mengklasifikasikan tujuan teks: to invite, to inform, to share experience</li>
+                  <li>Membedakan tingkat formalitas teks: formal vs informal</li>
+                  <li>Penggunaan tanda baca yang benar dalam kalimat Bahasa Inggris</li>
+                  <li>Mengidentifikasi kata rujukan (it, they, he) dan menentukan yang dirujuknya</li>
+                  <li>Penanda urutan waktu (time order): first, then, finally</li>
+                  <li>Sinonim dan antonim dalam konteks kalimat</li>
+                  <li>Mengidentifikasi dan mengklasifikasikan jenis kesalahan dalam tulisan (ejaan, tata bahasa, tanda baca)</li>
+                  <li>Menyesuaikan bahasa tulisan dengan audiens (guru vs teman)</li>
+                  <li>Membaca informasi dari diagram Venn</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <strong>Tips Belajar Bahasa Inggris</strong>
+            <ul class="tips-list">
+              <li>Soal tidak menguji terjemahan kata per kata — fokus pada pemahaman makna dan fungsi komunikasi dalam konteks</li>
+              <li>Semua soal listening disajikan sebagai transkrip tertulis — latih membaca cepat dialog dalam Bahasa Inggris</li>
+              <li>Pelajari jenis-jenis teks: deskriptif, naratif, prosedur, undangan, pengumuman, dan ciri-ciri kebahasaannya</li>
+              <li>Perhatikan kata-kata penanda: "first, then, however, therefore, finally" — ini kunci untuk soal urutan dan koherensi</li>
+              <li>Topik soal seputar kehidupan siswa: sekolah, hobi, keluarga, lingkungan — tidak ada topik yang jauh dari keseharian</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <!-- 6. SENI BUDAYA -->
+      <details>
+        <summary>
+          <div class="summary-icon">🎨</div>
+          <div class="summary-main">
+            <div class="summary-title">Seni Budaya</div>
+            <div class="summary-sub">2 Sesi · 40 Soal Total · Ujian Hari ke-6 (11 Mei 2026)</div>
+          </div>
+          <div class="summary-badge">40 Soal</div>
+          <span class="chevron">›</span>
+        </summary>
+        <div class="detail-body">
+
+          <div class="format-bar">
+            <div class="format-bar-label">Distribusi Format Soal</div>
+            <span class="format-pill pill-a">PG Tunggal (A): 20 soal</span>
+            <span class="format-pill pill-b">PG Kompleks (B): 12 soal</span>
+            <span class="format-pill pill-c">PG Kategori (C): 8 soal</span>
+            <span class="format-pill pill-total">Total: 40 soal</span>
+          </div>
+
+          <div class="sesi-grid">
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 1 · Soal 1–20 · Seni Rupa</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Unsur rupa: garis, bidang, bentuk, warna (primer, sekunder, tersier), dan tekstur (nyata vs semu)</li>
+                  <li>Prinsip desain: keseimbangan (simetris & asimetris), kesatuan (unity), irama/ritme, proporsi</li>
+                  <li>Teknik menggambar: arsir, dusel, dan pointilis untuk menciptakan tekstur</li>
+                  <li>Alat dan bahan karya seni: fungsi kuas, pahat, jarum, dan alat cetak tinggi (cukil)</li>
+                  <li>Teknik karya 2 dimensi dan 3 dimensi: melukis, menggambar, memahat, merakit, mengonstruksi</li>
+                  <li>Proses kreatif: mengembangkan ide dari lingkungan sekitar menjadi karya seni</li>
+                  <li>Bahan alam dan buatan dalam karya seni (tanah liat, plastik bekas, daun kering)</li>
+                  <li>Apresiasi karya: memberikan komentar konstruktif menggunakan kosakata seni yang tepat</li>
+                  <li>Membedakan umpan balik objektif (berdasarkan prinsip seni) dan subjektif (perasaan pribadi)</li>
+                  <li>Fungsi karya seni: karya pakai vs karya hias</li>
+                  <li>Tema karya: lingkungan, budaya lokal, kritik sosial</li>
+                  <li>Kosakata apresiasi: komposisi, estetika, perspektif, keseimbangan</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 2 · Soal 21–40 · Seni Musik</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Unsur musik: irama, pola ritme, tempo (cepat/lambat: Adagio, Allegro, Andante, Presto, Largo), dinamika (f, p, mf)</li>
+                  <li>Notasi musik: nilai nada (not penuh, setengah, seperempat) dan jumlah ketukannya</li>
+                  <li>Melodi dan tangga nada: pola melodi naik/turun</li>
+                  <li>Klasifikasi alat musik: ritmis vs melodis; cara memainkan (dipetik, dipukul, ditiup, digesek)</li>
+                  <li>Alat musik tradisional dan non-tradisional: potensi benda sekitar sebagai alat musik ritmis</li>
+                  <li>Merawat alat musik sesuai jenis dan bahannya</li>
+                  <li>Bermain musik bersama (ansambel): peran pemain melodi, pemain ritme, dan konduktor</li>
+                  <li>Fungsi musik daerah dalam kehidupan adat (upacara, penyambutan, hiburan)</li>
+                  <li>Kreaasi pola irama berbasis kearifan lokal daerah</li>
+                  <li>Apresiasi musik: memberikan umpan balik teknis menggunakan istilah yang tepat (tempo, dinamika, birama)</li>
+                  <li>Membedakan umpan balik teknis musik dan komentar non-teknis</li>
+                  <li>Bunyi alam vs bunyi buatan: mengidentifikasi sumber bunyi</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <strong>Tips Belajar Seni Budaya</strong>
+            <ul class="tips-list">
+              <li>Soal selalu disertai deskripsi karya atau gambar — latih menganalisis karya berdasarkan unsur dan prinsipnya, bukan sekadar "bagus atau tidak"</li>
+              <li>Hafalkan istilah seni rupa: unsur garis, bidang, warna primer/sekunder/tersier, tekstur nyata vs semu, teknik 2D vs 3D</li>
+              <li>Untuk musik: pahami istilah tempo (Adagio=sangat lambat, Andante=sedang, Allegro=cepat, Presto=sangat cepat) dan dinamika (p=pelan, f=keras)</li>
+              <li>Latih membedakan alat musik ritmis (drum, tamborin, triangle) dan melodis (pianika, recorder, gitar)</li>
+              <li>Fokus pada proses berkarya dan proses bermusik — bukan hanya hasil akhirnya</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <!-- 7. PJOK -->
+      <details>
+        <summary>
+          <div class="summary-icon">⚽</div>
+          <div class="summary-main">
+            <div class="summary-title">PJOK (Pendidikan Jasmani, Olahraga & Kesehatan)</div>
+            <div class="summary-sub">2 Sesi · 40 Soal Total · Ujian Hari ke-2 (5 Mei 2026)</div>
+          </div>
+          <div class="summary-badge">40 Soal</div>
+          <span class="chevron">›</span>
+        </summary>
+        <div class="detail-body">
+
+          <div class="format-bar">
+            <div class="format-bar-label">Distribusi Format Soal</div>
+            <span class="format-pill pill-a">PG Tunggal (A): 18 soal</span>
+            <span class="format-pill pill-b">PG Kompleks (B): 14 soal</span>
+            <span class="format-pill pill-c">PG Kategori (C): 8 soal</span>
+            <span class="format-pill pill-total">Total: 40 soal</span>
+          </div>
+
+          <div class="sesi-grid">
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 1 · Soal 1–20 · Gerak, Strategi & Gaya Hidup Aktif</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Adaptasi dan pemilihan teknik gerak dalam situasi permainan yang berbeda</li>
+                  <li>Konsep gerak: keseimbangan, koordinasi, ruang, dan arah dalam aktivitas jasmani</li>
+                  <li>Transfer keterampilan gerak: menerapkan strategi dari satu olahraga ke olahraga lain</li>
+                  <li>Investigasi gerak: menganalisis efisiensi gerakan (misal: teknik melempar untuk jarak terjauh)</li>
+                  <li>Kombinasi gerak dasar lokomotor (berpindah) dan manipulatif (melempar, menendang) dalam permainan tradisional</li>
+                  <li>Menguji efektivitas strategi tim: mengevaluasi taktik dan merumuskan perbaikan</li>
+                  <li>Modifikasi peraturan permainan untuk mendukung fair play dan partisipasi inklusif</li>
+                  <li>Peran dalam tim: kepemimpinan, kerjasama, dan sportivitas</li>
+                  <li>Fungsi peraturan dan wasit dalam olahraga</li>
+                  <li>Dampak aktivitas jasmani teratur terhadap kesehatan fisik dan mental</li>
+                  <li>Perilaku sedenter: definisi, contoh, dan cara mencegahnya</li>
+                  <li>Rekomendasi jenis aktivitas fisik yang sesuai untuk usia sekolah dasar</li>
+                  <li>Klasifikasi aktivitas: aerobik vs anaerobik</li>
+                  <li>Hubungan kebiasaan gaya hidup dengan risiko penyakit</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 2 · Soal 21–40 · Kesehatan, Nutrisi & Gaya Hidup</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Frekuensi dan durasi aktivitas fisik yang direkomendasikan per minggu</li>
+                  <li>Komponen kebugaran jasmani: daya tahan, kekuatan, dan kelenturan</li>
+                  <li>Dampak jangka panjang perilaku sedenter (kurang gerak)</li>
+                  <li>Nutrisi untuk olahraga: makanan yang tepat sebelum dan sesudah berolahraga</li>
+                  <li>Pentingnya hidrasi saat berolahraga: air putih vs minuman bersoda</li>
+                  <li>Jenis cedera olahraga umum: keseleo, memar, dan gejalanya</li>
+                  <li>Pertolongan pertama pada cedera otot: prinsip RICE (Rest, Ice, Compression, Elevation)</li>
+                  <li>Tindakan yang harus dihindari saat cedera (memijat keras, menggerakkan paksa)</li>
+                  <li>Hubungan olahraga dan kesehatan mental: mengurangi stres dan kecemasan</li>
+                  <li>Pola makan sehat: gizi seimbang sesuai panduan Isi Piringku</li>
+                  <li>Zat gizi: karbohidrat, protein, vitamin, mineral — fungsi dan sumber makanannya</li>
+                  <li>Klasifikasi makanan: sumber energi, zat pembangun, zat pengatur</li>
+                  <li>Makronutrien vs mikronutrien: perbedaan kebutuhan tubuh</li>
+                  <li>Strategi permainan beregu: formasi dan peran pemain di lapangan</li>
+                  <li>Klasifikasi permainan: invasi, net, fielding/striking, target</li>
+                  <li>Klasifikasi tingkat intensitas aktivitas: ringan, sedang, berat</li>
+                  <li>Klasifikasi cedera: yang bisa ditangani sendiri vs yang perlu bantuan medis</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <strong>Tips Belajar PJOK</strong>
+            <ul class="tips-list">
+              <li>PJOK teori bukan tentang hafalan aturan federasi — fokus pada <em>mengapa</em> strategi/aturan itu penting, bukan <em>berapa</em> pemain dalam satu tim</li>
+              <li>Hafalkan prinsip RICE untuk pertolongan pertama cedera: Rest (istirahat), Ice (kompres es), Compression (perban), Elevation (ditinggikan)</li>
+              <li>Pahami perbedaan aktivitas aerobik (daya tahan: lari jauh, renang) dan anaerobik (kekuatan: angkat beban, sprint)</li>
+              <li>Untuk nutrisi: ingat 3 fungsi zat gizi — energi (karbohidrat), pembangun (protein), pengatur (vitamin & mineral)</li>
+              <li>Soal tentang perilaku sedenter: contohnya duduk >2 jam tanpa gerak, menonton TV berlebihan — bukan sekadar "malas"</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <!-- 8. TIK -->
+      <details>
+        <summary>
+          <div class="summary-icon">💻</div>
+          <div class="summary-main">
+            <div class="summary-title">Informatika / TIK</div>
+            <div class="summary-sub">2 Sesi · 40 Soal Total · Ujian Hari ke-3 (6 Mei 2026)</div>
+          </div>
+          <div class="summary-badge">40 Soal</div>
+          <span class="chevron">›</span>
+        </summary>
+        <div class="detail-body">
+
+          <div class="format-bar">
+            <div class="format-bar-label">Distribusi Format Soal</div>
+            <span class="format-pill pill-a">PG Tunggal (A): 20 soal</span>
+            <span class="format-pill pill-b">PG Kompleks (B): 10 soal</span>
+            <span class="format-pill pill-c">PG Kategori (C): 10 soal</span>
+            <span class="format-pill pill-total">Total: 40 soal</span>
+          </div>
+
+          <div class="sesi-grid">
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 1 · Soal 1–20 · TIK & Sistem Komputer</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Fitur dasar aplikasi pengolah kata: menebalkan (bold), memiringkan (italic), menggaris bawahi (underline), dan pengaturan paragraf</li>
+                  <li>Fitur aplikasi pengolah gambar: memotong (crop), mengubah ukuran, dan pengeditan dasar</li>
+                  <li>Jenis file digital berdasarkan ekstensi: .docx (dokumen teks), .jpg/.png (gambar), .xlsx (tabel data), .mp3/.mp4 (multimedia)</li>
+                  <li>Penyimpanan data: cloud storage (Google Drive) vs local storage (flashdisk, hard disk) — kelebihan dan situasi penggunaannya</li>
+                  <li>Fitur dasar spreadsheet: menghitung total, rata-rata, dan fungsi dasar lainnya</li>
+                  <li>Mengorganisir file digital: penamaan dan pengelompokan folder yang efektif</li>
+                  <li>Perangkat input: keyboard, mouse, scanner, microphone, webcam — fungsinya masing-masing</li>
+                  <li>Perangkat output: monitor, printer, speaker — fungsinya masing-masing</li>
+                  <li>Konsep sistem komputer: input → proses → output</li>
+                  <li>Komponen komputer: CPU sebagai pemroses utama, RAM, hard disk (internal vs eksternal)</li>
+                  <li>Hardware vs software: membedakan perangkat keras dan perangkat lunak</li>
+                  <li>Mengklasifikasikan perangkat: input vs output; internal vs eksternal; penyimpanan online vs offline</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 2 · Soal 21–40 · Jaringan & Dampak Sosial Informatika</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Manfaat internet untuk pembelajaran: cara efektif menggunakan internet untuk mencari materi</li>
+                  <li>Risiko internet: hoaks (informasi bohong) — cara memverifikasi kebenaran informasi</li>
+                  <li>Keamanan akun: ciri-ciri kata sandi (password) yang kuat (kombinasi huruf, angka, simbol)</li>
+                  <li>Privasi data: jenis data pribadi sensitif yang tidak boleh dibagikan sembarangan di internet</li>
+                  <li>Jejak digital: dampak jangka panjang aktivitas online terhadap reputasi</li>
+                  <li>Phishing dan penipuan daring: ciri-ciri pesan mencurigakan (link aneh, meminta data, mendesak)</li>
+                  <li>Risiko Wi-Fi publik vs Wi-Fi pribadi dalam keamanan data</li>
+                  <li>Manfaat TIK untuk koneksi sosial dan komunikasi jarak jauh</li>
+                  <li>Ancaman TIK: kecanduan gawai dan dampaknya terhadap kesehatan fisik dan mental</li>
+                  <li>Etika digital: cyberbullying — cara merespons sebagai warga digital yang bertanggung jawab</li>
+                  <li>Manajemen waktu layar yang sehat</li>
+                  <li>Dampak positif dan negatif inovasi teknologi terhadap masyarakat</li>
+                  <li>Hak cipta dan etika menggunakan karya digital orang lain</li>
+                  <li>Literasi digital: membedakan sumber informasi yang terpercaya dan tidak terpercaya</li>
+                  <li>Mengklasifikasikan aktivitas: yang memerlukan koneksi internet vs tidak</li>
+                  <li>Etika berkomunikasi di grup chat: perilaku etis vs tidak etis</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <strong>Tips Belajar Informatika / TIK</strong>
+            <ul class="tips-list">
+              <li>Fokus pada <em>konsep</em>, bukan nama merek — bukan "cara pakai Microsoft Word", tapi "fungsi fitur bold/italic/underline untuk apa"</li>
+              <li>Hafalkan ekstensi file umum dan jenisnya: .docx (dokumen), .xlsx (spreadsheet), .jpg/.png (gambar), .mp3 (audio), .mp4 (video)</li>
+              <li>Untuk keamanan digital: ingat ciri password kuat (panjang, campuran huruf besar/kecil/angka/simbol) dan jenis data yang tidak boleh dibagi (alamat rumah, password, nomor identitas)</li>
+              <li>Pelajari tanda-tanda pesan phishing: link tidak jelas, meminta data pribadi, ada tekanan waktu (urgent)</li>
+              <li>Dampak sosial TIK: pahami bahwa teknologi bisa berdampak positif dan negatif secara bersamaan</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <!-- 9. KKA -->
+      <details>
+        <summary>
+          <div class="summary-icon">🤖</div>
+          <div class="summary-main">
+            <div class="summary-title">KKA (Kecerdasan & Komputasi Artifisial)</div>
+            <div class="summary-sub">2 Sesi · 40 Soal Total · Ujian Hari ke-3 (6 Mei 2026)</div>
+          </div>
+          <div class="summary-badge">40 Soal</div>
+          <span class="chevron">›</span>
+        </summary>
+        <div class="detail-body">
+
+          <div class="format-bar">
+            <div class="format-bar-label">Distribusi Format Soal</div>
+            <span class="format-pill pill-a">PG Tunggal (A): 20 soal</span>
+            <span class="format-pill pill-b">PG Kompleks (B): 10 soal</span>
+            <span class="format-pill pill-c">PG Kategori (C): 10 soal</span>
+            <span class="format-pill pill-total">Total: 40 soal</span>
+          </div>
+
+          <div class="sesi-grid">
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 1 · Soal 1–20 · Berpikir Komputasional & Literasi Digital</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Dekomposisi masalah: memecah masalah besar menjadi bagian-bagian yang lebih kecil dan terkelola</li>
+                  <li>Algoritma: menyusun urutan instruksi logis untuk menyelesaikan masalah (misal: langkah membuat sesuatu)</li>
+                  <li>Pengenalan pola: mengidentifikasi kesamaan atau pola yang berulang dalam berbagai masalah</li>
+                  <li>Abstraksi: memilah informasi yang relevan dari yang tidak perlu untuk fokus pada inti masalah</li>
+                  <li>Instruksi logis: menyusun perintah dengan kondisi "jika...maka..." (If-Then)</li>
+                  <li>Debugging: menemukan dan memperbaiki langkah yang salah dalam sebuah instruksi/algoritma</li>
+                  <li>Pola bilangan dan logika: melanjutkan urutan berdasarkan aturan yang ditemukan</li>
+                  <li>Konsep sistem komputer: input → proses → output dalam konteks kehidupan sehari-hari</li>
+                  <li>Keamanan data: melindungi informasi pribadi saat berkomunikasi daring</li>
+                  <li>Konten digital: teks, gambar, dan video — produksi dan cara mendiseminasikannya secara efektif dan aman</li>
+                  <li>Manfaat positif internet untuk pelajar: mencari referensi, komunikasi, kolaborasi</li>
+                  <li>Mengklasifikasikan masalah: yang bisa diselesaikan secara sistematis vs yang subjektif</li>
+                  <li>Mengklasifikasikan instruksi: logis vs tidak logis dalam urutan langkah</li>
+                  <li>Membedakan data pribadi sensitif dan data umum</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sesi-card">
+              <div class="sesi-header">Sesi 2 · Soal 21–40 · Literasi & Etika Kecerdasan Artifisial</div>
+              <div class="sesi-body">
+                <div class="sesi-elemen">Konsep & Topik yang Diujikan</div>
+                <ul class="topic-list">
+                  <li>Konsep dasar Kecerdasan Artifisial (AI): definisi, fungsi, dan contoh penerapannya dalam kehidupan sehari-hari</li>
+                  <li>Manfaat AI: membantu pembelajaran, diagnosa penyakit, keamanan, rekomendasi konten</li>
+                  <li>Dampak AI: positif (efisiensi, akurasi) dan negatif (bias data, ketergantungan, hoaks)</li>
+                  <li>Perbedaan manusia dan komputer dalam penginderaan: manusia lebih unggul dalam empati dan perasaan</li>
+                  <li>Mesin cerdas vs mesin non-cerdas: perbedaan kemampuan pengambilan keputusan</li>
+                  <li>Etika penggunaan AI: prinsip tidak merugikan, pentingnya empati dalam teknologi</li>
+                  <li>Bias data AI: keputusan AI bisa tidak adil jika data latihannya tidak representatif</li>
+                  <li>Simulasi cara kerja AI: mengenali pola, mengklasifikasikan benda berdasarkan sifat (warna, bentuk, ukuran)</li>
+                  <li>Pengaruh kualitas input terhadap prediksi sistem AI: data valid vs tidak valid</li>
+                  <li>Privasi dalam AI: etika penggunaan foto atau data orang lain untuk melatih AI</li>
+                  <li>Keunggulan manusia vs AI: manusia unggul dalam merasakan emosi dan kreativitas; AI unggul dalam kecepatan dan akurasi data</li>
+                  <li>Mengklasifikasikan penggunaan AI: etis vs tidak etis; meningkatkan kesejahteraan vs berpotensi merugikan</li>
+                  <li>AI sebagai alat bantu manusia — bukan pengganti sepenuhnya</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <strong>Tips Belajar KKA</strong>
+            <ul class="tips-list">
+              <li>Berpikir komputasional bukan tentang coding — ini tentang cara berpikir sistematis dan logis dalam memecahkan masalah</li>
+              <li>Latih menyusun algoritma dari kegiatan sehari-hari: langkah menyiapkan sarapan, cara berangkat ke sekolah — pastikan urutannya logis</li>
+              <li>Untuk AI: focus pada "AI ada untuk membantu manusia, bukan menggantikan" — terutama dalam hal empati dan keputusan etis</li>
+              <li>Pahami konsep bias data: kalau AI hanya dilatih dengan data dari satu kelompok, hasilnya bisa tidak adil untuk kelompok lain</li>
+              <li>Ciri penggunaan AI yang etis: ada izin, tidak merugikan orang lain, data yang digunakan valid dan representatif</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+    </div><!-- end accordion-list -->
+
+    <div class="notice" style="margin-top: 24px; border-left-color: #1a5c35; background: #f0faf4;">
+      <strong style="color: #1a5c35;">Semangat Belajar!</strong>
+      Kisi-kisi ini adalah <em>peta belajar</em>, bukan jaminan soal yang akan keluar persis seperti ini. Siswa yang memahami konsep secara mendalam akan lebih siap menghadapi variasi soal apapun. Hubungi wali kelas jika ada pertanyaan lebih lanjut.
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    SD Muhammadiyah 01 Kukusan &nbsp;·&nbsp; Kisi-Kisi Ujian Sekolah &nbsp;·&nbsp; Tahun Pelajaran 2025/2026
+  </footer>
+
+</body>
+</html>
