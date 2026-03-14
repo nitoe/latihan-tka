@@ -1,1 +1,1293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ujian Sekolah IPAS - SD Muhammadiyah 01 Kukusan</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<style>
+/* ── VARIABLES ─────────────────────────────────────────── */
+:root {
+  --primary:       #1e3a8a;
+  --primary-light: #eff6ff;
+  --success:       #16a34a;
+  --danger:        #dc2626;
+  --text:          #334155;
+  --bg:            #f1f5f9;
+  --border:        #cbd5e1;
+}
 
+*, *::before, *::after { box-sizing: border-box; outline: none; }
+
+body {
+  margin: 0; padding: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg); color: var(--text);
+  height: 100vh; overflow: hidden;
+}
+
+/* ── LAYOUT ────────────────────────────────────────────── */
+.app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+
+.header {
+  height: 64px; background: var(--primary); color: white;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  z-index: 50; flex-shrink: 0;
+}
+.header-title { font-weight: 700; font-size: 1.2rem; }
+.timer-box {
+  background: rgba(255,255,255,.15); padding: 6px 16px; border-radius: 6px;
+  font-weight: 700; font-family: monospace; font-size: 1.25rem;
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+/* ── WORKSPACE ─────────────────────────────────────────── */
+.workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+.main-stage {
+  flex: 1; position: relative; background: var(--bg);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+
+/* ── SLIDES ────────────────────────────────────────────── */
+.slide { display: none !important; width: 100%; height: 100%; }
+.slide.active { display: flex !important; flex-direction: column; animation: fadeIn .4s ease; }
+
+.center-content-wrapper {
+  width: 100%; max-width: 800px; margin: 0 auto;
+  padding: 20px; overflow-y: auto; flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+.card {
+  background: white; border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,.1);
+  padding: 32px; margin-bottom: 20px;
+  border-top: 5px solid var(--primary);
+}
+
+/* ── KUIS ──────────────────────────────────────────────── */
+.quiz-scroll-area {
+  flex: 1; overflow-y: auto;
+  padding: 20px; padding-bottom: 80px;
+  width: 100%; max-width: 900px; margin: 0 auto;
+}
+.nav-bar-fixed {
+  flex-shrink: 0; background: white;
+  padding: 16px 24px; border-top: 1px solid #e2e8f0;
+  box-shadow: 0 -4px 15px rgba(0,0,0,.05);
+  display: flex; justify-content: space-between; align-items: center;
+  z-index: 40;
+}
+
+/* ── SOAL ──────────────────────────────────────────────── */
+.question-item { display: none; }
+.question-item.active-q { display: block; animation: slideIn .3s ease-out; }
+@keyframes slideIn { from { opacity:0; transform:translateX(15px); } to { opacity:1; transform:translateX(0); } }
+
+.stimulus-box {
+  background: #fff; border: 1px solid #e2e8f0;
+  border-left: 5px solid var(--primary);
+  padding: 20px; margin-bottom: 24px; border-radius: 8px;
+}
+.stimulus-head {
+  font-weight: 800; color: var(--primary);
+  border-bottom: 2px dashed #e2e8f0;
+  padding-bottom: 10px; margin-bottom: 15px;
+  font-size: 1.1rem; text-transform: uppercase;
+}
+.visual-frame {
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  border-radius: 8px; padding: 20px;
+  display: flex; justify-content: center; align-items: center;
+  margin: 15px 0; overflow: hidden;
+}
+.q-text { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.6; }
+.tag-cat {
+  display: inline-block; font-size: .75rem;
+  background: #e0f2fe; color: #0369a1;
+  padding: 4px 10px; border-radius: 20px;
+  font-weight: bold; margin-bottom: 10px;
+}
+
+.opt-label {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 16px; background: white;
+  border: 1px solid #cbd5e1; border-radius: 8px;
+  margin-bottom: 12px; cursor: pointer;
+  transition: all .2s; font-size: 1rem; color: #475569;
+}
+.opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+.opt-label input { margin-top: 4px; transform: scale(1.2); flex-shrink: 0; }
+
+/* TABEL — wrapper scroll horizontal untuk HP */
+.matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 320px; }
+.matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 12px; }
+.matrix-table th { background: #f1f5f9; text-align: center; font-size: .85rem; white-space: nowrap; }
+.matrix-table td { text-align: center; }
+.matrix-table td:first-child { text-align: left; font-weight: 500; }
+
+/* ── SIDEBAR ───────────────────────────────────────────── */
+.side-panel {
+  width: 300px; background: white;
+  border-left: 1px solid #e2e8f0;
+  display: flex; flex-direction: column;
+  flex-shrink: 0; z-index: 40;
+}
+.nav-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; padding: 20px; overflow-y: auto; }
+.nav-num {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  border: 1px solid #cbd5e1; border-radius: 6px;
+  cursor: pointer; font-weight: 700; color: #64748b; transition: all .2s;
+}
+.nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+.nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,.15); color: var(--primary); }
+.nav-num.filled { background-color: var(--success)!important; color: white!important; border-color: var(--success)!important; }
+.nav-num.filled.current { border: 3px solid #1e3a8a!important; }
+
+/* ── FORM ──────────────────────────────────────────────── */
+input[type="text"], select {
+  width: 100%; padding: 14px; margin: 8px 0 20px;
+  border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem;
+}
+
+/* ── TOMBOL ────────────────────────────────────────────── */
+.btn {
+  background: var(--primary); color: white; border: none;
+  padding: 12px 24px; border-radius: 8px; cursor: pointer;
+  font-weight: 700; font-size: 1rem;
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+}
+.btn:hover { background: #172554; }
+.btn:disabled { background: #94a3b8; cursor: not-allowed; }
+.btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+.btn-outline:hover { background: #f8fafc; }
+.btn-danger { background: var(--danger); }
+.btn-danger:hover { background: #b91c1c; }
+
+/* ── CHART ─────────────────────────────────────────────── */
+.chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+.chart-lbl { width: 180px; font-size: .9rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+.chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+.chart-fill { height: 100%; transition: width 1s ease-out; }
+.chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+
+/* ── OVERLAY / MODAL ───────────────────────────────────── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+  display: none; justify-content: center; align-items: center;
+  z-index: 100;
+}
+.modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+
+/* PIN INPUT */
+.pin-input-wrap { position: relative; margin-bottom: 10px; }
+.pin-input-wrap svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  color: #94a3b8; pointer-events: none;
+}
+#inp-pin {
+  width: 100%; padding: 14px 14px 14px 44px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 1.1rem; font-weight: 700; letter-spacing: .15em;
+  font-family: monospace; color: var(--text);
+  transition: border-color .2s;
+}
+#inp-pin:focus { border-color: var(--primary); }
+#inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+#pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+
+/* GAMBAR SOAL */
+.stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+
+/* ANIMASI */
+@keyframes spin  { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+/* ── RESPONSIVE ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .workspace  { flex-direction: column; }
+  .side-panel { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+  .nav-grid   { max-height: 120px; padding: 10px; }
+  .chart-lbl  { width: 120px; font-size: .78rem; }
+}
+
+mjx-container { font-size: 1.1em !important; }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <div class="header">
+    <div class="header-title">Ujian Sekolah IPAS</div>
+    <div style="display:flex;align-items:center;gap:15px;">
+      <div id="user-badge"
+           style="display:none;font-size:.85rem;background:rgba(255,255,255,.1);
+                  padding:5px 12px;border-radius:20px;"></div>
+      <div class="timer-box" id="timer-display">--:--</div>
+    </div>
+  </div>
+
+  <div class="workspace">
+    <div class="main-stage">
+
+      <!-- ① SLIDE PIN ──────────────────────────────────── -->
+      <div id="slide-pin" class="slide active">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+            <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+            <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+            <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">
+              Masukkan PIN dari guru untuk membuka<br>
+              <strong>Uji Coba Ujian IPAS</strong>
+            </p>
+            <div class="pin-input-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2.2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input type="password" id="inp-pin"
+                     placeholder="PIN ujian…"
+                     maxlength="30" autocomplete="off"
+                     onkeydown="if(event.key==='Enter') app.checkPin()">
+            </div>
+            <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+            <button class="btn" style="width:100%" onclick="app.checkPin()">
+              Buka Ujian →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ② SLIDE LOGIN ────────────────────────────────── -->
+      <div id="slide-login" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+            <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+            <p style="color:#64748b;margin-bottom:30px;">Uji Coba Ujian Sekolah IPAS (Fase C)</p>
+            <div style="text-align:left;">
+              <label>Nama Lengkap</label>
+              <input type="text" id="inpNama" placeholder="Masukkan nama lengkap…">
+              <label>Kelas</label>
+              <select id="inpKelas">
+                <option value="">-- Pilih Kelas --</option>
+                <option value="6A">Kelas 6A</option>
+                <option value="6B">Kelas 6B</option>
+              </select>
+            </div>
+            <button class="btn" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+            <div id="resume-alert"
+                 style="display:none;margin-top:20px;padding:10px;
+                        background:#eff6ff;color:#1d4ed8;border-radius:8px;
+                        cursor:pointer;font-size:.9rem;"
+                 onclick="app.resume()">
+              🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ SLIDE PETUNJUK ─────────────────────────────── -->
+      <div id="slide-rules" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:700px;margin:0 auto;">
+            <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;
+                       padding-bottom:15px;color:var(--primary);">
+              Petunjuk Pengerjaan
+            </h2>
+            <div style="line-height:1.8;color:#334155;">
+              <p>1. <strong>Waktu:</strong> Waktu pengerjaan soal ujian adalah <strong>90 menit</strong>.</p>
+              <p>2. <strong>Soal:</strong> 40 butir soal IPAS.</p>
+              <p>3. <strong>Tipe soal:</strong> Pilihan Ganda (PG), Pilihan Ganda Kompleks, dan Menjodohkan.</p>
+              <p>4. <strong>Tips:</strong> Bacalah studi kasus dengan teliti sebelum menjawab.</p>
+              <p>5. <strong>Tips:</strong> Untuk soal menjodohkan, pastikan setiap baris sudah dipilih sebelum mengakhiri ujian.</p>
+            </div>
+            <div style="margin-top:30px;text-align:right;">
+              <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ④ SLIDE KUIS ──────────────────────────────────── -->
+      <div id="slide-quiz" class="slide">
+        <div id="quiz-scroll" class="quiz-scroll-area">
+          <div id="quiz-container"></div>
+        </div>
+        <div class="nav-bar-fixed">
+          <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+          <span id="q-indicator" style="font-weight:700;color:var(--primary);">Soal 1 / 40</span>
+          <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+        </div>
+      </div>
+
+      <!-- ⑤ SLIDE HASIL ─────────────────────────────────── -->
+      <div id="slide-result" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:620px;margin:0 auto;text-align:center;">
+            <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+            <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+            <p style="color:#64748b;">Jawaban kamu telah kami terima.</p>
+            <div id="result-content"
+                 style="text-align:left;margin-top:30px;
+                        border-top:1px solid #e2e8f0;padding-top:20px;">
+              <p style="text-align:center;color:#64748b;">Sedang memproses nilai…</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-stage -->
+
+    <!-- SIDEBAR ──────────────────────────────────────── -->
+    <div class="side-panel" id="sidebar" style="display:none;">
+      <div style="padding:15px 20px;font-weight:700;color:#334155;
+                  border-bottom:1px solid #e2e8f0;
+                  display:flex;justify-content:space-between;align-items:center;">
+        <span>Navigasi Soal</span>
+        <span style="font-size:.8rem;background:#e0f2fe;color:#0369a1;
+                     padding:2px 8px;border-radius:10px;">40 Butir</span>
+      </div>
+      <div class="nav-grid" id="nav-grid"></div>
+      <div style="padding:20px;border-top:1px solid #e2e8f0;
+                  margin-top:auto;background:#f8fafc;">
+        <button class="btn btn-danger" style="width:100%"
+                onclick="app.confirmFinish()">Selesai Ujian</button>
+      </div>
+    </div>
+
+  </div><!-- /workspace -->
+</div><!-- /app-container -->
+
+<!-- MODAL KONFIRMASI ─────────────────────────────────── -->
+<div id="modal-confirm" class="overlay">
+  <div class="modal">
+    <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+    <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+      <button class="btn btn-outline"
+              onclick="document.getElementById('modal-confirm').style.display='none'">
+        Cek Lagi
+      </button>
+      <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL LOADING ────────────────────────────────────── -->
+<div id="modal-loading" class="overlay">
+  <div class="modal">
+    <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+    <div style="width:40px;height:40px;border:4px solid #e2e8f0;
+                border-top:4px solid var(--primary);border-radius:50%;
+                margin:10px auto;animation:spin 1s linear infinite;"></div>
+    <p>Mohon jangan tutup halaman ini.</p>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  PIN: HZSbjD  |  HASH: 21709f6d4de3d8b8
+//  Untuk mengganti PIN, jalankan di browser console:
+//    hashPin("PIN_BARU").then(h => console.log(h))
+//  lalu salin hasilnya ke PIN_HASH.
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+  SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+  STORAGE_KEY: "US_2026_IPAS",
+  DURATION:    90 * 60,
+  PIN_HASH:    "21709f6d4de3d8b8"  // PIN: HZSbjD
+};
+
+// ── Fungsi hash SHA-256 16 karakter ─────────────────────
+async function hashPin(pin) {
+  const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2,'0'))
+    .join('').slice(0, 16);
+}
+window.hashPin = hashPin;
+
+// ── Aset Gambar ─────────────────────────────────────────
+const IMAGE_ASSETS = {
+  "ekosistem_sawah":   "https://i.postimg.cc/NGZ3RTcx/01_ekosistem_sawah.png",
+  "peta_indonesia":    "https://i.postimg.cc/RCwRbnfM/02_peta_indonesia.png",
+  "grafik_sampah":     "https://i.postimg.cc/xjLRFbHn/03_grafik_sampah.png",
+  "rangkaian_listrik": "https://i.postimg.cc/kMWcht83/04_rangkaian_listrik.png",
+  "sistem_pencernaan": "https://i.postimg.cc/66C01GRB/05_sistem_pencernaan.png",
+  "tata_surya":        "https://i.postimg.cc/h4Vr37x4/06_tata_surya.png",
+  "lingkungan_sekolah":"https://i.postimg.cc/bY1TF2bf/07_lingkungan_sekolah.png",
+  "monumen_pahlawan":  "https://i.postimg.cc/2jnwXBvS/08_monumen_pahlawan.png",
+  "alat_musik":        "https://i.postimg.cc/Wp0nfJZx/09_alat_musik_30.png",
+  "sistem_organ":      "https://i.postimg.cc/mZ7w6F9J/10_sistem_organ_30.png",
+  "sumber_sejarah":    "https://i.postimg.cc/KctNsgT6/11_sumber_sejarah_1_30.png",
+  "peta_kondisi_alam": "https://i.postimg.cc/XYq1hY4F/12-kenampakan-geografis.png"
+};
+
+function getImg(key, alt = "Ilustrasi Soal") {
+  const url = IMAGE_ASSETS[key];
+  if (!url) return `<div style="background:#fef3c7;padding:15px;border-radius:8px;
+    text-align:center;border:1px solid #f59e0b;">⚠️ Gambar tidak tersedia</div>`;
+  return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+// ════════════════════════════════════════════════════════
+//  BANK SOAL — 40 butir
+// ════════════════════════════════════════════════════════
+const QUESTIONS = [
+
+  // ── PENGETAHUAN IPAS ─────────────────────────────────
+  {
+    id: 1, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Data Kebiasaan Sehari-hari</div>
+      <p>Andi memiliki kebiasaan: (1) Merokok 2 batang/hari, (2) Jarang olahraga,
+         (3) Makan sayur 1x/minggu, (4) Tidur 5 jam/hari.</p>
+    </div>`,
+    q:   "Organ tubuh mana yang paling terdampak negatif berdasarkan data kebiasaan Andi?",
+    opt: ["Jantung dan Paru-paru", "Hati dan Ginjal", "Lambung dan Usus", "Otak dan Saraf"],
+    ans: "Jantung dan Paru-paru"
+  },
+  {
+    id: 2, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Ekosistem Sawah</div>
+      <div class='visual-frame'>${getImg("ekosistem_sawah","Ekosistem Sawah")}</div>
+      <p>Dalam ekosistem sawah terdapat: padi, tikus, ular, elang, dan decomposer.
+         Jika populasi ular hilang akibat perburuan, apa dampaknya?</p>
+    </div>`,
+    q:   "Apa dampak terhadap komponen lain jika populasi ular hilang dari ekosistem sawah?",
+    opt: ["Populasi tikus meningkat drastis", "Populasi elang meningkat",
+          "Populasi padi menurun", "Decomposer berkurang"],
+    ans: "Populasi tikus meningkat drastis"
+  },
+  {
+    id: 3, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Fenomena Cahaya</div>
+      <p>Peristiwa: (1) Pelangi setelah hujan, (2) Bayangan benda di bawah sinar matahari,
+         (3) Melihat wajah di cermin, (4) Sedotan terlihat patah dalam air.</p>
+    </div>`,
+    q:   "Peristiwa mana yang membuktikan sifat cahaya dapat dipantulkan?",
+    opt: ["Pelangi setelah hujan", "Melihat wajah di cermin",
+          "Bayangan benda", "Sedotan terlihat patah"],
+    ans: "Melihat wajah di cermin"
+  },
+  {
+    id: 4, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Kondisi Geografis Pesisir</div>
+      <p>Desa Makmur terletak di wilayah pesisir dengan angin kencang sepanjang tahun.
+         Warga ingin memanfaatkan sumber energi alternatif untuk mengurangi
+         ketergantungan pada listrik PLN.</p>
+    </div>`,
+    q:   "Sumber energi alternatif paling tepat untuk dimanfaatkan di wilayah tersebut adalah…",
+    opt: ["Energi Surya", "Energi Angin", "Energi Air", "Energi Biomassa"],
+    ans: "Energi Angin"
+  },
+  {
+    id: 5, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Fenomena Siang Malam</div>
+      <p>Di Indonesia sedang siang hari, sedangkan di Amerika sedang malam hari.
+         Fenomena ini terjadi secara bergantian setiap 24 jam.</p>
+    </div>`,
+    q:   "Penyebab fenomena siang dan malam di dua belahan bumi berbeda adalah…",
+    opt: ["Revolusi bumi mengelilingi matahari", "Rotasi bumi pada porosnya",
+          "Revolusi bulan mengelilingi bumi", "Kemiringan sumbu bumi"],
+    ans: "Rotasi bumi pada porosnya"
+  },
+  {
+    id: 6, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Peta Indonesia</div>
+      <div class='visual-frame'>${getImg("peta_indonesia","Peta Indonesia")}</div>
+      <p>Perhatikan peta Indonesia. Provinsi yang ditandai huruf A
+         terletak di Pulau Jawa bagian tengah.</p>
+    </div>`,
+    q:   "Nama provinsi yang dimaksud berdasarkan letak geografisnya adalah…",
+    opt: ["Jawa Barat", "Jawa Tengah", "Jawa Timur", "DI Yogyakarta"],
+    ans: "Jawa Tengah"
+  },
+  {
+    id: 7, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Pahlawan Daerah</div>
+      <p>Pangeran Diponegoro memimpin perang melawan Belanda tahun 1825–1830 di Jawa Tengah.
+         Perjuangannya menunjukkan semangat pantang menyerah meski menghadapi kekuatan
+         musuh yang lebih besar.</p>
+    </div>`,
+    q:   "Nilai perjuangan yang paling relevan untuk diterapkan siswa saat ini adalah…",
+    opt: ["Menggunakan senjata untuk melawan musuh",
+          "Pantang menyerah menghadapi kesulitan",
+          "Menghindari konflik dengan teman",
+          "Bergantung pada bantuan orang lain"],
+    ans: "Pantang menyerah menghadapi kesulitan"
+  },
+  {
+    id: 8, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Hutan Larangan</div>
+      <p>Masyarakat adat di beberapa daerah memiliki kearifan lokal berupa larangan
+         menebang pohon di hutan tertentu. Hutan ini dipercaya sebagai tempat tinggal
+         roh leluhur.</p>
+    </div>`,
+    q:   "Dampak praktik kearifan lokal tersebut terhadap kelestarian lingkungan adalah…",
+    opt: ["Mengurangi keanekaragaman hayati",
+          "Menjaga keseimbangan ekosistem hutan",
+          "Meningkatkan pemanasan global",
+          "Mengurangi ketersediaan air bersih"],
+    ans: "Menjaga keseimbangan ekosistem hutan"
+  },
+  {
+    id: 9, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Aktivitas Petani</div>
+      <p>Pak Budi menanam padi di sawah. Setelah panen, ia membawa hasilnya ke pasar
+         untuk dijual kepada pedagang beras.</p>
+    </div>`,
+    q:   "Kegiatan Pak Budi menjual hasil panen ke pasar termasuk aktivitas ekonomi jenis…",
+    opt: ["Produksi", "Distribusi", "Konsumsi", "Investasi"],
+    ans: "Distribusi"
+  },
+  {
+    id: 11, cat: "Pengetahuan IPAS", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Perilaku Hidup Sehat</div>
+      <p>Untuk mencegah penyakit menular, diperlukan perilaku hidup sehat yang tepat.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU perilaku yang secara langsung mencegah penyakit menular!",
+    opt: ["Cuci tangan dengan sabun sebelum makan",
+          "Olahraga teratur 3x seminggu",
+          "Makan makanan bergizi seimbang",
+          "Tidur 8 jam setiap hari"],
+    ans: ["Cuci tangan dengan sabun sebelum makan", "Makan makanan bergizi seimbang"]
+  },
+  {
+    id: 12, cat: "Pengetahuan IPAS", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Lingkungan Sekolah</div>
+      <div class='visual-frame'>${getImg("lingkungan_sekolah","Lingkungan Sekolah")}</div>
+      <p>Di lingkungan sekolah terdapat: tanaman hias, batu hiasan, siswa, udara,
+         meja kayu, air mancur.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU komponen yang termasuk komponen biotik!",
+    opt: ["Tanaman hias", "Batu hiasan", "Siswa", "Udara"],
+    ans: ["Tanaman hias", "Siswa"]
+  },
+  {
+    id: 13, cat: "Pengetahuan IPAS", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Peristiwa Bunyi</div>
+      <p>Peristiwa: (1) Berbicara lewat telepon kaleng, (2) Mendengar gema di gua,
+         (3) Mendengar suara ikan di dalam air, (4) Mendengar radio dari ruangan sebelah.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU peristiwa yang membuktikan bunyi merambat melalui benda padat/cair!",
+    opt: ["Berbicara lewat telepon kaleng", "Mendengar gema di gua",
+          "Mendengar suara ikan di dalam air", "Mendengar radio dari ruangan sebelah"],
+    ans: ["Berbicara lewat telepon kaleng", "Mendengar suara ikan di dalam air"]
+  },
+  {
+    id: 14, cat: "Pengetahuan IPAS", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Kebiasaan di Rumah</div>
+      <p>Untuk menghemat energi listrik, diperlukan kebiasaan yang efektif di rumah.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU kebiasaan yang efektif menghemat energi!",
+    opt: ["Mematikan lampu saat siang hari",
+          "Mencabut charger setelah selesai digunakan",
+          "Menyalakan AC suhu terendah",
+          "Menggunakan lampu LED hemat energi"],
+    ans: ["Mematikan lampu saat siang hari",
+          "Mencabut charger setelah selesai digunakan",
+          "Menggunakan lampu LED hemat energi"]
+  },
+  {
+    id: 15, cat: "Pengetahuan IPAS", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Fenomena Alam</div>
+      <p>Fenomena: (1) Terjadinya siang dan malam, (2) Gerak semu harian matahari,
+         (3) Perubahan musim, (4) Perbedaan waktu di berbagai wilayah.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU fenomena yang disebabkan oleh rotasi bumi!",
+    opt: ["Terjadinya siang dan malam", "Gerak semu harian matahari",
+          "Perubahan musim", "Perbedaan waktu di berbagai wilayah"],
+    ans: ["Terjadinya siang dan malam", "Gerak semu harian matahari",
+          "Perbedaan waktu di berbagai wilayah"]
+  },
+  {
+    id: 17, cat: "Pengetahuan IPAS", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Sumber Energi</div>
+      <p>Klasifikasikan setiap sumber energi apakah Terbarukan atau Tidak Terbarukan.</p>
+    </div>`,
+    q:    "Klasifikasikan setiap sumber apakah Energi Terbarukan atau Tidak Terbarukan!",
+    rows: ["Matahari", "Batu Bara", "Angin"],
+    cols: ["Terbarukan", "Tidak Terbarukan"],
+    ans:  ["Terbarukan", "Tidak Terbarukan", "Terbarukan"]
+  },
+  {
+    id: 18, cat: "Pengetahuan IPAS", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Aktivitas Ekonomi</div>
+      <p>Klasifikasikan setiap aktivitas apakah Produksi atau Distribusi.</p>
+    </div>`,
+    q:    "Klasifikasikan setiap aktivitas apakah Produksi atau Distribusi!",
+    rows: ["Membuat kue di rumah", "Mengirim barang ke toko", "Menjual Barang"],
+    cols: ["Produksi", "Distribusi"],
+    ans:  ["Produksi", "Distribusi", "Distribusi"]
+  },
+  {
+    id: 21, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Kondisi Alam Indonesia</div>
+      <div class='visual-frame'>${getImg("peta_kondisi_alam","Peta Kondisi Alam")}</div>
+      <p>Wilayah A: Pegunungan, Wilayah B: Pantai/Pesisir, Wilayah C: Dataran rendah subur.</p>
+    </div>`,
+    q:   "Mata pencaharian utama yang paling sesuai untuk Wilayah B adalah…",
+    opt: ["Petani padi", "Nelayan", "Peternak sapi", "Penambang batu bara"],
+    ans: "Nelayan"
+  },
+  {
+    id: 22, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Monumen Pahlawan</div>
+      <div class='visual-frame'>${getImg("monumen_pahlawan","Monumen Pahlawan")}</div>
+      <p>Monumen Pahlawan di daerahmu mengingatkan pada perjuangan para pahlawan lokal
+         yang mempertahankan kemerdekaan.</p>
+    </div>`,
+    q:   "Nilai perjuangan yang paling relevan untuk diterapkan dalam konteks kehidupan siswa saat ini adalah…",
+    opt: ["Berani menghadapi tantangan belajar",
+          "Menghindari tanggung jawab",
+          "Bergantung pada orang tua",
+          "Menyerah saat kesulitan"],
+    ans: "Berani menghadapi tantangan belajar"
+  },
+  {
+    id: 23, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Budaya Indonesia</div>
+      <p>Budaya: (1) Batik, (2) Tari Saman, (3) Upacara adat lokal, (4) Wayang Kulit.</p>
+    </div>`,
+    q:   "Mana yang telah diakui sebagai warisan budaya nasional berdasarkan konteks kebhinekaan?",
+    opt: ["Hanya Batik", "Batik dan Tari Saman",
+          "Semua adalah budaya nasional", "Hanya Wayang Kulit"],
+    ans: "Batik dan Tari Saman"
+  },
+  {
+    id: 24, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Rantai Distribusi Beras</div>
+      <p>Perjalanan beras: Petani → Penggilingan → Pasar → Konsumen.</p>
+    </div>`,
+    q:   "Pelaku ekonomi yang berperan sebagai distributor dalam rantai tersebut adalah…",
+    opt: ["Petani", "Penggilingan", "Pasar", "Konsumen"],
+    ans: "Pasar"
+  },
+  {
+    id: 26, cat: "Pengetahuan IPAS", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Penyakit dan Pencegahan</div>
+      <p>Penyakit: (1) Diare, (2) TBC, (3) Anemia, (4) Flu.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU penyakit yang dapat dicegah secara efektif melalui pola makan bergizi seimbang!",
+    opt: ["Diare", "TBC", "Anemia", "Flu"],
+    ans: ["Diare", "Anemia"]
+  },
+  {
+    id: 27, cat: "Pengetahuan IPAS", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Tindakan Manusia</div>
+      <p>Tindakan: (1) Reboisasi, (2) Memburu liar, (3) Membangun taman kota,
+         (4) Membakar sampah.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU tindakan yang membantu menjaga keseimbangan ekosistem!",
+    opt: ["Reboisasi", "Memburu liar", "Membangun taman kota", "Membakar sampah"],
+    ans: ["Reboisasi", "Membangun taman kota"]
+  },
+  {
+    id: 28, cat: "Pengetahuan IPAS", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Sumber Bunyi</div>
+      <div class='visual-frame'>${getImg("alat_musik","Alat Musik")}</div>
+      <p>Benda: (1) Gitar, (2) Seruling, (3) Drum, (4) Piano.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU benda yang menghasilkan bunyi melalui getaran senar atau udara!",
+    opt: ["Gitar", "Seruling", "Drum", "Piano"],
+    ans: ["Gitar", "Seruling", "Piano"]
+  },
+  {
+    id: 29, cat: "Pengetahuan IPAS", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Mitigasi Perubahan Iklim</div>
+      <p>Aktivitas: (1) Menanam pohon, (2) Membakar sampah, (3) Menggunakan sepeda,
+         (4) Menggunakan AC terus-menerus.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU aktivitas yang berkontribusi pada mitigasi perubahan iklim!",
+    opt: ["Menanam pohon", "Membakar sampah",
+          "Menggunakan sepeda", "Menggunakan AC terus-menerus"],
+    ans: ["Menanam pohon", "Menggunakan sepeda"]
+  },
+  {
+    id: 30, cat: "Pengetahuan IPAS", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Praktik Lokal</div>
+      <p>Praktik: (1) Sasi laut, (2) Subak, (3) Gotong royong, (4) Tebang pilih.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU praktik yang menunjukkan nilai pelestarian lingkungan berdasarkan kearifan lokal!",
+    opt: ["Sasi laut", "Subak", "Gotong royong", "Tebang pilih"],
+    ans: ["Sasi laut", "Subak", "Tebang pilih"]
+  },
+  {
+    id: 31, cat: "Pengetahuan IPAS", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Sistem Tubuh</div>
+      <div class='visual-frame'>${getImg("sistem_organ","Sistem Organ")}</div>
+      <p>Klasifikasikan setiap organ apakah termasuk Sistem Pernapasan
+         atau Sistem Peredaran Darah.</p>
+    </div>`,
+    q:    "Klasifikasikan setiap organ apakah Sistem Pernapasan atau Sistem Peredaran Darah!",
+    rows: ["Jantung", "Paru-paru", "Pembuluh darah"],
+    cols: ["Sistem Pernapasan", "Sistem Peredaran Darah"],
+    ans:  ["Sistem Peredaran Darah", "Sistem Pernapasan", "Sistem Peredaran Darah"]
+  },
+  {
+    id: 32, cat: "Pengetahuan IPAS", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Sifat Cahaya</div>
+      <p>Klasifikasikan setiap benda apakah Memantulkan Cahaya atau
+         Tidak Memantulkan Cahaya.</p>
+    </div>`,
+    q:    "Klasifikasikan setiap benda apakah Memantulkan Cahaya atau Tidak Memantulkan Cahaya!",
+    rows: ["Bulan", "Cermin", "Batu hitam"],
+    cols: ["Memantulkan Cahaya", "Tidak Memantulkan Cahaya"],
+    ans:  ["Memantulkan Cahaya", "Memantulkan Cahaya", "Tidak Memantulkan Cahaya"]
+  },
+  {
+    id: 33, cat: "Pengetahuan IPAS", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Pelaku Ekonomi</div>
+      <p>Klasifikasikan setiap pelaku apakah termasuk Produsen atau Konsumen.</p>
+    </div>`,
+    q:    "Klasifikasikan setiap pelaku apakah Produsen atau Konsumen!",
+    rows: ["Pembeli di pasar", "Petani padi", "Penjahit baju"],
+    cols: ["Produsen", "Konsumen"],
+    ans:  ["Konsumen", "Produsen", "Produsen"]
+  },
+  {
+    id: 35, cat: "Pengetahuan IPAS", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Planet Tata Surya</div>
+      <div class='visual-frame'>${getImg("tata_surya","Tata Surya")}</div>
+      <p>Klasifikasikan setiap planet apakah termasuk Planet Dalam atau Planet Luar
+         berdasarkan posisi terhadap sabuk asteroid.</p>
+    </div>`,
+    q:    "Klasifikasikan setiap planet apakah Planet Dalam atau Planet Luar!",
+    rows: ["Bumi", "Mars", "Jupiter"],
+    cols: ["Planet Dalam", "Planet Luar"],
+    ans:  ["Planet Dalam", "Planet Dalam", "Planet Luar"]
+  },
+  {
+    id: 38, cat: "Pengetahuan IPAS", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Masalah Ekonomi</div>
+      <p>Ketersediaan barang di pasar terbatas sementara kebutuhan masyarakat banyak.
+         Harga barang cenderung naik.</p>
+    </div>`,
+    q:   "Istilah ekonomi yang tepat untuk menggambarkan kondisi tersebut adalah…",
+    opt: ["Inflasi", "Kelangkaan", "Deflasi", "Surplus"],
+    ans: "Kelangkaan"
+  },
+  {
+    id: 39, cat: "Pengetahuan IPAS", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Sumber Sejarah</div>
+      <div class='visual-frame'>${getImg("sumber_sejarah","Sumber Sejarah")}</div>
+      <p>Benda: (1) Fosil, (2) Foto lama, (3) Cerita rakyat, (4) Dokumen tertulis.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU benda yang dapat dijadikan sumber sejarah tertulis atau artefak untuk meninjau perjuangan pahlawan!",
+    opt: ["Fosil", "Foto lama", "Cerita rakyat", "Dokumen tertulis"],
+    ans: ["Foto lama", "Dokumen tertulis"]
+  },
+
+  // ── KETERAMPILAN PROSES ──────────────────────────────
+  {
+    id: 10, cat: "Keterampilan Proses", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Eksperimen Tanaman</div>
+      <div class='matrix-wrapper'>
+        <table class='matrix-table'>
+          <tr><th>Pupuk</th>
+              <th>Tinggi Tanaman (cm) Minggu 1</th>
+              <th>Tinggi Tanaman (cm) Minggu 4</th></tr>
+          <tr><td>Organik</td><td>5</td><td>25</td></tr>
+          <tr><td>Anorganik</td><td>5</td><td>20</td></tr>
+          <tr><td>Tanpa Pupuk</td><td>5</td><td>10</td></tr>
+        </table>
+      </div>
+    </div>`,
+    q:   "Kesimpulan yang paling sesuai berdasarkan data tabel tersebut adalah…",
+    opt: ["Pupuk organik paling efektif untuk pertumbuhan",
+          "Pupuk anorganik tidak berpengaruh",
+          "Tanpa pupuk tanaman tidak tumbuh",
+          "Semua pupuk sama efektifnya"],
+    ans: "Pupuk organik paling efektif untuk pertumbuhan"
+  },
+  {
+    id: 16, cat: "Keterampilan Proses", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Masalah Ilmiah</div>
+      <p>Tanaman di pot mengalami layu meskipun sudah disiram setiap hari.
+         Perlu dilakukan investigasi untuk menemukan penyebabnya.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU pertanyaan investigasi yang relevan untuk memecahkan masalah tersebut!",
+    opt: ["Apakah tanah terlalu padat?",
+          "Apakah ada hama yang menyerang?",
+          "Apakah pupuk yang digunakan tepat?",
+          "Apakah potnya berwarna putih?"],
+    ans: ["Apakah tanah terlalu padat?",
+          "Apakah ada hama yang menyerang?",
+          "Apakah pupuk yang digunakan tepat?"]
+  },
+  {
+    id: 19, cat: "Keterampilan Proses", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Kesimpulan Penyelidikan</div>
+      <p>Klasifikasikan apakah langkah tersebut Sesuai atau Tidak Sesuai
+         dengan prinsip keterampilan proses.</p>
+    </div>`,
+    q:    "Klasifikasikan setiap langkah apakah Sesuai atau Tidak Sesuai!",
+    rows: ["Kesimpulan sesuai dengan data",
+           "Kesimpulan berdasarkan asumsi",
+           "Kesimpulan setelah analisis data"],
+    cols: ["Sesuai", "Tidak Sesuai"],
+    ans:  ["Sesuai", "Tidak Sesuai", "Sesuai"]
+  },
+  {
+    id: 20, cat: "Keterampilan Proses", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Penyajian Data</div>
+      <p>Klasifikasikan setiap cara penyajian data apakah cocok untuk
+         Membandingkan Data atau Menjelaskan Tren.</p>
+    </div>`,
+    q:    "Klasifikasikan setiap cara apakah cocok untuk Membandingkan Data atau Menjelaskan Tren!",
+    rows: ["Diagram batang", "Grafik garis", "Tabel frekuensi"],
+    cols: ["Membandingkan Data", "Menjelaskan Tren"],
+    ans:  ["Membandingkan Data", "Menjelaskan Tren", "Membandingkan Data"]
+  },
+  {
+    id: 25, cat: "Keterampilan Proses", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Perencanaan Eksperimen</div>
+      <p>Penelitian: Pengaruh cahaya terhadap pertumbuhan tanaman.
+         Variabel yang perlu ditentukan dengan tepat.</p>
+    </div>`,
+    q:   "Variabel yang harus diubah dan variabel yang harus tetap dalam perencanaan eksperimen tersebut adalah…",
+    opt: ["Cahaya (diubah), Jenis tanaman (tetap)",
+          "Jenis tanaman (diubah), Cahaya (tetap)",
+          "Air (diubah), Tanah (tetap)",
+          "Semua variabel diubah"],
+    ans: "Cahaya (diubah), Jenis tanaman (tetap)"
+  },
+  {
+    id: 34, cat: "Keterampilan Proses", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Mencatat Hasil Pengamatan</div>
+      <p>Klasifikasikan setiap cara apakah Efektif atau Tidak Efektif untuk analisis data.</p>
+    </div>`,
+    q:    "Klasifikasikan setiap cara apakah Efektif atau Tidak Efektif!",
+    rows: ["Deskripsi rinci", "Tabel terstruktur", "Coretan acak"],
+    cols: ["Efektif", "Tidak Efektif"],
+    ans:  ["Efektif", "Efektif", "Tidak Efektif"]
+  },
+  {
+    id: 36, cat: "Keterampilan Proses", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Jenis Peta</div>
+      <p>Situasi: (1) Mencari rute tercepat ke sekolah, (2) Melihat batas wilayah historis,
+         (3) Navigasi real-time.</p>
+    </div>`,
+    q:   "Jenis peta (Digital/Konvensional) yang paling tepat untuk mencari rute tercepat adalah…",
+    opt: ["Peta Konvensional", "Peta Digital", "Peta Topografi", "Peta Tematik"],
+    ans: "Peta Digital"
+  },
+  {
+    id: 37, cat: "Keterampilan Proses", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Mengomunikasikan Hasil</div>
+      <p>Bentuk laporan: (1) Video dokumenter, (2) Tabel data mentah,
+         (3) Poster infografis, (4) Catatan pribadi.</p>
+    </div>`,
+    q:   "Pilih LEBIH DARI SATU bentuk laporan yang efektif untuk mengomunikasikan hasil penyelidikan kepada masyarakat umum!",
+    opt: ["Video dokumenter", "Tabel data mentah", "Poster infografis", "Catatan pribadi"],
+    ans: ["Video dokumenter", "Poster infografis"]
+  },
+  {
+    id: 40, cat: "Keterampilan Proses", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Evaluasi Penyelidikan</div>
+      <p>Kesimpulan penyelidikan bertentangan dengan data yang diperoleh.
+         Perlu langkah perbaikan yang tepat.</p>
+    </div>`,
+    q:   "Langkah refleksi yang paling tepat untuk memperbaiki kesalahan tersebut adalah…",
+    opt: ["Mengabaikan data yang tidak sesuai",
+          "Mengulang eksperimen dan mengecek alat",
+          "Mengubah kesimpulan tanpa dasar",
+          "Menghentikan penyelidikan"],
+    ans: "Mengulang eksperimen dan mengecek alat"
+  },
+];
+
+// ════════════════════════════════════════════════════════
+//  APLIKASI
+// ════════════════════════════════════════════════════════
+const app = {
+  session:  { nama: "", kelas: "", answers: {}, startTime: 0 },
+  currIdx:  0,
+  timerInt: null,
+
+  init: function() {
+    this.showSlide('pin');
+    try {
+      if (localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession = true;
+    } catch(e) {}
+  },
+
+  checkPin: async function() {
+    const inp = document.getElementById('inp-pin');
+    const val = inp.value.trim();
+    if (!val) return;
+    const h = await hashPin(val);
+    if (h === CONFIG.PIN_HASH) {
+      this.showSlide('login');
+      if (this._hasSavedSession)
+        document.getElementById('resume-alert').style.display = 'block';
+    } else {
+      inp.classList.add('error');
+      document.getElementById('pin-err').style.display = 'block';
+      inp.value = '';
+      setTimeout(() => inp.classList.remove('error'), 400);
+    }
+  },
+
+  login: function() {
+    const n = document.getElementById('inpNama').value.trim();
+    const k = document.getElementById('inpKelas').value;
+    if (!n || !k) { alert("Harap isi nama lengkap dan pilih kelas!"); return; }
+    this.session.nama  = n;
+    this.session.kelas = k;
+    this.showSlide('rules');
+  },
+
+  resume: function() {
+    try {
+      this.session = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY));
+      this.renderSidebar();
+      this.startExam(true);
+    } catch(e) { alert("Sesi tersimpan rusak. Silakan mulai ujian baru."); }
+  },
+
+  startExam: function(isRes = false) {
+    if (!isRes) { this.session.startTime = Date.now(); this.save(); }
+    document.getElementById('user-badge').innerText     = this.session.nama;
+    document.getElementById('user-badge').style.display = 'block';
+    document.getElementById('sidebar').style.display    = 'flex';
+    this.renderQuestions();
+    this.renderSidebar();
+    this.showSlide('quiz');
+    this.goToQ(0);
+    this.startTimer();
+  },
+
+  showSlide: function(id) {
+    document.querySelectorAll('.slide').forEach(e => e.classList.remove('active'));
+    document.getElementById('slide-' + id).classList.add('active');
+  },
+
+  // ── RENDER SOAL ─────────────────────────────────────
+  // pgk-cat: kolom dinamis (mendukung 2+ kolom)
+  renderQuestions: function() {
+    const box = document.getElementById('quiz-container');
+    box.innerHTML = "";
+    QUESTIONS.forEach((q, i) => {
+      let h = `<div id="q-item-${i}" class="question-item">
+        <div class="tag-cat">${q.cat}</div>
+        ${q.stim || ""}
+        <div class="q-text">${i + 1}. ${q.q}</div>`;
+
+      if (q.type === 'pg') {
+        q.opt.forEach((o, oi) =>
+          h += `<label class="opt-label">
+                  <input type="radio" name="ans_${q.id}" value="${oi}"
+                         onchange="app.saveAns(${q.id},${oi})"> ${o}
+                </label>`
+        );
+      } else if (q.type === 'pgk') {
+        h += `<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">
+                ☑ Boleh memilih lebih dari satu jawaban
+              </p>`;
+        q.opt.forEach((o, oi) =>
+          h += `<label class="opt-label">
+                  <input type="checkbox" value="${oi}"
+                         onchange="app.saveMulti(${q.id},${oi})"> ${o}
+                </label>`
+        );
+      } else if (q.type === 'pgk-cat') {
+        h += `<div class="matrix-wrapper"><table class="matrix-table"><tr>
+                <th>Pernyataan</th>`;
+        q.cols.forEach(c => h += `<th>${c}</th>`);
+        h += `</tr>`;
+        q.rows.forEach((r, ri) => {
+          h += `<tr><td>${r}</td>`;
+          q.cols.forEach(c =>
+            h += `<td><input type="radio" name="mx_${q.id}_${ri}"
+                        value="${c}"
+                        onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`
+          );
+          h += `</tr>`;
+        });
+        h += `</table></div>`;
+      }
+
+      h += `</div>`;
+      box.innerHTML += h;
+    });
+
+    if (window.MathJax && MathJax.typesetPromise)
+      MathJax.typesetPromise([box]).catch(() => {});
+  },
+
+  // ── NAVIGASI ────────────────────────────────────────
+  goToQ: function(idx) {
+    if (idx < 0 || idx >= QUESTIONS.length) return;
+    this.currIdx = idx;
+
+    // Scroll area kembali ke atas setiap pindah soal
+    const qs = document.getElementById('quiz-scroll');
+    if (qs) qs.scrollTop = 0;
+
+    document.querySelectorAll('.question-item').forEach(e => e.classList.remove('active-q'));
+    document.getElementById(`q-item-${idx}`).classList.add('active-q');
+    document.getElementById('q-indicator').innerText = `Soal ${idx + 1} / 40`;
+    document.getElementById('btn-prev').disabled = (idx === 0);
+
+    const nBtn = document.getElementById('btn-next');
+    if (idx === QUESTIONS.length - 1) {
+      nBtn.innerText = "Selesai";
+      nBtn.onclick   = () => this.confirmFinish();
+      nBtn.classList.add('btn-danger');
+    } else {
+      nBtn.innerText = "Selanjutnya";
+      nBtn.onclick   = () => this.move(1);
+      nBtn.classList.remove('btn-danger');
+    }
+
+    this.restoreVisual(idx);
+    this.updateSidebarUI();
+
+    if (window.MathJax && MathJax.typesetPromise) {
+      const el = document.getElementById(`q-item-${idx}`);
+      if (el) MathJax.typesetPromise([el]).catch(() => {});
+    }
+  },
+
+  move: function(step) { this.goToQ(this.currIdx + step); },
+
+  // ── SIMPAN JAWABAN ───────────────────────────────────
+  saveAns: function(qid, optIdx) {
+    this.session.answers[qid] = optIdx;
+    this.save(); this.updateSidebarUI();
+  },
+  saveMulti: function(qid, optIdx) {
+    let c = this.session.answers[qid] || [];
+    if (c.includes(optIdx)) c = c.filter(x => x !== optIdx); else c.push(optIdx);
+    this.session.answers[qid] = c;
+    this.save(); this.updateSidebarUI();
+  },
+  saveMx: function(qid, rix, v) {
+    let c = this.session.answers[qid] || [];
+    c[rix] = v;
+    this.session.answers[qid] = c;
+    this.save(); this.updateSidebarUI();
+  },
+  save: function() {
+    try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.session)); } catch(e) {}
+  },
+
+  // ── SIDEBAR ──────────────────────────────────────────
+  renderSidebar: function() {
+    const g = document.getElementById('nav-grid');
+    g.innerHTML = "";
+    QUESTIONS.forEach((q, i) =>
+      g.innerHTML += `<div id="nav-num-${i}" class="nav-num"
+                           onclick="app.goToQ(${i})">${i + 1}</div>`
+    );
+  },
+  checkFilled: function(qid) {
+    const v = this.session.answers[qid];
+    if (v === undefined || v === null) return false;
+    if (Array.isArray(v)) return v.filter(x => x !== undefined && x !== null).length > 0;
+    return true;
+  },
+  updateSidebarUI: function() {
+    QUESTIONS.forEach((q, i) => {
+      const el = document.getElementById(`nav-num-${i}`);
+      if (!el) return;
+      if (i === this.currIdx) el.classList.add('current');
+      else el.classList.remove('current');
+      if (this.checkFilled(q.id)) el.classList.add('filled');
+      else el.classList.remove('filled');
+    });
+  },
+
+  // ── RESTORE VISUAL ───────────────────────────────────
+  restoreVisual: function(idx) {
+    const q   = QUESTIONS[idx];
+    const ans = this.session.answers[q.id];
+    if (ans === undefined || ans === null) return;
+
+    if (q.type === 'pg') {
+      const el = document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);
+      if (el) el.checked = true;
+    } else if (q.type === 'pgk' && Array.isArray(ans)) {
+      // Scope ke q-item untuk menghindari konflik checkbox lintas soal
+      ans.forEach(v => {
+        const el = document.querySelector(`#q-item-${idx} input[value="${v}"]`);
+        if (el) el.checked = true;
+      });
+    } else if (q.type === 'pgk-cat' && Array.isArray(ans)) {
+      ans.forEach((v, ri) => {
+        if (!v) return;
+        const el = document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);
+        if (el) el.checked = true;
+      });
+    }
+  },
+
+  // ── TIMER ────────────────────────────────────────────
+  startTimer: function() {
+    clearInterval(this.timerInt);
+    this.timerInt = setInterval(() => {
+      const rem = CONFIG.DURATION -
+                  Math.floor((Date.now() - this.session.startTime) / 1000);
+      if (rem <= 0) { clearInterval(this.timerInt); this.submitExam(); return; }
+      const m = Math.floor(rem / 60).toString().padStart(2, '0');
+      const s = (rem % 60).toString().padStart(2, '0');
+      document.getElementById('timer-display').innerText = `${m}:${s}`;
+    }, 1000);
+  },
+
+  confirmFinish: function() {
+    document.getElementById('modal-confirm').style.display = 'flex';
+  },
+
+  // ── HITUNG & KIRIM NILAI ─────────────────────────────
+  submitExam: function() {
+    document.getElementById('modal-confirm').style.display = 'none';
+    document.getElementById('modal-loading').style.display = 'flex';
+    clearInterval(this.timerInt);
+
+    // Inisialisasi kategori secara dinamis dari QUESTIONS
+    const stats = {};
+    let totS = 0, totM = 0;
+
+    QUESTIONS.forEach(q => {
+      if (!stats[q.cat]) stats[q.cat] = { s: 0, m: 0 };
+      stats[q.cat].m += q.score;
+      totM += q.score;
+      const u = this.session.answers[q.id];
+      let pt = 0;
+
+      if (u !== undefined && u !== null) {
+        if (q.type === 'pg') {
+          if (u == q.opt.indexOf(q.ans)) pt = q.score;
+        } else if (q.type === 'pgk' && Array.isArray(u) && Array.isArray(q.ans)) {
+          const userAns    = u.map(i => q.opt[i]).sort();
+          const correctAns = [...q.ans].sort();  // spread untuk menghindari mutasi
+          if (JSON.stringify(userAns) === JSON.stringify(correctAns)) pt = q.score;
+        } else if (q.type === 'pgk-cat' && Array.isArray(u)) {
+          let match = 0;
+          q.ans.forEach((k, i) => { if (u[i] === k) match++; });
+          pt = (match / q.rows.length) * q.score;
+        }
+      }
+      stats[q.cat].s += pt;
+      totS += pt;
+    });
+
+    const final = Math.round((totS / totM) * 100);
+    let summ = {}, cht = "", nts = [];
+
+    // Urutan kategori untuk tampilan chart
+    const catOrder = ["Pengetahuan IPAS", "Keterampilan Proses"];
+    catOrder.forEach(c => {
+      if (!stats[c]) return;
+      const p = stats[c].m > 0 ? Math.round((stats[c].s / stats[c].m) * 100) : 0;
+      summ[c] = { skor: p, tuntas: p >= 70, label: p >= 70 ? "Tuntas" : "Perlu Bimbingan" };
+      if (p < 70) nts.push(c);
+      cht += `<div class="chart-row">
+        <div class="chart-lbl">${c}</div>
+        <div class="chart-track">
+          <div class="chart-fill"
+               style="width:${p}%;background:${p >= 70 ? '#16a34a' : '#dc2626'}">
+          </div>
+        </div>
+        <div class="chart-val">${p}%</div>
+      </div>`;
+    });
+
+    const desc = nts.length === 0
+      ? "Selamat! Tuntas semua elemen."
+      : "Perlu belajar lagi di: " + nts.join(", ");
+
+    this.showSlide('result');
+    document.getElementById('modal-loading').style.display = 'none';
+    document.getElementById('result-content').innerHTML = `
+      <h3>Nilai Akhir:
+        <span style="color:var(--primary);font-size:2.5rem;">${final}</span>
+      </h3>
+      <div style="background:#f1f5f9;padding:15px;border-radius:8px;margin-bottom:20px;">
+        ${desc}
+      </div>
+      <h4>Capaian per Elemen:</h4>${cht}`;
+
+    fetch(CONFIG.SCRIPT_URL, {
+      method:  'POST',
+      mode:    'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        action:         "submit_exam",
+        mapel:          "IPAS",
+        nama:           this.session.nama,
+        kelas:          this.session.kelas,
+        skor:           final,
+        deskripsi:      desc,
+        jawaban:        this.session.answers,
+        ringkasanNilai: summ
+      })
+    }).then(() => {
+      try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
+    });
+  }
+};
+
+window.onload = () => app.init();
+</script>
+</body>
+</html>
