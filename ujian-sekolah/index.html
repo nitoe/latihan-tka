@@ -1,1 +1,509 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Program Ujian Sekolah – SD Muhammadiyah 01 Kukusan</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html { font-size: clamp(14px, 3.5vw, 16px); scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.7;
+      color: #222;
+      background: #f5f5f5;
+    }
+
+    /* ── NAV ── */
+    .topnav {
+      background: #1a5c35;
+      color: #fff;
+      padding: 0 16px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topnav a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.82rem; font-weight: 600; }
+    .topnav a:hover { color: #fff; text-decoration: underline; }
+    .topnav-sep { color: rgba(255,255,255,0.4); }
+    .topnav-title { font-size: 0.82rem; font-weight: 600; }
+
+    /* ── HEADER ── */
+    .page-header {
+      background: #1a5c35;
+      color: #fff;
+      padding: 32px 20px 28px;
+      text-align: center;
+      border-bottom: 3px solid #f5a623;
+    }
+    .page-header h1 { font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 700; }
+    .page-header p { margin-top: 4px; font-size: 0.9rem; opacity: 0.85; }
+    .page-header .tagline {
+      margin-top: 10px;
+      display: inline-block;
+      font-size: 0.82rem;
+      font-style: italic;
+      background: rgba(255,255,255,0.12);
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      background: #fff;
+      border-bottom: 2px solid #ddd;
+      display: flex;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 48px;
+      z-index: 90;
+    }
+    .tab-btn {
+      flex: 1 1 auto;
+      min-width: 80px;
+      padding: 13px 8px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #555;
+      border-bottom: 3px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: #1a5c35; }
+    .tab-btn.active { color: #1a5c35; border-bottom-color: #1a5c35; background: #f0faf4; }
+
+    /* ── PANEL ── */
+    .panel {
+      display: none;
+      background: #fff;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 20px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    .panel.active { display: block; }
+
+    /* ── TYPOGRAPHY ── */
+    .panel h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1a5c35;
+      border-left: 4px solid #1a5c35;
+      padding-left: 12px;
+      margin-top: 28px;
+      margin-bottom: 10px;
+    }
+    .panel h2:first-child { margin-top: 0; }
+    .panel h3 { font-size: 0.95rem; font-weight: 700; color: #1a5c35; margin-top: 20px; margin-bottom: 6px; }
+    .panel p { margin-bottom: 12px; color: #333; }
+    .panel ul { padding-left: 20px; margin-bottom: 12px; }
+    .panel ul li { margin-bottom: 5px; }
+
+    /* ── CALLOUT BOXES ── */
+    .box {
+      border-left: 4px solid #ccc;
+      padding: 14px 16px;
+      margin: 16px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .box.green  { border-color: #1a5c35; background: #f0faf4; }
+    .box.amber  { border-color: #c47f00; background: #fdf6e3; }
+    .box.blue   { border-color: #2a70b8; background: #edf4fb; }
+    .box strong { display: block; margin-bottom: 4px; }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; margin: 16px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    th { background: #1a5c35; color: #fff; padding: 9px 10px; text-align: left; font-weight: 600; }
+    td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+    tr:nth-child(even) td { background: #f9f9f9; }
+    tr:hover td { background: #f0faf4; }
+
+    /* ── TIMELINE ── */
+    .timeline { margin: 16px 0 16px 8px; }
+    .tl-item { display: flex; gap: 14px; padding-bottom: 18px; position: relative; }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: 6px; top: 20px; bottom: 0;
+      width: 2px;
+      background: #d0e8d8;
+    }
+    .tl-item:last-child::before { display: none; }
+    .tl-dot { width: 14px; height: 14px; border-radius: 50%; background: #1a5c35; flex-shrink: 0; margin-top: 4px; }
+    .tl-body { flex: 1; }
+    .tl-date {
+      display: inline-block;
+      background: #1a5c35;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-bottom: 3px;
+    }
+    .tl-title { font-weight: 700; font-size: 0.9rem; color: #222; margin-bottom: 2px; }
+    .tl-desc { font-size: 0.82rem; color: #555; }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin: 14px 0; padding: 12px 14px;
+      background: #f5f5f5; border-radius: 6px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 7px; font-size: 0.82rem; }
+    .legend-dot { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+    /* ── KISI-KISI BANNER ── */
+    .kisi-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border: 2px solid #1a5c35;
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin: 0 0 24px;
+    }
+    .kisi-banner-text strong { display: block; font-size: 0.97rem; color: #1a5c35; margin-bottom: 3px; }
+    .kisi-banner-text p { font-size: 0.83rem; color: #555; margin: 0; }
+    .kisi-btn {
+      display: inline-block;
+      background: #1a5c35;
+      color: #fff;
+      text-decoration: none;
+      padding: 9px 18px;
+      border-radius: 5px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .kisi-btn:hover { background: #155029; }
+
+    /* ── GRID ── */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 14px; }
+    .card { border: 1px solid #ddd; border-radius: 5px; padding: 14px; background: #fff; }
+    .card h3 { margin-top: 0; font-size: 0.9rem; }
+    .card p { font-size: 0.84rem; margin-bottom: 0; }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      text-align: center;
+      padding: 20px 16px;
+      font-size: 0.78rem;
+      color: #888;
+      border-top: 1px solid #ddd;
+    }
+
+    @media (max-width: 600px) {
+      .tab-btn { font-size: 0.74rem; padding: 10px 5px; }
+      .panel { padding: 20px 14px; }
+      .kisi-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="../">← Kembali</a>
+    <span class="topnav-sep">/</span>
+    <span class="topnav-title">Program Ujian Sekolah</span>
+  </nav>
+
+  <header class="page-header">
+    <h1>Program Ujian Sekolah</h1>
+    <p>SD Muhammadiyah 01 Kukusan &nbsp;·&nbsp; Tahun Pelajaran 2025/2026</p>
+    <span class="tagline">"Mengembalikan Makna Ujian Sekolah Sebagai Perayaan Belajar"</span>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="openTab(event,'filosofi')">Filosofi</button>
+    <button class="tab-btn" onclick="openTab(event,'projek')">Projek</button>
+    <button class="tab-btn" onclick="openTab(event,'pendampingan')">Pendampingan</button>
+    <button class="tab-btn" onclick="openTab(event,'tertulis')">Ujian Tertulis</button>
+    <button class="tab-btn" onclick="openTab(event,'ismuba')">ISMUBA</button>
+    <button class="tab-btn" onclick="openTab(event,'jadwal')">Jadwal</button>
+  </div>
+
+  <!-- TAB 1: FILOSOFI -->
+  <div id="filosofi" class="panel active">
+    <h2>Mengubah Cara Pandang: Dari Menakutkan menjadi Merayakan</h2>
+    <p>Di SD Muhammadiyah 01 Kukusan, ujian sekolah dilaksanakan sebagai <strong>puncak perayaan pembelajaran (celebration of learning)</strong>—bukan sekadar penilaian akhir yang menakutkan. Sejak tahun lalu, kami telah menggeser paradigma ujian praktik dari <em>task-oriented</em> menjadi <em>competency-oriented</em> melalui pendekatan <strong>projek bermakna</strong>.</p>
+
+    <div class="box green">
+      <strong>Student-Driven Inquiry</strong>
+      Siswa tidak lagi diberi tugas oleh guru. Mereka diajak merumuskan pertanyaan personal yang relevan dengan kehidupan mereka, lalu menggunakan kompetensi yang telah dikembangkan selama enam tahun untuk menjawabnya—mulai dari proposal, wawancara, perbaikan, pengumpulan data, hingga presentasi dan refleksi.
+    </div>
+
+    <h2>Contoh Keberhasilan Program</h2>
+    <p>Tahun lalu, seorang siswa mengajukan pertanyaan: <em>"Bagaimana cara meyakinkan orang tuaku bahwa bermain game itu baik?"</em> Dari pertanyaan yang sangat kontekstual ini, siswa tersebut secara alami mengintegrasikan kompetensi dari berbagai mata pelajaran:</p>
+    <ul>
+      <li><strong>Bahasa Indonesia:</strong> menyusun argumen persuasif yang logis dan santun</li>
+      <li><strong>Matematika:</strong> menghitung durasi bermain yang sehat berdasarkan rekomendasi kesehatan</li>
+      <li><strong>Pendidikan Pancasila:</strong> menunjukkan tanggung jawab sebagai warga digital yang seimbang</li>
+      <li><strong>Al-Islam:</strong> merefleksikan nilai keseimbangan antara dunia dan akhirat (qana'ah)</li>
+    </ul>
+
+    <h2>Realitas yang Kami Hadapi</h2>
+    <div class="box amber">
+      <strong>Keterbatasan yang kami sadari</strong>
+      <ul style="margin-top:6px; padding-left:18px;">
+        <li>Sekolah memiliki 380 siswa dengan lahan terbuka hanya 30 m²</li>
+        <li>Semester 2 kelas 6 memiliki waktu sangat terbatas karena persiapan kelulusan</li>
+        <li>Ujian tertulis tetap dilaksanakan sesuai ketentuan pemerintah (40 soal pilihan ganda)</li>
+        <li>Guru ISMUBA fokus pada kompetensi ibadah ritual dan bakti sosial</li>
+      </ul>
+    </div>
+
+    <h2>Tujuan Program</h2>
+    <ul>
+      <li>Siswa membuktikan kepada dirinya sendiri bahwa ia pantas lulus</li>
+      <li>Mengukur kemampuan mengajukan pertanyaan relevan, mencari jawaban sistematis, dan merefleksikan kegagalan</li>
+      <li>Bahkan projek yang "gagal" sekalipun menjadi pembelajaran berharga tentang ketekunan dan empati</li>
+      <li>Siswa siap melangkah ke jenjang berikutnya dengan keyakinan diri</li>
+    </ul>
+
+    <div class="box blue">
+      <strong>Filosofi Kami</strong>
+      Tidak ada cohort yang "buruk"—hanya cohort yang membutuhkan scaffolding berbeda. Student-Driven Inquiry tetap menjadi jiwa ujian sekolah, dengan tiga level pendampingan yang disesuaikan dengan kesiapan masing-masing siswa.
+    </div>
+  </div>
+
+  <!-- TAB 2: PROJEK -->
+  <div id="projek" class="panel">
+    <h2>Alur Projek Student-Driven Inquiry</h2>
+    <p>Siswa kelas 6 menempuh 5 tahap utama selama semester 2. Guru berperan sebagai fasilitator, bukan pemberi tugas.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tahap</th><th>Aktivitas Siswa</th><th>Peran Guru</th><th>Capaian</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1. Perumusan</strong></td><td>Identifikasi isu/pertanyaan personal</td><td>Menyempurnakan pertanyaan agar jelas dan terukur</td><td>IPAS: Mengidentifikasi pertanyaan ilmiah</td></tr>
+          <tr><td><strong>2. Perencanaan</strong></td><td>Menyusun proposal sederhana</td><td>Memberikan template sesuai level kesiapan</td><td>B. Indonesia: Menulis teks berdasarkan gagasan</td></tr>
+          <tr><td><strong>3. Pelaksanaan</strong></td><td>Pengumpulan data (wawancara, observasi, riset)</td><td>Checkpoint berkala sesuai level</td><td>IPAS: Menganalisis hubungan komponen</td></tr>
+          <tr><td><strong>4. Analisis & Penyajian</strong></td><td>Mengolah data menjadi temuan (video, poster, laporan)</td><td>Umpan balik pada struktur argumen</td><td>B. Indonesia: Mempresentasikan gagasan</td></tr>
+          <tr><td><strong>5. Refleksi</strong></td><td>Merefleksikan keberhasilan, kegagalan, dan perubahan cara berpikir</td><td>Pertanyaan reflektif mendalam</td><td>Pancasila: Implementasi norma & kewajiban</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Multidisiplin sebagai Konsekuensi Alami</h2>
+    <p>Kami tidak menetapkan tema projek yang "harus menggabungkan 4 mata pelajaran". Multidisiplin muncul secara alami ketika siswa menjawab pertanyaan nyata:</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Contoh: Konten YouTube Edukatif</h3>
+        <p><strong>B. Indonesia:</strong> naskah kalimat kompleks &nbsp;·&nbsp; <strong>MTK:</strong> durasi optimal &nbsp;·&nbsp; <strong>IPAS:</strong> konsep sains &nbsp;·&nbsp; <strong>PP:</strong> gotong royong</p>
+      </div>
+      <div class="card">
+        <h3>Contoh: Kampanye Hemat Air</h3>
+        <p><strong>IPAS:</strong> siklus air &nbsp;·&nbsp; <strong>MTK:</strong> volume terbuang &nbsp;·&nbsp; <strong>B. Indonesia:</strong> poster persuasif &nbsp;·&nbsp; <strong>Al-Islam:</strong> nilai syukur</p>
+      </div>
+    </div>
+
+    <h2>Projek Tidak Harus Berbasis Alam</h2>
+    <p>Dengan lahan terbatas, kami mendorong projek yang relevan dengan konteks kehidupan siswa di lingkungan perumahan padat.</p>
+    <div class="card-grid">
+      <div class="card"><h3>Projek Digital</h3><p>Konten kreator, literasi media, keamanan siber.</p></div>
+      <div class="card"><h3>Projek Komunitas</h3><p>Kampanye sosial, survei lingkungan, wawancara tokoh.</p></div>
+      <div class="card"><h3>Projek Solusi</h3><p>Inovasi kecil untuk masalah nyata di rumah atau sekolah.</p></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: PENDAMPINGAN -->
+  <div id="pendampingan" class="panel">
+    <h2>Tiga Level Pendampingan</h2>
+    <p>Setiap siswa mendapatkan level pendampingan yang disesuaikan dengan kesiapan dan kemandirian belajarnya.</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Level A – Mandiri</h3>
+        <p>Siswa merumuskan pertanyaan sendiri, menyusun proposal secara independen, dan hanya memerlukan umpan balik minimal dari guru.</p>
+      </div>
+      <div class="card">
+        <h3>Level B – Terbimbing</h3>
+        <p>Guru memberikan pilihan topik atau kerangka awal. Siswa mengembangkan sendiri dengan checkpoint berkala.</p>
+      </div>
+      <div class="card">
+        <h3>Level C – Terstruktur</h3>
+        <p>Guru memberikan template lengkap dan panduan langkah demi langkah. Fokus pada penyelesaian projek dengan dukungan penuh.</p>
+      </div>
+    </div>
+    <div class="box blue" style="margin-top:20px;">
+      <strong>Catatan</strong>
+      Level pendampingan bukan label permanen. Siswa dapat berkembang dari Level C ke Level A sepanjang proses projek berlangsung.
+    </div>
+  </div>
+
+  <!-- TAB 4: UJIAN TERTULIS -->
+  <div id="tertulis" class="panel">
+
+    <div class="kisi-banner">
+      <div class="kisi-banner-text">
+        <strong>📄 Kisi-Kisi Ujian Sekolah 2025/2026</strong>
+        <p>Materi, topik, dan format soal per mata pelajaran sebagai panduan belajar siswa.</p>
+      </div>
+      <a class="kisi-btn" href="kisi-kisi/">Lihat Kisi-Kisi →</a>
+    </div>
+
+    <h2>Format Ujian Tertulis</h2>
+    <p>Ujian tertulis dilaksanakan sesuai ketentuan pemerintah dengan format pilihan ganda berbasis komputer.</p>
+    <div class="box amber">
+      <strong>Informasi Teknis</strong>
+      Seluruh ujian tertulis dilaksanakan di <strong>Lab Komputer</strong> dengan 3 sesi per hari. Durasi per sesi <strong>90 menit</strong>, jumlah soal <strong>40 soal pilihan ganda</strong> per mata pelajaran.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Mata Pelajaran</th><th>Jumlah Soal</th><th>Level Kognitif</th><th>Catatan</th></tr></thead>
+        <tbody>
+          <tr><td>Matematika</td><td>40 soal</td><td>A (20), B (10), C (10)</td><td>Fokus pemahaman konsep & penerapan</td></tr>
+          <tr><td>Bahasa Indonesia</td><td>40 soal</td><td>A (15), B (15), C (10)</td><td>Teks bacaan & pemahaman wacana</td></tr>
+          <tr><td>IPAS</td><td>40 soal</td><td>A (20), B (12), C (8)</td><td>Sains & sosial terintegrasi</td></tr>
+          <tr><td>Pendidikan Pancasila</td><td>40 soal</td><td>A (20), B (12), C (8)</td><td>Kasus kontekstual</td></tr>
+          <tr><td>Bahasa Inggris</td><td>40 soal</td><td>A (20), B (12), C (8)</td><td>Reading & vocabulary</td></tr>
+          <tr><td>TIK</td><td>40 soal</td><td>A (25), B (10), C (5)</td><td>Aplikasi & konsep digital</td></tr>
+          <tr><td>Bahasa Sunda</td><td>40 soal</td><td>A (20), B (12), C (8)</td><td>Aksara & budaya Sunda</td></tr>
+          <tr><td>Seni Budaya</td><td>40 soal</td><td>A (25), B (10), C (5)</td><td>Apresiasi & teori seni</td></tr>
+          <tr><td>PJOK</td><td>40 soal</td><td>A (25), B (10), C (5)</td><td>Teori kesehatan & olahraga</td></tr>
+          <tr><td>Al-Islam</td><td>5 soal</td><td>A (3), C (2)</td><td>Pemahaman konsep</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box blue">
+      <strong>Catatan</strong>
+      Soal Al-Islam fokus pada pemahaman konsep, bukan hapalan ayat/hadis. Kompetensi ibadah ritual diasesmen terpisah melalui praktik langsung.
+    </div>
+
+    <h2>Mengelola Stres Siswa</h2>
+    <ul>
+      <li><strong>Transparansi kriteria:</strong> "Kamu tidak akan dihukum karena lupa tahun 1825. Yang dinilai adalah pemahamanmu tentang nilai perjuangan."</li>
+      <li><strong>Framing ulang makna:</strong> "Ujian ini bukan tentang menghafal. Ini kesempatan menunjukkan cara berpikir jernih."</li>
+      <li><strong>Latihan bermakna:</strong> Diskusi kelompok tentang "Mengapa jawaban ini lebih tepat daripada yang lain?"</li>
+    </ul>
+  </div>
+
+  <!-- TAB 5: ISMUBA -->
+  <div id="ismuba" class="panel">
+    <h2>Integrasi Nilai Muhammadiyah</h2>
+    <p>Kami menghormati otonomi guru ISMUBA. Integrasi dilakukan secara natural, bukan dipaksakan dalam tema projek.</p>
+
+    <h3>Al-Islam: Kompetensi Ibadah sebagai Fondasi Spiritual</h3>
+    <p>Guru Al-Islam fokus pada <strong>kompetensi ibadah ritual</strong> (shalat, baca Al-Qur'an, hafalan surah) sebagai bekal spiritual seumur hidup siswa.</p>
+    <div class="box green">
+      <strong>Asesmen Al-Islam</strong>
+      Dilakukan melalui <strong>praktik langsung</strong>: demonstrasi shalat, tilawah Al-Qur'an, dan hafalan surah—bukan melalui soal tertulis atau projek.
+    </div>
+    <p><strong>Koneksi natural (tanpa pemaksaan):</strong></p>
+    <ul>
+      <li>Siswa yang projeknya terkait lingkungan dapat mengaitkan dengan nilai <em>khalifah fil ardh</em> (menjaga bumi)</li>
+      <li>Siswa yang projeknya terkait ekonomi dapat merefleksikan nilai sedekah</li>
+      <li>Koneksi ini muncul dari kesadaran siswa, bukan dari instruksi guru</li>
+    </ul>
+
+    <h3>Kemuhammadiyahan: Bakti Sosial sebagai Ekspresi Karakter</h3>
+    <p>Guru Kemuhammadiyahan menyelenggarakan <strong>projek bakti sosial berkelompok terpisah</strong> sebagai puncak pengamalan nilai Muhammadiyah.</p>
+    <div class="box blue">
+      <strong>Titik Koneksi</strong>
+      Hasil projek inti dapat disumbangkan dalam kegiatan bakti sosial. Refleksi akhir mencakup: "Bagaimana projek ini bermanfaat bagi sesama?"
+    </div>
+    <div class="box amber">
+      <strong>Catatan Penting</strong>
+      Projek Kemuhammadiyahan dilaksanakan di luar waktu proyek inti—tidak perlu masuk waktu proyek akademik.
+    </div>
+
+    <h3>Munaqasah III</h3>
+    <p>Dilaksanakan pada 9–12 April 2026 sebagai presentasi hafalan & pemahaman Al-Qur'an. Merupakan asesmen kompetensi ibadah yang terpisah dari projek akademik.</p>
+  </div>
+
+  <!-- TAB 6: JADWAL -->
+  <div id="jadwal" class="panel">
+    <h2>Jadwal Lengkap Ujian & Kegiatan Akademik</h2>
+    <p>Timeline seluruh kegiatan penilaian dan ujian untuk siswa kelas 6 tahun pelajaran 2025/2026.</p>
+
+    <div class="box amber">
+      <strong>Catatan Teknis</strong>
+      Seluruh ujian tertulis di <strong>Lab Komputer</strong>, 3 sesi per hari, durasi <strong>90 menit/sesi</strong>, 40 soal per mata pelajaran. Hadir 15 menit sebelum sesi dimulai.
+    </div>
+
+    <h2>Legenda</h2>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#00BCD4"></div>Pendalaman Materi (PM)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2196F3"></div>Try Out (TO)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FF9800"></div>Ujian Praktik (UP)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#9C27B0"></div>TKA</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1a5c35"></div>Ujian Sekolah (US)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#795548"></div>UAM</div>
+    </div>
+
+    <h2>Timeline Maret – Mei 2026</h2>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot" style="background:#2196F3"></div><div class="tl-body"><span class="tl-date" style="background:#2196F3">4 & 6 Maret</span><div class="tl-title">Try Out Final TKA (TO 4)</div><div class="tl-desc">Lab Komputer · 3 sesi/hari · Day 1: Matematika, Day 2: B. Indonesia</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:#2196F3"></div><div class="tl-body"><span class="tl-date" style="background:#2196F3">31 Mar – 2 Apr</span><div class="tl-title">Try Out Ujian Sekolah</div><div class="tl-desc">Al-Islam, PP, Seni Budaya, IPAS, B. Arab, PJOK · Lab Komputer</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:#FF9800"></div><div class="tl-body"><span class="tl-date" style="background:#FF9800">6–15 April</span><div class="tl-title">Ujian Praktik</div><div class="tl-desc">PJOK, B. Arab, TIK, Seni Budaya, Al-Islam · Lokasi bervariasi</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:#795548"></div><div class="tl-body"><span class="tl-date" style="background:#795548">9–12 April</span><div class="tl-title">Munaqasah III</div><div class="tl-desc">Presentasi hafalan & pemahaman Al-Qur'an</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:#9C27B0"></div><div class="tl-body"><span class="tl-date" style="background:#9C27B0">20–21 April</span><div class="tl-title">Tes Kemampuan Akademik (TKA)</div><div class="tl-desc">Lab Komputer · 3 sesi/hari · Day 1: Matematika, Day 2: B. Indonesia</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><span class="tl-date">22–30 April</span><div class="tl-title">Pelaksanaan Projek Siswa</div><div class="tl-desc">PP, B. Indonesia, B. Inggris, MTK, IPAS, B. Sunda</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:#1a5c35"></div><div class="tl-body"><span class="tl-date" style="background:#1a5c35">4 Mei</span><div class="tl-title">Ujian Sekolah Hari 1</div><div class="tl-desc">Pendidikan Pancasila & Bahasa Inggris</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:#1a5c35"></div><div class="tl-body"><span class="tl-date" style="background:#1a5c35">5 Mei</span><div class="tl-title">Ujian Sekolah Hari 2</div><div class="tl-desc">Bahasa Indonesia & PJOK</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:#1a5c35"></div><div class="tl-body"><span class="tl-date" style="background:#1a5c35">6 Mei</span><div class="tl-title">Ujian Sekolah Hari 3</div><div class="tl-desc">TIK</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:#1a5c35"></div><div class="tl-body"><span class="tl-date" style="background:#1a5c35">7 Mei</span><div class="tl-title">Ujian Sekolah Hari 4</div><div class="tl-desc">IPAS</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:#1a5c35"></div><div class="tl-body"><span class="tl-date" style="background:#1a5c35">8 Mei</span><div class="tl-title">Ujian Sekolah Hari 5</div><div class="tl-desc">Matematika</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:#1a5c35"></div><div class="tl-body"><span class="tl-date" style="background:#1a5c35">11 Mei</span><div class="tl-title">Ujian Sekolah Hari 6</div><div class="tl-desc">Bahasa Sunda & Seni Budaya</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:#795548"></div><div class="tl-body"><span class="tl-date" style="background:#795548">12–13 Mei</span><div class="tl-title">Ujian Akhir Madrasah (UAM)</div><div class="tl-desc">Al-Islam, Kemuhammadiyahan, Bahasa Arab</div></div></div>
+    </div>
+
+    <h2>Ringkasan Ujian</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>No</th><th>Jenis Ujian</th><th>Mata Pelajaran</th><th>Tanggal</th><th>Lokasi</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Try Out TKA</td><td>Matematika, B. Indonesia</td><td>4 & 6 Maret</td><td>Lab Komputer</td></tr>
+          <tr><td>2</td><td>Try Out US</td><td>Al-Islam, PP, SB, IPAS, B. Arab, PJOK</td><td>31 Mar – 2 Apr</td><td>Lab Komputer</td></tr>
+          <tr><td>3</td><td>Ujian Praktik</td><td>PJOK, B. Arab, TIK, SB, Al-Islam</td><td>6–15 April</td><td>Bervariasi</td></tr>
+          <tr><td>4</td><td>TKA</td><td>Matematika, B. Indonesia</td><td>20–21 April</td><td>Lab Komputer</td></tr>
+          <tr><td>5</td><td>Ujian Sekolah</td><td>PP, B. Indo, B. Ing, TIK, IPAS, MTK, B. Sunda, SB</td><td>4–11 Mei</td><td>Lab Komputer</td></tr>
+          <tr><td>6</td><td>UAM</td><td>Al-Islam, Kemuhammadiyahan, B. Arab</td><td>12–13 Mei</td><td>Lab Komputer</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box green">
+      <strong>Tips untuk Orang Tua</strong>
+      <ul style="margin-top:6px; padding-left:18px;">
+        <li>Pastikan siswa istirahat cukup sebelum hari ujian</li>
+        <li>Periksa jadwal ujian setiap minggu untuk menghindari konflik</li>
+        <li>Dukung siswa dalam mengerjakan projek tanpa mengambil alih</li>
+        <li>Hubungi wali kelas jika ada pertanyaan mengenai jadwal</li>
+      </ul>
+    </div>
+
+    <div class="box amber">
+      <strong>Kontak Penting</strong>
+      Silakan hubungi <strong>Wali Kelas 6</strong> atau <strong>Bagian Kurikulum SD Muhammadiyah 01 Kukusan</strong> untuk informasi lebih lanjut.
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    SD Muhammadiyah 01 Kukusan &nbsp;·&nbsp; Program Ujian Sekolah &nbsp;·&nbsp; Tahun Pelajaran 2025/2026
+  </footer>
+
+  <script>
+    function openTab(evt, id) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      evt.currentTarget.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
