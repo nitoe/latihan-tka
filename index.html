@@ -15,6 +15,9 @@
       --green-light: #def7ec;
       --amber:       #d97706;
       --amber-light: #fef3c7;
+      --orange:      #ea580c;
+      --orange-dark: #c2410c;
+      --orange-light:#fff7ed;
       --text:        #1f2a37;
       --text-muted:  #6b7280;
       --bg:          #f0f4ff;
@@ -154,6 +157,9 @@
     @media (min-width: 560px) {
       .programs-grid { grid-template-columns: 1fr 1fr; }
     }
+    @media (min-width: 820px) {
+      .programs-grid { grid-template-columns: 1fr 1fr 1fr; }
+    }
 
     .program-card {
       background: var(--white);
@@ -170,21 +176,24 @@
 
     .program-card:nth-child(1) { animation-delay: 0.05s; }
     .program-card:nth-child(2) { animation-delay: 0.15s; }
+    .program-card:nth-child(3) { animation-delay: 0.25s; }
 
     .program-card:hover {
       transform: translateY(-6px);
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
     }
 
-    .program-card.us:hover  { border-color: #a7f3d0; }
-    .program-card.tka:hover { border-color: #bfdbfe; }
+    .program-card.us:hover    { border-color: #a7f3d0; }
+    .program-card.tka:hover   { border-color: #bfdbfe; }
+    .program-card.ucoba:hover { border-color: #fed7aa; }
 
     .card-banner {
       height: 7px;
     }
 
-    .program-card.us  .card-banner { background: linear-gradient(90deg, #046c4e, #057a55, #10b981); }
-    .program-card.tka .card-banner { background: linear-gradient(90deg, #1e429f, #1a56db, #3b82f6); }
+    .program-card.us    .card-banner { background: linear-gradient(90deg, #046c4e, #057a55, #10b981); }
+    .program-card.tka   .card-banner { background: linear-gradient(90deg, #1e429f, #1a56db, #3b82f6); }
+    .program-card.ucoba .card-banner { background: linear-gradient(90deg, #c2410c, #ea580c, #fb923c); }
 
     .card-body {
       padding: 24px 22px 22px;
@@ -199,8 +208,9 @@
       margin-bottom: 14px;
     }
 
-    .program-card.us  .card-icon { background: var(--green-light); }
-    .program-card.tka .card-icon { background: var(--blue-light);  }
+    .program-card.us    .card-icon { background: var(--green-light);  }
+    .program-card.tka   .card-icon { background: var(--blue-light);   }
+    .program-card.ucoba .card-icon { background: var(--orange-light); }
 
     .card-title {
       font-family: 'Baloo 2', cursive;
@@ -209,8 +219,9 @@
       margin-bottom: 4px;
     }
 
-    .program-card.us  .card-title { color: var(--green-dark); }
-    .program-card.tka .card-title { color: var(--blue-dark);  }
+    .program-card.us    .card-title { color: var(--green-dark);  }
+    .program-card.tka   .card-title { color: var(--blue-dark);   }
+    .program-card.ucoba .card-title { color: var(--orange-dark); }
 
     .card-subtitle {
       font-size: 0.75rem; font-weight: 600;
@@ -231,8 +242,9 @@
       padding: 3px 10px; border-radius: 10px;
     }
 
-    .program-card.us  .tag { background: var(--green-light); color: var(--green-dark); }
-    .program-card.tka .tag { background: var(--blue-light);  color: var(--blue-dark);  }
+    .program-card.us    .tag { background: var(--green-light);  color: var(--green-dark);  }
+    .program-card.tka   .tag { background: var(--blue-light);   color: var(--blue-dark);   }
+    .program-card.ucoba .tag { background: var(--orange-light); color: var(--orange-dark); }
 
     .card-cta {
       display: flex; align-items: center; justify-content: space-between;
@@ -242,8 +254,9 @@
       transition: opacity 0.15s;
     }
 
-    .program-card.us  .card-cta { background: var(--green-light); color: var(--green-dark); }
-    .program-card.tka .card-cta { background: var(--blue-light);  color: var(--blue-dark);  }
+    .program-card.us    .card-cta { background: var(--green-light);  color: var(--green-dark);  }
+    .program-card.tka   .card-cta { background: var(--blue-light);   color: var(--blue-dark);   }
+    .program-card.ucoba .card-cta { background: var(--orange-light); color: var(--orange-dark); }
 
     .card-cta:hover { opacity: 0.8; }
     .arrow { font-size: 1rem; }
@@ -383,7 +396,7 @@
     <div class="hero-pills">
       <div class="pill">🗓️ Ujian: Apr – Mei 2026</div>
       <div class="pill">💻 Lab Komputer</div>
-      <div class="pill">📚 2 Program Utama</div>
+      <div class="pill">📚 3 Program</div>
     </div>
   </section>
 
@@ -413,6 +426,29 @@
           </div>
           <div class="card-cta">
             <span>Lihat Info Ujian Sekolah</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- UJI COBA UJIAN SEKOLAH -->
+      <a class="program-card ucoba" href="uji-coba-us/">
+        <div class="card-banner"></div>
+        <div class="card-body">
+          <div class="card-icon">✏️</div>
+          <div class="card-title">Uji Coba Ujian Sekolah</div>
+          <div class="card-subtitle">Latihan soal per mata pelajaran</div>
+          <p class="card-desc">
+            Latihan mandiri menghadapi Ujian Sekolah. Pilih mata pelajaran, masukkan PIN dari guru, dan kerjakan soal dengan koreksi otomatis.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Al-Islam</span>
+            <span class="tag">IPAS</span>
+            <span class="tag">Bahasa Arab</span>
+            <span class="tag">31 Mar – 2 Apr</span>
+          </div>
+          <div class="card-cta">
+            <span>Mulai Uji Coba US</span>
             <span class="arrow">→</span>
           </div>
         </div>
