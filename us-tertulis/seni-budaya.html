@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Sekolah Tertulis – Seni Budaya · SD Muhammadiyah 01 Kukusan</title>
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-light: #f5f3ff;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #334155;
+            --bg: #faf5ff;
+            --border: #cbd5e1;
+        }
+        * { box-sizing: border-box; outline: none; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+        .app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+        .header { height: 64px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 50; flex-shrink: 0; }
+        .header-title { font-weight: 700; font-size: 1.15rem; }
+        .timer-box { background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 6px; font-weight: 700; font-family: monospace; font-size: 1.25rem; border: 1px solid rgba(255,255,255,0.2); }
+        .workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+        .main-stage { flex: 1; position: relative; background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+        .slide { display: none !important; width: 100%; height: 100%; }
+        .slide.active { display: flex !important; flex-direction: column; animation: fadeIn 0.4s ease; }
+        .center-content-wrapper { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); padding: 32px; margin-bottom: 20px; border-top: 5px solid var(--primary); }
+        .quiz-scroll-area { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; width: 100%; max-width: 900px; margin: 0 auto; }
+        .nav-bar-fixed { flex-shrink: 0; background: white; padding: 16px 24px; border-top: 1px solid #e2e8f0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; z-index: 40; }
+        .question-item { display: none; }
+        .question-item.active-q { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
+        .stimulus-box { background: #ffffff; border: 1px solid #e2e8f0; border-left: 5px solid var(--primary); padding: 20px; margin-bottom: 24px; border-radius: 8px; }
+        .stimulus-head { font-weight: 800; color: var(--primary); border-bottom: 2px dashed #e2e8f0; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; }
+        .visual-frame { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; display: flex; justify-content: center; align-items: center; margin: 15px 0; overflow: hidden; }
+        .q-text { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.6; }
+        .tag-cat { display: inline-block; font-size: 0.75rem; background: #ede9fe; color: #7c3aed; padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+        .opt-label { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s; font-size: 1rem; color: #475569; }
+        .opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        .opt-label input { margin-top: 4px; transform: scale(1.2); flex-shrink: 0; }
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 320px; }
+        .matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 12px; }
+        .matrix-table th { background: #f1f5f9; text-align: center; }
+        .matrix-table td { text-align: center; }
+        .matrix-table td:first-child { text-align: left; font-weight: 500; }
+        .side-panel { width: 300px; background: white; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; flex-shrink: 0; z-index: 40; }
+        .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 20px; overflow-y: auto; }
+        .nav-num { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; color: #64748b; transition: all 0.2s; }
+        .nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        .nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.15); color: var(--primary); }
+        .nav-num.filled { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .nav-num.filled.current { border: 3px solid #7c3aed !important; }
+        input[type="text"], select { width: 100%; padding: 14px; margin: 8px 0 20px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+        .btn:hover { background: #6d28d9; }
+        .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+        .btn-outline:hover { background: #f8fafc; }
+        .btn-danger { background: var(--danger); }
+        .chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+        .chart-lbl { width: 140px; font-size: 0.82rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+        .chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+        .chart-fill { height: 100%; transition: width 1s ease-out; }
+        .chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; }
+        .modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+        .pin-input-wrap { position: relative; margin-bottom: 10px; }
+        .pin-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+        #inp-pin { width: 100%; padding: 14px 14px 14px 44px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1.1rem; font-weight: 700; letter-spacing: .15em; font-family: monospace; color: var(--text); transition: border-color .2s; }
+        #inp-pin:focus { border-color: var(--primary); }
+        #inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+        #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+        .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+        .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        @media (max-width: 768px) {
+            .workspace { flex-direction: column; }
+            .side-panel { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+            .nav-grid { max-height: 120px; padding: 10px; }
+            .chart-lbl { width: 100px; font-size: 0.75rem; }
+            .header-title { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <div class="header-title">Ujian Sekolah – Seni Budaya (Seni Rupa & Seni Musik)</div>
+        <div style="display:flex;align-items:center;gap:15px;">
+            <div id="user-badge" style="display:none;font-size:0.85rem;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+            <div class="timer-box" id="timer-display">--:--</div>
+        </div>
+    </div>
+    <div class="workspace">
+        <div class="main-stage">
+            <!-- ① SLIDE PIN -->
+            <div id="slide-pin" class="slide active">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+                        <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+                        <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">Masukkan PIN dari guru untuk membuka<br><strong>Ujian Sekolah Tertulis Seni Budaya</strong></p>
+                        <div class="pin-input-wrap">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="inp-pin" placeholder="PIN ujian…" maxlength="30" autocomplete="off" onkeydown="if(event.key==='Enter') app.checkPin()">
+                        </div>
+                        <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+                        <button class="btn" style="width:100%" onclick="app.checkPin()">Buka Ujian →</button>
+                    </div>
+                </div>
+            </div>
+            <!-- ② SLIDE LOGIN -->
+            <div id="slide-login" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+                        <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+                        <p style="color:#64748b;margin-bottom:30px;">Ujian Sekolah Tertulis – Seni Budaya (Fase C)</p>
+                        <div style="text-align:left;">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+                            <label>Kelas</label>
+                            <select id="inpKelas">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="6A">Kelas 6A</option>
+                                <option value="6B">Kelas 6B</option>
+                            </select>
+                        </div>
+                        <button class="btn" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+                        <div id="resume-alert" style="display:none;margin-top:20px;padding:10px;background:#f5f3ff;color:#7c3aed;border-radius:8px;cursor:pointer;font-size:0.9rem;" onclick="app.resume()">
+                            🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ③ SLIDE PETUNJUK -->
+            <div id="slide-rules" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:700px;margin:0 auto;">
+                        <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;padding-bottom:15px;color:var(--primary);">Petunjuk Pengerjaan</h2>
+                        <div style="line-height:1.8;color:#334155;">
+                            <p>1. <strong>Waktu:</strong> <strong>90 Menit</strong>. Ujian dikumpulkan otomatis saat waktu habis.</p>
+                            <p>2. <strong>Soal:</strong> <strong>40 butir soal</strong> — Seni Rupa (Soal 1–20) dan Seni Musik (Soal 21–40).</p>
+                            <p>3. <strong>Format:</strong> PG Tunggal, PG Kompleks (lebih dari satu jawaban), dan PG Kategori (menjodohkan).</p>
+                            <p>4. <strong>Tips:</strong> Amati gambar/ilustrasi dan deskripsi dengan cermat sebelum menjawab — soal mengukur kemampuan analisis visual dan musikal, bukan hafalan nama tokoh.</p>
+                            <p>5. <strong>Dilarang:</strong> Menutup atau me-refresh halaman selama ujian.</p>
+                        </div>
+                        <div style="margin-top:30px;text-align:right;">
+                            <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ④ SLIDE KUIS -->
+            <div id="slide-quiz" class="slide">
+                <div id="quiz-scroll" class="quiz-scroll-area">
+                    <div id="quiz-container"></div>
+                </div>
+                <div class="nav-bar-fixed">
+                    <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+                    <span id="q-indicator" style="font-weight:700;color:var(--primary);">Soal 1 / 40</span>
+                    <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+                </div>
+            </div>
+            <!-- ⑤ SLIDE HASIL -->
+            <div id="slide-result" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:600px;margin:0 auto;text-align:center;">
+                        <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+                        <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+                        <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
+                        <div id="result-content" style="text-align:left;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
+                            <p style="text-align:center;color:#64748b;">Sedang memproses nilai...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- SIDEBAR -->
+        <div class="side-panel" id="sidebar" style="display:none;">
+            <div style="padding:15px 20px;font-weight:700;color:#334155;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                <span>Navigasi Soal</span>
+                <span style="font-size:0.8rem;background:#ede9fe;color:#7c3aed;padding:2px 8px;border-radius:10px;">40 Butir</span>
+            </div>
+            <div class="nav-grid" id="nav-grid"></div>
+            <div style="padding:20px;border-top:1px solid #e2e8f0;margin-top:auto;background:#f8fafc;">
+                <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Selesai Ujian</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-confirm" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+        <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+            <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Cek Lagi</button>
+            <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+        </div>
+    </div>
+</div>
+<div id="modal-loading" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+        <div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top:4px solid var(--primary);border-radius:50%;margin:10px auto;animation:spin 1s linear infinite;"></div>
+        <p>Mohon jangan tutup halaman ini.</p>
+    </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  Untuk mengganti PIN: hashPin("PIN_BARU").then(h => console.log(h))
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    STORAGE_KEY: "UST_2026_SENI_BUDAYA",
+    DURATION:    90 * 60,
+    PIN_HASH:    "672f187e25025646"
+};
+
+async function hashPin(pin) {
+    const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16);
+}
+window.hashPin = hashPin;
+
+// ── Aset Gambar — semua REUSE dari uji-coba (konsep identik) ────────────────
+const IMAGE_ASSETS = {
+    "unsur_rupa_alam":       "https://i.ibb.co.com/39bPbhz3/01-unsur-rupa-alam-25.png",
+    "campuran_warna":        "https://i.ibb.co.com/N2Kh1p8C/02-campuran-warna-1-25.png",
+    "keseimbangan_karya":    "https://i.ibb.co.com/TxVpJQrW/03-keseimbangan-karya-1-25.png",
+    "tekstur_permukaan":     "https://i.ibb.co.com/fG0mXf2p/04-tekstur-permukaan-2-25.png",
+    "alat_seni_rupa":        "https://i.ibb.co.com/QFyqFfH0/05-alat-seni-rupa-1-25.png",
+    "lingkungan_sekolah":    "https://i.ibb.co.com/C3zqSq9Q/06-lingkungan-sekolah-1-25.png",
+    "tekstur_permukaan_2":   "https://i.ibb.co.com/hR3JykjV/11-tekstur-permukaan-1-25.png",
+    "batik":                 "https://i.ibb.co.com/yFKXw85y/12-batik-25.png",
+    "teknik_seni_rupa":      "https://i.ibb.co.com/4wKc7Jn0/13-teknik-seni-rupa.png",
+    "notasi_ritme":          "https://i.ibb.co.com/NgFNgPYr/07-notasi-ritme-1-25.png",
+    "simbol_dinamika":       "https://i.ibb.co.com/x8gd2YMg/09-simbol-dinamika-1-25.png",
+    "alat_musik_tradisional":"https://i.ibb.co.com/XZdKwyC3/08-alat-musik-tradisional-1-25.png",
+    "ansambel_musik":        "https://i.ibb.co.com/4Z4qTJNh/10-ansambel-musik-1-25.png"
+};
+function getImg(key, alt="Ilustrasi Soal") {
+    const url = IMAGE_ASSETS[key];
+    if (!url) return `<div style="background:#fef3c7;padding:15px;border-radius:8px;text-align:center;border:1px solid #f59e0b;">⚠️ Gambar tidak tersedia</div>`;
+    return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+// ════════════════════════════════════════════════════════
+//  BANK SOAL — 40 Butir
+//  Sesi 1: Seni Rupa (1–20) | Sesi 2: Seni Musik (21–40)
+// ════════════════════════════════════════════════════════
+const QUESTIONS = [
+
+// ─── SESI 1: SENI RUPA (Soal 1–20) ───────────────────────────────────────────
+
+// ── PG Tunggal 1–10 ──────────────────────────────────────────────────────────
+
+{   id:1, cat:"Seni Rupa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Analisis Unsur Rupa Objek Alam</div>
+    <div class='visual-frame'>${getImg("unsur_rupa_alam","Objek Alam: Daun, Batu, Kayu")}</div>
+    <p>Perhatikan tiga objek alam di atas: daun, batu, dan kayu. Setiap objek menampilkan unsur rupa yang dominan berbeda-beda. Seorang siswa ingin menggambar ketiga objek tersebut dan bertanya kepada gurunya: <em>"Unsur rupa apa yang paling membedakan karakter visual daun dibandingkan batu?"</em></p></div>`,
+    q:"Berdasarkan pengamatan visual terhadap objek alam tersebut, perbedaan unsur rupa yang paling mencolok antara daun dan batu terletak pada...",
+    opt:["Daun didominasi garis lengkung dan bidang organis, sedangkan batu cenderung menampilkan bentuk masif tanpa tepi yang tegas","Daun memiliki warna yang lebih gelap dan ukuran yang lebih besar dari batu","Batu menampilkan lebih banyak garis lurus dibandingkan daun yang tidak memiliki garis sama sekali","Keduanya menampilkan unsur rupa yang identik karena sama-sama berasal dari alam"],
+    ans:"Daun didominasi garis lengkung dan bidang organis, sedangkan batu cenderung menampilkan bentuk masif tanpa tepi yang tegas"
+},
+
+{   id:2, cat:"Seni Rupa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Teori Warna: Campuran dan Kategori</div>
+    <div class='visual-frame'>${getImg("campuran_warna","Diagram Roda Warna")}</div>
+    <p>Perhatikan diagram roda warna di atas. Warna primer adalah warna yang tidak dapat dihasilkan dari campuran warna lain (merah, kuning, biru). Warna sekunder dihasilkan dari campuran dua warna primer. Warna tersier dihasilkan dari campuran warna primer dengan warna sekunder yang berdekatan di roda warna.</p></div>`,
+    q:"Berdasarkan teori warna tersebut, manakah pernyataan yang paling tepat?",
+    opt:["Campuran merah dan biru menghasilkan warna tersier karena keduanya adalah warna primer","Campuran biru dan kuning menghasilkan warna sekunder hijau, yang kemudian bila dicampur dengan biru akan menghasilkan warna tersier biru-hijau","Warna oranye adalah warna tersier karena dihasilkan dari campuran merah dan kuning","Semua warna dapat dikategorikan sebagai warna primer bila digunakan dalam jumlah yang cukup"],
+    ans:"Campuran biru dan kuning menghasilkan warna sekunder hijau, yang kemudian bila dicampur dengan biru akan menghasilkan warna tersier biru-hijau"
+},
+
+{   id:3, cat:"Seni Rupa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Prinsip Keseimbangan dalam Komposisi</div>
+    <div class='visual-frame'>${getImg("keseimbangan_karya","Dua Komposisi Karya Seni")}</div>
+    <p>Perhatikan dua komposisi karya di atas. <strong>Karya A</strong> menampilkan bentuk-bentuk yang identik antara sisi kiri dan kanan. <strong>Karya B</strong> menampilkan objek besar di sisi kiri dan beberapa objek kecil di sisi kanan, namun secara keseluruhan terasa seimbang karena distribusi beban visualnya setara.</p></div>`,
+    q:"Mengapa Karya B tetap dianggap memiliki keseimbangan yang baik meskipun kiri dan kanan tidak identik?",
+    opt:["Karena Karya B dibuat oleh seniman yang lebih berpengalaman sehingga hasilnya pasti seimbang","Karena satu objek besar di kiri diimbangi oleh beberapa objek kecil di kanan yang secara kolektif memiliki bobot visual setara — ini disebut keseimbangan asimetris","Karena warna yang digunakan di Karya B lebih cerah sehingga menutupi ketidakseimbangan bentuk","Karena keseimbangan asimetris hanya berlaku untuk karya abstrak, bukan karya figuratif"],
+    ans:"Karena satu objek besar di kiri diimbangi oleh beberapa objek kecil di kanan yang secara kolektif memiliki bobot visual setara — ini disebut keseimbangan asimetris"
+},
+
+{   id:4, cat:"Seni Rupa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Prinsip Kesatuan dalam Karya Kolase</div>
+    <p>Dua siswa membuat karya kolase dari potongan kertas berwarna. <strong>Karya Rena:</strong> Semua potongan menggunakan palet warna biru-hijau, tersusun membentuk siluet ikan yang jelas, dengan variasi ukuran potongan yang ritmis dari besar ke kecil. <strong>Karya Tono:</strong> Menggunakan 12 warna berbeda secara acak, potongan ditempatkan tanpa pola, tema tidak jelas, dan ukuran potongan bervariasi tanpa aturan.</p></div>`,
+    q:"Berdasarkan prinsip kesatuan (unity) dalam desain, mengapa Karya Rena lebih unggul dari Karya Tono?",
+    opt:["Karena Karya Rena menggunakan lebih sedikit warna, dan sedikit warna selalu menghasilkan karya yang lebih baik","Karena Karya Rena menunjukkan kohesi visual melalui konsistensi palet warna, tema yang terpusat, dan ritme ukuran yang membangun kesan satu-kesatuan","Karena ikan adalah tema yang lebih mudah dibuat dibandingkan tema abstrak","Karena Karya Tono menggunakan terlalu banyak bahan sehingga terlalu berat dan tidak seimbang"],
+    ans:"Karena Karya Rena menunjukkan kohesi visual melalui konsistensi palet warna, tema yang terpusat, dan ritme ukuran yang membangun kesan satu-kesatuan"
+},
+
+{   id:5, cat:"Seni Rupa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Analisis Teknik Menggambar Tekstur</div>
+    <div class='visual-frame'>${getImg("tekstur_permukaan","Berbagai Teknik Tekstur Menggambar")}</div>
+    <p>Perhatikan gambar di atas yang menampilkan hasil karya dengan berbagai efek tekstur. Bagian kiri menampilkan deretan titik-titik kecil dengan kepadatan berbeda untuk menciptakan gradasi terang-gelap. Bagian tengah menampilkan garis-garis paralel yang semakin rapat. Bagian kanan menampilkan permukaan yang tampak halus karena bidang warna digesek hingga menyatu.</p></div>`,
+    q:"Seniman yang ingin menciptakan kesan bulu hewan dengan gradasi halus dari gelap ke terang, teknik manakah yang paling tepat digunakan berdasarkan gambar di atas?",
+    opt:["Teknik arsir dengan garis lurus, karena menghasilkan tekstur yang paling kuat dan tegas","Teknik dusel (gosok), karena menghasilkan transisi halus antara area gelap dan terang yang menyerupai bulu","Teknik pointilis, karena titik-titik dapat disusun membentuk pola bulu yang sangat detail","Teknik aquarel, karena warna transparan lebih mudah diaplikasikan pada permukaan berbulu"],
+    ans:"Teknik dusel (gosok), karena menghasilkan transisi halus antara area gelap dan terang yang menyerupai bulu"
+},
+
+{   id:6, cat:"Seni Rupa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Pemilihan Alat untuk Teknik Cetak Tinggi</div>
+    <div class='visual-frame'>${getImg("alat_seni_rupa","Berbagai Alat Seni Rupa")}</div>
+    <p>Perhatikan gambar berbagai alat seni rupa di atas. Seorang siswa ingin membuat karya cetak tinggi (cukil kayu/hardboard). Proses cetak tinggi melibatkan: (1) menggambar desain pada permukaan bahan, (2) mencukil/membuang bagian yang tidak ingin tercetak, (3) mengaplikasikan tinta pada permukaan yang tersisa, dan (4) mencetak ke kertas. Pemilihan alat yang tepat pada tahap ke-2 sangat menentukan keberhasilan karya.</p></div>`,
+    q:"Alat yang paling tepat untuk tahap ke-2 (mencukil bagian yang tidak tercetak) adalah...",
+    opt:["Kuas cat berukuran kecil, karena lebih mudah dikendalikan untuk area detail yang kecil","Alat cukil (pahat ukir) dengan berbagai mata ukuran, karena dirancang khusus untuk mengangkat material dari permukaan hardboard","Pisau cutter lurus, karena dapat memotong garis lurus dengan lebih presisi","Penggaris logam, karena membantu menghasilkan lekukan yang konsisten di seluruh permukaan"],
+    ans:"Alat cukil (pahat ukir) dengan berbagai mata ukuran, karena dirancang khusus untuk mengangkat material dari permukaan hardboard"
+},
+
+{   id:7, cat:"Seni Rupa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Mengembangkan Ide Karya dari Lingkungan Sekolah</div>
+    <div class='visual-frame'>${getImg("lingkungan_sekolah","Foto Lingkungan SD Muhammadiyah 01 Kukusan")}</div>
+    <p>Perhatikan foto lingkungan SD Muhammadiyah 01 Kukusan di atas. Terdapat taman dengan berbagai tanaman, bangunan kelas, pohon besar, pagar, dan koridor. Seorang siswa diminta membuat karya seni rupa tiga dimensi berdasarkan pengamatan langsung terhadap lingkungan sekolah tersebut. Karya harus memanfaatkan bahan-bahan yang tersedia dan mencerminkan identitas sekolah.</p></div>`,
+    q:"Dari pilihan ide di bawah ini, karya seni rupa tiga dimensi yang paling relevan secara konseptual dan layak dibuat oleh siswa SD dari pengamatan foto tersebut adalah...",
+    opt:["Lukisan pemandangan sekolah dengan cat minyak di atas kanvas besar karena lebih realistis","Miniatur taman sekolah dari bahan alam (ranting, daun kering, batu kerikil) karena memanfaatkan material di sekitar dan merepresentasikan identitas sekolah secara tiga dimensi","Patung abstrak dari logam karena paling tahan lama dan bernilai seni tinggi","Mural dinding bertema kehidupan laut karena warnanya lebih menarik dari pemandangan sekolah"],
+    ans:"Miniatur taman sekolah dari bahan alam (ranting, daun kering, batu kerikil) karena memanfaatkan material di sekitar dan merepresentasikan identitas sekolah secara tiga dimensi"
+},
+
+{   id:8, cat:"Seni Rupa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Imajinasi vs Observasi dalam Karya</div>
+    <p>Seorang siswa membuat gambar seekor burung merak. Bagian-bagian berikut ada dalam karyanya: (A) Bentuk tubuh dan kepala merak yang proporsional sesuai anatomi aslinya, (B) Bulu ekor merak dengan pola "mata" yang akurat, (C) Warna biru-hijau metalik pada tubuh sesuai ciri khas merak, (D) Mahkota berwarna emas menjulang tinggi di kepala merak, dan (E) Sayap yang dilipat rapi, tetapi ketika dibentangkan menampilkan peta pulau Jawa yang terbentuk dari susunan bulu-bulunya.</p></div>`,
+    q:"Dari lima komponen karya tersebut, bagian manakah yang merupakan hasil pengembangan imajinasi yang paling dominan dan tidak ditemukan pada merak di alam nyata?",
+    opt:["Bagian A (bentuk tubuh proporsional), karena setiap seniman memaknai bentuk tubuh secara berbeda","Bagian B (pola mata di bulu ekor), karena pola ini terlalu rumit untuk digambar tanpa imajinasi tambahan","Bagian D dan E secara bersamaan, karena mahkota emas dan sayap berisi peta pulau Jawa adalah elemen yang tidak ada pada merak nyata dan merupakan tambahan imajinatif seniman","Bagian C (warna biru-hijau metalik), karena merak asli tidak memiliki warna metalik"],
+    ans:"Bagian D dan E secara bersamaan, karena mahkota emas dan sayap berisi peta pulau Jawa adalah elemen yang tidak ada pada merak nyata dan merupakan tambahan imajinatif seniman"
+},
+
+{   id:9, cat:"Seni Rupa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Apresiasi Karya Menggunakan Kosa Kata Seni Rupa</div>
+    <p>Winda menampilkan karya kolasenya kepada kelas. Empat teman memberikan komentar: <br><strong>Komentar Alfa:</strong> "Aku tidak suka karyamu, terlalu banyak warnanya." <br><strong>Komentar Beta:</strong> "Komposisinya sudah seimbang, tapi kamu bisa mencoba memperkuat kontras warna antara objek utama dan latar agar fokus karya lebih terpusat." <br><strong>Komentar Gamma:</strong> "Karyamu paling bagus di kelas!" <br><strong>Komentar Delta:</strong> "Warna-warnanya terlalu mencolok dan mengganggu."</p></div>`,
+    q:"Komentar mana yang paling konstruktif dan menggunakan kosa kata seni rupa secara tepat untuk membantu Winda berkembang?",
+    opt:["Komentar Alfa, karena jujur tentang ketidaksukaan dan langsung pada inti masalah","Komentar Beta, karena menggunakan istilah seni rupa (komposisi, kontras, fokus), mengakui kelebihan, dan memberikan saran perbaikan yang spesifik","Komentar Gamma, karena apresiasi positif memberikan motivasi kepada seniman","Komentar Delta, karena kritik langsung lebih membantu seniman mengetahui kelemahan karyanya"],
+    ans:"Komentar Beta, karena menggunakan istilah seni rupa (komposisi, kontras, fokus), mengakui kelebihan, dan memberikan saran perbaikan yang spesifik"
+},
+
+{   id:10, cat:"Seni Rupa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Memilih Media Karya Sesuai Minat dan Bakat</div>
+    <p>Profil minat tiga siswa: <br><strong>Siswa X:</strong> Suka mendaur ulang sampah, mengumpulkan barang bekas, suka bongkar-pasang benda, dan tertarik pada isu lingkungan. <br><strong>Siswa Y:</strong> Senang bermain dengan tanah, suka membentuk benda tiga dimensi dengan tangan, dan memiliki kesabaran tinggi dalam proses bertahap. <br><strong>Siswa Z:</strong> Suka menggambar di kertas, senang mengamati detail wajah orang, dan memiliki koleksi pensil warna.</p></div>`,
+    q:"Mencocokkan minat dengan media karya yang paling tepat, pasangan yang paling sesuai adalah...",
+    opt:["Siswa X → Patung tanah liat; Siswa Y → Karya daur ulang; Siswa Z → Sketsa potret dengan pensil","Siswa X → Karya daur ulang/instalasi dari bahan bekas; Siswa Y → Patung atau keramik dari tanah liat; Siswa Z → Sketsa atau gambar ilustrasi dengan pensil","Siswa X → Lukisan cat air; Siswa Y → Foto objek alam; Siswa Z → Kolase kain","Semua siswa sebaiknya mencoba media yang sama agar bisa dibandingkan hasilnya"],
+    ans:"Siswa X → Karya daur ulang/instalasi dari bahan bekas; Siswa Y → Patung atau keramik dari tanah liat; Siswa Z → Sketsa atau gambar ilustrasi dengan pensil"
+},
+
+// ── PG Kompleks 11–16 ─────────────────────────────────────────────────────────
+
+{   id:11, cat:"Seni Rupa", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Tekstur Nyata vs Tekstur Semu</div>
+    <div class='visual-frame'>${getImg("tekstur_permukaan_2","Berbagai Permukaan Benda")}</div>
+    <p>Perhatikan gambar di atas. Dalam seni rupa dikenal dua jenis tekstur: <strong>Tekstur Nyata</strong> (terasa bila diraba, ada dimensi fisik) dan <strong>Tekstur Semu/Visual</strong> (hanya terlihat seolah-olah bertekstur secara visual, namun permukaannya tetap halus bila diraba). Kemampuan membedakan keduanya penting dalam apresiasi dan proses berkarya.</p></div>`,
+    q:"Pilih LEBIH DARI SATU permukaan yang termasuk tekstur SEMU (terlihat bertekstur secara visual namun sebenarnya halus bila diraba)!",
+    opt:["Gambar kayu yang dicetak pada permukaan meja laminat halus","Foto batu berpori yang dicetak di atas kertas foto glossy","Permukaan kulit jeruk asli yang kasar dan berbintil","Permukaan kaca frosted yang tampak bertekstur tetapi sebenarnya halus saat disentuh"],
+    ans:["Gambar kayu yang dicetak pada permukaan meja laminat halus","Foto batu berpori yang dicetak di atas kertas foto glossy","Permukaan kaca frosted yang tampak bertekstur tetapi sebenarnya halus saat disentuh"]
+},
+
+{   id:12, cat:"Seni Rupa", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Prinsip Irama dan Proporsi pada Batik</div>
+    <div class='visual-frame'>${getImg("batik","Berbagai Pola Hias Batik")}</div>
+    <p>Perhatikan berbagai pola hias batik di atas. Prinsip <strong>Irama</strong> dalam desain diciptakan melalui pengulangan elemen visual (bentuk, warna, ukuran) secara teratur atau bervariasi. Prinsip <strong>Proporsi</strong> berkaitan dengan hubungan ukuran antarelemen: mana yang lebih besar, lebih kecil, atau setara dalam satu komposisi.</p></div>`,
+    q:"Pilih LEBIH DARI SATU karakteristik pola batik yang menunjukkan penerapan prinsip IRAMA secara visual!",
+    opt:["Motif bunga kecil yang diulang secara teratur mengisi seluruh bidang kain dengan jarak yang konsisten","Motif daun yang ukurannya semakin mengecil dari tepi menuju tengah kain membentuk pola menyatu","Motif garis-garis diagonal yang berulang dengan ketebalan dan jarak yang sama di seluruh permukaan","Satu motif burung besar yang ditempatkan di tengah tanpa pengulangan lain di sekitarnya"],
+    ans:["Motif bunga kecil yang diulang secara teratur mengisi seluruh bidang kain dengan jarak yang konsisten","Motif daun yang ukurannya semakin mengecil dari tepi menuju tengah kain membentuk pola menyatu","Motif garis-garis diagonal yang berulang dengan ketebalan dan jarak yang sama di seluruh permukaan"]
+},
+
+{   id:13, cat:"Seni Rupa", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Teknik Konstruksi dalam Karya 3 Dimensi</div>
+    <div class='visual-frame'>${getImg("teknik_seni_rupa","Berbagai Karya Seni Rupa 3D")}</div>
+    <p>Perhatikan gambar berbagai karya tiga dimensi di atas. Teknik pembuatan karya 3D dibedakan menjadi beberapa jenis: <strong>Teknik Konstruksi/Merakit</strong> — menyambung, menggabungkan, atau menyusun berbagai komponen terpisah. <strong>Teknik Membentuk</strong> — memanipulasi satu bahan utuh menjadi bentuk baru (memijit, menggulung, memahat). <strong>Teknik Cetak/Tuang</strong> — menggunakan cetakan untuk membentuk material.</p></div>`,
+    q:"Pilih LEBIH DARI SATU karya yang dibuat dengan teknik KONSTRUKSI atau MERAKIT (menggabungkan komponen terpisah)!",
+    opt:["Patung las dari potongan besi yang dilas/disambung menjadi satu bentuk","Keramik yang dibentuk dari satu gumpalan tanah liat dengan tangan","Anyaman bambu yang dibuat dari bilah-bilah bambu yang disilangkan dan dikaitkan","Patung perunggu yang dituang dalam cetakan cair kemudian didinginkan"],
+    ans:["Patung las dari potongan besi yang dilas/disambung menjadi satu bentuk","Anyaman bambu yang dibuat dari bilah-bilah bambu yang disilangkan dan dikaitkan"]
+},
+
+{   id:14, cat:"Seni Rupa", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Eksplorasi Bahan Alam untuk Karya Seni</div>
+    <p>Dalam pembelajaran Menciptakan (Creating), siswa diajak mengeksplorasi bahan-bahan yang tersedia di lingkungan sekitar. Bahan alam adalah material yang diperoleh langsung dari alam tanpa proses industri yang signifikan, sedangkan bahan buatan telah melalui proses manufaktur. Penggunaan bahan alam juga berkontribusi pada nilai keberlanjutan lingkungan.</p></div>`,
+    q:"Pilih LEBIH DARI SATU bahan yang termasuk bahan ALAM dan dapat langsung dimanfaatkan untuk karya seni rupa!",
+    opt:["Tanah liat dari tepi sungai untuk membuat patung atau keramik sederhana","Daun kering dan biji-bijian untuk membuat kolase dan mozaik","Styrofoam bekas kemasan elektronik untuk membuat relief","Bambu yang dipotong dan dibelah untuk membuat rangka konstruksi karya 3D"],
+    ans:["Tanah liat dari tepi sungai untuk membuat patung atau keramik sederhana","Daun kering dan biji-bijian untuk membuat kolase dan mozaik","Bambu yang dipotong dan dibelah untuk membuat rangka konstruksi karya 3D"]
+},
+
+{   id:15, cat:"Seni Rupa", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Pemilihan Tema Karya Berbasis Lingkungan</div>
+    <p>Kelas 6 mendapat proyek membuat karya seni rupa dengan tema yang berhubungan dengan konteks kehidupan nyata siswa. Guru menekankan bahwa tema yang baik adalah tema yang: (1) dapat diamati langsung dari lingkungan sekitar, (2) bermakna bagi kehidupan siswa, dan (3) berpotensi dikembangkan menjadi karya yang orisinal.</p></div>`,
+    q:"Pilih LEBIH DARI SATU tema yang paling sesuai dengan kriteria tema berbasis pengalaman dan lingkungan sekitar siswa SD di Depok!",
+    opt:["Keindahan alam Kukusan: sungai, pepohonan, dan sawah yang tersisa di sekitar sekolah","Tradisi dan budaya Betawi yang masih terlihat di lingkungan sekitar Depok","Kehidupan antarplanet dan eksplorasi luar angkasa yang dipelajari dari buku","Aktivitas warga di pasar tradisional dekat sekolah yang dapat diamati langsung"],
+    ans:["Keindahan alam Kukusan: sungai, pepohonan, dan sawah yang tersisa di sekitar sekolah","Tradisi dan budaya Betawi yang masih terlihat di lingkungan sekitar Depok","Aktivitas warga di pasar tradisional dekat sekolah yang dapat diamati langsung"]
+},
+
+{   id:16, cat:"Seni Rupa", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Kosa Kata Seni Rupa dalam Apresiasi Karya</div>
+    <p>Saat melakukan apresiasi karya seni rupa, penggunaan istilah yang tepat sangat penting agar diskusi dapat berjalan secara objektif dan konstruktif. Berbagai istilah dalam seni rupa memiliki makna spesifik yang berbeda dari penggunaan sehari-hari.</p></div>`,
+    q:"Pilih LEBIH DARI SATU istilah yang tepat dan relevan digunakan ketika membahas kualitas visual suatu karya seni rupa!",
+    opt:["Komposisi — merujuk pada cara unsur rupa disusun dalam bidang gambar","Estetika — merujuk pada nilai keindahan dan apresiasi terhadap karya","Perspektif — merujuk pada teknik menggambarkan kedalaman dan jauh-dekat","Kalkulasi — merujuk pada perhitungan matematika untuk menentukan proporsi"],
+    ans:["Komposisi — merujuk pada cara unsur rupa disusun dalam bidang gambar","Estetika — merujuk pada nilai keindahan dan apresiasi terhadap karya","Perspektif — merujuk pada teknik menggambarkan kedalaman dan jauh-dekat"]
+},
+
+// ── PG Kategori 17–20 ─────────────────────────────────────────────────────────
+
+{   id:17, cat:"Seni Rupa", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Unsur Rupa: Garis vs Bidang</div>
+    <p>Dalam seni rupa, <strong>Garis</strong> adalah elemen satu dimensi yang memiliki panjang namun tidak memiliki lebar yang berarti — dicirikan oleh arahnya (lurus, lengkung, zigzag). <strong>Bidang</strong> adalah elemen dua dimensi yang memiliki panjang dan lebar, dibatasi oleh garis-garis tepi, dan dapat berupa bidang geometris maupun organis.</p></div>`,
+    q:"Klasifikasikan setiap elemen visual berikut apakah termasuk Unsur Garis atau Unsur Bidang!",
+    rows:["Garis zigzag yang memotong bidang gambar secara diagonal","Bentuk persegi panjang berwarna merah","Kurva melengkung seperti huruf S"],
+    cols:["Unsur Garis","Unsur Bidang"],
+    ans:["Unsur Garis","Unsur Bidang","Unsur Garis"]
+},
+
+{   id:18, cat:"Seni Rupa", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Teknik Berkarya: 2 Dimensi vs 3 Dimensi</div>
+    <p>Karya seni rupa <strong>2 Dimensi</strong> hanya memiliki panjang dan lebar, dapat dinikmati dari satu sudut pandang (depan), seperti gambar dan lukisan. Karya <strong>3 Dimensi</strong> memiliki panjang, lebar, dan tinggi/kedalaman, dapat dinikmati dari berbagai sudut pandang, seperti patung dan keramik.</p></div>`,
+    q:"Klasifikasikan setiap teknik berkarya berikut apakah menghasilkan karya 2 Dimensi atau 3 Dimensi!",
+    rows:["Membuat relief dinding dengan semen (tonjolan dangkal di permukaan datar)","Menggambar potret wajah dengan pensil di atas kertas","Membuat topeng dari kertas mache (paper mache) yang memiliki kedalaman dan bisa dikenakan"],
+    cols:["2 Dimensi","3 Dimensi"],
+    ans:["3 Dimensi","2 Dimensi","3 Dimensi"]
+},
+
+{   id:19, cat:"Seni Rupa", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Fungsi Karya Seni Rupa</div>
+    <p><strong>Karya Seni Pakai (Terapan)</strong> adalah karya yang memiliki fungsi praktis dalam kehidupan sehari-hari selain nilai estetikanya. <strong>Karya Seni Murni (Hias)</strong> adalah karya yang diciptakan semata-mata untuk dinikmati keindahannya tanpa fungsi praktis. Perlu diperhatikan bahwa beberapa karya bisa bersifat dua-duanya.</p></div>`,
+    q:"Berdasarkan FUNGSI UTAMA yang paling dominan, klasifikasikan setiap benda berikut!",
+    rows:["Kendi dari tanah liat untuk menyimpan dan menuangkan air minum","Lukisan pemandangan alam yang digantung di dinding ruang tamu","Kursi ukir kayu bermotif batik yang digunakan untuk duduk"],
+    cols:["Karya Seni Pakai","Karya Seni Hias/Murni"],
+    ans:["Karya Seni Pakai","Karya Seni Hias/Murni","Karya Seni Pakai"]
+},
+
+{   id:20, cat:"Seni Rupa", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Umpan Balik: Objektif vs Subjektif</div>
+    <p>Dalam apresiasi karya seni, umpan balik <strong>Objektif</strong> didasarkan pada elemen yang dapat diamati dan diukur secara visual (proporsi, komposisi, teknik, penggunaan unsur rupa) — siapa pun yang melihat karya yang sama seharusnya bisa memverifikasinya. Umpan balik <strong>Subjektif</strong> didasarkan pada perasaan, selera, atau preferensi pribadi yang tidak dapat diverifikasi secara universal.</p></div>`,
+    q:"Klasifikasikan setiap komentar berikut apakah bersifat Objektif atau Subjektif!",
+    rows:["Proporsi kepala dalam gambar ini lebih besar dari proporsi kepala manusia normal (1:8)","Karya ini membuatku merasa tenang dan damai","Komposisi karya ini mengikuti aturan sepertiga (rule of thirds) dengan objek utama di titik pertemuan garis bantu"],
+    cols:["Objektif","Subjektif"],
+    ans:["Objektif","Subjektif","Objektif"]
+},
+
+// ─── SESI 2: SENI MUSIK (Soal 21–40) ─────────────────────────────────────────
+
+// ── PG Tunggal 21–30 ─────────────────────────────────────────────────────────
+
+{   id:21, cat:"Seni Musik", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Membaca Pola Ritme dalam Birama 4/4</div>
+    <div class='visual-frame'>${getImg("notasi_ritme","Notasi Ritme dalam Birama 4/4")}</div>
+    <p>Perhatikan notasi ritme dengan tanda birama 4/4 di atas. Dalam birama 4/4, setiap birama berisi 4 ketukan. Not penuh bernilai 4 ketukan, not setengah bernilai 2 ketukan, not seperempat bernilai 1 ketukan, dan not seperdelapan bernilai ½ ketukan.</p></div>`,
+    q:"Sebuah birama 4/4 berisi: 1 not setengah + 2 not seperempat. Berapa ketukan tersisa yang MASIH BOLEH diisi dengan not lain agar birama tersebut penuh dan valid?",
+    opt:["Tidak ada ketukan tersisa, birama sudah penuh karena 2+1+1=4","0 ketukan, tetapi polanya tidak valid karena tidak ada not penuh","Masih ada 2 ketukan tersisa karena baru terisi 1+1 = 2 ketukan","Tidak dapat ditentukan tanpa melihat not berikutnya"],
+    ans:"Tidak ada ketukan tersisa, birama sudah penuh karena 2+1+1=4"
+},
+
+{   id:22, cat:"Seni Musik", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Tempo dan Karakter Musik</div>
+    <p>Tanda tempo dalam musik menentukan kecepatan sajian dan sekaligus mencerminkan karakter emosional musik tersebut. Berikut beberapa istilah tempo dari yang paling lambat: <em>Grave</em> (sangat lambat dan hikmat), <em>Largo</em> (lambat dan luas), <em>Adagio</em> (lambat dan ekspresif), <em>Andante</em> (sedang seperti langkah kaki), <em>Moderato</em> (sedang), <em>Allegro</em> (cepat dan riang), <em>Vivace</em> (sangat hidup dan bersemangat), <em>Presto</em> (sangat cepat).</p></div>`,
+    q:"Sebuah komposisi musik mengiringi prosesi penghormatan pahlawan di hari peringatan kemerdekaan. Karakter musik yang diinginkan adalah khidmat, penuh hormat, dan bergerak dengan mantap namun tidak terburu-buru. Dari daftar tempo di atas, istilah yang paling tepat untuk mengarahkan komposisi tersebut adalah...",
+    opt:["Presto, karena suasana kemerdekaan seharusnya penuh semangat dan cepat","Grave atau Adagio, karena karakter khidmat dan mantap sesuai dengan tempo yang lambat dan ekspresif","Vivace, karena semangat nasionalisme membutuhkan musik yang berenergi tinggi","Allegro, karena tempo sedang-cepat paling universal untuk berbagai suasana"],
+    ans:"Grave atau Adagio, karena karakter khidmat dan mantap sesuai dengan tempo yang lambat dan ekspresif"
+},
+
+{   id:23, cat:"Seni Musik", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Membaca dan Menerapkan Tanda Dinamika</div>
+    <div class='visual-frame'>${getImg("simbol_dinamika","Simbol-Simbol Dinamika dalam Partitur")}</div>
+    <p>Perhatikan simbol dinamika pada partitur di atas. Simbol dinamika dari yang paling lembut ke paling keras: <em>pp</em> (pianissimo = sangat lembut), <em>p</em> (piano = lembut), <em>mp</em> (mezzo piano = agak lembut), <em>mf</em> (mezzo forte = agak keras), <em>f</em> (forte = keras), <em>ff</em> (fortissimo = sangat keras). Tanda <em>crescendo</em> (—<) berarti semakin mengeras, dan <em>decrescendo</em> (>—) berarti semakin melemah.</p></div>`,
+    q:"Sebuah lagu anak dimulai dengan tanda <em>pp</em>, lalu terdapat tanda <em>crescendo</em> menuju <em>f</em> di bagian reff, kemudian diakhiri dengan <em>decrescendo</em> kembali ke <em>p</em>. Bagaimana cara menyanyikan lagu tersebut dengan benar?",
+    opt:["Seluruh lagu dinyanyikan dengan volume keras karena bagian reff harus paling menonjol","Dimulai dengan suara sangat lembut, semakin mengeras secara bertahap menuju bagian reff yang keras, lalu semakin melemah kembali di akhir","Dinyanyikan dengan volume yang sama sepanjang lagu untuk menjaga konsistensi","Dimulai dengan suara keras karena pp artinya penuh semangat, lalu melemah di tengah"],
+    ans:"Dimulai dengan suara sangat lembut, semakin mengeras secara bertahap menuju bagian reff yang keras, lalu semakin melemah kembali di akhir"
+},
+
+{   id:24, cat:"Seni Musik", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Alat Musik Berdasarkan Cara Menghasilkan Bunyi</div>
+    <div class='visual-frame'>${getImg("alat_musik_tradisional","Berbagai Alat Musik Tradisional Indonesia")}</div>
+    <p>Perhatikan gambar berbagai alat musik tradisional di atas. Dalam ilmu organologi (studi tentang alat musik), alat musik diklasifikasikan berdasarkan cara menghasilkan bunyi: <em>Chordophone</em> (getaran senar), <em>Aerophone</em> (getaran kolom udara), <em>Membranophone</em> (getaran membran/kulit), <em>Idiophone</em> (getaran badan alat itu sendiri).</p></div>`,
+    q:"Alat musik Angklung menghasilkan bunyi ketika digoyangkan sehingga bilah-bilah bambunya bergetar. Berdasarkan klasifikasi organologi, Angklung termasuk kategori...",
+    opt:["Chordophone, karena bambu memiliki serat seperti senar yang bergetar","Aerophone, karena getaran yang terjadi di dalam tabung bambu menghasilkan kolom udara","Idiophone, karena bunyi dihasilkan dari getaran badan/material alat musik itu sendiri (bambu) tanpa membran atau senar","Membranophone, karena permukaan bambu yang tipis berfungsi seperti membran"],
+    ans:"Idiophone, karena bunyi dihasilkan dari getaran badan/material alat musik itu sendiri (bambu) tanpa membran atau senar"
+},
+
+{   id:25, cat:"Seni Musik", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Eksplorasi Material untuk Alat Musik Sederhana</div>
+    <p>Kelas 6 mendapat tantangan membuat alat musik ritmis dari bahan yang tersedia di sekitar sekolah. Kriteria alat musik ritmis yang baik: (1) menghasilkan bunyi yang konsisten saat dipukul/dikocok, (2) bunyi dapat diatur volumenya, (3) bahan aman dan tidak mudah rusak, (4) dapat dimainkan berulang-ulang. Tersedia pilihan bahan: botol kaca berisi kerikil, bantal empuk, buku tulis tebal, kaleng logam kosong.</p></div>`,
+    q:"Berdasarkan kriteria alat musik ritmis yang baik, bahan manakah yang paling potensial dan paling memenuhi semua kriteria tersebut?",
+    opt:["Bantal empuk, karena aman dan tidak berisiko melukai tangan saat dipukul","Buku tulis tebal, karena dapat dipukul dan mudah dibawa","Kaleng logam kosong, karena material logam menghasilkan bunyi yang jelas, konsisten, dan tahan lama saat dipukul","Botol kaca berisi kerikil, karena dapat dikocok menghasilkan ritme, namun berisiko pecah bila dipukul keras"],
+    ans:"Kaleng logam kosong, karena material logam menghasilkan bunyi yang jelas, konsisten, dan tahan lama saat dipukul"
+},
+
+{   id:26, cat:"Seni Musik", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Teknik Perawatan Alat Musik yang Tepat</div>
+    <p>Setelah sesi latihan intensif selama 45 menit, sebuah grup musik sekolah menyimpan alat-alat mereka. Kondisi alat: biola terkena keringat di fingerboard, drum kit perlu dibersihkan dari debu, pianika perlu dibersihkan setelah banyak ditiup, dan senar gitar terasa lengket. Perawatan yang salah dapat merusak alat dan memperpendek usia pakainya.</p></div>`,
+    q:"Langkah perawatan yang paling tepat untuk BIOLA setelah digunakan dan terkena keringat adalah...",
+    opt:["Langsung disimpan dalam kotak tertutup agar tidak kena udara karena biola sensitif terhadap perubahan suhu","Dilap dengan kain lembut kering pada seluruh permukaan, senar, dan fingerboard untuk menghilangkan keringat dan kotoran, kemudian disimpan di kotak yang sesuai","Dicuci dengan air dan sabun cair agar bersih dari keringat dan kuman","Dibiarkan terbuka di atas meja agar keringat menguap sendiri sebelum disimpan"],
+    ans:"Dilap dengan kain lembut kering pada seluruh permukaan, senar, dan fingerboard untuk menghilangkan keringat dan kotoran, kemudian disimpan di kotak yang sesuai"
+},
+
+{   id:27, cat:"Seni Musik", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Kreasi Pola Irama Berbasis Kearifan Lokal</div>
+    <p>Gamelan Jawa memiliki struktur musikal yang khas: tempo relatif stabil dan sedang, gong besar ditabuh untuk menandai akhir setiap siklus musik (gongan), kenong ditabuh di tengah siklus, dan berbagai instrumen mengisi di antaranya dengan pola yang saling melengkapi. Siswa diminta membuat variasi pola irama untuk mengiringi lagu dolanan Jawa menggunakan alat perkusi sederhana.</p></div>`,
+    q:"Variasi pola irama yang paling tepat untuk mengiringi lagu dolanan Jawa dengan semangat gamelan adalah...",
+    opt:["Irama 4/4 dengan tempo Presto (sangat cepat) dan tekanan kuat di setiap ketukan agar terasa bertenaga","Irama dengan ketukan yang stabil di tempo Andante-Moderato, dengan aksen yang jatuh secara siklis mencerminkan struktur gongan-kenong gamelan","Irama bebas tanpa birama tetap karena musik tradisional tidak mengenal notasi waktu","Irama seperti musik reggae dengan off-beat yang kuat karena lebih mudah dimainkan siswa"],
+    ans:"Irama dengan ketukan yang stabil di tempo Andante-Moderato, dengan aksen yang jatuh secara siklis mencerminkan struktur gongan-kenong gamelan"
+},
+
+{   id:28, cat:"Seni Musik", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Memberikan Apresiasi Pertunjukan Musik</div>
+    <p>Setelah penampilan ansambel kelas, guru meminta siswa memberikan umpan balik. Empat siswa memberikan tanggapan: <br><strong>A:</strong> "Suaranya berisik." <br><strong>B:</strong> "Tempo di awal sudah bagus, tapi pada birama ke-8 ada yang terlambat masuk sehingga harmonisasi terganggu sebentar." <br><strong>C:</strong> "Aku tidak suka lagu ini." <br><strong>D:</strong> "Dinamikanya sudah bervariasi dari piano ke forte, tapi bagian crescendo bisa lebih bertahap agar transisinya lebih mulus."</p></div>`,
+    q:"Manakah umpan balik yang paling tepat menggunakan kosa kata teknis musik DAN bersifat konstruktif (menunjukkan kelebihan sekaligus saran konkret)?",
+    opt:["Umpan balik A, karena jujur dan tidak menggunakan basa-basi","Umpan balik B saja, karena mengidentifikasi masalah spesifik (birama ke-8, terlambat masuk)","Umpan balik D saja, karena menggunakan istilah dinamika dan crescendo serta memberikan saran perbaikan yang spesifik","Umpan balik B dan D sama-sama tepat karena keduanya menggunakan istilah teknis musik dan memberikan saran spesifik yang dapat ditindaklanjuti"],
+    ans:"Umpan balik B dan D sama-sama tepat karena keduanya menggunakan istilah teknis musik dan memberikan saran spesifik yang dapat ditindaklanjuti"
+},
+
+{   id:29, cat:"Seni Musik", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Mencocokkan Minat dengan Kegiatan Bermusik</div>
+    <p>Profil tiga siswa: <br><strong>Siswa P:</strong> Suka menyanyi sendiri, memiliki suara yang merdu, sering menghafalkan melodi lagu, dan senang tampil di depan umum. <br><strong>Siswa Q:</strong> Selalu mengetuk-ngetuk meja saat mendengar musik, sensitif terhadap ritme, dan senang mengatur tempo kelompok. <br><strong>Siswa R:</strong> Suka mendengarkan banyak lagu berbeda, pandai meniru melodi dengan mulut, dan tertarik bagaimana harmoni tercipta dari beberapa instrumen.</p></div>`,
+    q:"Mencocokkan minat dengan kegiatan bermusik yang paling sesuai untuk masing-masing siswa...",
+    opt:["P → Grup perkusi; Q → Paduan Suara; R → Orkestra sekolah","P → Paduan Suara atau solo vokal; Q → Grup perkusi atau drum; R → Ansambel campuran atau paduan suara multi-suara","P → Orkestra biola; Q → Solo piano; R → Grup perkusi","Semua siswa sebaiknya bergabung di satu kegiatan yang sama agar bisa saling melengkapi"],
+    ans:"P → Paduan Suara atau solo vokal; Q → Grup perkusi atau drum; R → Ansambel campuran atau paduan suara multi-suara"
+},
+
+{   id:30, cat:"Seni Musik", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Menghitung Nilai Not dalam Satu Birama</div>
+    <div class='visual-frame'>${getImg("notasi_ritme","Berbagai Bentuk Not Balok")}</div>
+    <p>Perhatikan gambar not balok di atas. Ingat: Not penuh = 4 ketukan, Not setengah = 2 ketukan, Not seperempat = 1 ketukan, Not seperdelapan = ½ ketukan. Seorang siswa ingin mengisi satu birama 4/4 dengan kombinasi: 1 not setengah + 1 not seperempat + 2 not seperdelapan.</p></div>`,
+    q:"Berapakah total ketukan dari kombinasi not tersebut, dan apakah birama 4/4 tersebut sudah penuh?",
+    opt:["Total 3 ketukan — birama belum penuh, masih kurang 1 ketukan","Total 4 ketukan — birama sudah penuh karena 2 + 1 + (0,5 × 2) = 4","Total 5 ketukan — birama terlalu penuh dan tidak valid","Total 4,5 ketukan — birama terlalu penuh karena not seperdelapan dihitung sama dengan seperempat"],
+    ans:"Total 4 ketukan — birama sudah penuh karena 2 + 1 + (0,5 × 2) = 4"
+},
+
+// ── PG Kompleks 31–36 ─────────────────────────────────────────────────────────
+
+{   id:31, cat:"Seni Musik", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Mengidentifikasi Pola Melodi</div>
+    <p>Dalam teori musik, <strong>melodi naik</strong> berarti rangkaian nada bergerak dari nada rendah ke nada yang lebih tinggi. <strong>Melodi turun</strong> bergerak dari nada tinggi ke nada lebih rendah. <strong>Melodi bergelombang</strong> bergantian naik dan turun. Perhatikan lima pola berikut: <br>(A) Do–Re–Mi–Fa–Sol <br>(B) Sol–Mi–Do–Re–Fa <br>(C) Do–Mi–Sol–Si–Do' (naik satu oktaf) <br>(D) Mi–Re–Do–Si–La <br>(E) Do–Sol–Mi–La–Si</p></div>`,
+    q:"Pilih LEBIH DARI SATU pola yang menunjukkan melodi yang KONSISTEN NAIK dari awal hingga akhir!",
+    opt:["(A) Do–Re–Mi–Fa–Sol","(B) Sol–Mi–Do–Re–Fa","(C) Do–Mi–Sol–Si–Do'","(D) Mi–Re–Do–Si–La"],
+    ans:["(A) Do–Re–Mi–Fa–Sol","(C) Do–Mi–Sol–Si–Do'"]
+},
+
+{   id:32, cat:"Seni Musik", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Peran dalam Ansambel Musik</div>
+    <div class='visual-frame'>${getImg("ansambel_musik","Kelompok Ansambel Sekolah")}</div>
+    <p>Perhatikan gambar ansambel musik di atas. Sebuah ansambel sekolah terdiri dari berbagai peran: pemain melodi (memainkan nada-nada lagu), pemain ritme (menjaga ketukan), pemain harmoni (memainkan akor pengiring), bass (mendasari harmoni), dan konduktor (memimpin dan mengatur tempo). Untuk menciptakan musik yang terdengar harmonis dan terstruktur, beberapa peran di atas mutlak harus ada.</p></div>`,
+    q:"Pilih LEBIH DARI SATU peran yang MUTLAK harus ada agar sebuah ansambel dapat tampil dengan musik yang terstruktur dan dapat dikenali sebagai lagu!",
+    opt:["Pemain melodi, karena tanpa melodi tidak ada tema lagu yang dapat dikenal","Pemain ritme atau konduktor, karena tanpa pengatur ketukan musik akan berantakan dan tidak teratur","Pemain bass, karena harmoni rendah memberikan pondasi yang tidak bisa digantikan","Penonton, karena musik baru bermakna ketika ada yang mendengarkan"],
+    ans:["Pemain melodi, karena tanpa melodi tidak ada tema lagu yang dapat dikenal","Pemain ritme atau konduktor, karena tanpa pengatur ketukan musik akan berantakan dan tidak teratur"]
+},
+
+{   id:33, cat:"Seni Musik", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Teknik Memainkan Berbagai Alat Musik</div>
+    <p>Alat musik dapat dimainkan dengan berbagai teknik sesuai konstruksi fisiknya. Teknik yang salah tidak hanya menghasilkan bunyi yang kurang baik, tetapi juga dapat merusak alat. Berikut beberapa alat musik: Biola, Saksofon, Rebab, Terompet, Sitar India, Harmonika.</p></div>`,
+    q:"Pilih LEBIH DARI SATU alat musik dari daftar di atas yang dimainkan dengan cara DIGESEK menggunakan busur (bow)!",
+    opt:["Biola, karena dimainkan dengan menggesekkan busur berbulu kuda pada senarnya","Saksofon, karena memiliki tabung logam yang perlu ditekan tombolnya sambil ditiup","Rebab, karena alat musik tradisional ini juga menggunakan busur untuk menggesek senar tunggal atau gandanya","Sitar India, karena memiliki banyak senar yang digesek untuk menghasilkan nada"],
+    ans:["Biola, karena dimainkan dengan menggesekkan busur berbulu kuda pada senarnya","Rebab, karena alat musik tradisional ini juga menggunakan busur untuk menggesek senar tunggal atau gandanya"]
+},
+
+{   id:34, cat:"Seni Musik", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Fungsi Musik Daerah dalam Kearifan Lokal</div>
+    <p>Musik tradisional daerah di Indonesia tidak hanya berfungsi sebagai hiburan, tetapi juga memiliki peran penting dalam berbagai aspek kehidupan masyarakat adat: upacara ritual, siklus kehidupan, pertanian, dan penyambutan tamu. Setiap daerah memiliki repertoar musik khusus untuk konteks-konteks tertentu yang diwariskan turun-temurun.</p></div>`,
+    q:"Pilih LEBIH DARI SATU konteks kehidupan yang secara tradisional diiringi oleh musik daerah atau musik tradisional!",
+    opt:["Upacara adat pernikahan dan selamatan yang memerlukan suasana khidmat dan meriah","Ritual panen padi di daerah tertentu sebagai ungkapan syukur kepada Yang Maha Kuasa","Belajar mandiri di rumah menggunakan buku pelajaran","Penyambutan tamu kehormatan yang datang ke suatu daerah"],
+    ans:["Upacara adat pernikahan dan selamatan yang memerlukan suasana khidmat dan meriah","Ritual panen padi di daerah tertentu sebagai ungkapan syukur kepada Yang Maha Kuasa","Penyambutan tamu kehormatan yang datang ke suatu daerah"]
+},
+
+{   id:35, cat:"Seni Musik", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Kosa Kata Teknis dalam Apresiasi Musik</div>
+    <p>Ketika membahas dan mengapresiasi sebuah karya musik, penggunaan istilah teknis yang tepat membuat diskusi lebih objektif dan informatif. Berbagai istilah musik memiliki makna spesifik yang berbeda dan saling melengkapi dalam mendeskripsikan aspek-aspek berbeda dari sebuah karya.</p></div>`,
+    q:"Pilih LEBIH DARI SATU istilah yang tepat digunakan ketika membahas aspek KECEPATAN dan KEKUATAN bunyi dalam sebuah lagu!",
+    opt:["Tempo — merujuk pada kecepatan sajian musik dalam ketukan per menit","Dinamika — merujuk pada variasi kekuatan bunyi dari lembut ke keras dalam sebuah karya","Birama — merujuk pada pengelompokan ketukan dalam musik yang diatur dalam siklus teratur","Melisma — merujuk pada teknik menyanyikan banyak nada pada satu suku kata"],
+    ans:["Tempo — merujuk pada kecepatan sajian musik dalam ketukan per menit","Dinamika — merujuk pada variasi kekuatan bunyi dari lembut ke keras dalam sebuah karya"]
+},
+
+{   id:36, cat:"Seni Musik", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Eksplorasi Material: Bunyi Alam vs Bunyi Buatan</div>
+    <p>Dalam musik eksperimental dan pendidikan musik, eksplorasi sumber bunyi di lingkungan sekitar merupakan bagian penting dari proses kreatif. Bunyi dibedakan menjadi <strong>bunyi alam</strong> (dihasilkan oleh fenomena atau makhluk hidup alami tanpa campur tangan alat buatan manusia) dan <strong>bunyi buatan</strong> (dihasilkan oleh alat atau mesin yang dibuat manusia).</p></div>`,
+    q:"Pilih LEBIH DARI SATU bunyi yang termasuk kategori BUNYI ALAM!",
+    opt:["Kicauan burung di pagi hari","Suara ombak laut yang menghantam karang","Suara klakson mobil di jalan raya","Suara gemericik air sungai yang mengalir"],
+    ans:["Kicauan burung di pagi hari","Suara ombak laut yang menghantam karang","Suara gemericik air sungai yang mengalir"]
+},
+
+// ── PG Kategori 37–40 ─────────────────────────────────────────────────────────
+
+{   id:37, cat:"Seni Musik", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Alat Musik: Ritmis vs Melodis</div>
+    <p>Alat musik <strong>Ritmis</strong> adalah alat yang berfungsi utama untuk menghasilkan dan menjaga pola ritme/ketukan — tidak menghasilkan nada-nada berbeda yang bisa membentuk melodi. Alat musik <strong>Melodis</strong> adalah alat yang dapat menghasilkan rangkaian nada berbeda (tinggi-rendah) sehingga bisa memainkan melodi sebuah lagu.</p></div>`,
+    q:"Klasifikasikan setiap alat musik berikut apakah termasuk Alat Musik Ritmis atau Melodis!",
+    rows:["Castanet (alat ketukan dari kayu atau logam)","Pianika (dimainkan dengan meniup sambil menekan tuts)","Kendang (drum tradisional Jawa/Sunda)"],
+    cols:["Alat Musik Ritmis","Alat Musik Melodis"],
+    ans:["Alat Musik Ritmis","Alat Musik Melodis","Alat Musik Ritmis"]
+},
+
+{   id:38, cat:"Seni Musik", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Cara Memainkan Alat Musik</div>
+    <p>Alat musik diklasifikasikan berdasarkan cara memainkan dan menghasilkan bunyi. Dua kategori yang dipelajari: <strong>Dipetik/Disentuh</strong> — senar dipetik dengan jari/plektrum, atau tuts ditekan. <strong>Ditiup</strong> — udara ditiupkan ke dalam instrumen melalui corong atau embouchure.</p></div>`,
+    q:"Klasifikasikan setiap alat musik berikut berdasarkan cara memainkannya!",
+    rows:["Sasando (alat musik petik tradisional NTT)","Suling bambu Sunda","Recorder (seruling plastik)"],
+    cols:["Dipetik/Disentuh","Ditiup"],
+    ans:["Dipetik/Disentuh","Ditiup","Ditiup"]
+},
+
+{   id:39, cat:"Seni Musik", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Tempo: Cepat vs Lambat</div>
+    <p>Berikut daftar istilah tempo dalam musik Barat dari yang paling lambat ke paling cepat (perkiraan BPM): Grave (20–40 bpm), Largo (40–60 bpm), Adagio (66–76 bpm), Andante (76–108 bpm), Moderato (108–120 bpm), Allegro (120–156 bpm), Vivace (156–176 bpm), Presto (168–200 bpm), Prestissimo (>200 bpm). Sebagai patokan, "Lambat" berarti di bawah Moderato, dan "Cepat" berarti Allegro ke atas.</p></div>`,
+    q:"Berdasarkan patokan tersebut, klasifikasikan setiap istilah tempo berikut!",
+    rows:["Vivace (penuh semangat, sekitar 156–176 bpm)","Adagio (lambat dan ekspresif, sekitar 66–76 bpm)","Prestissimo (secepat mungkin, >200 bpm)"],
+    cols:["Cepat","Lambat"],
+    ans:["Cepat","Lambat","Cepat"]
+},
+
+{   id:40, cat:"Seni Musik", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Umpan Balik: Teknis vs Non-Teknis</div>
+    <p>Umpan balik <strong>Teknis Musik</strong> mengacu pada aspek yang dapat diukur dan dinilai secara objektif dalam penampilan musik — seperti intonasi (ketepatan nada), ritme, tempo, dinamika, artikulasi, dan teknik memainkan alat. Umpan balik <strong>Non-Teknis</strong> mengacu pada aspek di luar musik itu sendiri, seperti penampilan fisik, perasaan subjektif, atau hal-hal yang tidak berkaitan dengan kualitas musik.</p></div>`,
+    q:"Klasifikasikan setiap komentar berikut apakah termasuk Umpan Balik Teknis Musik atau Non-Teknis!",
+    rows:["Intonasi pada nada fa di baris ketiga terdengar sedikit meleset ke bawah","Kostum yang dikenakan pemain sangat menarik dan serasi","Ritme pada bagian solo sudah akurat namun artikulasi antar nada bisa lebih tajam"],
+    cols:["Umpan Balik Teknis Musik","Non-Teknis"],
+    ans:["Umpan Balik Teknis Musik","Non-Teknis","Umpan Balik Teknis Musik"]
+}
+
+]; // ═══ END QUESTIONS ═══
+
+// ════════════════════════════════════════════════════════
+//  APP OBJECT
+// ════════════════════════════════════════════════════════
+const app = {
+    session: { nama:"", kelas:"", answers:{}, startTime:0 },
+    currIdx: 0, timerInt: null, _hasSavedSession: false,
+
+    init() { this.showSlide('pin'); try { if(localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession=true; } catch(e){} },
+
+    async checkPin() {
+        const inp=document.getElementById('inp-pin'), val=inp.value.trim();
+        if(!val) return;
+        const h=await hashPin(val);
+        if(h===CONFIG.PIN_HASH){ this.showSlide('login'); if(this._hasSavedSession) document.getElementById('resume-alert').style.display='block'; }
+        else { inp.classList.add('error'); document.getElementById('pin-err').style.display='block'; inp.value=''; setTimeout(()=>inp.classList.remove('error'),400); }
+    },
+
+    login() {
+        const n=document.getElementById('inpNama').value.trim(), k=document.getElementById('inpKelas').value;
+        if(!n||!k){alert("Harap isi nama lengkap dan pilih kelas!");return;}
+        this.session.nama=n; this.session.kelas=k; this.showSlide('rules');
+    },
+
+    resume() { try { this.session=JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)); this.renderSidebar(); this.startExam(true); } catch(e){alert("Sesi tersimpan rusak. Silakan mulai ujian baru.");} },
+
+    startExam(isRes=false) {
+        if(!isRes){this.session.startTime=Date.now();this.save();}
+        document.getElementById('user-badge').innerText=this.session.nama;
+        document.getElementById('user-badge').style.display='block';
+        document.getElementById('sidebar').style.display='flex';
+        this.renderQuestions(); this.renderSidebar(); this.showSlide('quiz'); this.goToQ(0); this.startTimer();
+    },
+
+    showSlide(id) { document.querySelectorAll('.slide').forEach(e=>e.classList.remove('active')); document.getElementById('slide-'+id).classList.add('active'); },
+
+    renderQuestions() {
+        const box=document.getElementById('quiz-container'); box.innerHTML="";
+        QUESTIONS.forEach((q,i)=>{
+            let h=`<div id="q-item-${i}" class="question-item"><div class="tag-cat">${q.cat}</div>${q.stim||""}<div class="q-text">${i+1}. ${q.q}</div>`;
+            if(q.type==='pg') q.opt.forEach((o,oi)=>h+=`<label class="opt-label"><input type="radio" name="ans_${q.id}" value="${oi}" onchange="app.saveAns(${q.id},${oi})"> ${o}</label>`);
+            else if(q.type==='pgk'){
+                h+=`<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">☑ Boleh memilih lebih dari satu jawaban</p>`;
+                q.opt.forEach((o,oi)=>h+=`<label class="opt-label"><input type="checkbox" value="${oi}" onchange="app.saveMulti(${q.id},${oi})"> ${o}</label>`);
+            } else if(q.type==='pgk-cat'){
+                h+=`<div class="matrix-wrapper"><table class="matrix-table"><tr><th>Pernyataan</th>`;
+                q.cols.forEach(c=>h+=`<th>${c}</th>`); h+=`</tr>`;
+                q.rows.forEach((r,ri)=>{ h+=`<tr><td>${r}</td>`; q.cols.forEach(c=>h+=`<td><input type="radio" name="mx_${q.id}_${ri}" value="${c}" onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`); h+=`</tr>`; });
+                h+=`</table></div>`;
+            }
+            h+=`</div>`; box.innerHTML+=h;
+        });
+    },
+
+    goToQ(idx) {
+        if(idx<0||idx>=QUESTIONS.length) return;
+        this.currIdx=idx;
+        const qs=document.getElementById('quiz-scroll'); if(qs) qs.scrollTop=0;
+        document.querySelectorAll('.question-item').forEach(e=>e.classList.remove('active-q'));
+        document.getElementById(`q-item-${idx}`).classList.add('active-q');
+        document.getElementById('q-indicator').innerText=`Soal ${idx+1} / 40`;
+        document.getElementById('btn-prev').disabled=(idx===0);
+        const nBtn=document.getElementById('btn-next');
+        if(idx===QUESTIONS.length-1){nBtn.innerText="Selesai";nBtn.onclick=()=>this.confirmFinish();nBtn.classList.add('btn-danger');}
+        else{nBtn.innerText="Selanjutnya";nBtn.onclick=()=>this.move(1);nBtn.classList.remove('btn-danger');}
+        this.restoreVisual(idx); this.updateSidebarUI();
+    },
+
+    move(step){this.goToQ(this.currIdx+step);},
+    saveAns(qid,v){this.session.answers[qid]=v;this.save();this.updateSidebarUI();},
+    saveMulti(qid,oi){let c=this.session.answers[qid]||[];if(c.includes(oi))c=c.filter(x=>x!==oi);else c.push(oi);this.session.answers[qid]=c;this.save();this.updateSidebarUI();},
+    saveMx(qid,ri,v){let c=this.session.answers[qid]||[];c[ri]=v;this.session.answers[qid]=c;this.save();this.updateSidebarUI();},
+    save(){try{localStorage.setItem(CONFIG.STORAGE_KEY,JSON.stringify(this.session));}catch(e){}},
+
+    renderSidebar(){const g=document.getElementById('nav-grid');g.innerHTML="";QUESTIONS.forEach((q,i)=>g.innerHTML+=`<div id="nav-num-${i}" class="nav-num" onclick="app.goToQ(${i})">${i+1}</div>`);},
+
+    checkFilled(qid){const v=this.session.answers[qid];if(v===undefined||v===null)return false;if(Array.isArray(v))return v.filter(x=>x!==undefined&&x!==null).length>0;return true;},
+
+    updateSidebarUI(){QUESTIONS.forEach((q,i)=>{const el=document.getElementById(`nav-num-${i}`);if(!el)return;if(i===this.currIdx)el.classList.add('current');else el.classList.remove('current');if(this.checkFilled(q.id))el.classList.add('filled');else el.classList.remove('filled');});},
+
+    restoreVisual(idx){
+        const q=QUESTIONS[idx],ans=this.session.answers[q.id];
+        if(ans===undefined||ans===null)return;
+        if(q.type==='pg'){const el=document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);if(el)el.checked=true;}
+        else if(q.type==='pgk'&&Array.isArray(ans))ans.forEach(v=>{const el=document.querySelector(`#q-item-${idx} input[value="${v}"]`);if(el)el.checked=true;});
+        else if(q.type==='pgk-cat'&&Array.isArray(ans))ans.forEach((v,ri)=>{if(!v)return;const el=document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);if(el)el.checked=true;});
+    },
+
+    startTimer(){
+        clearInterval(this.timerInt);
+        this.timerInt=setInterval(()=>{
+            const rem=CONFIG.DURATION-Math.floor((Date.now()-this.session.startTime)/1000);
+            if(rem<=0){clearInterval(this.timerInt);this.submitExam();return;}
+            document.getElementById('timer-display').innerText=`${Math.floor(rem/60).toString().padStart(2,'0')}:${(rem%60).toString().padStart(2,'0')}`;
+        },1000);
+    },
+
+    confirmFinish(){document.getElementById('modal-confirm').style.display='flex';},
+
+    submitExam(){
+        document.getElementById('modal-confirm').style.display='none';
+        document.getElementById('modal-loading').style.display='flex';
+        clearInterval(this.timerInt);
+
+        const stats={};let totS=0,totM=0;
+        QUESTIONS.forEach(q=>{
+            if(!stats[q.cat])stats[q.cat]={s:0,m:0};
+            stats[q.cat].m+=q.score; totM+=q.score;
+            const u=this.session.answers[q.id]; let pt=0;
+            if(u!==undefined&&u!==null){
+                if(q.type==='pg'){if(u==q.opt.indexOf(q.ans))pt=q.score;}
+                else if(q.type==='pgk'&&Array.isArray(u)&&Array.isArray(q.ans)){
+                    if(JSON.stringify(u.map(i=>q.opt[i]).sort())===JSON.stringify([...q.ans].sort()))pt=q.score;
+                } else if(q.type==='pgk-cat'&&Array.isArray(u)){
+                    let m=0; q.ans.forEach((k,i)=>{if(u[i]===k)m++;});
+                    pt=(m/q.rows.length)*q.score;
+                }
+            }
+            stats[q.cat].s+=pt; totS+=pt;
+        });
+
+        const final=Math.round((totS/totM)*100);
+        let summ={},cht="",nts=[];
+        ["Seni Rupa","Seni Musik"].forEach(c=>{
+            if(!stats[c])return;
+            const p=stats[c].m>0?Math.round((stats[c].s/stats[c].m)*100):0;
+            summ[c]={skor:p,tuntas:p>=70,label:p>=70?"Tuntas":"Perlu Bimbingan"};
+            if(p<70)nts.push(c);
+            cht+=`<div class="chart-row"><div class="chart-lbl">${c}</div><div class="chart-track"><div class="chart-fill" style="width:${p}%;background:${p>=70?'#16a34a':'#dc2626'}"></div></div><div class="chart-val">${p}%</div></div>`;
+        });
+
+        const desc=nts.length===0?"Selamat! Tuntas semua elemen.":"Perlu belajar lagi di: "+nts.join(", ");
+        this.showSlide('result');
+        document.getElementById('modal-loading').style.display='none';
+        document.getElementById('result-content').innerHTML=`<h3>Nilai Akhir: <span style="color:var(--primary);font-size:2.5rem;">${final}</span></h3><div style="background:#f5f3ff;padding:15px;border-radius:8px;margin-bottom:20px;">${desc}</div><h4>Capaian per Elemen:</h4>${cht}`;
+
+        fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
+            body:JSON.stringify({action:"submit_exam",mapel:"Seni Budaya",nama:this.session.nama,kelas:this.session.kelas,skor:final,deskripsi:desc,jawaban:this.session.answers,ringkasanNilai:summ})
+        }).then(()=>{try{localStorage.removeItem(CONFIG.STORAGE_KEY);}catch(e){}});
+    }
+};
+window.onload=()=>app.init();
+</script>
+</body>
+</html>
