@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Sekolah Tertulis – KKA · SD Muhammadiyah 01 Kukusan</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #334155;
+            --bg: #f0f4ff;
+            --border: #cbd5e1;
+        }
+        * { box-sizing: border-box; outline: none; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+        .app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+        .header { height: 64px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 50; flex-shrink: 0; }
+        .header-title { font-weight: 700; font-size: 1.15rem; }
+        .timer-box { background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 6px; font-weight: 700; font-family: monospace; font-size: 1.25rem; border: 1px solid rgba(255,255,255,0.2); }
+        .workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+        .main-stage { flex: 1; position: relative; background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+        .slide { display: none !important; width: 100%; height: 100%; }
+        .slide.active { display: flex !important; flex-direction: column; animation: fadeIn 0.4s ease; }
+        .center-content-wrapper { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); padding: 32px; margin-bottom: 20px; border-top: 5px solid var(--primary); }
+        .quiz-scroll-area { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; width: 100%; max-width: 900px; margin: 0 auto; }
+        .nav-bar-fixed { flex-shrink: 0; background: white; padding: 16px 24px; border-top: 1px solid #e2e8f0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; z-index: 40; }
+        .question-item { display: none; }
+        .question-item.active-q { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity:0; transform:translateX(15px); } to { opacity:1; transform:translateX(0); } }
+        .stimulus-box { background: #ffffff; border: 1px solid #e2e8f0; border-left: 5px solid var(--primary); padding: 20px; margin-bottom: 24px; border-radius: 8px; }
+        .stimulus-head { font-weight: 800; color: var(--primary); border-bottom: 2px dashed #e2e8f0; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; }
+        .visual-frame { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; display: flex; justify-content: center; align-items: center; margin: 15px 0; overflow: hidden; }
+        .q-text { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.6; }
+        .tag-cat { display: inline-block; font-size: 0.75rem; background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+        .opt-label { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s; font-size: 1rem; color: #475569; }
+        .opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        .opt-label input { margin-top: 4px; transform: scale(1.2); flex-shrink: 0; }
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 320px; }
+        .matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 12px; }
+        .matrix-table th { background: #f1f5f9; text-align: center; }
+        .matrix-table td { text-align: center; }
+        .matrix-table td:first-child { text-align: left; font-weight: 500; }
+        .side-panel { width: 300px; background: white; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; flex-shrink: 0; z-index: 40; }
+        .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 20px; overflow-y: auto; }
+        .nav-num { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; color: #64748b; transition: all 0.2s; }
+        .nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        .nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.15); color: var(--primary); }
+        .nav-num.filled { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .nav-num.filled.current { border: 3px solid #1e3a8a !important; }
+        input[type="text"], select { width: 100%; padding: 14px; margin: 8px 0 20px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+        .btn:hover { background: #172554; }
+        .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+        .btn-outline:hover { background: #f8fafc; }
+        .btn-danger { background: var(--danger); }
+        .chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+        .chart-lbl { width: 200px; font-size: 0.78rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+        .chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+        .chart-fill { height: 100%; transition: width 1s ease-out; }
+        .chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; }
+        .modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+        .pin-input-wrap { position: relative; margin-bottom: 10px; }
+        .pin-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+        #inp-pin { width: 100%; padding: 14px 14px 14px 44px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1.1rem; font-weight: 700; letter-spacing: .15em; font-family: monospace; color: var(--text); transition: border-color .2s; }
+        #inp-pin:focus { border-color: var(--primary); }
+        #inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+        #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+        .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+        .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        @media (max-width: 768px) {
+            .workspace { flex-direction: column; }
+            .side-panel { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+            .nav-grid { max-height: 120px; padding: 10px; }
+            .chart-lbl { width: 120px; font-size: 0.72rem; }
+            .header-title { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <div class="header-title">Ujian Sekolah &#8211; KKA (Koding &amp; Kecerdasan Artifisial)</div>
+        <div style="display:flex;align-items:center;gap:15px;">
+            <div id="user-badge" style="display:none;font-size:0.85rem;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+            <div class="timer-box" id="timer-display">--:--</div>
+        </div>
+    </div>
+    <div class="workspace">
+        <div class="main-stage">
+            <!-- ① SLIDE PIN -->
+            <div id="slide-pin" class="slide active">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+                        <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+                        <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">Masukkan PIN dari guru untuk membuka<br><strong>Ujian Sekolah Tertulis KKA</strong></p>
+                        <div class="pin-input-wrap">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="inp-pin" placeholder="PIN ujian&#x2026;" maxlength="30" autocomplete="off" onkeydown="if(event.key==='Enter') app.checkPin()">
+                        </div>
+                        <div id="pin-err">&#10060; PIN salah. Coba lagi.</div>
+                        <button class="btn" style="width:100%" onclick="app.checkPin()">Buka Ujian &#8594;</button>
+                    </div>
+                </div>
+            </div>
+            <!-- ② SLIDE LOGIN -->
+            <div id="slide-login" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+                        <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+                        <p style="color:#64748b;margin-bottom:30px;">Ujian Sekolah KKA (Fase C) &#8212; 4 Elemen</p>
+                        <div style="text-align:left;">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+                            <label>Kelas</label>
+                            <select id="inpKelas">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="6A">Kelas 6A</option>
+                                <option value="6B">Kelas 6B</option>
+                            </select>
+                        </div>
+                        <button class="btn" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+                        <div id="resume-alert" style="display:none;margin-top:20px;padding:10px;background:#eff6ff;color:#1d4ed8;border-radius:8px;cursor:pointer;font-size:0.9rem;" onclick="app.resume()">
+                            &#x1F504; <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ③ SLIDE PETUNJUK -->
+            <div id="slide-rules" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:700px;margin:0 auto;">
+                        <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;padding-bottom:15px;color:var(--primary);">Petunjuk Pengerjaan</h2>
+                        <div style="line-height:1.8;color:#334155;">
+                            <p>1. <strong>Waktu:</strong> <strong>90 Menit</strong>. Ujian dikumpulkan otomatis saat waktu habis.</p>
+                            <p>2. <strong>Soal:</strong> <strong>40 butir soal</strong> &#8212; mencakup 4 elemen: Berpikir Komputasional, Literasi Digital, Literasi &amp; Etika KA, dan Pemanfaatan &amp; Pengembangan KA.</p>
+                            <p>3. <strong>Format:</strong> PG Tunggal, PG Kompleks (lebih dari satu jawaban), dan PG Kategori (menjodohkan).</p>
+                            <p>4. <strong>Tips:</strong> Bacalah stimulus (skenario, diagram, atau gambar) dengan cermat sebelum menjawab.</p>
+                            <p>5. <strong>Dilarang:</strong> Menutup atau me-refresh halaman selama ujian berlangsung.</p>
+                        </div>
+                        <div style="margin-top:30px;text-align:right;">
+                            <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ④ SLIDE KUIS -->
+            <div id="slide-quiz" class="slide">
+                <div id="quiz-scroll" class="quiz-scroll-area">
+                    <div id="quiz-container"></div>
+                </div>
+                <div class="nav-bar-fixed">
+                    <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+                    <span id="q-indicator" style="font-weight:700;color:var(--primary);">Soal 1 / 40</span>
+                    <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+                </div>
+            </div>
+            <!-- ⑤ SLIDE HASIL -->
+            <div id="slide-result" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:600px;margin:0 auto;text-align:center;">
+                        <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+                        <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+                        <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
+                        <div id="result-content" style="text-align:left;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
+                            <p style="text-align:center;color:#64748b;">Sedang memproses nilai...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- SIDEBAR -->
+        <div class="side-panel" id="sidebar" style="display:none;">
+            <div style="padding:15px 20px;font-weight:700;color:#334155;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                <span>Navigasi Soal</span>
+                <span style="font-size:0.8rem;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:10px;">40 Butir</span>
+            </div>
+            <div class="nav-grid" id="nav-grid"></div>
+            <div style="padding:20px;border-top:1px solid #e2e8f0;margin-top:auto;background:#f8fafc;">
+                <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Selesai Ujian</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-confirm" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+        <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+            <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Cek Lagi</button>
+            <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+        </div>
+    </div>
+</div>
+<div id="modal-loading" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Sedang Mengirim&#x2026;</h3>
+        <div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top:4px solid var(--primary);border-radius:50%;margin:10px auto;animation:spin 1s linear infinite;"></div>
+        <p>Mohon jangan tutup halaman ini.</p>
+    </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  Untuk mengganti PIN: hashPin("PIN_BARU").then(h => console.log(h))
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    STORAGE_KEY: "UST_2026_KKA",
+    DURATION:    90 * 60,
+    PIN_HASH:    "0a47b97cca8939d0"
+};
+
+async function hashPin(pin) {
+    const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16);
+}
+window.hashPin = hashPin;
+
+// ── Aset Gambar ──────────────────────────────────────────────────────────────
+
+const IMAGE_ASSETS = {
+"buah_kelompok":     "img/kka-q28-buah.png",
+"bentuk_3d":         "img/kka-q29-bentuk3d.png",
+"objek_klasifikasi": "img/kka-q35-objek3d.png"
+};
+
+function getImg(key, alt="Ilustrasi Soal") {
+    const url = IMAGE_ASSETS[key];
+    if (!url) return `<div style="background:#fef3c7;padding:15px;border-radius:8px;text-align:center;border:1px solid #f59e0b;">⚠️ Gambar tidak tersedia</div>`;
+    return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+// ════════════════════════════════════════════════════════
+//  BANK SOAL — 40 Butir
+//  Soal 1–20 : Berpikir Komputasional + Literasi Digital
+//  Soal 21–40: Literasi & Etika KA + Pemanfaatan KA
+// ════════════════════════════════════════════════════════
+
+const QUESTIONS = [
+{ id:1, cat:"Berpikir Komputasional", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Skenario: Acara Ulang Tahun</div><p>Adi diminta membantu menyiapkan acara ulang tahun adiknya. Ada banyak hal yang perlu dilakukan: membeli kue, mengundang teman, menyiapkan dekorasi, dan menyiapkan permainan. Masalah ini terasa besar dan membingungkan.</p></div>", q:"Apa langkah <strong>pertama</strong> yang paling logis untuk memecah masalah besar ini menjadi bagian-bagian yang lebih kecil?", opt:["Langsung pergi ke toko membeli kue agar tidak kehabisan","Membuat daftar semua hal yang perlu disiapkan beserta siapa yang bertanggung jawab","Langsung menelepon semua teman agar segera datang besok","Menyiapkan dekorasi terlebih dahulu karena paling memakan waktu"], ans:"Membuat daftar semua hal yang perlu disiapkan beserta siapa yang bertanggung jawab" },
+{ id:2, cat:"Berpikir Komputasional", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Langkah-Langkah Acak: Membuat Minuman Instan</div><p><strong>P.</strong> Aduk rata hingga serbuk larut &nbsp;|&nbsp; <strong>Q.</strong> Masukkan serbuk ke dalam gelas &nbsp;|&nbsp; <strong>R.</strong> Siapkan gelas bersih dan satu sachet &nbsp;|&nbsp; <strong>S.</strong> Minum selagi hangat &nbsp;|&nbsp; <strong>T.</strong> Tuangkan air panas secukupnya</p></div>", q:"Urutan <strong>algoritma</strong> yang paling benar dan dapat dijalankan adalah...", opt:["R → Q → T → P → S","R → T → Q → P → S","Q → R → T → P → S","T → Q → R → P → S"], ans:"R → Q → T → P → S" },
+{ id:3, cat:"Berpikir Komputasional", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Kasus Sehari-hari</div><p><strong>Kasus 1:</strong> Setiap pagi Budi bangun, sarapan, mandi, lalu berangkat sekolah — urutannya selalu sama.</p><p><strong>Kasus 2:</strong> Chef membuat kue: siapkan bahan → campur adonan → masukkan oven → sajikan. Urutan tidak boleh diubah.</p><p><strong>Kasus 3:</strong> Siti memilih baju dengan melihat semua pilihan, mencoba satu per satu, dan mengambil yang paling cocok menurut seleranya hari itu.</p></div>", q:"Dua kasus yang memiliki <strong>pola penyelesaian paling sama</strong> adalah...", opt:["Kasus 1 dan Kasus 2 — keduanya menggunakan urutan langkah tetap dan terstruktur","Kasus 1 dan Kasus 3 — keduanya dilakukan berulang setiap hari","Kasus 2 dan Kasus 3 — keduanya membutuhkan bahan fisik","Semua kasus memiliki pola yang sama karena dilakukan setiap hari"], ans:"Kasus 1 dan Kasus 2 — keduanya menggunakan urutan langkah tetap dan terstruktur" },
+{ id:4, cat:"Literasi Digital", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Formulir Pendaftaran Lomba Sains Daring</div><p>Dina mengisi formulir yang meminta: (1) Nama lengkap, (2) NISN, (3) Nama sekolah, (4) Kata sandi akun email, (5) Nama guru pembimbing.</p></div>", q:"Data manakah yang <strong>paling kritis</strong> dan <strong>tidak boleh</strong> diisi pada formulir daring sembarangan?", opt:["Nama lengkap","NISN","Kata sandi akun email","Nama sekolah"], ans:"Kata sandi akun email" },
+{ id:5, cat:"Literasi Digital", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Situasi: Poster Kampanye Sekolah</div><p>Rafi ingin membuat poster digital untuk kampanye \"Hemat Air\" di sekolahnya. Poster harus memiliki teks slogan, gambar ilustrasi, dan dapat dicetak dalam ukuran A3.</p></div>", q:"Kombinasi alat digital yang paling <strong>tepat</strong> untuk memproduksi konten tersebut adalah...", opt:["Aplikasi kalkulator + kamera HP","Aplikasi desain grafis (Canva/PowerPoint) + printer","Aplikasi pemutar video + scanner","Aplikasi catatan teks (Notepad) + printer"], ans:"Aplikasi desain grafis (Canva/PowerPoint) + printer" },
+{ id:6, cat:"Berpikir Komputasional", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Cerita Pak Tani</div><p>\"Kemarin, Pak Slamet — berusia 52 tahun, tinggal di Desa Makmur, memiliki 3 ekor kambing serta 2 hektar sawah — ingin menanam padi. Hari itu cuaca cerah. Ia sarapan bersama keluarga sebelum berangkat ke sawah. Sesampainya, ia bingung menentukan <em>kapan waktu tepat untuk mulai menanam padi</em> agar hasilnya maksimal.\"</p></div>", q:"Berdasarkan teknik <strong>abstraksi</strong>, informasi manakah yang <strong>relevan</strong> untuk menyelesaikan masalah inti Pak Slamet?", opt:["Usia Pak Slamet dan jumlah kambingnya","Menu sarapan dan lokasi tinggal Pak Slamet","Kondisi cuaca saat ini dan jadwal waktu tanam padi yang tepat","Nama desa dan luas sawah Pak Slamet"], ans:"Kondisi cuaca saat ini dan jadwal waktu tanam padi yang tepat" },
+{ id:7, cat:"Literasi Digital", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Dua Pola Penggunaan Gawai</div><p><strong>Rena:</strong> Menggunakan gawai untuk menonton video pelajaran, membaca e-book, dan berdiskusi tugas di grup kelas.</p><p><strong>Doni:</strong> Menggunakan gawai untuk bermain game online hingga larut malam setiap hari. Ia sering mengantuk di kelas dan nilainya turun drastis.</p></div>", q:"Dampak <strong>utama</strong> penggunaan gawai terhadap prestasi belajar dari kedua kasus tersebut adalah...", opt:["Rena dan Doni sama-sama tidak terpengaruh karena gawai hanyalah sebuah alat","Rena prestasinya meningkat karena memanfaatkan gawai untuk belajar; Doni prestasinya menurun karena gawai mengganggu waktu istirahat dan belajar","Gawai selalu berdampak negatif bagi seluruh siswa karena menyebabkan kecanduan","Doni prestasinya meningkat karena bermain game melatih refleks dan konsentrasi"], ans:"Rena prestasinya meningkat karena memanfaatkan gawai untuk belajar; Doni prestasinya menurun karena gawai mengganggu waktu istirahat dan belajar" },
+{ id:8, cat:"Berpikir Komputasional", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Instruksi Resep Telur Dadar</div><p><strong>Langkah 1:</strong> Panaskan wajan dengan sedikit minyak<br><strong>Langkah 2:</strong> Kocok telur bersama garam dalam mangkuk<br><strong>Langkah 3:</strong> Angkat dan sajikan telur dadar di piring<br><strong>Langkah 4:</strong> Tuangkan adonan telur ke dalam wajan panas<br><strong>Langkah 5:</strong> Tunggu hingga matang, lalu balik telur</p><p>Seorang siswa mengikuti instruksi di atas persis seperti tertulis, namun hasilnya gagal.</p></div>", q:"Langkah manakah yang penempatannya <strong>menyebabkan kegagalan</strong> hasil akhir?", opt:["Langkah 1 — wajan seharusnya dipanaskan terakhir","Langkah 2 — telur seharusnya tidak dikocok sebelum dimasak","Langkah 3 — ditempatkan sebelum Langkah 4 dan 5; telur sudah 'diangkat' sebelum sempat dimasak","Langkah 5 — telur tidak perlu dibalik sama sekali"], ans:"Langkah 3 — ditempatkan sebelum Langkah 4 dan 5; telur sudah 'diangkat' sebelum sempat dimasak" },
+{ id:9, cat:"Literasi Digital", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Diagram Aktivitas Mengetik Dokumen</div><p>Seorang siswa mengetik laporan di komputer:</p><p style='text-align:center;margin:12px 0;'>⌨️ Keyboard (menekan tombol) &nbsp;→&nbsp; ❓ <em>??? (Proses)</em> &nbsp;→&nbsp; 🖥️ Monitor (teks muncul di layar)</p><p>Konsep: <strong>Input → Proses → Output</strong></p></div>", q:"Komponen manakah yang mengisi kotak 'Proses' dalam konsep sistem komputer <strong>Input–Proses–Output</strong>?", opt:["Keyboard (papan ketik)","Monitor (layar)","CPU (Central Processing Unit — unit pemroses pusat)","Mouse (tetikus)"], ans:"CPU (Central Processing Unit — unit pemroses pusat)" },
+{ id:10, cat:"Literasi Digital", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Situasi: Berbagi Karya Tulis</div><p>Maya telah menulis cerpen pendek untuk tugas Bahasa Indonesia. Ia ingin membagikannya kepada seluruh teman sekelasnya (30 siswa) agar dapat dibaca sebelum presentasi besok.</p></div>", q:"Metode daring yang paling <strong>efektif</strong> dan <strong>aman</strong> untuk mendiseminasi konten tersebut adalah...", opt:["Mengirim file satu per satu via pesan langsung ke setiap teman","Mengunggah file ke platform berbagi kelas (Google Classroom/grup WhatsApp kelas) agar semua teman mengaksesnya sekaligus","Mencetak 30 salinan dan membagikannya secara fisik besok pagi","Memposting cerpen ke akun media sosial pribadi yang bersifat publik"], ans:"Mengunggah file ke platform berbagi kelas (Google Classroom/grup WhatsApp kelas) agar semua teman mengaksesnya sekaligus" },
+{ id:11, cat:"Berpikir Komputasional", type:"pgk", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Kondisi Cuaca</div><ul style='padding-left:20px;line-height:2;'><li><strong>Kondisi A:</strong> Hujan deras disertai petir</li><li><strong>Kondisi B:</strong> Cerah dan berangin sepoi-sepoi</li><li><strong>Kondisi C:</strong> Mendung tetapi tidak hujan</li></ul></div>", q:"Pilihlah <strong>lebih dari satu</strong> instruksi logis (Jika … maka …) yang <strong>tepat dan benar</strong> untuk situasi-situasi di atas!", opt:["Jika hujan deras dan ada petir, maka hindari berteduh di bawah pohon tinggi","Jika cerah dan angin sepoi-sepoi, maka ini waktu tepat untuk olahraga lari pagi di luar","Jika mendung tetapi tidak hujan, maka tidak perlu membawa payung sama sekali","Jika hujan deras, maka aman untuk berenang di sungai dekat rumah"], ans:["Jika hujan deras dan ada petir, maka hindari berteduh di bawah pohon tinggi","Jika cerah dan angin sepoi-sepoi, maka ini waktu tepat untuk olahraga lari pagi di luar"] },
+{ id:12, cat:"Literasi Digital", type:"pgk", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Contoh Kata Sandi</div><p><strong>A:</strong> budi123 &nbsp;|&nbsp; <strong>B:</strong> Aku@Suka#Belajar7 &nbsp;|&nbsp; <strong>C:</strong> P@ssw0rd!9x</p><p style='font-size:.85rem;color:#475569;margin-top:10px;'>Kriteria kata sandi kuat: minimal 8 karakter, mengandung huruf besar, huruf kecil, angka, dan simbol.</p></div>", q:"Pilihlah <strong>lebih dari satu</strong> kata sandi yang <strong>memenuhi kriteria keamanan standar</strong>!", opt:["Kata Sandi A: budi123","Kata Sandi B: Aku@Suka#Belajar7","Kata Sandi C: P@ssw0rd!9x"], ans:["Kata Sandi B: Aku@Suka#Belajar7","Kata Sandi C: P@ssw0rd!9x"] },
+{ id:13, cat:"Literasi Digital", type:"pgk", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Jenis File</div><p>📄 dokumen_laporan.doc &nbsp;|&nbsp; 🖼️ foto_kelas.jpg &nbsp;|&nbsp; 🖼️ logo_sekolah.png</p></div>", q:"Pilihlah <strong>lebih dari satu</strong> file yang merupakan format konten digital berupa <strong>gambar</strong>!", opt:["File 1: dokumen_laporan.doc","File 2: foto_kelas.jpg","File 3: logo_sekolah.png"], ans:["File 2: foto_kelas.jpg","File 3: logo_sekolah.png"] },
+{ id:14, cat:"Berpikir Komputasional", type:"pgk", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Pola Bilangan</div><p style='text-align:center;font-size:1.3rem;font-weight:700;letter-spacing:6px;margin:10px 0;'>2 → 4 → 8 → 16 → ?</p></div>", q:"Pilihlah <strong>lebih dari satu</strong> pernyataan yang <strong>benar</strong> berdasarkan pola bilangan di atas!", opt:["Angka selanjutnya adalah 32","Pola ini menggunakan operasi penjumlahan bertambah (+2, +4, +6 …)","Pola ini menggunakan operasi perkalian dua (×2 setiap langkah)","Angka selanjutnya adalah 24"], ans:["Angka selanjutnya adalah 32","Pola ini menggunakan operasi perkalian dua (×2 setiap langkah)"] },
+{ id:15, cat:"Literasi Digital", type:"pgk", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Aktivitas Daring</div><ul style='padding-left:20px;line-height:2;'><li><strong>Aktivitas 1:</strong> Mencari referensi artikel ilmiah untuk tugas sekolah di mesin pencari</li><li><strong>Aktivitas 2:</strong> Melakukan video call bersama kelompok untuk diskusi proyek</li><li><strong>Aktivitas 3:</strong> Bermain game offline (tanpa koneksi internet) selama 5 jam</li></ul></div>", q:"Pilihlah <strong>lebih dari satu</strong> aktivitas yang merupakan <strong>manfaat positif</strong> penggunaan internet untuk pelajar!", opt:["Aktivitas 1: Mencari referensi artikel ilmiah","Aktivitas 2: Video call diskusi proyek bersama kelompok","Aktivitas 3: Bermain game offline selama 5 jam"], ans:["Aktivitas 1: Mencari referensi artikel ilmiah","Aktivitas 2: Video call diskusi proyek bersama kelompok"] },
+{ id:16, cat:"Berpikir Komputasional", type:"pgk-cat", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Set Instruksi</div><p><strong>Set A (Memasak nasi):</strong> ① Cuci beras → ② Masukkan ke rice cooker → ③ Tambahkan air → ④ Nyalakan rice cooker</p><p><strong>Set B (Menyalakan lampu):</strong> ① Tekan saklar ON → ② Pasang bola lampu → ③ Pastikan kabel terhubung aman</p><p><strong>Set C (Berpakaian):</strong> ① Kenakan kemeja → ② Kenakan kaos dalam → ③ Pasang kancing → ④ Masukkan baju ke celana</p></div>", q:"Klasifikasikan setiap set instruksi: apakah urutannya <strong>Logis</strong> atau <strong>Tidak Logis</strong>?", rows:["Set A – Memasak Nasi","Set B – Menyalakan Lampu","Set C – Berpakaian"], cols:["Urutannya Logis","Urutannya Tidak Logis"], ans:["Urutannya Logis","Urutannya Tidak Logis","Urutannya Tidak Logis"] },
+{ id:17, cat:"Literasi Digital", type:"pgk-cat", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Jenis Informasi</div><ul style='padding-left:20px;line-height:2;'><li><strong>Info 1:</strong> Nama lengkap dan nomor telepon orang tua</li><li><strong>Info 2:</strong> Alamat rumah lengkap (RT/RW, Kelurahan, Kecamatan)</li><li><strong>Info 3:</strong> Warna favorit dan makanan kesukaan</li></ul></div>", q:"Klasifikasikan setiap informasi: apakah termasuk <strong>Data Pribadi Sensitif</strong> atau <strong>Data Umum</strong>?", rows:["Info 1 – Nama & No. Telp Orang Tua","Info 2 – Alamat Rumah Lengkap","Info 3 – Warna & Makanan Favorit"], cols:["Data Pribadi Sensitif","Data Umum"], ans:["Data Pribadi Sensitif","Data Pribadi Sensitif","Data Umum"] },
+{ id:18, cat:"Literasi Digital", type:"pgk-cat", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Karya Digital</div><ul style='padding-left:20px;line-height:2;'><li><strong>Karya 1:</strong> Artikel blog tentang cara merawat tanaman hias (tulisan panjang + beberapa foto)</li><li><strong>Karya 2:</strong> Album foto liburan keluarga yang diunggah ke Google Photos</li><li><strong>Karya 3:</strong> Vlog perjalanan wisata berupa rekaman video + narasi di YouTube</li></ul></div>", q:"Klasifikasikan setiap karya berdasarkan jenis konten yang <strong>paling dominan</strong>!", rows:["Karya 1 – Artikel Blog","Karya 2 – Album Foto","Karya 3 – Vlog YouTube"], cols:["Dominan Teks","Dominan Gambar","Dominan Video"], ans:["Dominan Teks","Dominan Gambar","Dominan Video"] },
+{ id:19, cat:"Berpikir Komputasional", type:"pgk-cat", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Jenis Masalah</div><ul style='padding-left:20px;line-height:2;'><li><strong>Masalah 1:</strong> Menghitung luas persegi dengan panjang sisi 7 cm</li><li><strong>Masalah 2:</strong> Memilih teman terbaik untuk dijadikan ketua kelompok belajar</li><li><strong>Masalah 3:</strong> Merapikan kamar agar terlihat rapi dan nyaman</li></ul></div>", q:"Klasifikasikan setiap masalah: apakah <strong>Memiliki Solusi Sistematis</strong> atau <strong>Bersifat Subjektif</strong>?", rows:["Masalah 1 – Hitung Luas","Masalah 2 – Pilih Ketua Kelompok","Masalah 3 – Rapikan Kamar"], cols:["Memiliki Solusi Sistematis","Bersifat Subjektif"], ans:["Memiliki Solusi Sistematis","Bersifat Subjektif","Bersifat Subjektif"] },
+{ id:20, cat:"Literasi Digital", type:"pgk-cat", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Perilaku Daring</div><ul style='padding-left:20px;line-height:2;'><li><strong>Perilaku 1:</strong> Mengklik tautan dari pengirim yang tidak dikenal di email</li><li><strong>Perilaku 2:</strong> Selalu logout dari akun setelah selesai menggunakan komputer publik</li><li><strong>Perilaku 3:</strong> Membagikan kata sandi akun media sosial kepada teman dekat</li></ul></div>", q:"Klasifikasikan setiap perilaku: apakah termasuk perilaku <strong>Aman</strong> atau <strong>Tidak Aman</strong>?", rows:["Perilaku 1 – Klik link asing","Perilaku 2 – Logout di komputer publik","Perilaku 3 – Bagikan kata sandi"], cols:["Aman","Tidak Aman"], ans:["Tidak Aman","Aman","Tidak Aman"] },
+{ id:21, cat:"Literasi & Etika KA", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Aktivitas Teknologi</div><ul style='padding-left:20px;line-height:2;'><li><strong>Aktivitas 1:</strong> Kalkulator menghitung 345×678 menggunakan rumus tetap</li><li><strong>Aktivitas 2:</strong> Aplikasi YouTube merekomendasikan video berdasarkan riwayat tontonanmu</li><li><strong>Aktivitas 3:</strong> Lampu koridor menyala otomatis setiap kali mendeteksi gerakan</li></ul></div>", q:"Aktivitas manakah yang <strong>paling tepat</strong> menggambarkan penggunaan <strong>Kecerdasan Artifisial (AI) sederhana</strong>?", opt:["Aktivitas 1 — kalkulator bekerja sangat cepat tanpa bantuan manusia","Aktivitas 2 — sistem mempelajari preferensimu dari data tontonan dan membuat rekomendasi personal yang berbeda untuk setiap orang","Aktivitas 3 — lampu bekerja otomatis tanpa perlu menekan saklar","Aktivitas 1 dan 3 — keduanya bekerja otomatis tanpa bantuan manusia"], ans:"Aktivitas 2 — sistem mempelajari preferensimu dari data tontonan dan membuat rekomendasi personal yang berbeda untuk setiap orang" },
+{ id:22, cat:"Literasi & Etika KA", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Situasi: Mencari Bahan Pelajaran</div><p>Nisa kesulitan mencari bahan pelajaran tentang sistem tata surya untuk tugas IPA-nya. Temannya menyarankan menggunakan asisten virtual berbasis AI.</p></div>", q:"Cara yang <strong>paling tepat</strong> menggunakan asisten AI untuk belajar <strong>tanpa bergantung sepenuhnya</strong> adalah...", opt:["Minta AI menuliskan semua isi tugas, lalu salin langsung tanpa membacanya","Gunakan AI untuk mencari informasi awal, baca dan pahami sendiri, kemudian tulis ulang dengan kalimatmu sendiri","Tanyakan jawaban soal latihan kepada AI dan hafalkan jawabannya","Biarkan AI mengerjakan seluruh tugas agar bisa bermain lebih lama"], ans:"Gunakan AI untuk mencari informasi awal, baca dan pahami sendiri, kemudian tulis ulang dengan kalimatmu sendiri" },
+{ id:23, cat:"Literasi & Etika KA", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Kasus Rian</div><p>Rian selalu menggunakan AI untuk membuat tugas sekolahnya secara instan: ia hanya mengetik pertanyaan tugas, lalu menyalin jawaban AI tanpa membaca atau memahaminya sama sekali. Kebiasaan ini terus dilakukan selama satu semester penuh.</p></div>", q:"Dampak <strong>jangka panjang</strong> yang paling mungkin terjadi pada kemampuan belajar Rian adalah...", opt:["Nilai Rian akan terus meningkat karena AI selalu memberikan jawaban yang benar","Kemampuan berpikir dan menulis Rian akan berkembang pesat karena terbantu AI","Kemampuan berpikir kritis dan menulis Rian akan menurun karena ia tidak pernah berlatih sendiri","Tidak ada dampak apapun karena AI hanyalah alat bantu yang netral"], ans:"Kemampuan berpikir kritis dan menulis Rian akan menurun karena ia tidak pernah berlatih sendiri" },
+{ id:24, cat:"Literasi & Etika KA", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Situasi di Kelas</div><p>Di kelas, Bagas terlihat murung, menunduk, dan tidak mau menjawab pertanyaan. Teman sebangkunya, Zara, merasa ada yang tidak beres dan ingin memberikan dukungan kepada Bagas.</p></div>", q:"Pihak manakah yang <strong>lebih tepat</strong> untuk memberikan empati dan dukungan emosional kepada Bagas?", opt:["AI (Chatbot) — karena dapat memproses data ekspresi wajah dengan sangat cepat","Manusia (Zara atau guru) — karena manusia memiliki kemampuan merasakan dan memahami emosi secara mendalam melalui empati yang nyata","Keduanya sama saja — karena AI modern sudah sangat canggih dan bisa merasakan emosi","Tidak ada yang perlu dilakukan — Bagas akan baik-baik saja dengan sendirinya"], ans:"Manusia (Zara atau guru) — karena manusia memiliki kemampuan merasakan dan memahami emosi secara mendalam melalui empati yang nyata" },
+{ id:25, cat:"Literasi & Etika KA", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Dua Perangkat</div><p><strong>Perangkat A:</strong> Robot penyedot debu otomatis yang dapat mendeteksi rintangan, memetakan ruangan, dan menyesuaikan jalurnya secara mandiri.</p><p><strong>Perangkat B:</strong> Sapu lidi biasa yang digunakan manusia untuk menyapu lantai.</p></div>", q:"Perbedaan <strong>utama</strong> antara kedua perangkat berdasarkan kemampuan <strong>pengambilan keputusan</strong> adalah...", opt:["Perangkat A lebih mahal daripada Perangkat B","Perangkat A dapat mengambil keputusan sendiri (misal: menghindari kursi, berhenti saat baterai habis), sementara Perangkat B tidak dapat mengambil keputusan apapun tanpa digerakkan manusia","Perangkat B lebih efektif membersihkan lantai dibandingkan Perangkat A","Perangkat A menggunakan listrik sehingga lebih canggih; Perangkat B menggunakan tenaga manusia"], ans:"Perangkat A dapat mengambil keputusan sendiri (misal: menghindari kursi, berhenti saat baterai habis), sementara Perangkat B tidak dapat mengambil keputusan apapun tanpa digerakkan manusia" },
+{ id:26, cat:"Literasi & Etika KA", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Kasus Penyebaran Hoaks</div><p>Sebuah akun media sosial menggunakan AI untuk secara otomatis membuat dan menyebarkan berita palsu (hoaks) tentang seorang tokoh masyarakat. Akibatnya, tokoh tersebut dijauhi banyak orang dan kehilangan kepercayaan komunitasnya.</p></div>", q:"Prinsip etika AI manakah yang <strong>paling jelas dilanggar</strong> dalam kasus ini?", opt:["Prinsip bahwa AI harus bekerja secara cepat dan efisien dalam memproses data","Prinsip bahwa AI dikembangkan untuk meningkatkan kesejahteraan manusia dan tidak boleh merugikan manusia","Prinsip bahwa AI harus selalu terhubung dengan jaringan internet yang stabil","Prinsip bahwa AI harus menggunakan data latihan sebanyak mungkin"], ans:"Prinsip bahwa AI dikembangkan untuk meningkatkan kesejahteraan manusia dan tidak boleh merugikan manusia" },
+{ id:27, cat:"Literasi & Etika KA", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Kasus Filter Wajah</div><p>Ada filter wajah AI yang mengubah penampilan pengguna menjadi bentuk menggelikan. Teman Cici, yaitu Lia, secara tidak sengaja menggunakannya dalam foto yang kemudian dibagikan ke grup kelas. Beberapa teman menertawakan Lia, dan Lia merasa malu serta tersinggung.</p></div>", q:"Sikap Cici yang <strong>paling tepat</strong> dan mencerminkan <strong>empati</strong> dalam penggunaan teknologi ini adalah...", opt:["Ikut tertawa bersama teman-teman karena filternya memang lucu dan tidak sengaja","Membagikan foto tersebut ke lebih banyak orang agar semakin banyak yang terhibur","Meminta maaf kepada Lia, menghapus foto dari grup, dan memastikan Lia tidak merasa dipermalukan","Menjelaskan kepada Lia bahwa itu hanya filter AI dan tidak perlu terlalu sensitif"], ans:"Meminta maaf kepada Lia, menghapus foto dari grup, dan memastikan Lia tidak merasa dipermalukan" },
+{ id:28, cat:"Pemanfaatan KA", type:"pg", score:1, stim:`<div class='stimulus-box'><div class='stimulus-head'>Pengelompokan Buah oleh AI</div><p>Sebuah sistem AI mengelompokkan buah-buahan sebagai berikut:</p><div class='visual-frame'>${getImg("buah_kelompok","Kelompok buah oleh AI")}</div><p><strong>Kelompok 1:</strong> Apel merah kecil · Stroberi merah kecil &nbsp;|&nbsp; <strong>Kelompok 2:</strong> Jeruk besar bulat · Melon besar bulat &nbsp;|&nbsp; <strong>Kelompok 3:</strong> Pisang kuning panjang · Mangga kuning lonjong</p></div>`, q:"Pola sifat apakah yang <strong>paling mungkin</strong> digunakan AI untuk mengelompokkan buah-buah tersebut?", opt:["Berdasarkan rasa buah (manis, asam, atau hambar)","Berdasarkan warna dan ukuran buah","Berdasarkan harga buah di pasaran","Berdasarkan daerah asal buah tersebut"], ans:"Berdasarkan warna dan ukuran buah" },
+{ id:29, cat:"Pemanfaatan KA", type:"pg", score:1, stim:`<div class='stimulus-box'><div class='stimulus-head'>Tiga Benda Geometris</div><div class='visual-frame'>${getImg("bentuk_3d","Bola sepak, kubus rubik, dan tabung kaleng")}</div><p>⚽ Bola Sepak (bulat) &nbsp;|&nbsp; 🟩 Kubus Rubik (kotak) &nbsp;|&nbsp; 🥫 Tabung Kaleng (silinder)</p></div>`, q:"Sifat fisik manakah yang <strong>paling tepat</strong> digunakan AI untuk <strong>membedakan</strong> ketiga benda tersebut?", opt:["Berat benda (ringan atau berat)","Harga benda (murah atau mahal)","Bentuk geometris (bulat/kotak/silinder)","Warna benda (hitam-putih/berwarna-warni/metalik)"], ans:"Bentuk geometris (bulat/kotak/silinder)" },
+{ id:30, cat:"Pemanfaatan KA", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Sistem AI Prediksi Panen</div><p>Sebuah sistem AI memprediksi hasil panen padi menggunakan data: curah hujan, suhu udara, dan jenis tanah. Seorang operator tidak sengaja memasukkan curah hujan yang salah: ia mengetik <strong>500 mm/bulan</strong> padahal seharusnya <strong>50 mm/bulan</strong>.</p></div>", q:"Apa yang <strong>paling mungkin</strong> terjadi pada hasil rekomendasi sistem AI tersebut?", opt:["Sistem AI akan otomatis mendeteksi kesalahan dan memperbaiki datanya sendiri","Sistem AI akan menghasilkan rekomendasi yang tidak akurat atau menyesatkan karena data inputnya salah","Sistem AI akan berhenti bekerja dan meminta operator memasukkan ulang data yang benar","Rekomendasi sistem tidak akan terpengaruh karena AI sangat canggih dan tahu data mana yang benar"], ans:"Sistem AI akan menghasilkan rekomendasi yang tidak akurat atau menyesatkan karena data inputnya salah" },
+{ id:31, cat:"Literasi & Etika KA", type:"pgk", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Penggunaan AI</div><ul style='padding-left:20px;line-height:2;'><li><strong>Penggunaan 1:</strong> AI menganalisis hasil rontgen dan membantu dokter mendeteksi kanker lebih dini dan akurat</li><li><strong>Penggunaan 2:</strong> AI pada mobil otonom yang mendeteksi pejalan kaki dan mengerem otomatis sebelum terjadi kecelakaan</li><li><strong>Penggunaan 3:</strong> Filter wajah AI yang mengubah ekspresi menjadi lucu di aplikasi media sosial</li></ul></div>", q:"Pilihlah <strong>lebih dari satu</strong> penggunaan AI yang berkontribusi <strong>langsung</strong> pada keselamatan dan kesejahteraan manusia!", opt:["Penggunaan 1: Deteksi kanker lebih dini dengan AI","Penggunaan 2: Mobil otonom mengerem otomatis cegah kecelakaan","Penggunaan 3: Filter wajah lucu di media sosial"], ans:["Penggunaan 1: Deteksi kanker lebih dini dengan AI","Penggunaan 2: Mobil otonom mengerem otomatis cegah kecelakaan"] },
+{ id:32, cat:"Literasi & Etika KA", type:"pgk", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Situasi Keputusan AI</div><ul style='padding-left:20px;line-height:2;'><li><strong>Situasi 1:</strong> Sistem AI untuk menyeleksi penerima beasiswa yang dilatih hanya menggunakan data siswa di kota-kota besar</li><li><strong>Situasi 2:</strong> AI merekomendasikan lagu berdasarkan riwayat lagu yang pernah kamu dengarkan</li><li><strong>Situasi 3:</strong> AI memprediksi cuaca berdasarkan data suhu, kelembaban, dan tekanan udara dari ribuan stasiun di seluruh dunia</li></ul></div>", q:"Pilihlah <strong>lebih dari satu</strong> situasi yang <strong>berpotensi menimbulkan ketidakadilan</strong> jika data latihannya bias!", opt:["Situasi 1: Seleksi beasiswa oleh AI","Situasi 2: Rekomendasi lagu oleh AI","Situasi 3: Prediksi cuaca oleh AI"], ans:["Situasi 1: Seleksi beasiswa oleh AI","Situasi 2: Rekomendasi lagu oleh AI"] },
+{ id:33, cat:"Pemanfaatan KA", type:"pgk", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Melatih AI Mengenali Kucing</div><p>Seorang anak ingin melatih sistem AI agar bisa mengenali gambar kucing. Ia mengumpulkan gambar untuk dijadikan data latihan (<em>training data</em>).</p></div>", q:"Pilihlah <strong>lebih dari satu</strong> jenis gambar yang <strong>perlu diberikan</strong> sebagai data latihan agar AI belajar dengan benar!", opt:["Gambar kucing dari berbagai sudut pandang (depan, samping, belakang)","Gambar kucing dengan berbagai warna bulu (putih, hitam, oranye, belang)","Gambar anjing yang jelas (sebagai contoh 'bukan kucing' agar AI bisa membedakan)","Gambar teks bertulisan 'KUCING' dalam berbagai jenis huruf"], ans:["Gambar kucing dari berbagai sudut pandang (depan, samping, belakang)","Gambar kucing dengan berbagai warna bulu (putih, hitam, oranye, belang)","Gambar anjing yang jelas (sebagai contoh 'bukan kucing' agar AI bisa membedakan)"] },
+{ id:34, cat:"Literasi & Etika KA", type:"pgk", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Proyek AI Pengenalan Wajah</div><p>Kelompok Dani ingin membuat proyek AI yang bisa mengenali wajah teman-teman sekelasnya. Tiga cara pengumpulan data:<br><strong>Tindakan 1:</strong> Mengambil foto teman diam-diam dari media sosial mereka tanpa izin.<br><strong>Tindakan 2:</strong> Menggunakan foto lama teman dari album kenangan kelas tanpa memberitahu mereka.<br><strong>Tindakan 3:</strong> Meminta izin secara langsung kepada setiap teman dan hanya menggunakan foto yang sudah mendapat persetujuan.</p></div>", q:"Pilihlah <strong>lebih dari satu</strong> tindakan yang <strong>melanggar etika privasi dan persetujuan</strong>!", opt:["Tindakan 1: Mengambil foto diam-diam dari media sosial tanpa izin","Tindakan 2: Menggunakan foto lama teman tanpa memberitahu mereka","Tindakan 3: Meminta izin secara langsung kepada setiap teman"], ans:["Tindakan 1: Mengambil foto diam-diam dari media sosial tanpa izin","Tindakan 2: Menggunakan foto lama teman tanpa memberitahu mereka"] },
+{ id:35, cat:"Pemanfaatan KA", type:"pgk", score:1, stim:`<div class='stimulus-box'><div class='stimulus-head'>Tiga Objek dengan Sifat Berbeda</div><div class='visual-frame'>${getImg("objek_klasifikasi","Objek P: bola merah besar, Objek Q: bola biru kecil, Objek R: kubus merah besar")}</div><p><strong>Objek P:</strong> Bola merah, besar &nbsp;|&nbsp; <strong>Objek Q:</strong> Bola biru, kecil &nbsp;|&nbsp; <strong>Objek R:</strong> Kubus merah, besar</p><p>AI ingin memisahkan objek yang <strong>berbentuk bulat</strong> dari yang bukan.</p></div>`, q:"Pilihlah <strong>lebih dari satu</strong> sifat yang dapat digunakan AI sebagai kriteria untuk mengidentifikasi objek bulat!", opt:["Warna merah","Bentuk bulat / sphere","Tidak memiliki sudut atau sisi lurus","Ukuran besar"], ans:["Bentuk bulat / sphere","Tidak memiliki sudut atau sisi lurus"] },
+{ id:36, cat:"Literasi & Etika KA", type:"pgk-cat", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Tugas — Siapa yang Lebih Unggul?</div><ul style='padding-left:20px;line-height:2;'><li><strong>Tugas 1:</strong> Merasakan kesedihan teman yang baru saja kehilangan hewan peliharaannya dan memberikan dukungan emosional yang tulus</li><li><strong>Tugas 2:</strong> Menghitung 1.000 soal perkalian bilangan 5 digit dalam waktu kurang dari 1 detik</li><li><strong>Tugas 3:</strong> Mengenali wajah seseorang dari database berisi 10 juta foto dalam hitungan detik</li></ul></div>", q:"Klasifikasikan setiap tugas: apakah ini <strong>Keunggulan Manusia</strong> atau <strong>Keunggulan AI</strong>?", rows:["Tugas 1 – Empati & dukungan emosional","Tugas 2 – Hitung perkalian super cepat","Tugas 3 – Kenali wajah dari jutaan foto"], cols:["Keunggulan Manusia","Keunggulan AI"], ans:["Keunggulan Manusia","Keunggulan AI","Keunggulan AI"] },
+{ id:37, cat:"Literasi & Etika KA", type:"pgk-cat", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Penggunaan AI di Sekolah</div><ul style='padding-left:20px;line-height:2;'><li><strong>Penggunaan 1:</strong> Menggunakan AI untuk membantu memahami materi pelajaran yang sulit dan menemukan contoh soal latihan</li><li><strong>Penggunaan 2:</strong> Menggunakan AI untuk menjawab soal ujian secara langsung dan menyalin jawabannya saat ujian berlangsung</li><li><strong>Penggunaan 3:</strong> Menggunakan AI untuk membuat berita bohong tentang calon ketua OSIS agar lawannya kalah</li></ul></div>", q:"Klasifikasikan setiap penggunaan AI: apakah <strong>Etis</strong> atau <strong>Tidak Etis</strong>?", rows:["Penggunaan 1 – Bantu belajar memahami materi","Penggunaan 2 – Mencontek soal ujian","Penggunaan 3 – Membuat hoaks OSIS"], cols:["Etis","Tidak Etis"], ans:["Etis","Tidak Etis","Tidak Etis"] },
+{ id:38, cat:"Pemanfaatan KA", type:"pgk-cat", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Kualitas Data Latihan AI</div><p>Seorang siswa melatih AI untuk mengenali gambar kucing. Tiga jenis data input:<br><strong>Data 1:</strong> Foto kucing yang jelas, terang, dan terlihat seluruh tubuhnya.<br><strong>Data 2:</strong> Foto sangat buram dan gelap sehingga hampir tidak bisa dikenali objeknya.<br><strong>Data 3:</strong> Foto anjing yang jelas, dimasukkan ke folder data kucing tanpa keterangan apapun.</p></div>", q:"Klasifikasikan setiap data: apakah <strong>Mendukung</strong> atau <strong>Mengganggu</strong> proses belajar AI mengenali kucing?", rows:["Data 1 – Foto kucing jelas","Data 2 – Foto buram dan gelap","Data 3 – Foto anjing tanpa label"], cols:["Mendukung Belajar AI","Mengganggu Belajar AI"], ans:["Mendukung Belajar AI","Mengganggu Belajar AI","Mengganggu Belajar AI"] },
+{ id:39, cat:"Literasi & Etika KA", type:"pgk-cat", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Alat Teknologi</div><ul style='padding-left:20px;line-height:2;'><li><strong>Alat 1:</strong> Robot vacuum cleaner yang dapat memetakan ruangan, menghindari rintangan, dan memutuskan jalur terbaik secara mandiri</li><li><strong>Alat 2:</strong> Penggaris plastik standar untuk mengukur panjang</li><li><strong>Alat 3:</strong> Lampu koridor sederhana yang menyala otomatis setiap kali sensor mendeteksi gerakan (aturan tetap ON/OFF)</li></ul></div>", q:"Klasifikasikan setiap alat: apakah termasuk <strong>Mesin Cerdas (AI)</strong> atau <strong>Mesin Non-Cerdas</strong>?", rows:["Alat 1 – Robot vacuum cleaner","Alat 2 – Penggaris plastik","Alat 3 – Lampu sensor gerak sederhana"], cols:["Mesin Cerdas (AI)","Mesin Non-Cerdas"], ans:["Mesin Cerdas (AI)","Mesin Non-Cerdas","Mesin Non-Cerdas"] },
+{ id:40, cat:"Literasi & Etika KA", type:"pgk-cat", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Tiga Dampak Kehadiran AI</div><ul style='padding-left:20px;line-height:2;'><li><strong>Dampak 1:</strong> Sistem AI membantu dokter mendiagnosis penyakit lebih cepat dan akurat sehingga banyak nyawa terselamatkan</li><li><strong>Dampak 2:</strong> Mesin-mesin otomatis berbasis AI menggantikan pekerja manusia di pabrik, menyebabkan banyak orang kehilangan pekerjaan</li><li><strong>Dampak 3:</strong> AI digunakan untuk menghasilkan dan menyebarkan berita bohong (hoaks) dalam jumlah yang sangat besar</li></ul></div>", q:"Klasifikasikan setiap dampak: apakah <strong>Meningkatkan Kesejahteraan</strong> atau <strong>Berpotensi Merugikan</strong> manusia?", rows:["Dampak 1 – Diagnosa penyakit lebih akurat","Dampak 2 – Otomatisasi gantikan pekerja pabrik","Dampak 3 – Penyebaran hoaks massal"], cols:["Meningkatkan Kesejahteraan","Berpotensi Merugikan"], ans:["Meningkatkan Kesejahteraan","Berpotensi Merugikan","Berpotensi Merugikan"] }
+];
+
+// ════════════════════════════════════════════════════════
+//  APP OBJECT
+// ════════════════════════════════════════════════════════
+const app = {
+    session: { nama:"", kelas:"", answers:{}, startTime:0 },
+    currIdx: 0, timerInt: null, _hasSavedSession: false,
+
+    init() { this.showSlide('pin'); try { if(localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession=true; } catch(e){} },
+
+    async checkPin() {
+        const inp=document.getElementById('inp-pin'), val=inp.value.trim();
+        if(!val) return;
+        const h=await hashPin(val);
+        if(h===CONFIG.PIN_HASH){ this.showSlide('login'); if(this._hasSavedSession) document.getElementById('resume-alert').style.display='block'; }
+        else { inp.classList.add('error'); document.getElementById('pin-err').style.display='block'; inp.value=''; setTimeout(()=>inp.classList.remove('error'),400); }
+    },
+
+    login() {
+        const n=document.getElementById('inpNama').value.trim(), k=document.getElementById('inpKelas').value;
+        if(!n||!k){alert("Harap isi nama lengkap dan pilih kelas!");return;}
+        this.session.nama=n; this.session.kelas=k; this.showSlide('rules');
+    },
+
+    resume() { try { this.session=JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)); this.renderSidebar(); this.startExam(true); } catch(e){alert("Sesi tersimpan rusak. Silakan mulai ujian baru.");} },
+
+    startExam(isRes=false) {
+        if(!isRes){this.session.startTime=Date.now();this.save();}
+        document.getElementById('user-badge').innerText=this.session.nama;
+        document.getElementById('user-badge').style.display='block';
+        document.getElementById('sidebar').style.display='flex';
+        this.renderQuestions(); this.renderSidebar(); this.showSlide('quiz'); this.goToQ(0); this.startTimer();
+    },
+
+    showSlide(id) { document.querySelectorAll('.slide').forEach(e=>e.classList.remove('active')); document.getElementById('slide-'+id).classList.add('active'); },
+
+    renderQuestions() {
+        const box=document.getElementById('quiz-container'); box.innerHTML="";
+        QUESTIONS.forEach((q,i)=>{
+            let h=`<div id="q-item-${i}" class="question-item"><div class="tag-cat">${q.cat}</div>${q.stim||""}<div class="q-text">${i+1}. ${q.q}</div>`;
+            if(q.type==='pg') q.opt.forEach((o,oi)=>h+=`<label class="opt-label"><input type="radio" name="ans_${q.id}" value="${oi}" onchange="app.saveAns(${q.id},${oi})"> ${o}</label>`);
+            else if(q.type==='pgk'){
+                h+=`<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">☑ Boleh memilih lebih dari satu jawaban</p>`;
+                q.opt.forEach((o,oi)=>h+=`<label class="opt-label"><input type="checkbox" value="${oi}" onchange="app.saveMulti(${q.id},${oi})"> ${o}</label>`);
+            } else if(q.type==='pgk-cat'){
+                h+=`<div class="matrix-wrapper"><table class="matrix-table"><tr><th>Pernyataan</th>`;
+                q.cols.forEach(c=>h+=`<th>${c}</th>`); h+=`</tr>`;
+                q.rows.forEach((r,ri)=>{ h+=`<tr><td>${r}</td>`; q.cols.forEach(c=>h+=`<td><input type="radio" name="mx_${q.id}_${ri}" value="${c}" onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`); h+=`</tr>`; });
+                h+=`</table></div>`;
+            }
+            h+=`</div>`; box.innerHTML+=h;
+        });
+    },
+
+    goToQ(idx) {
+        if(idx<0||idx>=QUESTIONS.length) return;
+        this.currIdx=idx;
+        const qs=document.getElementById('quiz-scroll'); if(qs) qs.scrollTop=0;
+        document.querySelectorAll('.question-item').forEach(e=>e.classList.remove('active-q'));
+        document.getElementById(`q-item-${idx}`).classList.add('active-q');
+        document.getElementById('q-indicator').innerText=`Soal ${idx+1} / 40`;
+        document.getElementById('btn-prev').disabled=(idx===0);
+        const nBtn=document.getElementById('btn-next');
+        if(idx===QUESTIONS.length-1){nBtn.innerText="Selesai";nBtn.onclick=()=>this.confirmFinish();nBtn.classList.add('btn-danger');}
+        else{nBtn.innerText="Selanjutnya";nBtn.onclick=()=>this.move(1);nBtn.classList.remove('btn-danger');}
+        this.restoreVisual(idx); this.updateSidebarUI();
+    },
+
+    move(step){this.goToQ(this.currIdx+step);},
+    saveAns(qid,v){this.session.answers[qid]=v;this.save();this.updateSidebarUI();},
+    saveMulti(qid,oi){let c=this.session.answers[qid]||[];if(c.includes(oi))c=c.filter(x=>x!==oi);else c.push(oi);this.session.answers[qid]=c;this.save();this.updateSidebarUI();},
+    saveMx(qid,ri,v){let c=this.session.answers[qid]||[];c[ri]=v;this.session.answers[qid]=c;this.save();this.updateSidebarUI();},
+    save(){try{localStorage.setItem(CONFIG.STORAGE_KEY,JSON.stringify(this.session));}catch(e){}},
+
+    renderSidebar(){const g=document.getElementById('nav-grid');g.innerHTML="";QUESTIONS.forEach((q,i)=>g.innerHTML+=`<div id="nav-num-${i}" class="nav-num" onclick="app.goToQ(${i})">${i+1}</div>`);},
+
+    checkFilled(qid){const v=this.session.answers[qid];if(v===undefined||v===null)return false;if(Array.isArray(v))return v.filter(x=>x!==undefined&&x!==null).length>0;return true;},
+
+    updateSidebarUI(){QUESTIONS.forEach((q,i)=>{const el=document.getElementById(`nav-num-${i}`);if(!el)return;if(i===this.currIdx)el.classList.add('current');else el.classList.remove('current');if(this.checkFilled(q.id))el.classList.add('filled');else el.classList.remove('filled');});},
+
+    restoreVisual(idx){
+        const q=QUESTIONS[idx],ans=this.session.answers[q.id];
+        if(ans===undefined||ans===null)return;
+        if(q.type==='pg'){const el=document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);if(el)el.checked=true;}
+        else if(q.type==='pgk'&&Array.isArray(ans))ans.forEach(v=>{const el=document.querySelector(`#q-item-${idx} input[value="${v}"]`);if(el)el.checked=true;});
+        else if(q.type==='pgk-cat'&&Array.isArray(ans))ans.forEach((v,ri)=>{if(!v)return;const el=document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);if(el)el.checked=true;});
+    },
+
+    startTimer(){
+        clearInterval(this.timerInt);
+        this.timerInt=setInterval(()=>{
+            const rem=CONFIG.DURATION-Math.floor((Date.now()-this.session.startTime)/1000);
+            if(rem<=0){clearInterval(this.timerInt);this.submitExam();return;}
+            document.getElementById('timer-display').innerText=`${Math.floor(rem/60).toString().padStart(2,'0')}:${(rem%60).toString().padStart(2,'0')}`;
+        },1000);
+    },
+
+    confirmFinish(){document.getElementById('modal-confirm').style.display='flex';},
+
+    submitExam(){
+        document.getElementById('modal-confirm').style.display='none';
+        document.getElementById('modal-loading').style.display='flex';
+        clearInterval(this.timerInt);
+
+        const stats={};let totS=0,totM=0;
+        QUESTIONS.forEach(q=>{
+            if(!stats[q.cat])stats[q.cat]={s:0,m:0};
+            stats[q.cat].m+=q.score; totM+=q.score;
+            const u=this.session.answers[q.id]; let pt=0;
+            if(u!==undefined&&u!==null){
+                if(q.type==='pg'){if(u==q.opt.indexOf(q.ans))pt=q.score;}
+                else if(q.type==='pgk'&&Array.isArray(u)&&Array.isArray(q.ans)){
+                    if(JSON.stringify(u.map(i=>q.opt[i]).sort())===JSON.stringify([...q.ans].sort()))pt=q.score;
+                } else if(q.type==='pgk-cat'&&Array.isArray(u)){
+                    let m=0; q.ans.forEach((k,i)=>{if(u[i]===k)m++;});
+                    pt=(m/q.rows.length)*q.score;
+                }
+            }
+            stats[q.cat].s+=pt; totS+=pt;
+        });
+
+        const final=Math.round((totS/totM)*100);
+        let summ={},cht="",nts=[];
+        Object.keys(stats).forEach(c=>{
+            const p=stats[c].m>0?Math.round((stats[c].s/stats[c].m)*100):0;
+            summ[c]={skor:p,tuntas:p>=70,label:p>=70?"Tuntas":"Perlu Bimbingan"};
+            if(p<70)nts.push(c);
+            cht+=`<div class="chart-row"><div class="chart-lbl">${c}</div><div class="chart-track"><div class="chart-fill" style="width:${p}%;background:${p>=70?'#16a34a':'#dc2626'}"></div></div><div class="chart-val">${p}%</div></div>`;
+        });
+
+        const desc=nts.length===0?"Selamat! Tuntas semua elemen.":"Perlu belajar lagi di: "+nts.join(", ");
+        this.showSlide('result');
+        document.getElementById('modal-loading').style.display='none';
+        document.getElementById('result-content').innerHTML=`<h3>Nilai Akhir: <span style="color:var(--primary);font-size:2.5rem;">${final}</span></h3><div style="background:#eff6ff;padding:15px;border-radius:8px;margin-bottom:20px;">${desc}</div><h4>Capaian per Elemen:</h4>${cht}`;
+
+        fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
+            body:JSON.stringify({action:"submit_exam",mapel:"KKA",nama:this.session.nama,kelas:this.session.kelas,skor:final,deskripsi:desc,jawaban:this.session.answers,ringkasanNilai:summ})
+        }).then(()=>{try{localStorage.removeItem(CONFIG.STORAGE_KEY);}catch(e){}});
+    }
+};
+window.onload=()=>app.init();
+</script>
+</body>
+</html>
