@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ujian Sekolah Al-Islam - SD Muhammadiyah 01 Kukusan</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<style>
+/* ── VARIABLES ─────────────────────────────────────────── */
+:root {
+  --primary:       #1e3a8a;
+  --primary-light: #eff6ff;
+  --success:       #16a34a;
+  --danger:        #dc2626;
+  --text:          #334155;
+  --bg:            #f1f5f9;
+  --border:        #cbd5e1;
+}
+
+*, *::before, *::after { box-sizing: border-box; outline: none; }
+
+body {
+  margin: 0; padding: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg); color: var(--text);
+  height: 100vh; overflow: hidden;
+}
+
+/* ── LAYOUT ────────────────────────────────────────────── */
+.app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+
+/* HEADER */
+.header {
+  height: 64px; background: var(--primary); color: white;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  z-index: 50; flex-shrink: 0;
+}
+.header-title { font-weight: 700; font-size: 1.2rem; }
+.timer-box {
+  background: rgba(255,255,255,.15); padding: 6px 16px; border-radius: 6px;
+  font-weight: 700; font-family: monospace; font-size: 1.25rem;
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+/* WORKSPACE */
+.workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+.main-stage {
+  flex: 1; position: relative; background: var(--bg);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+
+/* ── SLIDES ────────────────────────────────────────────── */
+.slide { display: none !important; width: 100%; height: 100%; }
+.slide.active { display: flex !important; flex-direction: column; animation: fadeIn .4s ease; }
+
+.center-content-wrapper {
+  width: 100%; max-width: 800px; margin: 0 auto;
+  padding: 20px; overflow-y: auto; flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+.card {
+  background: white; border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,.1);
+  padding: 32px; margin-bottom: 20px;
+  border-top: 5px solid var(--primary);
+}
+
+/* ── KUIS ──────────────────────────────────────────────── */
+.quiz-scroll-area {
+  flex: 1; overflow-y: auto;
+  padding: 20px; padding-bottom: 80px;
+  width: 100%; max-width: 900px; margin: 0 auto;
+}
+
+.nav-bar-fixed {
+  flex-shrink: 0; background: white;
+  padding: 16px 24px;
+  border-top: 1px solid #e2e8f0;
+  box-shadow: 0 -4px 15px rgba(0,0,0,.05);
+  display: flex; justify-content: space-between; align-items: center;
+  z-index: 40;
+}
+
+/* ── SOAL ──────────────────────────────────────────────── */
+.question-item { display: none; }
+.question-item.active-q { display: block; animation: slideIn .3s ease-out; }
+@keyframes slideIn { from { opacity:0; transform:translateX(15px); } to { opacity:1; transform:translateX(0); } }
+
+.stimulus-box {
+  background: #fff; border: 1px solid #e2e8f0;
+  border-left: 5px solid var(--primary);
+  padding: 20px; margin-bottom: 24px; border-radius: 8px;
+}
+.stimulus-head {
+  font-weight: 800; color: var(--primary);
+  border-bottom: 2px dashed #e2e8f0;
+  padding-bottom: 10px; margin-bottom: 15px;
+  font-size: 1.1rem; text-transform: uppercase;
+}
+.visual-frame {
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  border-radius: 8px; padding: 20px;
+  display: flex; justify-content: center; align-items: center;
+  margin: 15px 0; overflow: hidden;
+}
+.arabic-text {
+  font-size: 1.5rem;
+  font-family: 'Times New Roman', 'Scheherazade New', serif;
+  direction: rtl;
+  line-height: 2.2;
+  text-align: right;
+  color: #1e293b;
+  width: 100%;
+}
+
+.q-text { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.6; }
+.tag-cat {
+  display: inline-block; font-size: .75rem;
+  background: #e0f2fe; color: #0369a1;
+  padding: 4px 10px; border-radius: 20px;
+  font-weight: bold; margin-bottom: 10px;
+}
+
+.opt-label {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 16px; background: white;
+  border: 1px solid #cbd5e1; border-radius: 8px;
+  margin-bottom: 12px; cursor: pointer;
+  transition: all .2s; font-size: 1rem; color: #475569;
+}
+.opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+.opt-label input { margin-top: 4px; transform: scale(1.2); flex-shrink: 0; }
+
+/* TABEL MATRIKS */
+.matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 320px; }
+.matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 12px; }
+.matrix-table th { background: #f1f5f9; text-align: center; font-size: .85rem; white-space: nowrap; }
+.matrix-table td { text-align: center; }
+.matrix-table td:first-child { text-align: left; font-weight: 500; }
+
+/* ── SIDEBAR ───────────────────────────────────────────── */
+.side-panel {
+  width: 300px; background: white;
+  border-left: 1px solid #e2e8f0;
+  display: flex; flex-direction: column;
+  flex-shrink: 0; z-index: 40;
+}
+.nav-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; padding: 20px; overflow-y: auto; }
+.nav-num {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  border: 1px solid #cbd5e1; border-radius: 6px;
+  cursor: pointer; font-weight: 700; color: #64748b; transition: all .2s;
+}
+.nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+.nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,.15); color: var(--primary); }
+.nav-num.filled { background-color: var(--success)!important; color: white!important; border-color: var(--success)!important; }
+.nav-num.filled.current { border: 3px solid #1e3a8a!important; }
+
+/* ── FORM INPUT ────────────────────────────────────────── */
+input[type="text"], select {
+  width: 100%; padding: 14px; margin: 8px 0 20px;
+  border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem;
+}
+
+/* ── TOMBOL ────────────────────────────────────────────── */
+.btn {
+  background: var(--primary); color: white; border: none;
+  padding: 12px 24px; border-radius: 8px; cursor: pointer;
+  font-weight: 700; font-size: 1rem;
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+}
+.btn:hover { background: #172554; }
+.btn:disabled { background: #94a3b8; cursor: not-allowed; }
+.btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+.btn-outline:hover { background: #f8fafc; }
+.btn-danger { background: var(--danger); }
+.btn-danger:hover { background: #b91c1c; }
+
+/* ── HASIL (CHART) ─────────────────────────────────────── */
+.chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+.chart-lbl { width: 210px; font-size: .82rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+.chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+.chart-fill { height: 100%; transition: width 1s ease-out; }
+.chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+
+/* ── OVERLAY / MODAL ───────────────────────────────────── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+  display: none; justify-content: center; align-items: center;
+  z-index: 100;
+}
+.modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+
+/* PIN INPUT */
+.pin-input-wrap { position: relative; margin-bottom: 10px; }
+.pin-input-wrap svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  color: #94a3b8; pointer-events: none;
+}
+#inp-pin {
+  width: 100%; padding: 14px 14px 14px 44px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 1.1rem; font-weight: 700; letter-spacing: .15em;
+  font-family: monospace; color: var(--text);
+  transition: border-color .2s;
+}
+#inp-pin:focus { border-color: var(--primary); }
+#inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+#pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+
+/* GAMBAR SOAL */
+.stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+
+/* LOADING SPINNER */
+@keyframes spin  { 0%   { transform: rotate(0deg);   } 100% { transform: rotate(360deg); } }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+/* ── RESPONSIVE ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .workspace     { flex-direction: column; }
+  .side-panel    { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+  .nav-grid      { max-height: 120px; padding: 10px; }
+  .chart-lbl     { width: 140px; font-size: .75rem; }
+  .header-title  { font-size: 1rem; }
+}
+
+mjx-container { font-size: 1.1em !important; }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <div class="header">
+    <div class="header-title">Ujian Sekolah Al-Islam</div>
+    <div style="display:flex;align-items:center;gap:15px;">
+      <div id="user-badge"
+           style="display:none;font-size:.85rem;background:rgba(255,255,255,.1);
+                  padding:5px 12px;border-radius:20px;"></div>
+      <div class="timer-box" id="timer-display">--:--</div>
+    </div>
+  </div>
+
+  <div class="workspace">
+    <div class="main-stage">
+
+      <!-- ① SLIDE PIN ──────────────────────────────────── -->
+      <div id="slide-pin" class="slide active">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+            <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+            <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+            <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">
+              Masukkan PIN dari guru untuk membuka<br>
+              <strong>Ujian Sekolah Tertulis Al-Islam</strong>
+            </p>
+            <div class="pin-input-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2.2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input type="password" id="inp-pin"
+                     placeholder="PIN ujian…"
+                     maxlength="30" autocomplete="off"
+                     onkeydown="if(event.key==='Enter') app.checkPin()">
+            </div>
+            <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+            <button class="btn" style="width:100%" onclick="app.checkPin()">
+              Buka Ujian →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ② SLIDE LOGIN ────────────────────────────────── -->
+      <div id="slide-login" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+            <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+            <p style="color:#64748b;margin-bottom:30px;">Ujian Sekolah Al-Islam (Fase C)</p>
+            <div style="text-align:left;">
+              <label>Nama Lengkap</label>
+              <input type="text" id="inpNama" placeholder="Masukkan nama lengkap…">
+              <label>Kelas</label>
+              <select id="inpKelas">
+                <option value="">-- Pilih Kelas --</option>
+                <option value="6A">Kelas 6A</option>
+                <option value="6B">Kelas 6B</option>
+              </select>
+            </div>
+            <button class="btn" style="width:100%" onclick="app.login()">
+              Masuk Ujian
+            </button>
+            <div id="resume-alert"
+                 style="display:none;margin-top:20px;padding:10px;
+                        background:#eff6ff;color:#1d4ed8;border-radius:8px;
+                        cursor:pointer;font-size:.9rem;"
+                 onclick="app.resume()">
+              🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ SLIDE PETUNJUK ─────────────────────────────── -->
+      <div id="slide-rules" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:700px;margin:0 auto;">
+            <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;
+                       padding-bottom:15px;color:var(--primary);">
+              Petunjuk Pengerjaan
+            </h2>
+            <div style="line-height:1.8;color:#334155;">
+              <p>1. <strong>Waktu:</strong> Waktu pengerjaan soal ujian adalah <strong>90 menit</strong>.</p>
+              <p>2. <strong>Soal:</strong> 40 butir soal Al-Islam (Al-Qur'an &amp; Hadis, Aqidah &amp; Akhlak, Fiqh, dan SKI).</p>
+              <p>3. <strong>Tipe soal:</strong> Pilihan Ganda (PG), Pilihan Ganda Kompleks, dan Menjodohkan/Kategori.</p>
+              <p>4. <strong>Tips:</strong> Untuk soal yang menampilkan teks Arab, baca dengan teliti sebelum menjawab.</p>
+              <p>5. <strong>Tips:</strong> Untuk soal Pilihan Ganda Kompleks, perhatikan bahwa lebih dari satu jawaban bisa benar.</p>
+              <p>6. <strong>Tips:</strong> Untuk soal menjodohkan/kategori, pastikan setiap baris sudah dipilih sebelum mengakhiri ujian.</p>
+            </div>
+            <div style="margin-top:30px;text-align:right;">
+              <button class="btn" onclick="app.startExam()">
+                Mulai Mengerjakan &#8594;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ④ SLIDE KUIS ──────────────────────────────────── -->
+      <div id="slide-quiz" class="slide">
+        <div id="quiz-scroll" class="quiz-scroll-area">
+          <div id="quiz-container"></div>
+        </div>
+        <div class="nav-bar-fixed">
+          <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">
+            &#8592; Sebelumnya
+          </button>
+          <span id="q-indicator" style="font-weight:700;color:var(--primary);">
+            Soal 1 / 40
+          </span>
+          <button class="btn" id="btn-next" onclick="app.move(1)">
+            Selanjutnya
+          </button>
+        </div>
+      </div>
+
+      <!-- ⑤ SLIDE HASIL ─────────────────────────────────── -->
+      <div id="slide-result" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:620px;margin:0 auto;text-align:center;">
+            <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+            <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+            <p style="color:#64748b;">Jawaban kamu telah kami terima.</p>
+            <div id="result-content"
+                 style="text-align:left;margin-top:30px;
+                        border-top:1px solid #e2e8f0;padding-top:20px;">
+              <p style="text-align:center;color:#64748b;">Sedang memproses nilai…</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-stage -->
+
+    <!-- SIDEBAR NAVIGASI ──────────────────────────────── -->
+    <div class="side-panel" id="sidebar" style="display:none;">
+      <div style="padding:15px 20px;font-weight:700;color:#334155;
+                  border-bottom:1px solid #e2e8f0;
+                  display:flex;justify-content:space-between;align-items:center;">
+        <span>Navigasi Soal</span>
+        <span style="font-size:.8rem;background:#e0f2fe;color:#0369a1;
+                     padding:2px 8px;border-radius:10px;">40 Butir</span>
+      </div>
+      <div class="nav-grid" id="nav-grid"></div>
+      <div style="padding:20px;border-top:1px solid #e2e8f0;
+                  margin-top:auto;background:#f8fafc;">
+        <button class="btn btn-danger" style="width:100%"
+                onclick="app.confirmFinish()">
+          Selesai Ujian
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /workspace -->
+</div><!-- /app-container -->
+
+<!-- MODAL KONFIRMASI ──────────────────────────────────── -->
+<div id="modal-confirm" class="overlay">
+  <div class="modal">
+    <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+    <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+      <button class="btn btn-outline"
+              onclick="document.getElementById('modal-confirm').style.display='none'">
+        Cek Lagi
+      </button>
+      <button class="btn btn-danger" onclick="app.submitExam()">
+        Ya, Kumpulkan
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL LOADING ──────────────────────────────────────── -->
+<div id="modal-loading" class="overlay">
+  <div class="modal">
+    <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+    <div style="width:40px;height:40px;border:4px solid #e2e8f0;
+                border-top:4px solid var(--primary);border-radius:50%;
+                margin:10px auto;animation:spin 1s linear infinite;"></div>
+    <p>Mohon jangan tutup halaman ini.</p>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  //  Untuk mengganti PIN, jalankan di browser console:
+//    hashPin("PIN_BARU").then(h => console.log(h))
+//  lalu salin hasilnya ke PIN_HASH.
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+  SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+  STORAGE_KEY: "UST_2026_AL_ISLAM_B",
+  DURATION:    90 * 60,
+  PIN_HASH:    "5487f9a684cee00b"
+};
+
+// ── Fungsi hash (SHA-256, 16 karakter) ──────────────────
+async function hashPin(pin) {
+  const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2,'0'))
+    .join('').slice(0, 16);
+}
+window.hashPin = hashPin;
+
+// ── Aset Gambar ─────────────────────────────────────────
+// Kosongkan sementara — isi URL setelah gambar diunggah ke hosting
+// Contoh pengisian: "nama_kunci": "https://i.ibb.co.com/xxx/nama-file.png"
+const IMAGE_ASSETS = {
+  // "contoh": "https://..."
+};
+
+function getImg(key, alt = "Ilustrasi Soal") {
+  const url = IMAGE_ASSETS[key];
+  if (!url) return `<div style="background:#fef3c7;padding:15px;border-radius:8px;
+    text-align:center;border:1px solid #f59e0b;">⚠️ Gambar belum tersedia</div>`;
+  return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════
+//  BANK SOAL — 40 butir (Paket B)
+//
+//  Tipe:
+//    pg      = Pilihan Ganda biasa (skor 1)
+//    pgk     = PG Kompleks / MCMA (skor 2)
+//    pgk-cat = Menjodohkan / kategori (skor 2)
+//
+//  Kategori:
+//    "Al-Qur'an & Hadis"        (8 soal)
+//    "Aqidah & Akhlak"          (12 soal)
+//    "Fiqh"                     (12 soal)
+//    "Sejarah Kebudayaan Islam" (8 soal)
+// ════════════════════════════════════════════════════════
+const QUESTIONS = [
+
+  // ── AL-QUR'AN & HADIS (8 soal) ──────────────────────
+
+  {
+    id: 1, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Surah Al-Ikhlas</div>
+      <p>Surah Al-Ikhlas adalah surah ke-112 dalam Al-Quran dan termasuk golongan
+      surah Makkiyah. Surah ini disebut juga "sepertiga Al-Quran" karena kandungan
+      tauhidnya yang sangat mendalam dan padat.</p>
+    </div>`,
+    q: "Kandungan utama Surah Al-Ikhlas adalah tentang …",
+    opt: [
+      "Keesaan Allah swt (tauhid)",
+      "Perintah membaca dan belajar",
+      "Larangan berbuat syirik secara terperinci",
+      "Balasan bagi orang-orang kafir"
+    ],
+    ans: "Keesaan Allah swt (tauhid)"
+  },
+
+  {
+    id: 2, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Surah Al-Asr</div>
+      <div class='visual-frame'>
+        <div class='arabic-text'>وَالۡعَصۡرِۙ ١ اِنَّ الۡاِنۡسَانَ لَفِىۡ خُسۡرٍۙ ٢</div>
+      </div>
+      <p>Dua ayat pertama Surah Al-Asr di atas menegaskan suatu kondisi yang
+      dialami oleh manusia secara umum.</p>
+    </div>`,
+    q: "Berdasarkan dua ayat di atas, manusia pada dasarnya berada dalam …",
+    opt: ["Keberuntungan", "Kerugian", "Kemuliaan", "Keselamatan"],
+    ans: "Kerugian"
+  },
+
+  {
+    id: 3, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Surah Al-Kafirun</div>
+      <p>Surah Al-Kafirun adalah surah ke-109 dalam Al-Quran. Surah ini diturunkan
+      sebagai jawaban tegas terhadap tawaran kaum Quraisy yang mengajak Nabi
+      Muhammad saw untuk saling bergantian menyembah sesembahan masing-masing.</p>
+    </div>`,
+    q: "Pesan utama yang terkandung dalam Surah Al-Kafirun adalah …",
+    opt: [
+      "Ajakan berdamai antara muslim dan non-muslim",
+      "Larangan bergaul dengan orang yang berbeda agama",
+      "Ketegasan sikap dalam beragama dan tidak mencampur ibadah",
+      "Kewajiban berdakwah kepada orang-orang kafir"
+    ],
+    ans: "Ketegasan sikap dalam beragama dan tidak mencampur ibadah"
+  },
+
+  {
+    id: 4, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Hadis tentang Kebersihan</div>
+      <div class='visual-frame'>
+        <div class='arabic-text'>الطَّهُورُ شَطْرُ الْإِيمَانِ</div>
+      </div>
+      <p>Hadis di atas diriwayatkan oleh Imam Muslim dari sahabat Abu Malik Al-Asy'ari ra.</p>
+    </div>`,
+    q: "Makna dari hadis \"Ath-thahuru syathrul iman\" di atas adalah …",
+    opt: [
+      "Kebersihan adalah tanda kesempurnaan iman",
+      "Kebersihan adalah sebagian dari iman",
+      "Iman seseorang dilihat dari kebersihan badannya",
+      "Orang yang beriman wajib selalu berwudhu"
+    ],
+    ans: "Kebersihan adalah sebagian dari iman"
+  },
+
+  {
+    id: 5, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>QS. Al-Baqarah Ayat 286</div>
+      <div class='visual-frame'>
+        <div class='arabic-text'>لَا يُكَلِّفُ اللّٰهُ نَفۡسًا اِلَّا وُسۡعَهَا</div>
+      </div>
+      <p>Ayat di atas merupakan bagian dari firman Allah dalam Surah Al-Baqarah.</p>
+    </div>`,
+    q: "Makna ayat di atas adalah Allah tidak membebani seseorang …",
+    opt: [
+      "kecuali sesuai dengan kemampuannya",
+      "kecuali jika ia meminta sendiri",
+      "kecuali dengan ijin malaikat",
+      "kecuali sesuai dengan hartanya"
+    ],
+    ans: "kecuali sesuai dengan kemampuannya"
+  },
+
+  {
+    id: 6, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>QS. An-Nisa Ayat 59</div>
+      <p>QS. An-Nisa ayat 59 berisi perintah Allah swt tentang ketaatan yang harus
+      dimiliki oleh setiap muslim. Ayat ini menjelaskan hierarki ketaatan yang
+      wajib dijaga oleh setiap mukmin.</p>
+    </div>`,
+    q: "Urutan ketaatan yang diperintahkan dalam QS. An-Nisa: 59 adalah …",
+    opt: [
+      "Rasul, Allah, pemimpin",
+      "Allah, Rasul, pemimpin (ulil amri)",
+      "Pemimpin, Allah, Rasul",
+      "Allah, pemimpin, Rasul"
+    ],
+    ans: "Allah, Rasul, pemimpin (ulil amri)"
+  },
+
+  {
+    id: 7, cat: "Al-Qur'an & Hadis", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Hadis tentang Menghormati Orang Tua</div>
+      <p>Rasulullah saw sangat menekankan pentingnya berbakti kepada orang tua.
+      Birrul walidain (berbakti kepada kedua orang tua) adalah salah satu amalan
+      yang paling dicintai Allah swt setelah shalat tepat waktu.</p>
+    </div>`,
+    q: "Pilih LEBIH DARI SATU wujud nyata berbakti kepada orang tua yang sesuai dengan ajaran Islam!",
+    opt: [
+      "Berkata lemah lembut dan tidak membentak",
+      "Membantu pekerjaan rumah dengan ikhlas",
+      "Mendoakan orang tua setiap selesai shalat",
+      "Tidak mau menuruti perintah orang tua jika tidak suka"
+    ],
+    ans: ["Berkata lemah lembut dan tidak membentak", "Membantu pekerjaan rumah dengan ikhlas", "Mendoakan orang tua setiap selesai shalat"]
+  },
+
+  {
+    id: 8, cat: "Al-Qur'an & Hadis", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Penggolongan Surah</div>
+      <p>Surah-surah dalam Al-Quran digolongkan menjadi Makkiyah (turun sebelum
+      hijrah ke Madinah) dan Madaniyah (turun setelah hijrah ke Madinah).
+      Umumnya surah Makkiyah bersifat pendek dan berisi tentang keimanan,
+      sedangkan Madaniyah umumnya lebih panjang dan berisi hukum-hukum.</p>
+    </div>`,
+    q: "Tentukan apakah setiap surah berikut termasuk golongan MAKKIYAH atau MADANIYAH!",
+    rows: [
+      "Al-Ikhlas (QS. 112)",
+      "Al-Baqarah (QS. 2)",
+      "Al-Kafirun (QS. 109)",
+      "Al-Imran (QS. 3)"
+    ],
+    cols: ["Makkiyah", "Madaniyah"],
+    ans: ["Makkiyah", "Madaniyah", "Makkiyah", "Madaniyah"]
+  },
+
+  // ── AQIDAH & AKHLAK (12 soal) ───────────────────────
+
+  {
+    id: 9, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna: Al-Alim</div>
+      <p>Al-Alim merupakan salah satu dari 99 Asmaul Husna. Allah swt bersifat
+      Al-Alim artinya ilmu Allah tidak terbatas dan meliputi segala sesuatu,
+      baik yang tersembunyi maupun yang tampak, di seluruh penjuru alam semesta.</p>
+    </div>`,
+    q: "Arti dari Asmaul Husna Al-Alim adalah Allah Maha …",
+    opt: ["Mengetahui", "Pemberi", "Pemaaf", "Pengasih"],
+    ans: "Mengetahui"
+  },
+
+  {
+    id: 10, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna: Al-Fattah</div>
+      <p>Allah swt memiliki sifat Al-Fattah yang berarti Maha Pembuka. Allah
+      membuka pintu rezeki, pertolongan, dan jalan keluar bagi setiap hamba-Nya
+      yang beriman dan bersungguh-sungguh berusaha.</p>
+    </div>`,
+    q: "Contoh perilaku yang mencerminkan keyakinan terhadap sifat Allah Al-Fattah adalah …",
+    opt: [
+      "Berputus asa ketika menghadapi kesulitan",
+      "Terus berdoa dan berusaha karena yakin Allah akan membuka jalan",
+      "Mengandalkan diri sendiri tanpa berdoa kepada Allah",
+      "Berhenti berusaha dan hanya menunggu pertolongan"
+    ],
+    ans: "Terus berdoa dan berusaha karena yakin Allah akan membuka jalan"
+  },
+
+  {
+    id: 11, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna: Al-Quddus</div>
+      <p>Al-Quddus adalah salah satu Asmaul Husna yang menggambarkan kesucian
+      Allah swt secara mutlak dari segala kekurangan, aib, dan kelemahan. Allah
+      swt Mahasuci dari segala sesuatu yang tidak layak bagi-Nya.</p>
+    </div>`,
+    q: "Arti dari Asmaul Husna Al-Quddus adalah Allah Maha …",
+    opt: ["Esa", "Suci", "Pemberi", "Kuasa"],
+    ans: "Suci"
+  },
+
+  {
+    id: 12, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna: Al-Karim</div>
+      <p>Allah swt memiliki sifat Al-Karim yang berarti Maha Mulia atau Maha
+      Pemurah. Sifat ini menggambarkan kemuliaan Allah yang tak terbatas dan
+      kemurahan-Nya dalam memberikan nikmat kepada seluruh makhluk-Nya.</p>
+    </div>`,
+    q: "Perilaku yang mencerminkan penghayatan terhadap Asmaul Husna Al-Karim adalah …",
+    opt: [
+      "Pelit dan tidak mau berbagi dengan sesama",
+      "Dermawan dan suka memuliakan tamu",
+      "Sombong dan membanggakan harta",
+      "Malas beribadah namun rajin bersedekah"
+    ],
+    ans: "Dermawan dan suka memuliakan tamu"
+  },
+
+  {
+    id: 13, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Rukun Iman</div>
+      <p>Rukun Iman terdiri dari enam perkara yang wajib diyakini oleh setiap
+      muslim. Iman kepada kitab-kitab Allah merupakan rukun iman yang ketiga.
+      Kitab-kitab Allah diturunkan kepada para nabi dan rasul pilihan-Nya.</p>
+    </div>`,
+    q: "Kitab Allah yang diturunkan kepada Nabi Musa as adalah …",
+    opt: ["Al-Quran", "Injil", "Taurat", "Zabur"],
+    ans: "Taurat"
+  },
+
+  {
+    id: 14, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Iman kepada Rasul</div>
+      <p>Iman kepada rasul-rasul Allah merupakan rukun iman yang keempat. Rasul
+      adalah manusia pilihan Allah yang diberi wahyu dan diperintahkan untuk
+      menyampaikannya kepada umat manusia. Setiap rasul memiliki sifat wajib
+      yang harus kita imani.</p>
+    </div>`,
+    q: "Sifat wajib rasul yang berarti tidak pernah berdusta adalah …",
+    opt: ["Amanah", "Tabligh", "Shiddiq", "Fathanah"],
+    ans: "Shiddiq"
+  },
+
+  {
+    id: 15, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Husnuzan</div>
+      <p>Husnuzan adalah salah satu akhlak terpuji yang diajarkan dalam Islam.
+      Perilaku ini sangat penting dalam menjaga hubungan yang baik antar sesama
+      manusia dan juga dalam hubungan seorang hamba dengan Allah swt.</p>
+    </div>`,
+    q: "Husnuzan artinya …",
+    opt: [
+      "Berburuk sangka kepada orang lain",
+      "Berbaik sangka kepada Allah dan sesama",
+      "Merasa diri lebih baik dari orang lain",
+      "Tidak peduli dengan lingkungan sekitar"
+    ],
+    ans: "Berbaik sangka kepada Allah dan sesama"
+  },
+
+  {
+    id: 16, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Tawadu'</div>
+      <p>Tawadu' adalah akhlak mulia yang sangat dianjurkan dalam Islam. Rasulullah
+      saw adalah sosok paling sempurna dalam mencontohkan akhlak ini kepada
+      para sahabat dan umatnya.</p>
+    </div>`,
+    q: "Tawadu' artinya …",
+    opt: ["Sombong", "Rendah hati", "Pemarah", "Pembohong"],
+    ans: "Rendah hati"
+  },
+
+  {
+    id: 17, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Qadha dan Qadar</div>
+      <p>Seorang siswa bernama Faris telah belajar dengan sungguh-sungguh untuk
+      menghadapi ujian. Namun ternyata nilai ujiannya di bawah ekspektasinya.
+      Sebagai seorang muslim yang beriman kepada qadha dan qadar, Faris harus
+      menyikapinya dengan tepat.</p>
+    </div>`,
+    q: "Sikap yang paling sesuai bagi Faris sebagai seorang muslim adalah …",
+    opt: [
+      "Marah kepada guru karena soalnya terlalu sulit",
+      "Berputus asa dan berhenti belajar",
+      "Bersabar, introspeksi diri, dan terus berusaha lebih keras",
+      "Menyalahkan teman karena tidak mau mengajarinya"
+    ],
+    ans: "Bersabar, introspeksi diri, dan terus berusaha lebih keras"
+  },
+
+  {
+    id: 18, cat: "Aqidah & Akhlak", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Sifat Wajib Rasul</div>
+      <p>Para rasul Allah memiliki empat sifat wajib yang wajib kita imani sebagai
+      bagian dari rukun iman. Sifat-sifat ini menjadi jaminan atas kebenaran
+      risalah yang mereka sampaikan kepada umat manusia.</p>
+    </div>`,
+    q: "Pilih LEBIH DARI SATU yang termasuk sifat wajib para rasul Allah!",
+    opt: ["Shiddiq (jujur/benar)", "Amanah (dapat dipercaya)", "Tabligh (menyampaikan)", "Kibr (sombong)"],
+    ans: ["Shiddiq (jujur/benar)", "Amanah (dapat dipercaya)", "Tabligh (menyampaikan)"]
+  },
+
+  {
+    id: 19, cat: "Aqidah & Akhlak", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Akhlak Terpuji dalam Kehidupan Sehari-hari</div>
+      <p>Islam mengajarkan akhlak mulia dalam setiap aspek kehidupan, baik dalam
+      hubungan dengan Allah swt maupun dengan sesama manusia dan lingkungan sekitar.</p>
+    </div>`,
+    q: "Pilih LEBIH DARI SATU yang termasuk akhlak terpuji (mahmudah)!",
+    opt: ["Jujur dalam perkataan", "Amanah dalam menjaga kepercayaan", "Hasad (iri hati)", "Sabar dalam menghadapi cobaan"],
+    ans: ["Jujur dalam perkataan", "Amanah dalam menjaga kepercayaan", "Sabar dalam menghadapi cobaan"]
+  },
+
+  {
+    id: 20, cat: "Aqidah & Akhlak", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna dan Maknanya</div>
+      <p>Berikut ini adalah beberapa Asmaul Husna beserta artinya. Tentukan
+      apakah setiap pasangan tersebut sudah sesuai atau belum!</p>
+    </div>`,
+    q: "Tentukan apakah pasangan Asmaul Husna dan artinya berikut ini SESUAI atau TIDAK SESUAI!",
+    rows: [
+      "Al-Alim = Maha Mengetahui",
+      "Al-Fattah = Maha Penyayang",
+      "Al-Quddus = Maha Suci",
+      "Al-Karim = Maha Mulia / Maha Pemurah"
+    ],
+    cols: ["Sesuai", "Tidak Sesuai"],
+    ans: ["Sesuai", "Tidak Sesuai", "Sesuai", "Sesuai"]
+  },
+
+  // ── FIQH (12 soal) ──────────────────────────────────
+
+  {
+    id: 21, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Keutamaan Shalat Berjamaah</div>
+      <p>Shalat berjamaah sangat dianjurkan dalam Islam karena memiliki keutamaan
+      yang jauh lebih besar dibandingkan shalat sendiri (munfarid). Rasulullah saw
+      sangat menekankan pentingnya shalat berjamaah bagi kaum muslimin.</p>
+    </div>`,
+    q: "Keutamaan shalat berjamaah dibandingkan shalat sendirian adalah …",
+    opt: [
+      "15 derajat lebih utama",
+      "21 derajat lebih utama",
+      "27 derajat lebih utama",
+      "30 derajat lebih utama"
+    ],
+    ans: "27 derajat lebih utama"
+  },
+
+  {
+    id: 22, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Syarat Sah Shalat</div>
+      <p>Shalat memiliki syarat-syarat yang harus dipenuhi agar shalatnya sah
+      di hadapan Allah swt. Jika salah satu syarat tidak terpenuhi, maka
+      shalat tersebut tidak dianggap sah.</p>
+    </div>`,
+    q: "Yang termasuk syarat sah shalat adalah …",
+    opt: [
+      "Membaca surah Al-Fatihah",
+      "Suci dari hadas dan najis",
+      "Berdiri tegak bagi yang mampu",
+      "Membaca doa iftitah"
+    ],
+    ans: "Suci dari hadas dan najis"
+  },
+
+  {
+    id: 23, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Zakat Fitrah</div>
+      <p>Zakat fitrah adalah zakat yang wajib dikeluarkan oleh setiap muslim
+      pada bulan Ramadhan hingga sebelum pelaksanaan shalat Idul Fitri.
+      Zakat ini berfungsi untuk menyucikan jiwa dan membahagiakan kaum
+      fakir miskin di hari raya.</p>
+    </div>`,
+    q: "Batas akhir waktu paling utama dalam mengeluarkan zakat fitrah adalah …",
+    opt: [
+      "Setelah shalat Subuh pada hari Idul Fitri",
+      "Sebelum shalat Idul Fitri dilaksanakan",
+      "Setelah shalat Idul Fitri selesai",
+      "Pada malam takbiran setelah shalat Isya"
+    ],
+    ans: "Sebelum shalat Idul Fitri dilaksanakan"
+  },
+
+  {
+    id: 24, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Hikmah Puasa Ramadhan</div>
+      <p>Puasa Ramadhan merupakan ibadah wajib bagi setiap muslim yang telah
+      baligh dan mampu menjalankannya. Selain aspek ibadah, puasa juga
+      memiliki hikmah yang besar bagi kehidupan manusia.</p>
+    </div>`,
+    q: "Salah satu hikmah utama melaksanakan puasa Ramadhan bagi seorang muslim adalah …",
+    opt: [
+      "Melatih kesabaran dan pengendalian diri",
+      "Mendapatkan pengakuan dari masyarakat sekitar",
+      "Mengurangi pengeluaran biaya makan sehari-hari",
+      "Merasakan lapar yang dirasakan oleh orang kaya"
+    ],
+    ans: "Melatih kesabaran dan pengendalian diri"
+  },
+
+  {
+    id: 25, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Shalat Jumat</div>
+      <p>Shalat Jumat adalah kewajiban bagi laki-laki muslim yang sudah baligh
+      dan berakal. Shalat ini dilaksanakan setiap hari Jumat menggantikan
+      shalat Zhuhur dan memiliki beberapa syarat wajib tertentu.</p>
+    </div>`,
+    q: "Syarat wajib shalat Jumat adalah …",
+    opt: [
+      "Baligh, berakal, laki-laki, merdeka, dan bermukim",
+      "Baligh, berakal, laki-laki atau perempuan, merdeka",
+      "Baligh, berakal, laki-laki, dan sedang bepergian jauh",
+      "Baligh, berakal, perempuan, dan sehat"
+    ],
+    ans: "Baligh, berakal, laki-laki, merdeka, dan bermukim"
+  },
+
+  {
+    id: 26, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Infak dan Sedekah</div>
+      <p>Infak dan sedekah adalah dua bentuk pemberian harta di jalan Allah swt
+      yang sangat dianjurkan dalam Islam. Keduanya memiliki persamaan namun
+      juga memiliki perbedaan dalam sifat dan cakupannya.</p>
+    </div>`,
+    q: "Perbedaan utama antara infak dan sedekah adalah …",
+    opt: [
+      "Infak hanya berupa harta benda, sedekah bisa berupa tindakan kebaikan",
+      "Infak hanya boleh diberikan kepada keluarga, sedekah untuk semua orang",
+      "Infak wajib hukumnya, sedekah sunnah hukumnya",
+      "Infak dan sedekah tidak memiliki perbedaan apapun"
+    ],
+    ans: "Infak hanya berupa harta benda, sedekah bisa berupa tindakan kebaikan"
+  },
+
+  {
+    id: 27, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Makanan Halal dan Haram</div>
+      <p>Islam mengatur dengan jelas mengenai makanan dan minuman yang halal
+      (diperbolehkan) dan haram (dilarang). Seorang muslim wajib memperhatikan
+      kehalalan makanan yang dikonsumsinya.</p>
+    </div>`,
+    q: "Berikut ini yang merupakan kriteria makanan halal dalam Islam adalah …",
+    opt: [
+      "Enak, bergizi, dan murah harganya",
+      "Suci, tidak memabukkan, dan disembelih atas nama Allah",
+      "Bersih, dimasak dengan baik, dan tidak berbau",
+      "Disukai banyak orang dan tersedia di pasaran"
+    ],
+    ans: "Suci, tidak memabukkan, dan disembelih atas nama Allah"
+  },
+
+  {
+    id: 28, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Shalat Sunnah</div>
+      <p>Selain shalat fardhu lima waktu, Islam juga menganjurkan berbagai shalat
+      sunnah yang dapat menambah pahala dan mendekatkan diri kepada Allah swt.
+      Shalat sunnah rawatib adalah shalat sunnah yang mengiringi shalat fardhu.</p>
+    </div>`,
+    q: "Shalat sunnah yang dilaksanakan sebelum atau sesudah shalat fardhu disebut …",
+    opt: ["Shalat Tahajud", "Shalat Dhuha", "Shalat Rawatib", "Shalat Istisqa"],
+    ans: "Shalat Rawatib"
+  },
+
+  {
+    id: 29, cat: "Fiqh", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Hal-hal yang Membatalkan Wudhu</div>
+      <p>Wudhu adalah syarat sah shalat yang harus dilakukan dengan benar.
+      Ada beberapa hal yang dapat membatalkan wudhu dan mengharuskan seseorang
+      untuk berwudhu kembali sebelum melaksanakan shalat.</p>
+    </div>`,
+    q: "Pilih LEBIH DARI SATU hal yang dapat membatalkan wudhu!",
+    opt: [
+      "Buang air kecil atau buang air besar",
+      "Makan dan minum saat berpuasa",
+      "Keluar sesuatu dari qubul atau dubur selain tinja dan air kencing",
+      "Hilang akal (tidur nyenyak, pingsan, atau mabuk)"
+    ],
+    ans: ["Buang air kecil atau buang air besar", "Keluar sesuatu dari qubul atau dubur selain tinja dan air kencing", "Hilang akal (tidur nyenyak, pingsan, atau mabuk)"]
+  },
+
+  {
+    id: 30, cat: "Fiqh", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Rukun Shalat</div>
+      <p>Rukun shalat adalah perbuatan-perbuatan yang wajib dilakukan dalam shalat
+      dan jika ditinggalkan — baik disengaja maupun tidak — maka shalat menjadi
+      batal dan wajib diulang.</p>
+    </div>`,
+    q: "Pilih LEBIH DARI SATU yang termasuk rukun shalat!",
+    opt: [
+      "Niat",
+      "Membaca doa iftitah",
+      "Ruku' dengan tuma'ninah",
+      "Sujud dengan tuma'ninah"
+    ],
+    ans: ["Niat", "Ruku' dengan tuma'ninah", "Sujud dengan tuma'ninah"]
+  },
+
+  {
+    id: 31, cat: "Fiqh", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Fardhu dan Sunnah Wudhu</div>
+      <p>Wudhu memiliki fardhu (rukun) yang wajib dilaksanakan dan sunnah yang
+      dianjurkan. Fardhu wudhu adalah bagian yang jika ditinggalkan maka
+      wudhu tidak sah.</p>
+    </div>`,
+    q: "Tentukan apakah setiap hal berikut termasuk FARDHU atau SUNNAH wudhu!",
+    rows: [
+      "Membasuh muka",
+      "Membaca basmalah sebelum wudhu",
+      "Membasuh kedua tangan hingga siku",
+      "Berkumur-kumur"
+    ],
+    cols: ["Fardhu Wudhu", "Sunnah Wudhu"],
+    ans: ["Fardhu Wudhu", "Sunnah Wudhu", "Fardhu Wudhu", "Sunnah Wudhu"]
+  },
+
+  {
+    id: 32, cat: "Fiqh", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Ketentuan Puasa Ramadhan</div>
+      <p>Puasa Ramadhan memiliki rukun (fardhu) yang wajib dijalankan dan sunnah
+      yang sangat dianjurkan untuk dilakukan. Pemahaman yang benar tentang
+      keduanya penting agar puasa yang kita lakukan menjadi sah dan bernilai
+      ibadah yang sempurna.</p>
+    </div>`,
+    q: "Tentukan apakah setiap hal berikut termasuk RUKUN (FARDHU) atau SUNNAH puasa!",
+    rows: [
+      "Niat puasa di malam hari",
+      "Makan sahur",
+      "Menahan diri dari yang membatalkan puasa",
+      "Menyegerakan berbuka saat tiba waktunya"
+    ],
+    cols: ["Rukun (Fardhu)", "Sunnah"],
+    ans: ["Rukun (Fardhu)", "Sunnah", "Rukun (Fardhu)", "Sunnah"]
+  },
+
+  // ── SEJARAH KEBUDAYAAN ISLAM / SKI (8 soal) ─────────
+
+  {
+    id: 33, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Kelahiran Nabi Muhammad saw</div>
+      <p>Nabi Muhammad saw adalah nabi dan rasul terakhir yang diutus Allah swt
+      untuk seluruh umat manusia. Beliau lahir dalam keadaan yatim karena
+      ayahnya, Abdullah, telah wafat sebelum beliau dilahirkan.</p>
+    </div>`,
+    q: "Nabi Muhammad saw dilahirkan di kota …",
+    opt: ["Madinah", "Thaif", "Makkah", "Yaman"],
+    ans: "Makkah"
+  },
+
+  {
+    id: 34, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Peristiwa Hijrah ke Madinah</div>
+      <p>Hijrah adalah peristiwa perpindahan Nabi Muhammad saw beserta para sahabat
+      dari kota Makkah ke kota Madinah. Peristiwa ini merupakan salah satu
+      tonggak penting dalam sejarah Islam dan menjadi awal penghitungan
+      kalender Hijriah.</p>
+    </div>`,
+    q: "Tujuan utama Nabi Muhammad saw melakukan hijrah ke Madinah adalah …",
+    opt: [
+      "Mencari kehidupan yang lebih sejahtera secara ekonomi",
+      "Menghindari ancaman dan mendirikan masyarakat Islam yang lebih kuat",
+      "Menemui keluarga jauh yang tinggal di Madinah",
+      "Melaksanakan perintah ibadah haji"
+    ],
+    ans: "Menghindari ancaman dan mendirikan masyarakat Islam yang lebih kuat"
+  },
+
+  {
+    id: 35, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Perang Badar</div>
+      <p>Perang Badar adalah perang besar pertama dalam sejarah Islam yang terjadi
+      pada tahun 2 Hijriah. Dalam perang ini, kaum muslimin yang berjumlah
+      sekitar 313 orang berhadapan dengan pasukan Quraisy yang berjumlah
+      sekitar 1.000 orang.</p>
+    </div>`,
+    q: "Hasil akhir dari Perang Badar adalah …",
+    opt: [
+      "Kemenangan pasukan Quraisy Makkah",
+      "Kemenangan kaum muslimin",
+      "Perdamaian antara kedua belah pihak",
+      "Perang berakhir tanpa pemenang"
+    ],
+    ans: "Kemenangan kaum muslimin"
+  },
+
+  {
+    id: 36, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Fathu Makkah (Pembebasan Makkah)</div>
+      <p>Fathu Makkah adalah peristiwa pembebasan kota Makkah oleh Nabi Muhammad saw
+      beserta para sahabat. Peristiwa bersejarah ini terjadi tanpa pertumpahan
+      darah yang berarti dan menjadi titik balik penyebaran Islam secara besar-besaran.</p>
+    </div>`,
+    q: "Fathu Makkah terjadi pada tahun …",
+    opt: ["6 Hijriah", "7 Hijriah", "8 Hijriah", "10 Hijriah"],
+    ans: "8 Hijriah"
+  },
+
+  {
+    id: 37, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Khulafaur Rasyidin</div>
+      <p>Setelah wafatnya Nabi Muhammad saw, kepemimpinan umat Islam dilanjutkan
+      oleh para Khulafaur Rasyidin (khalifah-khalifah yang mendapat petunjuk).
+      Salah satu di antaranya dikenal dengan gelar Al-Faruq karena ketegasannya
+      dalam membedakan yang hak dan batil.</p>
+    </div>`,
+    q: "Khalifah yang mendapatkan gelar Al-Faruq adalah …",
+    opt: [
+      "Abu Bakar Ash-Shiddiq",
+      "Umar bin Khattab",
+      "Utsman bin Affan",
+      "Ali bin Abi Thalib"
+    ],
+    ans: "Umar bin Khattab"
+  },
+
+  {
+    id: 38, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Dakwah Nabi di Makkah</div>
+      <p>Dakwah Nabi Muhammad saw di Makkah berlangsung selama kurang lebih 13 tahun.
+      Pada periode ini, dakwah dilakukan secara bertahap, dimulai dari yang paling
+      dekat kemudian meluas ke masyarakat umum.</p>
+    </div>`,
+    q: "Ciri utama periode dakwah Nabi Muhammad saw di Makkah adalah …",
+    opt: [
+      "Berfokus pada pembentukan hukum-hukum Islam",
+      "Berfokus pada penanaman aqidah dan tauhid",
+      "Berfokus pada perluasan wilayah kekuasaan Islam",
+      "Berfokus pada pembangunan infrastruktur kota"
+    ],
+    ans: "Berfokus pada penanaman aqidah dan tauhid"
+  },
+
+  {
+    id: 39, cat: "Sejarah Kebudayaan Islam", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>As-Sabiqun Al-Awwalun</div>
+      <p>As-Sabiqun Al-Awwalun adalah orang-orang yang pertama kali masuk Islam.
+      Mereka adalah para sahabat terpilih yang langsung menerima dakwah Nabi
+      Muhammad saw di awal kenabian dan menanggung berbagai ujian berat
+      demi mempertahankan keimanan mereka.</p>
+    </div>`,
+    q: "Pilih LEBIH DARI SATU yang termasuk As-Sabiqun Al-Awwalun (orang yang pertama masuk Islam)!",
+    opt: [
+      "Khadijah binti Khuwailid (istri pertama Nabi)",
+      "Abu Bakar Ash-Shiddiq (sahabat karib Nabi)",
+      "Ali bin Abi Thalib (sepupu Nabi)",
+      "Abu Jahal (paman Nabi yang menentang Islam)"
+    ],
+    ans: ["Khadijah binti Khuwailid (istri pertama Nabi)", "Abu Bakar Ash-Shiddiq (sahabat karib Nabi)", "Ali bin Abi Thalib (sepupu Nabi)"]
+  },
+
+  {
+    id: 40, cat: "Sejarah Kebudayaan Islam", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Urutan Khulafaur Rasyidin</div>
+      <p>Khulafaur Rasyidin terdiri dari empat khalifah yang memimpin umat Islam
+      setelah wafatnya Nabi Muhammad saw. Setiap khalifah memiliki julukan dan
+      prestasi tersendiri yang tercatat dalam sejarah Islam.</p>
+    </div>`,
+    q: "Tentukan gelar/julukan yang tepat bagi setiap Khalifah Khulafaur Rasyidin!",
+    rows: [
+      "Abu Bakar Ash-Shiddiq",
+      "Umar bin Khattab",
+      "Utsman bin Affan",
+      "Ali bin Abi Thalib"
+    ],
+    cols: ["Ash-Shiddiq (yang membenarkan)", "Al-Faruq (pembeda hak & batil)", "Dzun Nurain (pemilik 2 cahaya)", "Karramallahu Wajhah"],
+    ans: ["Ash-Shiddiq (yang membenarkan)", "Al-Faruq (pembeda hak & batil)", "Dzun Nurain (pemilik 2 cahaya)", "Karramallahu Wajhah"]
+  }
+
+];
+
+
+// ════════════════════════════════════════════════════════
+//  APP
+// ════════════════════════════════════════════════════════
+const app = {
+  session:  { nama: "", kelas: "", answers: {}, startTime: 0 },
+  currIdx:  0,
+  timerInt: null,
+  _hasSavedSession: false,
+
+  // ── INIT ──────────────────────────────────────────────
+  init: function() {
+    this.showSlide('pin');
+    try {
+      if (localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession = true;
+    } catch(e) {}
+  },
+
+  // ── CEK PIN ───────────────────────────────────────────
+  checkPin: async function() {
+    const inp = document.getElementById('inp-pin');
+    const val = inp.value.trim();
+    if (!val) return;
+    const h = await hashPin(val);
+    if (h === CONFIG.PIN_HASH) {
+      this.showSlide('login');
+      if (this._hasSavedSession)
+        document.getElementById('resume-alert').style.display = 'block';
+    } else {
+      inp.classList.add('error');
+      document.getElementById('pin-err').style.display = 'block';
+      inp.value = '';
+      setTimeout(() => inp.classList.remove('error'), 400);
+    }
+  },
+
+  // ── LOGIN ─────────────────────────────────────────────
+  login: function() {
+    const n = document.getElementById('inpNama').value.trim();
+    const k = document.getElementById('inpKelas').value;
+    if (!n || !k) { alert("Harap isi nama lengkap dan pilih kelas!"); return; }
+    this.session.nama  = n;
+    this.session.kelas = k;
+    this.showSlide('rules');
+  },
+
+  // ── RESUME SESI TERSIMPAN ─────────────────────────────
+  resume: function() {
+    try {
+      this.session = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY));
+      this.renderSidebar();
+      this.startExam(true);
+    } catch(e) {
+      alert("Sesi tersimpan rusak. Silakan mulai ujian baru.");
+    }
+  },
+
+  // ── MULAI UJIAN ───────────────────────────────────────
+  startExam: function(isRes = false) {
+    if (!isRes) { this.session.startTime = Date.now(); this.save(); }
+    document.getElementById('user-badge').innerText  = this.session.nama;
+    document.getElementById('user-badge').style.display = 'block';
+    document.getElementById('sidebar').style.display    = 'flex';
+    this.renderQuestions();
+    this.renderSidebar();
+    this.showSlide('quiz');
+    this.goToQ(0);
+    this.startTimer();
+  },
+
+  // ── SHOW SLIDE ────────────────────────────────────────
+  showSlide: function(id) {
+    document.querySelectorAll('.slide').forEach(e => e.classList.remove('active'));
+    document.getElementById('slide-' + id).classList.add('active');
+  },
+
+  // ── RENDER SOAL ───────────────────────────────────────
+  renderQuestions: function() {
+    const box = document.getElementById('quiz-container');
+    box.innerHTML = "";
+    QUESTIONS.forEach((q, i) => {
+      let h = `<div id="q-item-${i}" class="question-item">
+        <div class="tag-cat">${q.cat}</div>
+        ${q.stim || ""}
+        <div class="q-text">${i + 1}. ${q.q}</div>`;
+
+      if (q.type === 'pg') {
+        q.opt.forEach((o, oi) =>
+          h += `<label class="opt-label">
+                  <input type="radio" name="ans_${q.id}" value="${oi}"
+                         onchange="app.saveAns(${q.id},${oi})"> ${o}
+                </label>`
+        );
+      } else if (q.type === 'pgk') {
+        h += `<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">
+                ☑ Boleh memilih lebih dari satu jawaban
+              </p>`;
+        q.opt.forEach((o, oi) =>
+          h += `<label class="opt-label">
+                  <input type="checkbox" value="${oi}"
+                         onchange="app.saveMulti(${q.id},${oi})"> ${o}
+                </label>`
+        );
+      } else if (q.type === 'pgk-cat') {
+        h += `<div class="matrix-wrapper"><table class="matrix-table">
+                <tr><th>Pernyataan</th>`;
+        q.cols.forEach(c => h += `<th>${c}</th>`);
+        h += `</tr>`;
+        q.rows.forEach((r, ri) => {
+          h += `<tr><td>${r}</td>`;
+          q.cols.forEach(c =>
+            h += `<td><input type="radio"
+                        name="mx_${q.id}_${ri}"
+                        value="${c}"
+                        onchange="app.saveMx(${q.id},${ri},'${c}')">
+                  </td>`
+          );
+          h += `</tr>`;
+        });
+        h += `</table></div>`;
+      }
+
+      h += `</div>`;
+      box.innerHTML += h;
+    });
+
+    if (window.MathJax && MathJax.typesetPromise)
+      MathJax.typesetPromise([box]).catch(() => {});
+  },
+
+  // ── NAVIGASI SOAL ─────────────────────────────────────
+  goToQ: function(idx) {
+    if (idx < 0 || idx >= QUESTIONS.length) return;
+    this.currIdx = idx;
+
+    const qs = document.getElementById('quiz-scroll');
+    if (qs) qs.scrollTop = 0;
+
+    document.querySelectorAll('.question-item').forEach(e => e.classList.remove('active-q'));
+    document.getElementById(`q-item-${idx}`).classList.add('active-q');
+    document.getElementById('q-indicator').innerText = `Soal ${idx + 1} / 40`;
+    document.getElementById('btn-prev').disabled = (idx === 0);
+
+    const nBtn = document.getElementById('btn-next');
+    if (idx === QUESTIONS.length - 1) {
+      nBtn.innerText = "Selesai";
+      nBtn.onclick   = () => this.confirmFinish();
+      nBtn.classList.add('btn-danger');
+    } else {
+      nBtn.innerText = "Selanjutnya";
+      nBtn.onclick   = () => this.move(1);
+      nBtn.classList.remove('btn-danger');
+    }
+
+    this.restoreVisual(idx);
+    this.updateSidebarUI();
+
+    if (window.MathJax && MathJax.typesetPromise) {
+      const el = document.getElementById(`q-item-${idx}`);
+      if (el) MathJax.typesetPromise([el]).catch(() => {});
+    }
+  },
+
+  move: function(step) { this.goToQ(this.currIdx + step); },
+
+  // ── SIMPAN JAWABAN ────────────────────────────────────
+  saveAns: function(qid, optIdx) {
+    this.session.answers[qid] = optIdx;
+    this.save(); this.updateSidebarUI();
+  },
+
+  saveMulti: function(qid, optIdx) {
+    let c = this.session.answers[qid] || [];
+    if (c.includes(optIdx)) c = c.filter(x => x !== optIdx);
+    else c.push(optIdx);
+    this.session.answers[qid] = c;
+    this.save(); this.updateSidebarUI();
+  },
+
+  saveMx: function(qid, rix, v) {
+    let c = this.session.answers[qid] || [];
+    c[rix] = v;
+    this.session.answers[qid] = c;
+    this.save(); this.updateSidebarUI();
+  },
+
+  save: function() {
+    try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.session)); } catch(e) {}
+  },
+
+  // ── SIDEBAR ───────────────────────────────────────────
+  renderSidebar: function() {
+    const g = document.getElementById('nav-grid');
+    g.innerHTML = "";
+    QUESTIONS.forEach((q, i) =>
+      g.innerHTML += `<div id="nav-num-${i}" class="nav-num"
+                           onclick="app.goToQ(${i})">${i + 1}</div>`
+    );
+  },
+
+  checkFilled: function(qid) {
+    const v = this.session.answers[qid];
+    if (v === undefined || v === null) return false;
+    if (Array.isArray(v)) return v.filter(x => x !== undefined && x !== null).length > 0;
+    return true;
+  },
+
+  updateSidebarUI: function() {
+    QUESTIONS.forEach((q, i) => {
+      const el = document.getElementById(`nav-num-${i}`);
+      if (!el) return;
+      if (i === this.currIdx) el.classList.add('current');
+      else el.classList.remove('current');
+      if (this.checkFilled(q.id)) el.classList.add('filled');
+      else el.classList.remove('filled');
+    });
+  },
+
+  // ── RESTORE VISUAL (setelah navigasi / resume) ────────
+  restoreVisual: function(idx) {
+    const q   = QUESTIONS[idx];
+    const ans = this.session.answers[q.id];
+    if (ans === undefined || ans === null) return;
+
+    if (q.type === 'pg') {
+      const el = document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);
+      if (el) el.checked = true;
+    } else if (q.type === 'pgk' && Array.isArray(ans)) {
+      ans.forEach(v => {
+        const el = document.querySelector(`#q-item-${idx} input[value="${v}"]`);
+        if (el) el.checked = true;
+      });
+    } else if (q.type === 'pgk-cat' && Array.isArray(ans)) {
+      ans.forEach((v, ri) => {
+        if (!v) return;
+        const el = document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);
+        if (el) el.checked = true;
+      });
+    }
+  },
+
+  // ── TIMER ─────────────────────────────────────────────
+  startTimer: function() {
+    clearInterval(this.timerInt);
+    this.timerInt = setInterval(() => {
+      const rem = CONFIG.DURATION -
+                  Math.floor((Date.now() - this.session.startTime) / 1000);
+      if (rem <= 0) { clearInterval(this.timerInt); this.submitExam(); return; }
+      const m = Math.floor(rem / 60).toString().padStart(2, '0');
+      const s = (rem % 60).toString().padStart(2, '0');
+      document.getElementById('timer-display').innerText = `${m}:${s}`;
+    }, 1000);
+  },
+
+  confirmFinish: function() {
+    document.getElementById('modal-confirm').style.display = 'flex';
+  },
+
+  // ── HITUNG & KIRIM NILAI ──────────────────────────────
+  submitExam: function() {
+    document.getElementById('modal-confirm').style.display = 'none';
+    document.getElementById('modal-loading').style.display = 'flex';
+    clearInterval(this.timerInt);
+
+    const cats = [
+      "Al-Qur'an & Hadis",
+      "Aqidah & Akhlak",
+      "Fiqh",
+      "Sejarah Kebudayaan Islam"
+    ];
+    const stats = {};
+    cats.forEach(c => { stats[c] = { s: 0, m: 0 }; });
+    let totS = 0, totM = 0;
+
+    QUESTIONS.forEach(q => {
+      stats[q.cat].m += q.score;
+      totM += q.score;
+      const u = this.session.answers[q.id];
+      let pt = 0;
+
+      if (u !== undefined && u !== null) {
+        if (q.type === 'pg') {
+          if (u == q.opt.indexOf(q.ans)) pt = q.score;
+        } else if (q.type === 'pgk' && Array.isArray(u) && Array.isArray(q.ans)) {
+          const userAns    = u.map(i => q.opt[i]).sort();
+          const correctAns = [...q.ans].sort();
+          if (JSON.stringify(userAns) === JSON.stringify(correctAns)) pt = q.score;
+        } else if (q.type === 'pgk-cat' && Array.isArray(u)) {
+          let match = 0;
+          q.ans.forEach((k, i) => { if (u[i] === k) match++; });
+          pt = (match / q.rows.length) * q.score;
+        }
+      }
+
+      stats[q.cat].s += pt;
+      totS += pt;
+    });
+
+    const final = Math.round((totS / totM) * 100);
+    let summ = {}, cht = "", nts = [];
+
+    cats.forEach(c => {
+      const p = stats[c].m > 0
+        ? Math.round((stats[c].s / stats[c].m) * 100) : 0;
+      summ[c] = { skor: p, tuntas: p >= 70,
+                  label: p >= 70 ? "Tuntas" : "Perlu Bimbingan" };
+      if (p < 70) nts.push(c);
+      cht += `<div class="chart-row">
+        <div class="chart-lbl">${c}</div>
+        <div class="chart-track">
+          <div class="chart-fill"
+               style="width:${p}%;background:${p >= 70 ? '#16a34a' : '#dc2626'}">
+          </div>
+        </div>
+        <div class="chart-val">${p}%</div>
+      </div>`;
+    });
+
+    const desc = nts.length === 0
+      ? "Selamat! Tuntas semua elemen."
+      : "Perlu belajar lagi di: " + nts.join(", ");
+
+    this.showSlide('result');
+    document.getElementById('modal-loading').style.display = 'none';
+    document.getElementById('result-content').innerHTML = `
+      <h3>Nilai Akhir:
+        <span style="color:var(--primary);font-size:2.5rem;">${final}</span>
+      </h3>
+      <div style="background:#f1f5f9;padding:15px;border-radius:8px;margin-bottom:20px;">
+        ${desc}
+      </div>
+      <h4>Capaian per Elemen:</h4>
+      ${cht}`;
+
+    fetch(CONFIG.SCRIPT_URL, {
+      method:  'POST',
+      mode:    'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        action:         "submit_exam",
+        mapel:          "Al-Islam",
+        nama:           this.session.nama,
+        kelas:          this.session.kelas,
+        skor:           final,
+        deskripsi:      desc,
+        jawaban:        this.session.answers,
+        ringkasanNilai: summ
+      })
+    }).then(() => {
+      try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
+    });
+  }
+};
+
+window.onload = () => app.init();
+</script>
+</body>
+</html>
