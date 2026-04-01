@@ -1,1 +1,658 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Ujian Sekolah – Kelas 6 SD Muhammadiyah 01 Kukusan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple:        #7c3aed;
+      --purple-dark:   #5b21b6;
+      --purple-light:  #ede9fe;
+      --purple-mid:    #8b5cf6;
+      --text:          #1f2a37;
+      --text-muted:    #6b7280;
+      --bg:            #f5f3ff;
+      --white:         #ffffff;
+      --border:        #d1d5db;
+      --radius:        16px;
+      --shadow:        0 4px 24px rgba(0,0,0,0.08);
 
+      /* Warna per kelompok mapel */
+      --us-green:      #046c4e;
+      --us-green-l:    #def7ec;
+      --uam-brown:     #78350f;
+      --uam-brown-l:   #fef3c7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: clamp(14px, 3.5vw, 16px); scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: linear-gradient(135deg, #3b0764, #5b21b6 50%, #7c3aed);
+      color: white;
+      padding: 0 20px;
+      height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+
+    .header-brand { display: flex; align-items: center; gap: 10px; }
+    .logo { font-size: 1.6rem; }
+    .brand-name {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(0.85rem, 2.8vw, 1.05rem);
+      font-weight: 800; line-height: 1.1;
+    }
+    .sub-brand { font-size: 0.65rem; opacity: 0.8; font-weight: 600; }
+
+    .back-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.75rem; font-weight: 700;
+      color: white; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .back-btn:hover { background: rgba(255,255,255,0.28); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(160deg, #3b0764 0%, #5b21b6 45%, #7c3aed 100%);
+      color: white;
+      padding: 48px 20px 56px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM50 10V4h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 50v-6H8v6H2v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .school-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 30px;
+      padding: 6px 18px;
+      font-size: 0.78rem; font-weight: 700;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .hero-emoji {
+      font-size: 3.5rem; display: block;
+      margin-bottom: 12px; position: relative;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    .hero h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 800; margin-bottom: 8px; position: relative;
+    }
+
+    .hero p {
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      opacity: 0.88; font-weight: 600;
+      max-width: 520px; margin: 0 auto 28px;
+      position: relative;
+    }
+
+    .hero-pills {
+      display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+      position: relative;
+    }
+
+    .pill {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 30px;
+      padding: 6px 16px;
+      font-size: 0.78rem; font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 40px 16px 60px;
+    }
+
+    /* ─── PANDUAN BOX ─── */
+    .guide-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      border-left: 5px solid var(--purple);
+      padding: 18px 20px;
+      display: flex; gap: 14px; align-items: flex-start;
+      box-shadow: var(--shadow);
+      margin-bottom: 36px;
+      animation: fadeUp 0.5s ease both;
+    }
+    .guide-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .guide-box strong { color: var(--purple-dark); font-size: 0.88rem; display: block; margin-bottom: 4px; }
+    .guide-box p { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; margin: 0; line-height: 1.6; }
+
+    /* ─── SECTION HEADER ─── */
+    .section-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+      margin-top: 36px;
+    }
+    .section-header:first-of-type { margin-top: 0; }
+
+    .section-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      border-radius: 10px;
+      padding: 4px 12px;
+      font-size: 0.72rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      color: white;
+      flex-shrink: 0;
+    }
+    .badge-us  { background: #046c4e; }
+    .badge-uam { background: #78350f; }
+
+    .section-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1rem; font-weight: 800;
+      color: var(--text);
+    }
+
+    .section-sub {
+      font-size: 0.75rem; color: var(--text-muted); font-weight: 600;
+      margin-left: auto;
+    }
+
+    /* ─── MAPEL GRID ─── */
+    .mapel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 12px;
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+
+    .mapel-card {
+      background: var(--white);
+      border-radius: 16px;
+      border: 2px solid transparent;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: var(--text);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .mapel-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 36px rgba(0,0,0,0.14);
+    }
+
+    /* Warna per mapel */
+    .mapel-card[data-color="green"]:hover  { border-color: #6ee7b7; }
+    .mapel-card[data-color="blue"]:hover   { border-color: #93c5fd; }
+    .mapel-card[data-color="red"]:hover    { border-color: #fca5a5; }
+    .mapel-card[data-color="amber"]:hover  { border-color: #fcd34d; }
+    .mapel-card[data-color="teal"]:hover   { border-color: #5eead4; }
+    .mapel-card[data-color="rose"]:hover   { border-color: #fda4af; }
+    .mapel-card[data-color="indigo"]:hover { border-color: #a5b4fc; }
+    .mapel-card[data-color="orange"]:hover { border-color: #fdba74; }
+    .mapel-card[data-color="sky"]:hover    { border-color: #7dd3fc; }
+    .mapel-card[data-color="brown"]:hover  { border-color: #d4a574; }
+    .mapel-card[data-color="purple"]:hover { border-color: #c4b5fd; }
+    .mapel-card[data-color="lime"]:hover   { border-color: #bef264; }
+
+    .mapel-banner { height: 5px; }
+    .mapel-card[data-color="green"]  .mapel-banner { background: linear-gradient(90deg, #065f46, #059669, #34d399); }
+    .mapel-card[data-color="blue"]   .mapel-banner { background: linear-gradient(90deg, #1e40af, #2563eb, #60a5fa); }
+    .mapel-card[data-color="red"]    .mapel-banner { background: linear-gradient(90deg, #991b1b, #dc2626, #f87171); }
+    .mapel-card[data-color="amber"]  .mapel-banner { background: linear-gradient(90deg, #92400e, #d97706, #fbbf24); }
+    .mapel-card[data-color="teal"]   .mapel-banner { background: linear-gradient(90deg, #134e4a, #0d9488, #2dd4bf); }
+    .mapel-card[data-color="rose"]   .mapel-banner { background: linear-gradient(90deg, #9f1239, #e11d48, #fb7185); }
+    .mapel-card[data-color="indigo"] .mapel-banner { background: linear-gradient(90deg, #312e81, #4338ca, #818cf8); }
+    .mapel-card[data-color="orange"] .mapel-banner { background: linear-gradient(90deg, #7c2d12, #ea580c, #fb923c); }
+    .mapel-card[data-color="sky"]    .mapel-banner { background: linear-gradient(90deg, #0c4a6e, #0284c7, #38bdf8); }
+    .mapel-card[data-color="brown"]  .mapel-banner { background: linear-gradient(90deg, #78350f, #b45309, #d97706); }
+    .mapel-card[data-color="purple"] .mapel-banner { background: linear-gradient(90deg, #4c1d95, #7c3aed, #a78bfa); }
+    .mapel-card[data-color="lime"]   .mapel-banner { background: linear-gradient(90deg, #365314, #65a30d, #a3e635); }
+
+    .mapel-body {
+      padding: 18px 18px 16px;
+      flex: 1; display: flex; flex-direction: column;
+    }
+
+    .mapel-top {
+      display: flex; align-items: flex-start; gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .mapel-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .mapel-card[data-color="green"]  .mapel-icon { background: #d1fae5; }
+    .mapel-card[data-color="blue"]   .mapel-icon { background: #dbeafe; }
+    .mapel-card[data-color="red"]    .mapel-icon { background: #fee2e2; }
+    .mapel-card[data-color="amber"]  .mapel-icon { background: #fef3c7; }
+    .mapel-card[data-color="teal"]   .mapel-icon { background: #ccfbf1; }
+    .mapel-card[data-color="rose"]   .mapel-icon { background: #ffe4e6; }
+    .mapel-card[data-color="indigo"] .mapel-icon { background: #e0e7ff; }
+    .mapel-card[data-color="orange"] .mapel-icon { background: #ffedd5; }
+    .mapel-card[data-color="sky"]    .mapel-icon { background: #e0f2fe; }
+    .mapel-card[data-color="brown"]  .mapel-icon { background: #fef3c7; }
+    .mapel-card[data-color="purple"] .mapel-icon { background: #ede9fe; }
+    .mapel-card[data-color="lime"]   .mapel-icon { background: #ecfccb; }
+
+    .mapel-info { flex: 1; }
+
+    .mapel-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.95rem; font-weight: 800;
+      line-height: 1.2; margin-bottom: 3px;
+    }
+
+    .mapel-card[data-color="green"]  .mapel-title { color: #065f46; }
+    .mapel-card[data-color="blue"]   .mapel-title { color: #1e40af; }
+    .mapel-card[data-color="red"]    .mapel-title { color: #991b1b; }
+    .mapel-card[data-color="amber"]  .mapel-title { color: #92400e; }
+    .mapel-card[data-color="teal"]   .mapel-title { color: #134e4a; }
+    .mapel-card[data-color="rose"]   .mapel-title { color: #9f1239; }
+    .mapel-card[data-color="indigo"] .mapel-title { color: #312e81; }
+    .mapel-card[data-color="orange"] .mapel-title { color: #7c2d12; }
+    .mapel-card[data-color="sky"]    .mapel-title { color: #0c4a6e; }
+    .mapel-card[data-color="brown"]  .mapel-title { color: #78350f; }
+    .mapel-card[data-color="purple"] .mapel-title { color: #4c1d95; }
+    .mapel-card[data-color="lime"]   .mapel-title { color: #365314; }
+
+    .mapel-kode {
+      font-size: 0.68rem; font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .mapel-desc {
+      font-size: 0.78rem; color: #4b5563; line-height: 1.55;
+      margin-bottom: 12px; flex: 1;
+    }
+
+    .mapel-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.75rem; font-weight: 800;
+    }
+
+    .mapel-card[data-color="green"]  .mapel-footer { background: #d1fae5; color: #065f46; }
+    .mapel-card[data-color="blue"]   .mapel-footer { background: #dbeafe; color: #1e40af; }
+    .mapel-card[data-color="red"]    .mapel-footer { background: #fee2e2; color: #991b1b; }
+    .mapel-card[data-color="amber"]  .mapel-footer { background: #fef3c7; color: #92400e; }
+    .mapel-card[data-color="teal"]   .mapel-footer { background: #ccfbf1; color: #134e4a; }
+    .mapel-card[data-color="rose"]   .mapel-footer { background: #ffe4e6; color: #9f1239; }
+    .mapel-card[data-color="indigo"] .mapel-footer { background: #e0e7ff; color: #312e81; }
+    .mapel-card[data-color="orange"] .mapel-footer { background: #ffedd5; color: #7c2d12; }
+    .mapel-card[data-color="sky"]    .mapel-footer { background: #e0f2fe; color: #0c4a6e; }
+    .mapel-card[data-color="brown"]  .mapel-footer { background: #fef3c7; color: #78350f; }
+    .mapel-card[data-color="purple"] .mapel-footer { background: #ede9fe; color: #4c1d95; }
+    .mapel-card[data-color="lime"]   .mapel-footer { background: #ecfccb; color: #365314; }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 36px 0 0;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 0.76rem; color: var(--text-muted); font-weight: 600;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-brand">
+      <span class="logo">📖</span>
+      <div>
+        <div class="brand-name">Materi Ujian Sekolah</div>
+        <div class="sub-brand">Kelas 6 · SD Muhammadiyah 01 Kukusan · TP 2025/2026</div>
+      </div>
+    </div>
+    <a class="back-btn" href="../">← Kembali</a>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="school-badge">📖 Belajar Mandiri</div>
+    <span class="hero-emoji">🧠</span>
+    <h1>Materi Ujian Sekolah</h1>
+    <p>Pilih mata pelajaran untuk membaca ringkasan materi, peta konsep, dan contoh soal yang sesuai kisi-kisi Ujian Sekolah 2026.</p>
+    <div class="hero-pills">
+      <div class="pill">📚 12 Mata Pelajaran</div>
+      <div class="pill">🎯 Sesuai Kisi-Kisi US</div>
+      <div class="pill">✅ Belajar Mandiri</div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main class="container">
+
+    <!-- PANDUAN -->
+    <div class="guide-box">
+      <div class="guide-icon">💡</div>
+      <div>
+        <strong>Cara menggunakan halaman ini</strong>
+        <p>Pilih mata pelajaran yang ingin kamu pelajari. Setiap halaman materi memuat: <strong>ringkasan materi pokok</strong> sesuai kisi-kisi, <strong>materi pendukung</strong> yang berkaitan, dan <strong>contoh soal</strong> latihan. Gunakan bersama portal Latihan Soal untuk hasil belajar yang optimal.</p>
+      </div>
+    </div>
+
+    <!-- ── KELOMPOK US ── -->
+    <div class="section-header">
+      <span class="section-badge badge-us">US · 4–11 Mei</span>
+      <span class="section-title">Ujian Sekolah</span>
+      <span class="section-sub">8 mata pelajaran</span>
+    </div>
+
+    <div class="mapel-grid">
+
+      <!-- Pendidikan Pancasila -->
+      <a class="mapel-card" data-color="red" href="materi-pendidikan-pancasila.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">🦅</div>
+            <div class="mapel-info">
+              <div class="mapel-title">Pendidikan Pancasila</div>
+              <div class="mapel-kode">PP · Ujian Sekolah</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Nilai-nilai Pancasila, UUD 1945, NKRI, kebhinnekaan, hak & kewajiban warga negara, serta norma dalam kehidupan bermasyarakat.</p>
+          <div class="mapel-footer">
+            <span>Buka Materi PP</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Bahasa Indonesia -->
+      <a class="mapel-card" data-color="blue" href="materi-bahasa-indonesia.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">📝</div>
+            <div class="mapel-info">
+              <div class="mapel-title">Bahasa Indonesia</div>
+              <div class="mapel-kode">B. Indo · Ujian Sekolah</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Membaca teks fiksi & nonfiksi, menentukan ide pokok, menulis ringkasan, memahami kosakata, serta menyunting kalimat dan paragraf.</p>
+          <div class="mapel-footer">
+            <span>Buka Materi B. Indo</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Bahasa Inggris -->
+      <a class="mapel-card" data-color="sky" href="materi-bahasa-inggris.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">🌐</div>
+            <div class="mapel-info">
+              <div class="mapel-title">Bahasa Inggris</div>
+              <div class="mapel-kode">B. Ing · Ujian Sekolah</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Reading comprehension, kosakata sehari-hari, tenses dasar, percakapan pendek, serta penulisan kalimat sederhana dalam Bahasa Inggris.</p>
+          <div class="mapel-footer">
+            <span>Buka Materi B. Inggris</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Matematika -->
+      <a class="mapel-card" data-color="amber" href="materi-matematika.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">🔢</div>
+            <div class="mapel-info">
+              <div class="mapel-title">Matematika</div>
+              <div class="mapel-kode">MTK · Ujian Sekolah</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Bilangan bulat & pecahan, operasi hitung campuran, FPB & KPK, bangun datar & ruang, pengukuran, statistika dasar, dan pemecahan masalah.</p>
+          <div class="mapel-footer">
+            <span>Buka Materi Matematika</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- IPAS -->
+      <a class="mapel-card" data-color="green" href="materi-ipas.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">🔬</div>
+            <div class="mapel-info">
+              <div class="mapel-title">IPAS</div>
+              <div class="mapel-kode">Ilmu Pengetahuan Alam & Sosial</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Makhluk hidup & lingkungan, sistem tubuh manusia, energi & perubahannya, bumi & antariksa, keragaman sosial budaya, dan sejarah Indonesia.</p>
+          <div class="mapel-footer">
+            <span>Buka Materi IPAS</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Seni Budaya -->
+      <a class="mapel-card" data-color="rose" href="materi-seni-budaya.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">🎨</div>
+            <div class="mapel-info">
+              <div class="mapel-title">Seni Budaya</div>
+              <div class="mapel-kode">SB · Ujian Sekolah</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Unsur seni rupa, seni musik, seni tari, dan seni teater. Karya seni daerah & nasional, apresiasi karya seni, serta keterampilan membuat karya seni.</p>
+          <div class="mapel-footer">
+            <span>Buka Materi Seni Budaya</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Bahasa Sunda -->
+      <a class="mapel-card" data-color="lime" href="materi-bahasa-sunda.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">🌿</div>
+            <div class="mapel-info">
+              <div class="mapel-title">Bahasa Sunda</div>
+              <div class="mapel-kode">B. Sunda · Ujian Sekolah</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Maca & ngarti téks Sunda, kosakata, undak usuk basa, nulis karangan, pupuh, babasan & paribasa, serta aksara Sunda dasar.</p>
+          <div class="mapel-footer">
+            <span>Buka Materi B. Sunda</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- TIK -->
+      <a class="mapel-card" data-color="teal" href="materi-tik.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">💻</div>
+            <div class="mapel-info">
+              <div class="mapel-title">TIK</div>
+              <div class="mapel-kode">Teknologi Informasi & Komunikasi</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Dasar komputer & perangkat, penggunaan aplikasi pengolah kata & angka, internet & keamanan digital, serta etika penggunaan teknologi.</p>
+          <div class="mapel-footer">
+            <span>Buka Materi TIK</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── KELOMPOK UAM ── -->
+    <div class="section-header">
+      <span class="section-badge badge-uam">UAM · 12–13 Mei</span>
+      <span class="section-title">Ujian Akhir Madrasah (ISMUBA)</span>
+      <span class="section-sub">3 mata pelajaran</span>
+    </div>
+
+    <div class="mapel-grid">
+
+      <!-- Al-Islam -->
+      <a class="mapel-card" data-color="indigo" href="materi-al-islam.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">🕌</div>
+            <div class="mapel-info">
+              <div class="mapel-title">Al-Islam</div>
+              <div class="mapel-kode">UAM · ISMUBA</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Akidah, akhlak, fikih ibadah sehari-hari, Al-Qur'an (tajwid & hafalan), sejarah Islam (sirah nabawiyah), dan adab islami dalam kehidupan.</p>
+          <div class="mapel-footer">
+            <span>Buka Materi Al-Islam</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Kemuhammadiyahan -->
+      <a class="mapel-card" data-color="orange" href="materi-kemuhammadiyahan.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">⭐</div>
+            <div class="mapel-info">
+              <div class="mapel-title">Kemuhammadiyahan</div>
+              <div class="mapel-kode">KMD · UAM · ISMUBA</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Sejarah berdirinya Muhammadiyah, tokoh-tokoh penting, amal usaha Muhammadiyah, organisasi otonom, serta peran Muhammadiyah di masyarakat.</p>
+          <div class="mapel-footer">
+            <span>Buka Materi Kemuhammadiyahan</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Bahasa Arab -->
+      <a class="mapel-card" data-color="brown" href="materi-bahasa-arab.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">📜</div>
+            <div class="mapel-info">
+              <div class="mapel-title">Bahasa Arab</div>
+              <div class="mapel-kode">B. Arab · UAM · ISMUBA</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Kosakata sehari-hari (mufradat), membaca teks Arab sederhana, hiwar (percakapan), qawa'id dasar (nahwu & sharaf), serta menulis kalimat Arab.</p>
+          <div class="mapel-footer">
+            <span>Buka Materi B. Arab</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── KELOMPOK PRAKTIK ── -->
+    <div class="section-header">
+      <span class="section-badge" style="background:#b45309;">UP · 6–15 Apr</span>
+      <span class="section-title">Ujian Praktik</span>
+      <span class="section-sub">1 mata pelajaran</span>
+    </div>
+
+    <div class="mapel-grid">
+
+      <!-- PJOK -->
+      <a class="mapel-card" data-color="purple" href="materi-pjok.html">
+        <div class="mapel-banner"></div>
+        <div class="mapel-body">
+          <div class="mapel-top">
+            <div class="mapel-icon">⚽</div>
+            <div class="mapel-info">
+              <div class="mapel-title">PJOK</div>
+              <div class="mapel-kode">Pendidikan Jasmani, Olahraga & Kesehatan</div>
+            </div>
+          </div>
+          <p class="mapel-desc">Permainan bola besar & kecil, atletik, senam, beladiri dasar, kebugaran jasmani, kesehatan reproduksi, dan PHBS (Perilaku Hidup Bersih & Sehat).</p>
+          <div class="mapel-footer">
+            <span>Buka Materi PJOK</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    SD Muhammadiyah 01 Kukusan · Materi Ujian Sekolah Kelas 6 · Tahun Pelajaran 2025/2026 📖
+  </footer>
+
+</body>
+</html>
