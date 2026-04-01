@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Bahasa Arab – Ujian Sekolah Kelas 6</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple:      #7c3aed;
+      --purple-dark: #5b21b6;
+      --purple-light:#f5f3ff;
+      --purple-pale: #ede9fe;
+      --green:       #059669;
+      --green-dark:  #065f46;
+      --green-light: #d1fae5;
+      --blue:        #2563eb;
+      --blue-light:  #dbeafe;
+      --orange:      #ea580c;
+      --orange-light:#fff7ed;
+      --red:         #dc2626;
+      --red-light:   #fef2f2;
+      --amber:       #d97706;
+      --amber-light: #fef3c7;
+      --teal:        #0d9488;
+      --teal-light:  #ccfbf1;
+      --text:        #1f2a37;
+      --text-muted:  #6b7280;
+      --bg:          #f0f4ff;
+      --white:       #ffffff;
+      --border:      #e5e7eb;
+      --radius:      14px;
+      --shadow:      0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: clamp(14px, 3.2vw, 16px); scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.75;
+    }
+
+    /* ─── ARABIC TEXT ─── */
+    .ar {
+      font-family: 'Scheherazade New', 'Traditional Arabic', serif;
+      direction: rtl;
+      unicode-bidi: bidi-override;
+      line-height: 2.4;
+    }
+    .ar-inline {
+      font-family: 'Scheherazade New', 'Traditional Arabic', serif;
+      direction: rtl;
+      unicode-bidi: embed;
+      font-size: 1.2rem;
+    }
+    .ar-block {
+      font-family: 'Scheherazade New', 'Traditional Arabic', serif;
+      direction: rtl;
+      unicode-bidi: bidi-override;
+      text-align: center;
+      font-size: 1.5rem;
+      line-height: 2.4;
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 12px 0;
+    }
+    .ar-large {
+      font-size: 1.8rem;
+    }
+    .ar-medium {
+      font-size: 1.4rem;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: linear-gradient(135deg, #3b0764, #5b21b6 50%, #7c3aed);
+      color: white;
+      padding: 0 20px;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .header-brand { display: flex; align-items: center; gap: 10px; }
+    .logo { font-size: 1.5rem; }
+    .brand-name { font-family: 'Baloo 2', cursive; font-size: clamp(0.82rem, 2.6vw, 1rem); font-weight: 800; line-height: 1.1; }
+    .sub-brand { font-size: 0.62rem; opacity: 0.8; font-weight: 600; }
+    .header-back {
+      display: flex; align-items: center; gap: 5px;
+      color: white; text-decoration: none;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px; padding: 4px 14px;
+      font-size: 0.72rem; font-weight: 700;
+      transition: background 0.2s;
+    }
+    .header-back:hover { background: rgba(255,255,255,0.3); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(160deg, #3b0764 0%, #5b21b6 40%, #7c3aed 100%);
+      color: white; padding: 40px 20px 48px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM50 10V4h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 50v-6H8v6H2v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-emoji { font-size: 3rem; display: block; margin-bottom: 10px; position: relative; }
+    .hero h1 { font-family: 'Baloo 2', cursive; font-size: clamp(1.4rem, 4.5vw, 2rem); font-weight: 800; margin-bottom: 6px; position: relative; }
+    .hero p { font-size: clamp(0.8rem, 2.2vw, 0.92rem); opacity: 0.88; font-weight: 600; max-width: 600px; margin: 0 auto; position: relative; line-height: 1.6; }
+
+    /* ─── NAV PILLS ─── */
+    .nav-pills { background: var(--white); border-bottom: 1px solid var(--border); padding: 14px 16px; position: sticky; top: 56px; z-index: 90; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .nav-pills-inner { max-width: 900px; margin: 0 auto; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .nav-pill { font-size: 0.72rem; font-weight: 700; padding: 5px 14px; border-radius: 20px; text-decoration: none; background: var(--purple-light); color: var(--purple-dark); border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    .nav-pill:hover { background: var(--purple-pale); border-color: var(--purple); }
+
+    /* ─── MAIN ─── */
+    .container { max-width: 900px; margin: 0 auto; padding: 32px 16px 56px; }
+
+    .section-block { margin-bottom: 40px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 3px solid var(--purple); }
+    .section-num { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 900; color: white; flex-shrink: 0; }
+    .section-num.e1 { background: linear-gradient(135deg, #059669, #10b981); }
+    .section-num.e2 { background: linear-gradient(135deg, #2563eb, #60a5fa); }
+    .section-num.e3 { background: linear-gradient(135deg, #d97706, #fbbf24); }
+    .section-num.e4 { background: linear-gradient(135deg, #dc2626, #f87171); }
+    .section-num.e5 { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+    .section-title-group { flex: 1; }
+    .section-title { font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 800; }
+    .section-subtitle { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); }
+
+    /* ─── CONTENT CARDS ─── */
+    .content-card { background: var(--white); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+    .content-card h3 { font-family: 'Baloo 2', cursive; font-size: 1.05rem; font-weight: 800; margin-bottom: 12px; color: var(--purple-dark); display: flex; align-items: center; gap: 8px; }
+    .content-card h4 { font-size: 0.92rem; font-weight: 800; margin: 18px 0 8px; color: var(--text); }
+    .content-card p { font-size: 0.88rem; margin-bottom: 12px; color: #374151; }
+    .content-card ul, .content-card ol { padding-left: 20px; margin-bottom: 12px; }
+    .content-card li { font-size: 0.86rem; margin-bottom: 6px; color: #374151; }
+    .content-card li strong { color: var(--text); }
+
+    /* ─── INFO BOX ─── */
+    .info-box { border-radius: 10px; padding: 16px 18px; margin: 16px 0; font-size: 0.84rem; }
+    .info-box.green  { background: var(--green-light); border-left: 4px solid var(--green); }
+    .info-box.blue   { background: var(--blue-light);  border-left: 4px solid var(--blue);  }
+    .info-box.orange { background: var(--orange-light); border-left: 4px solid var(--orange); }
+    .info-box.red    { background: var(--red-light);    border-left: 4px solid var(--red);   }
+    .info-box.amber  { background: var(--amber-light);  border-left: 4px solid var(--amber); }
+    .info-box.teal   { background: var(--teal-light);   border-left: 4px solid var(--teal);  }
+    .info-box.purple { background: var(--purple-light);  border-left: 4px solid var(--purple); }
+    .info-box strong { display: block; margin-bottom: 4px; }
+    .info-box.green  strong { color: var(--green-dark); }
+    .info-box.blue   strong { color: #1e40af; }
+    .info-box.orange strong { color: var(--orange); }
+    .info-box.red    strong { color: var(--red); }
+    .info-box.amber  strong { color: var(--amber); }
+    .info-box.teal   strong { color: var(--teal); }
+    .info-box.purple strong { color: var(--purple-dark); }
+
+    /* ─── TABLES ─── */
+    .table-wrap { overflow-x: auto; margin: 14px 0; -webkit-overflow-scrolling: touch; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; min-width: 360px; }
+    th { background: var(--purple-light); color: var(--purple-dark); padding: 10px 14px; text-align: left; font-weight: 800; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 2px solid var(--purple); }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    tr:nth-child(even) td { background: #fafbff; }
+    th.ar-col, td.ar-col { text-align: right; direction: rtl; font-family: 'Scheherazade New', serif; font-size: 1.15rem; line-height: 2; }
+
+    /* ─── CONVERSATION PAIR ─── */
+    .convo-pair {
+      background: #f9fafb; border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 20px; margin: 12px 0;
+    }
+    .convo-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+    .convo-row:last-child { margin-bottom: 0; }
+    .convo-label {
+      font-size: 0.72rem; font-weight: 800; color: white;
+      padding: 2px 10px; border-radius: 8px;
+      flex-shrink: 0; margin-top: 4px;
+    }
+    .convo-label.a { background: var(--blue); }
+    .convo-label.b { background: var(--green); }
+    .convo-text {
+      font-family: 'Scheherazade New', serif;
+      direction: rtl; unicode-bidi: bidi-override;
+      font-size: 1.35rem; line-height: 2.2;
+      flex: 1; text-align: right;
+    }
+    .convo-meaning {
+      font-family: 'Nunito', sans-serif;
+      direction: ltr; unicode-bidi: normal;
+      font-size: 0.78rem; color: var(--text-muted);
+      font-weight: 600; font-style: italic;
+    }
+
+    /* ─── KEY TERM ─── */
+    .key-term { display: inline-block; background: var(--purple-light); color: var(--purple-dark); padding: 1px 8px; border-radius: 6px; font-weight: 800; font-size: 0.84rem; }
+
+    /* ─── COMPARE GRID ─── */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+    @media (max-width: 500px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-box { border-radius: 10px; padding: 16px; font-size: 0.84rem; }
+
+    /* ─── FOOTER ─── */
+    .footer { text-align: center; padding: 24px 16px; font-size: 0.76rem; color: var(--text-muted); font-weight: 600; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-brand">
+      <span class="logo">🕋</span>
+      <div>
+        <div class="brand-name">Materi Bahasa Arab</div>
+        <div class="sub-brand">UAM ISMUBA · Kelas 6</div>
+      </div>
+    </div>
+    <a href="index.html" class="header-back">← Hub Materi</a>
+  </header>
+
+  <section class="hero">
+    <span class="hero-emoji">🕋</span>
+    <h1>Bahasa Arab – ISMUBA</h1>
+    <p>Materi lengkap Bahasa Arab Fase C untuk Ujian Akhir Madrasah. Mencakup 5 elemen: pemahaman teks, kosakata, percakapan, tata bahasa, dan angka Arab.</p>
+  </section>
+
+  <nav class="nav-pills">
+    <div class="nav-pills-inner">
+      <a href="#elemen1" class="nav-pill">📖 Pemahaman Teks</a>
+      <a href="#elemen2" class="nav-pill">📚 Kosakata</a>
+      <a href="#elemen3" class="nav-pill">💬 Muhadatsah</a>
+      <a href="#elemen4" class="nav-pill">📐 Tata Bahasa</a>
+      <a href="#elemen5" class="nav-pill">🔢 Angka</a>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- ═══════════════════════════════════════════════════════
+         ELEMEN 1: PEMAHAMAN TEKS (Fahm Al-Maqru')
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-block" id="elemen1">
+      <div class="section-header">
+        <div class="section-num e1">1</div>
+        <div class="section-title-group">
+          <div class="section-title">Pemahaman Teks (فَهْمُ الْمَقْرُوْءِ)</div>
+          <div class="section-subtitle">Ta'aruf, pertanyaan هَلْ dan أَيْنَ, teks pendek tentang desa & kelas, arti kata bergaris bawah</div>
+        </div>
+      </div>
+
+      <!-- 1A: Ta'aruf -->
+      <div class="content-card">
+        <h3>👋 Ta'aruf — Perkenalan Diri</h3>
+        <p>Ta'aruf adalah memperkenalkan diri dalam Bahasa Arab. Perhatikan pola kalimat berikut:</p>
+
+        <div class="ar-block ar-large">
+          أَنَا أَحْمَدُ. أَنَا تِلْمِيْذٌ. أَنَا مِنْ جَاكَرْتَا
+        </div>
+        <p style="text-align:center; font-style:italic; color: var(--text-muted);">Saya Ahmad. Saya seorang siswa. Saya berasal dari Jakarta.</p>
+
+        <h4>Kosakata Kunci Ta'aruf</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Bahasa Indonesia</th><th class="ar-col">Bahasa Arab</th><th>Keterangan</th></tr></thead>
+            <tbody>
+              <tr><td>Saya</td><td class="ar-col">أَنَا</td><td>Kata ganti orang pertama</td></tr>
+              <tr><td>Nama saya ...</td><td class="ar-col">اِسْمِيْ ...</td><td>Untuk memperkenalkan nama</td></tr>
+              <tr><td>Siswa (laki-laki)</td><td class="ar-col">تِلْمِيْذٌ</td><td>Mudzakkar (maskulin)</td></tr>
+              <tr><td>Siswi (perempuan)</td><td class="ar-col">تِلْمِيْذَةٌ</td><td>Mu'annats (feminin)</td></tr>
+              <tr><td>Guru (laki-laki)</td><td class="ar-col">أُسْتَاذٌ / مُدَرِّسٌ</td><td>Mudzakkar</td></tr>
+              <tr><td>Dari ...</td><td class="ar-col">مِنْ ...</td><td>Keterangan asal</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Menjawab Pertanyaan dari Teks Ta'aruf</h4>
+        <p>Saat membaca teks perkenalan, perhatikan informasi ini: <strong>siapa</strong> yang memperkenalkan diri (nama), <strong>apa</strong> statusnya (siswa/guru), dan <strong>dari mana</strong> asalnya (kota). Jawaban selalu bisa ditemukan langsung di dalam teks.</p>
+      </div>
+
+      <!-- 1B: Pertanyaan هَلْ -->
+      <div class="content-card">
+        <h3>❓ Pertanyaan dengan هَلْ (Apakah?)</h3>
+        <p><span class="ar-inline">هَلْ</span> adalah kata tanya yang berarti "apakah" — jawabannya hanya dua kemungkinan:</p>
+
+        <div class="compare-grid">
+          <div class="compare-box" style="background: var(--green-light);">
+            <p style="text-align: center; margin: 0;">
+              <span style="font-family:'Scheherazade New',serif; font-size: 1.5rem; direction:rtl;">نَعَمْ</span><br>
+              <strong style="color: var(--green-dark);">Ya (benar)</strong>
+            </p>
+          </div>
+          <div class="compare-box" style="background: var(--red-light);">
+            <p style="text-align: center; margin: 0;">
+              <span style="font-family:'Scheherazade New',serif; font-size: 1.5rem; direction:rtl;">لَا</span><br>
+              <strong style="color: var(--red);">Tidak (bukan)</strong>
+            </p>
+          </div>
+        </div>
+
+        <h4>Contoh Penggunaan</h4>
+        <div class="convo-pair">
+          <div class="convo-row"><span class="convo-label a">Tanya</span><div><div class="convo-text">هَلْ أَحْمَدُ تِلْمِيْذٌ؟</div><div class="convo-meaning">Apakah Ahmad seorang siswa?</div></div></div>
+          <div class="convo-row"><span class="convo-label b">Jawab</span><div><div class="convo-text">نَعَمْ، أَحْمَدُ تِلْمِيْذٌ</div><div class="convo-meaning">Ya, Ahmad seorang siswa.</div></div></div>
+        </div>
+        <div class="convo-pair">
+          <div class="convo-row"><span class="convo-label a">Tanya</span><div><div class="convo-text">هَلْ هُوَ أُسْتَاذٌ؟</div><div class="convo-meaning">Apakah dia seorang guru?</div></div></div>
+          <div class="convo-row"><span class="convo-label b">Jawab</span><div><div class="convo-text">لَا، هُوَ تِلْمِيْذٌ</div><div class="convo-meaning">Tidak, dia seorang siswa.</div></div></div>
+        </div>
+
+        <div class="info-box green">
+          <strong>💡 Tips Menjawab Soal هَلْ</strong>
+          Baca teks aslinya terlebih dahulu. Jika informasi dalam pertanyaan <strong>sesuai</strong> dengan teks → jawab <span class="ar-inline">نَعَمْ</span> + ulangi informasinya. Jika <strong>tidak sesuai</strong> → jawab <span class="ar-inline">لَا</span> + berikan koreksi.
+        </div>
+      </div>
+
+      <!-- 1C: Pertanyaan أَيْنَ dan Kata Tanya Lain -->
+      <div class="content-card">
+        <h3>🗺️ Kata Tanya Penting</h3>
+        <p>Selain <span class="ar-inline">هَلْ</span>, ada beberapa kata tanya lain yang sering muncul:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Bahasa Arab</th><th>Arti</th><th>Contoh Penggunaan</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">أَيْنَ</td><td><strong>Di mana?</strong></td><td>Menanyakan tempat/lokasi</td></tr>
+              <tr><td class="ar-col">مَا / مَاذَا</td><td><strong>Apa?</strong></td><td>Menanyakan benda/hal</td></tr>
+              <tr><td class="ar-col">مَنْ</td><td><strong>Siapa?</strong></td><td>Menanyakan orang</td></tr>
+              <tr><td class="ar-col">مَتَى</td><td><strong>Kapan?</strong></td><td>Menanyakan waktu</td></tr>
+              <tr><td class="ar-col">كَيْفَ</td><td><strong>Bagaimana?</strong></td><td>Menanyakan keadaan/kabar</td></tr>
+              <tr><td class="ar-col">هَلْ</td><td><strong>Apakah?</strong></td><td>Pertanyaan ya/tidak</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Contoh Pertanyaan أَيْنَ (Di mana?)</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Pertanyaan</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">أَيْنَ حَدِيْقَةُ الْحَيَوَانَاتِ؟</td><td>Di mana <strong>kebun binatang</strong>?</td></tr>
+              <tr><td class="ar-col">أَيْنَ مَحَطَّةُ الْحَافِلَاتِ؟</td><td>Di mana <strong>halte bus</strong>?</td></tr>
+              <tr><td class="ar-col">أَيْنَ الشَّارِعُ؟</td><td>Di mana <strong>jalan</strong>?</td></tr>
+              <tr><td class="ar-col">أَيْنَ السُّوْقُ؟</td><td>Di mana <strong>pasar</strong>?</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 1D: Memahami Teks Pendek -->
+      <div class="content-card">
+        <h3>📄 Memahami Teks Pendek</h3>
+        <h4>Teks tentang Desa (القَرْيَة)</h4>
+        <div class="ar-block ar-medium">
+          أَنَا خَدِيْجَةُ. أَسْكُنُ فِي الْقَرْيَةِ.<br>
+          فِيْهَا مَسْجِدٌ وَمَدْرَسَةٌ وَمَلْعَبٌ.<br>
+          هُنَاكَ بَيْتِيْ
+        </div>
+        <p style="text-align:center; font-style:italic; color: var(--text-muted);">Saya Khadijah. Saya tinggal di desa. Di sana ada masjid, sekolah, dan lapangan. Di sana rumah saya.</p>
+
+        <h4>Kosakata dari Teks</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Arab</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">أَسْكُنُ</td><td>Saya tinggal</td></tr>
+              <tr><td class="ar-col">الْقَرْيَة</td><td>Desa</td></tr>
+              <tr><td class="ar-col">فِيْهَا</td><td>Di sana / di dalamnya</td></tr>
+              <tr><td class="ar-col">مَسْجِد</td><td>Masjid</td></tr>
+              <tr><td class="ar-col">مَدْرَسَة</td><td>Sekolah</td></tr>
+              <tr><td class="ar-col">مَلْعَب</td><td>Lapangan</td></tr>
+              <tr><td class="ar-col">هُنَاكَ</td><td>Di sana</td></tr>
+              <tr><td class="ar-col">بَيْتِيْ</td><td>Rumah saya</td></tr>
+              <tr><td class="ar-col">هُنَاكَ بَيْتِيْ</td><td><strong>Di sana rumah saya</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Teks tentang Kelas (الفَصْل)</h4>
+        <div class="ar-block ar-medium">
+          هٰذَا فَصْلِي. فِي الْفَصْلِ أُسْتَاذٌ وَتَلَامِيْذٌ.<br>
+          الْمِرْوَحَةُ بَيْنَ السَّقْفِ وَالْبِلَاطِ.<br>
+          وَالْمِصْبَاحُ فَوْقَ الْمَكْتَبِ
+        </div>
+        <p style="text-align:center; font-style:italic; color: var(--text-muted);">Ini kelasku. Di dalam kelas ada guru dan siswa-siswa. Kipas angin ada di antara langit-langit dan lantai. Dan lampu di atas meja.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Arab</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">فَصْلِي</td><td>Kelas saya</td></tr>
+              <tr><td class="ar-col">فِي الْفَصْلِ</td><td><strong>Di dalam kelas</strong></td></tr>
+              <tr><td class="ar-col">تَلَامِيْذ</td><td>Siswa-siswa (jamak)</td></tr>
+              <tr><td class="ar-col">الْمِرْوَحَة</td><td>Kipas angin</td></tr>
+              <tr><td class="ar-col">السَّقْف</td><td>Langit-langit / atap</td></tr>
+              <tr><td class="ar-col">الْبِلَاط</td><td>Lantai</td></tr>
+              <tr><td class="ar-col">الْمِصْبَاح</td><td>Lampu</td></tr>
+              <tr><td class="ar-col">الْمَكْتَب</td><td>Meja</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box blue">
+          <strong>📘 Tips Memahami Teks</strong>
+          Saat menghadapi soal pemahaman teks: (1) baca seluruh teks terlebih dahulu, (2) perhatikan kata yang bergaris bawah — biasanya itulah yang ditanyakan artinya, (3) cari jawaban yang paling sesuai dengan konteks teks.
+        </div>
+      </div>
+
+      <!-- 1E: Teks Jadwal Pelajaran -->
+      <div class="content-card">
+        <h3>📅 Memahami Jadwal Pelajaran</h3>
+        <p>Teks tentang jadwal pelajaran menggabungkan keterangan waktu (hari) dan angka bertingkat (urutan pelajaran).</p>
+
+        <div class="ar-block ar-medium">
+          فِي يَوْمِ الْخَمِيْسِ دَرْسُ الرِّيَاضِيَّاتِ.<br>
+          الرِّيَاضِيَّاتُ فِي الدَّرْسِ الْأَوَّلِ.<br>
+          وَاللُّغَةُ الْعَرَبِيَّةُ فِي الدَّرْسِ الثَّالِثِ
+        </div>
+        <p style="text-align:center; font-style:italic; color: var(--text-muted);">Pada hari Kamis ada pelajaran Matematika. Matematika di pelajaran pertama. Dan Bahasa Arab di pelajaran ketiga.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Arab</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">يَوْمِ الْخَمِيْسِ</td><td>Hari Kamis</td></tr>
+              <tr><td class="ar-col">دَرْس</td><td>Pelajaran</td></tr>
+              <tr><td class="ar-col">الرِّيَاضِيَّات</td><td>Matematika</td></tr>
+              <tr><td class="ar-col">اللُّغَةُ الْعَرَبِيَّة</td><td>Bahasa Arab</td></tr>
+              <tr><td class="ar-col">الدَّرْسُ الْأَوَّلُ</td><td>Pelajaran ke-1 (pertama)</td></tr>
+              <tr><td class="ar-col">الدَّرْسُ الثَّالِثُ</td><td>Pelajaran ke-3 (ketiga)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         ELEMEN 2: KOSAKATA (Mufradat)
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-block" id="elemen2">
+      <div class="section-header">
+        <div class="section-num e2">2</div>
+        <div class="section-title-group">
+          <div class="section-title">Kosakata (مُفْرَدَات)</div>
+          <div class="section-subtitle">Isim isyarah, benda di kelas & rumah, profesi, tempat di sekolah, keterangan tempat</div>
+        </div>
+      </div>
+
+      <!-- 2A: Isim Isyarah -->
+      <div class="content-card">
+        <h3>👉 Isim Isyarah — Kata Tunjuk</h3>
+        <p>Bahasa Arab memiliki dua kata tunjuk utama, tergantung jenis kelamin benda yang ditunjuk:</p>
+
+        <div class="compare-grid">
+          <div class="compare-box" style="background: var(--blue-light);">
+            <p style="text-align:center; margin:0;">
+              <span style="font-family:'Scheherazade New',serif; font-size: 2rem; direction:rtl;">هٰذَا</span><br>
+              <strong style="color: #1e40af;">Ini (laki-laki / mudzakkar)</strong><br>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Untuk benda yang berjenis maskulin</span>
+            </p>
+          </div>
+          <div class="compare-box" style="background: var(--red-light);">
+            <p style="text-align:center; margin:0;">
+              <span style="font-family:'Scheherazade New',serif; font-size: 2rem; direction:rtl;">هٰذِهِ</span><br>
+              <strong style="color: var(--red);">Ini (perempuan / mu'annats)</strong><br>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Untuk benda yang berjenis feminin</span>
+            </p>
+          </div>
+        </div>
+
+        <h4>Contoh Penggunaan</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Kalimat Arab</th><th>Arti</th><th>Jenis</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">هٰذَا كِتَابٌ</td><td>Ini sebuah buku</td><td>Mudzakkar</td></tr>
+              <tr><td class="ar-col">هٰذَا مَكْتَبٌ</td><td>Ini sebuah meja</td><td>Mudzakkar</td></tr>
+              <tr><td class="ar-col">هٰذَا كُرْسِيٌّ</td><td>Ini sebuah kursi</td><td>Mudzakkar</td></tr>
+              <tr><td class="ar-col">هٰذِهِ خَرِيْطَةٌ</td><td>Ini sebuah peta</td><td>Mu'annats</td></tr>
+              <tr><td class="ar-col">هٰذِهِ مَدْرَسَةٌ</td><td>Ini sebuah sekolah</td><td>Mu'annats</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box amber">
+          <strong>🔑 Cara Mengenali Mu'annats</strong>
+          Kebanyakan kata benda mu'annats (feminin) diakhiri dengan <span class="ar-inline">ة</span> (ta' marbuthah). Contoh: <span class="ar-inline">خَرِيْطَةٌ</span> (peta), <span class="ar-inline">مَدْرَسَةٌ</span> (sekolah), <span class="ar-inline">سَبُّوْرَةٌ</span> (papan tulis). Gunakan <span class="ar-inline">هٰذِهِ</span> untuk kata-kata ini.
+        </div>
+      </div>
+
+      <!-- 2B: Benda di Kelas dan Rumah -->
+      <div class="content-card">
+        <h3>🏫 Kosakata Benda di Kelas dan Rumah</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Arab</th><th>Arti</th><th>Keterangan</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">كِتَابٌ</td><td>Buku</td><td>Mudzakkar</td></tr>
+              <tr><td class="ar-col">قَلَمٌ</td><td>Pulpen / pena</td><td>Mudzakkar</td></tr>
+              <tr><td class="ar-col">مَكْتَبٌ</td><td>Meja</td><td>Mudzakkar</td></tr>
+              <tr><td class="ar-col">كُرْسِيٌّ</td><td>Kursi</td><td>Mudzakkar</td></tr>
+              <tr><td class="ar-col">مِصْبَاحٌ</td><td>Lampu</td><td>Mudzakkar</td></tr>
+              <tr><td class="ar-col">خَرِيْطَةٌ</td><td>Peta</td><td>Mu'annats</td></tr>
+              <tr><td class="ar-col">سَبُّوْرَةٌ</td><td>Papan tulis</td><td>Mu'annats</td></tr>
+              <tr><td class="ar-col">سَاعَةٌ</td><td>Jam</td><td>Mu'annats</td></tr>
+              <tr><td class="ar-col">مِرْوَحَةٌ</td><td>Kipas angin</td><td>Mu'annats</td></tr>
+              <tr><td class="ar-col">أَرِيْكَةٌ</td><td>Sofa</td><td>Mu'annats</td></tr>
+              <tr><td class="ar-col">تِلْفَازٌ</td><td>Televisi</td><td>Mudzakkar</td></tr>
+              <tr><td class="ar-col">مِفْرَشٌ</td><td>Taplak meja</td><td>Mudzakkar</td></tr>
+              <tr><td class="ar-col">زَهْرِيَّةٌ</td><td>Vas bunga</td><td>Mu'annats</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 2C: Profesi -->
+      <div class="content-card">
+        <h3>👨‍⚕️ Kosakata Profesi (المِهْنَة)</h3>
+        <p>Dalam Bahasa Arab, profesi untuk laki-laki dan perempuan berbeda bentuknya. Profesi perempuan biasanya ditambah <span class="ar-inline">ة</span> (ta' marbuthah) di akhir kata.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Profesi</th><th class="ar-col">Laki-laki (مُذَكَّر)</th><th class="ar-col">Perempuan (مُؤَنَّث)</th></tr></thead>
+            <tbody>
+              <tr><td>Dokter</td><td class="ar-col">طَبِيْبٌ</td><td class="ar-col">طَبِيْبَةٌ</td></tr>
+              <tr><td>Guru</td><td class="ar-col">مُدَرِّسٌ</td><td class="ar-col">مُدَرِّسَةٌ</td></tr>
+              <tr><td>Insinyur</td><td class="ar-col">مُهَنْدِسٌ</td><td class="ar-col">مُهَنْدِسَةٌ</td></tr>
+              <tr><td>Perawat</td><td class="ar-col">مُمَرِّضٌ</td><td class="ar-col">مُمَرِّضَةٌ</td></tr>
+              <tr><td>Nelayan</td><td class="ar-col">صَيَّادٌ</td><td class="ar-col">صَيَّادَةٌ</td></tr>
+              <tr><td>Penjahit</td><td class="ar-col">خَيَّاطٌ</td><td class="ar-col">خَيَّاطَةٌ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box green">
+          <strong>💡 Tips Mengerjakan Soal Profesi</strong>
+          Jika yang dibicarakan adalah <span class="ar-inline">هُوَ</span> (dia laki-laki) atau <span class="ar-inline">أَبِيْ</span> (ayahku) → gunakan bentuk mudzakkar (tanpa <span class="ar-inline">ة</span>).<br>
+          Jika yang dibicarakan adalah <span class="ar-inline">هِيَ</span> (dia perempuan) atau <span class="ar-inline">أُمِّيْ</span> (ibuku) → gunakan bentuk mu'annats (dengan <span class="ar-inline">ة</span>).
+        </div>
+      </div>
+
+      <!-- 2D: Tempat di Sekolah -->
+      <div class="content-card">
+        <h3>🏫 Tempat di Sekolah dan Sekitarnya</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Arab</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">الْفَصْل</td><td>Kelas / ruang kelas</td></tr>
+              <tr><td class="ar-col">الْمَقْصَف</td><td>Kantin</td></tr>
+              <tr><td class="ar-col">الْمَيْدَان</td><td>Lapangan</td></tr>
+              <tr><td class="ar-col">الْمَكْتَبَة</td><td>Perpustakaan</td></tr>
+              <tr><td class="ar-col">الْمَدْرَسَة</td><td>Sekolah</td></tr>
+              <tr><td class="ar-col">الشَّارِع</td><td>Jalan</td></tr>
+              <tr><td class="ar-col">السُّوْق</td><td>Pasar</td></tr>
+              <tr><td class="ar-col">الْمَسْجِد</td><td>Masjid</td></tr>
+              <tr><td class="ar-col">حَدِيْقَةُ الْحَيَوَانَاتِ</td><td>Kebun binatang</td></tr>
+              <tr><td class="ar-col">مَحَطَّةُ الْحَافِلَاتِ</td><td>Halte bus</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 2E: Keterangan Tempat -->
+      <div class="content-card">
+        <h3>📍 Keterangan Tempat (ظَرْفُ الْمَكَانِ)</h3>
+        <p>Keterangan tempat (zharaf makan) menunjukkan posisi suatu benda terhadap benda lain. Ini adalah kosakata yang <strong>sangat penting</strong> dan sering diujikan.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Arab</th><th>Arti</th><th>Contoh Kalimat</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">أَمَامَ</td><td><strong>Di depan</strong></td><td>TV di depan kursi</td></tr>
+              <tr><td class="ar-col">وَرَاءَ</td><td><strong>Di belakang</strong></td><td>Taman di belakang sekolah</td></tr>
+              <tr><td class="ar-col">فَوْقَ</td><td><strong>Di atas</strong></td><td>Lampu di atas meja</td></tr>
+              <tr><td class="ar-col">تَحْتَ</td><td><strong>Di bawah</strong></td><td>Taplak di bawah vas bunga</td></tr>
+              <tr><td class="ar-col">جَانِبَ</td><td><strong>Di samping</strong></td><td>Buku di samping pulpen</td></tr>
+              <tr><td class="ar-col">بَيْنَ</td><td><strong>Di antara</strong></td><td>Kipas di antara langit-langit dan lantai</td></tr>
+              <tr><td class="ar-col">فِي</td><td><strong>Di dalam</strong></td><td>Di dalam kelas ada guru</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Contoh Kalimat Lengkap</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Kalimat Arab</th><th>Terjemahan</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">التِّلْفَازُ أَمَامَ الْكُرْسِيِّ</td><td>Televisi <strong>di depan</strong> kursi</td></tr>
+              <tr><td class="ar-col">الْمِصْبَاحُ فَوْقَ الْمَكْتَبِ</td><td>Lampu <strong>di atas</strong> meja</td></tr>
+              <tr><td class="ar-col">الْمِفْرَشُ تَحْتَ الزَّهْرِيَّةِ</td><td>Taplak meja <strong>di bawah</strong> vas bunga</td></tr>
+              <tr><td class="ar-col">الْكِتَابُ جَانِبَ الْقَلَمِ</td><td>Buku <strong>di samping</strong> pulpen</td></tr>
+              <tr><td class="ar-col">الْمِرْوَحَةُ بَيْنَ السَّقْفِ وَالْبِلَاطِ</td><td>Kipas <strong>di antara</strong> langit-langit dan lantai</td></tr>
+              <tr><td class="ar-col">السَّاعَةُ فَوْقَ السَّبُّوْرَةِ</td><td>Jam <strong>di atas</strong> papan tulis</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box red">
+          <strong>⚠️ Jangan Tertukar!</strong>
+          <span class="ar-inline">أَمَامَ</span> = di depan (BUKAN di samping)<br>
+          <span class="ar-inline">وَرَاءَ</span> = di belakang (BUKAN di bawah)<br>
+          <span class="ar-inline">فَوْقَ</span> = di atas (BUKAN di dalam)<br>
+          <span class="ar-inline">تَحْتَ</span> = di bawah (BUKAN di belakang)<br>
+          Hafalkan berpasangan: <span class="ar-inline">فَوْقَ</span> ↔ <span class="ar-inline">تَحْتَ</span> (atas ↔ bawah), <span class="ar-inline">أَمَامَ</span> ↔ <span class="ar-inline">وَرَاءَ</span> (depan ↔ belakang)
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         ELEMEN 3: MUHADATSAH (Percakapan)
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-block" id="elemen3">
+      <div class="section-header">
+        <div class="section-num e3">3</div>
+        <div class="section-title-group">
+          <div class="section-title">Muhadatsah (مُحَادَثَة)</div>
+          <div class="section-subtitle">Sapaan pagi/siang/malam, menanyakan nama & kabar, ucapan selamat datang & perpisahan</div>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <h3>🌅 Sapaan Berdasarkan Waktu</h3>
+        <p>Dalam Bahasa Arab, sapaan berbeda tergantung waktu. Setiap sapaan memiliki <strong>jawaban khusus</strong> yang harus dihafalkan berpasangan.</p>
+
+        <h4>1. Sapaan Pagi</h4>
+        <div class="convo-pair">
+          <div class="convo-row"><span class="convo-label a">Sapa</span><div><div class="convo-text">صَبَاحُ الْخَيْرِ</div><div class="convo-meaning">Selamat pagi</div></div></div>
+          <div class="convo-row"><span class="convo-label b">Jawab</span><div><div class="convo-text">صَبَاحُ النُّوْرِ</div><div class="convo-meaning">Selamat pagi (jawaban) — arti harfiah: "pagi cahaya"</div></div></div>
+        </div>
+
+        <h4>2. Sapaan Siang</h4>
+        <div class="convo-pair">
+          <div class="convo-row"><span class="convo-label a">Sapa</span><div><div class="convo-text">نَهَارُكَ سَعِيْدٌ</div><div class="convo-meaning">Selamat siang</div></div></div>
+          <div class="convo-row"><span class="convo-label b">Jawab</span><div><div class="convo-text">سَعِيْدٌ مُبَارَكٌ</div><div class="convo-meaning">Selamat siang (jawaban) — "bahagia dan berkah"</div></div></div>
+        </div>
+
+        <h4>3. Sapaan Malam</h4>
+        <div class="convo-pair">
+          <div class="convo-row"><span class="convo-label a">Sapa</span><div><div class="convo-text">مَسَاءُ الْخَيْرِ</div><div class="convo-meaning">Selamat malam</div></div></div>
+          <div class="convo-row"><span class="convo-label b">Jawab</span><div><div class="convo-text">مَسَاءُ النُّوْرِ</div><div class="convo-meaning">Selamat malam (jawaban) — "malam cahaya"</div></div></div>
+        </div>
+
+        <div class="info-box teal">
+          <strong>🔑 Pola yang Harus Diingat</strong>
+          Pagi: <span class="ar-inline">الْخَيْرِ → النُّوْرِ</span> (kebaikan → cahaya)<br>
+          Siang: <span class="ar-inline">سَعِيْدٌ → سَعِيْدٌ مُبَارَكٌ</span> (bahagia → bahagia & berkah)<br>
+          Malam: <span class="ar-inline">الْخَيْرِ → النُّوْرِ</span> (sama seperti pagi, tapi pakai <span class="ar-inline">مَسَاءُ</span> bukan <span class="ar-inline">صَبَاحُ</span>)
+        </div>
+      </div>
+
+      <div class="content-card">
+        <h3>💬 Percakapan Sehari-hari</h3>
+
+        <h4>Menanyakan Nama</h4>
+        <div class="convo-pair">
+          <div class="convo-row"><span class="convo-label a">Tanya</span><div><div class="convo-text">مَا اسْمُكَ؟</div><div class="convo-meaning">Siapa namamu?</div></div></div>
+          <div class="convo-row"><span class="convo-label b">Jawab</span><div><div class="convo-text">اِسْمِيْ مُحَمَّدٌ</div><div class="convo-meaning">Nama saya Muhammad</div></div></div>
+        </div>
+
+        <div class="info-box amber">
+          <strong>⚠️ Perhatikan Perbedaan:</strong><br>
+          <span class="ar-inline">اِسْمِيْ</span> = nama <strong>saya</strong> (untuk menjawab tentang diri sendiri)<br>
+          <span class="ar-inline">اِسْمُكَ</span> = nama<strong>mu</strong> (untuk bertanya ke orang lain)<br>
+          <span class="ar-inline">اِسْمُهُ</span> = nama<strong>nya</strong> (laki-laki, untuk membicarakan orang ketiga)<br>
+          <span class="ar-inline">اِسْمُهَا</span> = nama<strong>nya</strong> (perempuan)
+        </div>
+
+        <h4>Menanyakan Kabar</h4>
+        <div class="convo-pair">
+          <div class="convo-row"><span class="convo-label a">Tanya</span><div><div class="convo-text">كَيْفَ حَالُكُمْ؟</div><div class="convo-meaning">Bagaimana kabar kalian?</div></div></div>
+          <div class="convo-row"><span class="convo-label b">Jawab</span><div><div class="convo-text">بِخَيْرٍ وَالْحَمْدُ لِلّهِ</div><div class="convo-meaning">Baik, alhamdulillah.</div></div></div>
+        </div>
+        <p>Kata tanya <span class="ar-inline">كَيْفَ</span> berarti "bagaimana" — digunakan khusus untuk menanyakan <strong>keadaan/kabar</strong>.</p>
+
+        <h4>Selamat Datang</h4>
+        <div class="convo-pair">
+          <div class="convo-row"><span class="convo-label a">Sapa</span><div><div class="convo-text">أَهْلًا وَسَهْلًا</div><div class="convo-meaning">Selamat datang</div></div></div>
+          <div class="convo-row"><span class="convo-label b">Jawab</span><div><div class="convo-text">أَهْلًا بِكَ</div><div class="convo-meaning">Selamat datang juga (jawaban)</div></div></div>
+        </div>
+
+        <h4>Ucapan Perpisahan</h4>
+        <div class="convo-pair">
+          <div class="convo-row"><span class="convo-label a">Ucap</span><div><div class="convo-text">إِلَى اللِّقَاءِ</div><div class="convo-meaning">Sampai jumpa</div></div></div>
+        </div>
+
+        <h4>Ucapan Senang Berjumpa</h4>
+        <div class="convo-pair">
+          <div class="convo-row"><span class="convo-label a">Ucap</span><div><div class="convo-text">أَنَا سَعِيْدٌ بِهٰذَا اللِّقَاءِ</div><div class="convo-meaning">Saya senang berjumpa denganmu</div></div></div>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <h3>📋 Ringkasan Seluruh Sapaan & Respon</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Situasi</th><th class="ar-col">Sapaan</th><th class="ar-col">Jawaban</th></tr></thead>
+            <tbody>
+              <tr><td>Pagi</td><td class="ar-col">صَبَاحُ الْخَيْرِ</td><td class="ar-col">صَبَاحُ النُّوْرِ</td></tr>
+              <tr><td>Siang</td><td class="ar-col">نَهَارُكَ سَعِيْدٌ</td><td class="ar-col">سَعِيْدٌ مُبَارَكٌ</td></tr>
+              <tr><td>Malam</td><td class="ar-col">مَسَاءُ الْخَيْرِ</td><td class="ar-col">مَسَاءُ النُّوْرِ</td></tr>
+              <tr><td>Tanya nama</td><td class="ar-col">مَا اسْمُكَ؟</td><td class="ar-col">اِسْمِيْ ...</td></tr>
+              <tr><td>Tanya kabar</td><td class="ar-col">كَيْفَ حَالُكُمْ؟</td><td class="ar-col">بِخَيْرٍ وَالْحَمْدُ لِلّهِ</td></tr>
+              <tr><td>Selamat datang</td><td class="ar-col">أَهْلًا وَسَهْلًا</td><td class="ar-col">أَهْلًا بِكَ</td></tr>
+              <tr><td>Sampai jumpa</td><td class="ar-col" colspan="2">إِلَى اللِّقَاءِ</td></tr>
+              <tr><td>Senang berjumpa</td><td class="ar-col" colspan="2">أَنَا سَعِيْدٌ بِهٰذَا اللِّقَاءِ</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         ELEMEN 4: TATA BAHASA (Qawa'id)
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-block" id="elemen4">
+      <div class="section-header">
+        <div class="section-num e4">4</div>
+        <div class="section-title-group">
+          <div class="section-title">Tata Bahasa (قَوَاعِد)</div>
+          <div class="section-subtitle">Dhamir, zharaf makan, terjemahan kalimat, dan menyusun kalimat</div>
+        </div>
+      </div>
+
+      <!-- 4A: Dhamir -->
+      <div class="content-card">
+        <h3>👤 Dhamir — Kata Ganti Orang</h3>
+        <p>Dhamir (ضَمِيْر) adalah kata ganti untuk orang. Dalam Bahasa Arab, kata ganti berbeda untuk laki-laki dan perempuan.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Dhamir</th><th>Arti</th><th>Keterangan</th><th>Contoh Kalimat</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">أَنَا</td><td><strong>Saya</strong></td><td>Orang ke-1 tunggal</td><td>Saya seorang siswa</td></tr>
+              <tr><td class="ar-col">أَنْتَ</td><td><strong>Kamu</strong> (lk)</td><td>Orang ke-2 tunggal, <span style="color:var(--blue);font-weight:800;">LAKI-LAKI</span></td><td>Kamu pergi ke sekolah</td></tr>
+              <tr><td class="ar-col">أَنْتِ</td><td><strong>Kamu</strong> (pr)</td><td>Orang ke-2 tunggal, <span style="color:var(--red);font-weight:800;">PEREMPUAN</span></td><td>Kamu pergi ke sekolah</td></tr>
+              <tr><td class="ar-col">نَحْنُ</td><td><strong>Kami / Kita</strong></td><td>Orang ke-1 jamak</td><td>Kami belajar bersama</td></tr>
+              <tr><td class="ar-col">هُوَ</td><td><strong>Dia</strong> (lk)</td><td>Orang ke-3, <span style="color:var(--blue);font-weight:800;">LAKI-LAKI</span></td><td>Dia seorang dokter</td></tr>
+              <tr><td class="ar-col">هِيَ</td><td><strong>Dia</strong> (pr)</td><td>Orang ke-3, <span style="color:var(--red);font-weight:800;">PEREMPUAN</span></td><td>Dia seorang perawat</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box red">
+          <strong>⚠️ Jebakan Paling Umum: أَنْتَ vs أَنْتِ</strong>
+          Kedua kata ini terlihat hampir sama! Perbedaannya ada pada harakat akhir:<br>
+          <span class="ar-inline">أَنْتَ</span> (dengan fathah/baris atas di akhir) = kamu <strong>laki-laki</strong><br>
+          <span class="ar-inline">أَنْتِ</span> (dengan kasrah/baris bawah di akhir) = kamu <strong>perempuan</strong><br><br>
+          Cara membedakan di soal: lihat kata kerja setelahnya. Jika kata kerja berakhiran <span class="ar-inline">ـِيْنَ</span> atau <span class="ar-inline">تَ...ِيْنَ</span>, berarti untuk perempuan → gunakan <span class="ar-inline">أَنْتِ</span>.
+        </div>
+      </div>
+
+      <!-- 4B: Zharaf Makan dalam Kalimat -->
+      <div class="content-card">
+        <h3>📐 Mengidentifikasi Zharaf Makan dalam Kalimat</h3>
+        <p>Dalam soal tata bahasa, kamu mungkin diminta menunjukkan mana yang merupakan zharaf makan (keterangan tempat) dalam sebuah kalimat.</p>
+
+        <h4>Contoh</h4>
+        <div class="ar-block ar-medium">
+          السَّاعَةُ <span style="color:#dc2626; text-decoration: underline;">فَوْقَ</span> السَّبُّوْرَةِ
+        </div>
+        <p style="text-align:center;">Jam berada <strong style="color:var(--red);">di atas</strong> papan tulis. → Zharaf makan-nya adalah <span class="ar-inline">فَوْقَ</span></p>
+
+        <div class="info-box purple">
+          <strong>📝 Daftar Semua Zharaf Makan yang Harus Dihafalkan</strong>
+          <span class="ar-inline">فَوْقَ</span> (di atas) · <span class="ar-inline">تَحْتَ</span> (di bawah) · <span class="ar-inline">أَمَامَ</span> (di depan) · <span class="ar-inline">وَرَاءَ</span> (di belakang) · <span class="ar-inline">جَانِبَ</span> (di samping) · <span class="ar-inline">بَيْنَ</span> (di antara) · <span class="ar-inline">فِي</span> (di dalam)<br><br>
+          Jika soal bertanya "mana yang merupakan zharaf makan?", cari salah satu dari kata-kata di atas.
+        </div>
+      </div>
+
+      <!-- 4C: Terjemahan Kalimat -->
+      <div class="content-card">
+        <h3>🔄 Menerjemahkan Kalimat</h3>
+        <p>Soal terjemahan meminta kamu mengubah kalimat Indonesia ke Arab atau sebaliknya. Kuncinya adalah menguasai kosakata benda + keterangan tempat.</p>
+
+        <h4>Pola Kalimat Posisi Benda</h4>
+        <p>Pola dasar: <strong>Benda + Keterangan Tempat + Benda Acuan</strong></p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Indonesia</th><th class="ar-col">Arab</th></tr></thead>
+            <tbody>
+              <tr><td>Meja itu di samping sofa</td><td class="ar-col">الْمَكْتَبُ جَانِبَ الْأَرِيْكَةِ</td></tr>
+              <tr><td>Buku itu di samping pulpen</td><td class="ar-col">الْكِتَابُ جَانِبَ الْقَلَمِ</td></tr>
+              <tr><td>Lampu di atas meja</td><td class="ar-col">الْمِصْبَاحُ فَوْقَ الْمَكْتَبِ</td></tr>
+              <tr><td>TV di depan kursi</td><td class="ar-col">التِّلْفَازُ أَمَامَ الْكُرْسِيِّ</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 4D: Menyusun Kalimat -->
+      <div class="content-card">
+        <h3>🧩 Menyusun Kata Menjadi Kalimat</h3>
+        <p>Soal ini memberi kata-kata acak yang harus disusun menjadi kalimat yang benar.</p>
+
+        <h4>Pola Kalimat Ismiyyah (Kalimat Nominal)</h4>
+        <p>Kalimat ismiyyah biasanya mengikuti pola:</p>
+        <ul>
+          <li><strong>Keterangan tempat (فِي ...)</strong> + benda + sifat, ATAU</li>
+          <li><strong>Kata ganti (أَنَا ...)</strong> + nama + informasi</li>
+        </ul>
+
+        <h4>Contoh Menyusun</h4>
+        <p><strong>Kata acak:</strong> <span class="ar-inline">غُرْفَةِ الْعَائِلَةِ - جَمِيْلَةٌ - فِي - أَرِيْكَةٌ</span></p>
+        <p><strong>Susunan benar:</strong> <span class="ar-inline">فِي غُرْفَةِ الْعَائِلَةِ أَرِيْكَةٌ جَمِيْلَةٌ</span></p>
+        <p><strong>Arti:</strong> "Di ruang keluarga ada sofa yang indah."</p>
+
+        <p><strong>Kata acak:</strong> <span class="ar-inline">بَيْتِيْ - رَقْمُ - أَنَا - سَلْمَى - ثَلَاثَةَ عَشَرَ</span></p>
+        <p><strong>Susunan benar:</strong> <span class="ar-inline">أَنَا سَلْمَى رَقْمُ بَيْتِيْ ثَلَاثَةَ عَشَرَ</span></p>
+        <p><strong>Arti:</strong> "Saya Salma, nomor rumah saya tiga belas."</p>
+
+        <div class="info-box green">
+          <strong>💡 Tips Menyusun Kalimat</strong>
+          1. Cari kata pembuka — biasanya <span class="ar-inline">فِي</span> (di) atau <span class="ar-inline">أَنَا</span> (saya)<br>
+          2. Jika ada <span class="ar-inline">فِي</span>, taruh di awal diikuti keterangan tempatnya<br>
+          3. Jika ada <span class="ar-inline">أَنَا</span>, taruh di awal diikuti nama lalu informasi lain<br>
+          4. Sifat (<span class="ar-inline">جَمِيْلَةٌ</span> = indah) selalu mengikuti benda yang disifatinya
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         ELEMEN 5: ANGKA (Al-Arqam)
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-block" id="elemen5">
+      <div class="section-header">
+        <div class="section-num e5">5</div>
+        <div class="section-title-group">
+          <div class="section-title">Angka Arab (الْأَرْقَام)</div>
+          <div class="section-subtitle">Angka 1–20, angka bertingkat (ordinal), angka dalam konteks kehidupan</div>
+        </div>
+      </div>
+
+      <!-- 5A: Angka Kardinal 1-20 -->
+      <div class="content-card">
+        <h3>🔢 Angka Kardinal (العَدَد) 1–20</h3>
+        <p>Angka-angka dasar dalam Bahasa Arab yang wajib dihafalkan:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Angka</th><th class="ar-col">Bahasa Arab</th><th>Angka</th><th class="ar-col">Bahasa Arab</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td class="ar-col">وَاحِدٌ</td><td>11</td><td class="ar-col">أَحَدَ عَشَرَ</td></tr>
+              <tr><td>2</td><td class="ar-col">اِثْنَانِ</td><td>12</td><td class="ar-col">اِثْنَا عَشَرَ</td></tr>
+              <tr><td>3</td><td class="ar-col">ثَلَاثَةٌ</td><td>13</td><td class="ar-col">ثَلَاثَةَ عَشَرَ</td></tr>
+              <tr><td>4</td><td class="ar-col">أَرْبَعَةٌ</td><td>14</td><td class="ar-col">أَرْبَعَةَ عَشَرَ</td></tr>
+              <tr><td>5</td><td class="ar-col">خَمْسَةٌ</td><td>15</td><td class="ar-col">خَمْسَةَ عَشَرَ</td></tr>
+              <tr><td>6</td><td class="ar-col">سِتَّةٌ</td><td>16</td><td class="ar-col">سِتَّةَ عَشَرَ</td></tr>
+              <tr><td>7</td><td class="ar-col">سَبْعَةٌ</td><td>17</td><td class="ar-col">سَبْعَةَ عَشَرَ</td></tr>
+              <tr><td>8</td><td class="ar-col">ثَمَانِيَةٌ</td><td>18</td><td class="ar-col">ثَمَانِيَةَ عَشَرَ</td></tr>
+              <tr><td>9</td><td class="ar-col">تِسْعَةٌ</td><td>19</td><td class="ar-col">تِسْعَةَ عَشَرَ</td></tr>
+              <tr><td>10</td><td class="ar-col">عَشَرَةٌ</td><td>20</td><td class="ar-col">عِشْرُوْنَ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box blue">
+          <strong>💡 Pola Angka 11–19</strong>
+          Angka 11–19 dibentuk dari: <strong>satuan + عَشَرَ</strong> (sepuluh). Contoh: <span class="ar-inline">ثَلَاثَةَ عَشَرَ</span> = 3 + 10 = 13. Angka 20 memiliki bentuk sendiri: <span class="ar-inline">عِشْرُوْنَ</span>.
+        </div>
+      </div>
+
+      <!-- 5B: Angka Ordinal -->
+      <div class="content-card">
+        <h3>🏅 Angka Bertingkat (العَدَد التَّرْتِيْبِي) — Ordinal</h3>
+        <p>Angka bertingkat menunjukkan urutan: pertama, kedua, ketiga, dst. Sering muncul dalam konteks jadwal pelajaran dan halaman buku.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Urutan</th><th class="ar-col">Mudzakkar (lk)</th><th class="ar-col">Mu'annats (pr)</th></tr></thead>
+            <tbody>
+              <tr><td>Ke-1 (pertama)</td><td class="ar-col">الْأَوَّلُ</td><td class="ar-col">الْأُوْلَى</td></tr>
+              <tr><td>Ke-2 (kedua)</td><td class="ar-col">الثَّانِي</td><td class="ar-col">الثَّانِيَة</td></tr>
+              <tr><td>Ke-3 (ketiga)</td><td class="ar-col">الثَّالِثُ</td><td class="ar-col">الثَّالِثَة</td></tr>
+              <tr><td>Ke-4 (keempat)</td><td class="ar-col">الرَّابِعُ</td><td class="ar-col">الرَّابِعَة</td></tr>
+              <tr><td>Ke-5 (kelima)</td><td class="ar-col">الْخَامِسُ</td><td class="ar-col">الْخَامِسَة</td></tr>
+              <tr><td>Ke-6 (keenam)</td><td class="ar-col">السَّادِسُ</td><td class="ar-col">السَّادِسَة</td></tr>
+              <tr><td>Ke-7 (ketujuh)</td><td class="ar-col">السَّابِعُ</td><td class="ar-col">السَّابِعَة</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Contoh dalam Konteks</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Kalimat Arab</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">الدَّرْسُ الْأَوَّلُ</td><td>Pelajaran <strong>pertama</strong> (ke-1)</td></tr>
+              <tr><td class="ar-col">الصَّفْحَةُ الْأُوْلَى</td><td>Halaman <strong>pertama</strong> (ke-1, feminin)</td></tr>
+              <tr><td class="ar-col">الدَّرْسُ الْخَامِسُ</td><td>Pelajaran <strong>kelima</strong> (ke-5)</td></tr>
+              <tr><td class="ar-col">الْفَصْلِ السَّادِسِ</td><td>Kelas <strong>enam</strong> (ke-6)</td></tr>
+              <tr><td class="ar-col">الدَّرْسُ السَّابِعُ</td><td>Pelajaran <strong>ketujuh</strong> (ke-7)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box orange">
+          <strong>⚠️ Perhatikan Konteks Percakapan!</strong>
+          Jika seseorang bertanya "Apa pelajaran ke-5?" dan jawabannya adalah "Pelajaran ke-5 adalah Bahasa Arab", maka angka bertingkat di jawaban harus sama: <span class="ar-inline">الْخَامِسُ</span>. Baca pertanyaan dengan teliti — angka bertingkat yang ditanya harus diulang di jawaban.
+        </div>
+      </div>
+
+      <!-- 5C: Angka dalam Konteks -->
+      <div class="content-card">
+        <h3>🏠 Angka dalam Konteks Kehidupan</h3>
+        <p>Angka Arab sering muncul dalam kalimat tentang nomor rumah, nomor sekolah, atau halaman buku.</p>
+
+        <h4>Contoh Penggunaan</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Kalimat Arab</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">هٰذَا بَيْتِيْ رَقْمُ بَيْتِيْ ثَلَاثَةٌ (٣)</td><td>Ini rumahku, nomor rumahku <strong>tiga</strong></td></tr>
+              <tr><td class="ar-col">هٰذَا بَيْتُ جَدِّيْ رَقْمُهُ ثَمَانِيَةٌ (٨)</td><td>Ini rumah kakekku, nomornya <strong>delapan</strong></td></tr>
+              <tr><td class="ar-col">رَقْمُ مَدْرَسَتِيْ عِشْرُوْنَ</td><td>Nomor sekolahku <strong>dua puluh</strong></td></tr>
+              <tr><td class="ar-col">أَنَا سَلْمَى رَقْمُ بَيْتِيْ ثَلَاثَةَ عَشَرَ</td><td>Saya Salma, nomor rumahku <strong>tiga belas</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="ar-col">Kosakata</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td class="ar-col">رَقْم</td><td>Nomor</td></tr>
+              <tr><td class="ar-col">بَيْتِيْ</td><td>Rumahku</td></tr>
+              <tr><td class="ar-col">بَيْتُ جَدِّيْ</td><td>Rumah kakekku</td></tr>
+              <tr><td class="ar-col">مَدْرَسَتِيْ</td><td>Sekolahku</td></tr>
+              <tr><td class="ar-col">صَفْحَة</td><td>Halaman</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         RINGKASAN AKHIR
+         ═══════════════════════════════════════════════════════ -->
+    <div class="content-card" style="border: 2px solid var(--purple); background: var(--purple-light);">
+      <h3 style="color: var(--purple-dark); font-size: 1.1rem;">📝 Ringkasan Poin Kunci untuk Ujian</h3>
+
+      <h4>1. Pemahaman Teks</h4>
+      <ul>
+        <li>Baca teks utuh dulu, pahami konteks, baru jawab pertanyaan</li>
+        <li>Pertanyaan <span class="ar-inline">هَلْ</span> → jawab <span class="ar-inline">نَعَمْ</span> atau <span class="ar-inline">لَا</span> + koreksi</li>
+        <li>Hafalkan arti <span class="ar-inline">هُنَاكَ بَيْتِيْ</span> = "di sana rumah saya" dan <span class="ar-inline">فِي الْفَصْلِ</span> = "di dalam kelas"</li>
+      </ul>
+
+      <h4>2. Kosakata</h4>
+      <ul>
+        <li><span class="ar-inline">هٰذَا</span> = ini (mudzakkar) vs <span class="ar-inline">هٰذِهِ</span> = ini (mu'annats — berakhiran ة)</li>
+        <li>Profesi perempuan = profesi laki-laki + <span class="ar-inline">ة</span> → <span class="ar-inline">مُمَرِّضٌ</span> → <span class="ar-inline">مُمَرِّضَةٌ</span></li>
+        <li>7 keterangan tempat: <span class="ar-inline">أَمَامَ وَرَاءَ فَوْقَ تَحْتَ جَانِبَ بَيْنَ فِي</span></li>
+      </ul>
+
+      <h4>3. Muhadatsah</h4>
+      <ul>
+        <li>Hafalkan sapaan + jawaban <strong>berpasangan</strong></li>
+        <li>Pagi: <span class="ar-inline">صَبَاحُ الْخَيْرِ</span> → <span class="ar-inline">صَبَاحُ النُّوْرِ</span></li>
+        <li>Siang: <span class="ar-inline">نَهَارُكَ سَعِيْدٌ</span> → <span class="ar-inline">سَعِيْدٌ مُبَارَكٌ</span></li>
+        <li>Malam: <span class="ar-inline">مَسَاءُ الْخَيْرِ</span> → <span class="ar-inline">مَسَاءُ النُّوْرِ</span></li>
+        <li><span class="ar-inline">كَيْفَ</span> = bagaimana (untuk tanya kabar)</li>
+      </ul>
+
+      <h4>4. Tata Bahasa</h4>
+      <ul>
+        <li><span class="ar-inline">أَنْتَ</span> (kamu lk) vs <span class="ar-inline">أَنْتِ</span> (kamu pr) — perbedaan di harakat akhir!</li>
+        <li>Pola kalimat posisi: Benda + zharaf makan + benda acuan</li>
+        <li>Susun kalimat: cari <span class="ar-inline">فِي</span> atau <span class="ar-inline">أَنَا</span> sebagai pembuka</li>
+      </ul>
+
+      <h4>5. Angka</h4>
+      <ul>
+        <li>Hafalkan angka 1–20, terutama: <span class="ar-inline">ثَلَاثَةٌ</span> (3), <span class="ar-inline">ثَمَانِيَةٌ</span> (8), <span class="ar-inline">عَشَرَةٌ</span> (10), <span class="ar-inline">عِشْرُوْنَ</span> (20)</li>
+        <li>Angka bertingkat kunci: <span class="ar-inline">الْأَوَّلُ/الْأُوْلَى</span> (1), <span class="ar-inline">الْخَامِسُ</span> (5), <span class="ar-inline">السَّادِسُ</span> (6), <span class="ar-inline">السَّابِعُ</span> (7)</li>
+        <li>Angka bertingkat di jawaban harus cocok dengan angka yang ditanyakan</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    SD Muhammadiyah 01 Kukusan · Materi Bahasa Arab Kelas 6 · Tahun Pelajaran 2025/2026 🕋
+  </footer>
+
+</body>
+</html>
