@@ -19,6 +19,7 @@
     --arab: #0284c7; --arab-light: #e0f2fe; --arab-dark: #0369a1;
     --sunda: #d97706; --sunda-light: #fef3c7; --sunda-dark: #b45309;
     --sb: #e11d48; --sb-light: #fff1f2; --sb-dark: #be123c;
+    --tik: #4f46e5; --tik-light: #eef2ff; --tik-dark: #3730a3;
     --islam: #0f766e; --islam-light: #ccfbf1; --islam-dark: #115e59;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -94,6 +95,7 @@
   .subject-card:nth-child(4) { animation-delay: 0.20s; }
   .subject-card:nth-child(5) { animation-delay: 0.25s; }
   .subject-card:nth-child(6) { animation-delay: 0.30s; }
+  .subject-card:nth-child(7) { animation-delay: 0.35s; }
 
   .subject-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
 
@@ -204,6 +206,11 @@
   .subject-card.sb .card-count { background: var(--sb-light); color: var(--sb-dark); }
   .subject-card.sb:hover { border-color: #fda4af; }
   .subject-card.sb .sub-icon { background: var(--sb-light); }
+
+  .subject-card.tik .card-banner { background: linear-gradient(90deg, #3730a3, #4f46e5, #818cf8); }
+  .subject-card.tik .card-icon { background: var(--tik-light); }
+  .subject-card.tik .card-title { color: var(--tik-dark); }
+  .subject-card.tik:hover { border-color: #c7d2fe; }
 
   .subject-card.islam .card-banner { background: linear-gradient(90deg, #115e59, #0f766e, #2dd4bf); }
   .subject-card.islam .card-icon { background: var(--islam-light); }
@@ -386,7 +393,20 @@
       </div>
     </div>
 
-    <!-- ══════ 6. Al-Islam ══════ -->
+    <!-- ══════ 6. TIK/Informatika ══════ -->
+    <div class="subject-card tik">
+      <div class="card-banner"></div>
+      <a class="card-link" href="tik.html">
+        <div class="card-icon">💻</div>
+        <div class="card-info">
+          <div class="card-title">Informatika / TIK</div>
+          <div class="card-desc">Sistem Operasi, Word, Excel & PowerPoint</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ══════ 7. Al-Islam ══════ -->
     <div class="subject-card islam">
       <div class="card-banner"></div>
       <a class="card-link" href="al-islam.html">
