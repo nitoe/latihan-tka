@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi PJOK Praktik – Ujian Sekolah Kelas 6</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --orange:      #ea580c;
+      --orange-dark: #c2410c;
+      --orange-light:#fff7ed;
+      --orange-pale: #fed7aa;
+      --green:       #059669;
+      --green-dark:  #065f46;
+      --green-light: #d1fae5;
+      --blue:        #2563eb;
+      --blue-dark:   #1e40af;
+      --blue-light:  #dbeafe;
+      --purple:      #7c3aed;
+      --purple-dark: #5b21b6;
+      --purple-light:#f5f3ff;
+      --amber:       #d97706;
+      --amber-dark:  #b45309;
+      --amber-light: #fef3c7;
+      --red:         #dc2626;
+      --red-light:   #fef2f2;
+      --emerald:     #059669;
+      --emerald-light:#d1fae5;
+      --teal:        #0d9488;
+      --teal-light:  #ccfbf1;
+      --text:        #1f2a37;
+      --text-muted:  #6b7280;
+      --bg:          #fff7ed;
+      --white:       #ffffff;
+      --border:      #e5e7eb;
+      --radius:      14px;
+      --shadow:      0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: clamp(14px, 3.2vw, 16px); scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.75;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: linear-gradient(135deg, #7c1d0a, #c2410c 50%, #ea580c);
+      color: white;
+      padding: 0 20px;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .header-brand { display: flex; align-items: center; gap: 10px; }
+    .logo { font-size: 1.5rem; }
+    .brand-name {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(0.82rem, 2.6vw, 1rem);
+      font-weight: 800; line-height: 1.1;
+    }
+    .sub-brand { font-size: 0.62rem; opacity: 0.8; font-weight: 600; }
+    .header-back {
+      display: flex; align-items: center; gap: 5px;
+      color: white; text-decoration: none;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.72rem; font-weight: 700;
+      transition: background 0.2s;
+    }
+    .header-back:hover { background: rgba(255,255,255,0.3); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(160deg, #7c1d0a 0%, #c2410c 40%, #ea580c 100%);
+      color: white;
+      padding: 40px 20px 48px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM50 10V4h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 50v-6H8v6H2v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-emoji {
+      font-size: 3rem; display: block;
+      margin-bottom: 10px; position: relative;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+    .hero h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.4rem, 4.5vw, 2rem);
+      font-weight: 800; margin-bottom: 6px; position: relative;
+    }
+    .hero p {
+      font-size: clamp(0.8rem, 2.2vw, 0.92rem);
+      opacity: 0.88; font-weight: 600;
+      max-width: 560px; margin: 0 auto;
+      position: relative; line-height: 1.6;
+    }
+    .hero-badges {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      justify-content: center; margin-top: 18px;
+      position: relative;
+    }
+    .hero-badge {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.72rem; font-weight: 700;
+    }
+
+    /* ─── TOC (Quick Nav) ─── */
+    .toc {
+      background: var(--white);
+      border: 2px solid var(--orange-pale);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      margin-bottom: 28px;
+    }
+    .toc-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.9rem; font-weight: 800;
+      color: var(--orange-dark);
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    @media (min-width: 600px) { .toc-grid { grid-template-columns: repeat(4, 1fr); } }
+    .toc-link {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 10px; border-radius: 10px;
+      text-decoration: none; font-size: 0.78rem; font-weight: 700;
+      transition: all 0.15s;
+    }
+    .toc-link.green  { background: var(--green-light);  color: var(--green-dark); }
+    .toc-link.blue   { background: var(--blue-light);   color: var(--blue-dark); }
+    .toc-link.amber  { background: var(--amber-light);  color: var(--amber-dark); }
+    .toc-link.purple { background: var(--purple-light); color: var(--purple-dark); }
+    .toc-link:hover { filter: brightness(0.94); transform: translateY(-1px); }
+
+    /* ─── MAIN CONTENT ─── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 16px 60px;
+    }
+
+    /* ─── INFO BOX ─── */
+    .info-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--orange);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 28px;
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 0.82rem; line-height: 1.6;
+    }
+    .info-box .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .info-box strong { display: block; color: var(--orange-dark); font-size: 0.88rem; margin-bottom: 2px; }
+
+    /* ─── SECTION ─── */
+    .section {
+      margin-bottom: 44px;
+      animation: fadeUp 0.5s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .section:nth-child(2) { animation-delay: 0.1s; }
+    .section:nth-child(3) { animation-delay: 0.2s; }
+    .section:nth-child(4) { animation-delay: 0.3s; }
+    .section:nth-child(5) { animation-delay: 0.4s; }
+
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      color: white;
+      margin-bottom: 0;
+    }
+    .section-header.green  { background: linear-gradient(135deg, var(--green-dark), var(--green)); }
+    .section-header.blue   { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); }
+    .section-header.amber  { background: linear-gradient(135deg, var(--amber-dark), var(--amber)); }
+    .section-header.purple { background: linear-gradient(135deg, var(--purple-dark), var(--purple)); }
+    .section-icon { font-size: 1.8rem; }
+    .section-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.1rem; font-weight: 800;
+    }
+    .section-sub { font-size: 0.72rem; opacity: 0.85; font-weight: 600; }
+    .section-body {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 20px 18px;
+    }
+
+    /* ─── RUBRIK CARD ─── */
+    .rubrik-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 600px) { .rubrik-row { grid-template-columns: repeat(3, 1fr); } }
+    .rubrik-card {
+      border-radius: 10px;
+      padding: 11px 13px;
+      font-size: 0.78rem; line-height: 1.6;
+    }
+    .rubrik-card .rc-label {
+      font-weight: 800; font-size: 0.82rem;
+      display: block; margin-bottom: 4px;
+    }
+    .rubrik-card.teknik   { background: #eff6ff; }
+    .rubrik-card.teknik   .rc-label { color: var(--blue-dark); }
+    .rubrik-card.strategi { background: #f0fdf4; }
+    .rubrik-card.strategi .rc-label { color: var(--green-dark); }
+    .rubrik-card.sportvts { background: #fff7ed; }
+    .rubrik-card.sportvts .rc-label { color: var(--orange-dark); }
+
+    .bobot-bar {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .bobot-chip {
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 0.7rem; font-weight: 800;
+      border: 1px solid currentColor;
+    }
+
+    /* ─── SPORT TABS ─── */
+    .sport-tabs {
+      display: flex; gap: 0;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .sport-tab {
+      flex: 1; padding: 8px 4px;
+      background: #f9fafb; border: none;
+      font-family: inherit; font-size: 0.75rem; font-weight: 700;
+      color: var(--text-muted); cursor: pointer;
+      transition: all 0.15s; text-align: center;
+    }
+    .sport-tab + .sport-tab { border-left: 1px solid var(--border); }
+    .sport-tab.active.green  { background: var(--green);  color: white; }
+    .sport-tab.active.blue   { background: var(--blue);   color: white; }
+    .sport-tab.active.amber  { background: var(--amber);  color: white; }
+    .sport-tab.active.purple { background: var(--purple); color: white; }
+
+    .sport-panel { display: none; }
+    .sport-panel.active { display: block; }
+
+    /* ─── STEPS ─── */
+    .steps-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.9rem; font-weight: 800;
+      color: var(--text);
+      margin: 14px 0 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .steps-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 6px;
+      margin-bottom: 14px;
+    }
+    .steps-list li {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 0.82rem; line-height: 1.55;
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 8px 11px;
+    }
+    .step-num {
+      flex-shrink: 0; width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 900; color: white;
+      margin-top: 0px;
+    }
+    .step-num.green  { background: var(--green); }
+    .step-num.blue   { background: var(--blue); }
+    .step-num.amber  { background: var(--amber); }
+    .step-num.purple { background: var(--purple); }
+
+    /* ─── TWO COL ─── */
+    .two-col {
+      display: grid; grid-template-columns: 1fr;
+      gap: 12px; margin-bottom: 16px;
+    }
+    @media (min-width: 600px) { .two-col { grid-template-columns: 1fr 1fr; } }
+
+    /* ─── MINI CARD ─── */
+    .mini-card {
+      border-radius: 10px; padding: 12px 14px;
+      font-size: 0.8rem; line-height: 1.6;
+    }
+    .mini-card .mc-title {
+      font-weight: 800; margin-bottom: 5px;
+      font-size: 0.82rem;
+    }
+    .mini-card ul { padding-left: 16px; }
+    .mini-card li { margin-bottom: 2px; }
+    .mini-card.green  { background: var(--green-light);  }
+    .mini-card.green  .mc-title { color: var(--green-dark); }
+    .mini-card.blue   { background: var(--blue-light);   }
+    .mini-card.blue   .mc-title { color: var(--blue-dark); }
+    .mini-card.amber  { background: var(--amber-light);  }
+    .mini-card.amber  .mc-title { color: var(--amber-dark); }
+    .mini-card.purple { background: var(--purple-light); }
+    .mini-card.purple .mc-title { color: var(--purple-dark); }
+    .mini-card.red    { background: var(--red-light);    }
+    .mini-card.red    .mc-title { color: var(--red); }
+    .mini-card.orange { background: var(--orange-light); }
+    .mini-card.orange .mc-title { color: var(--orange-dark); }
+
+    /* ─── SKALA NILAI ─── */
+    .skala-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.78rem; margin-bottom: 14px;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .skala-table th {
+      background: #1f2937; color: white;
+      padding: 7px 10px; text-align: left;
+      font-size: 0.72rem; font-weight: 700;
+    }
+    .skala-table td {
+      padding: 7px 10px;
+      border-bottom: 1px solid #f3f4f6;
+      vertical-align: top;
+    }
+    .skala-table tr:last-child td { border-bottom: none; }
+    .skala-table tr:nth-child(even) td { background: #f9fafb; }
+    .badge-nilai {
+      display: inline-block;
+      padding: 1px 8px; border-radius: 6px;
+      font-weight: 800; font-size: 0.7rem;
+    }
+    .badge-sb { background: var(--emerald-light); color: var(--emerald); }
+    .badge-b  { background: var(--blue-light);    color: var(--blue); }
+    .badge-c  { background: var(--amber-light);   color: var(--amber); }
+    .badge-pp { background: var(--red-light);      color: var(--red); }
+
+    /* ─── TIPS UJIAN ─── */
+    .tips-box {
+      background: linear-gradient(135deg, #fff7ed, #fef3c7);
+      border: 1px solid var(--orange-pale);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    .tips-box-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.88rem; font-weight: 800;
+      color: var(--orange-dark);
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .tips-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .tips-list li {
+      font-size: 0.8rem; line-height: 1.5;
+      display: flex; gap: 7px; align-items: flex-start;
+    }
+    .tips-list li::before {
+      content: '✓';
+      color: var(--orange);
+      font-weight: 900; flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      border: none;
+      border-top: 2px dashed #e5e7eb;
+      margin: 18px 0;
+    }
+
+    /* ─── HIGHLIGHT BOX ─── */
+    .highlight {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid;
+      border-radius: 8px;
+      padding: 10px 13px;
+      font-size: 0.8rem; line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .highlight.green  { border-left-color: var(--green);  }
+    .highlight.blue   { border-left-color: var(--blue);   }
+    .highlight.amber  { border-left-color: var(--amber);  }
+    .highlight.purple { border-left-color: var(--purple); }
+    .highlight strong { display: block; margin-bottom: 2px; font-size: 0.82rem; }
+    .highlight.green  strong { color: var(--green-dark); }
+    .highlight.blue   strong { color: var(--blue-dark); }
+    .highlight.amber  strong { color: var(--amber-dark); }
+    .highlight.purple strong { color: var(--purple-dark); }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    /* ─── PRINT ─── */
+    @media print {
+      .header { position: relative; }
+      .sport-panel { display: block !important; }
+      .sport-tabs { display: none; }
+    }
+
+    /* ─── BACK TO TOP ─── */
+    .back-top {
+      position: fixed; bottom: 20px; right: 16px;
+      background: var(--orange); color: white;
+      border: none; border-radius: 50%;
+      width: 40px; height: 40px;
+      font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(234,88,12,0.35);
+      opacity: 0; transition: opacity 0.3s;
+      z-index: 50;
+    }
+    .back-top.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <span class="logo">🤸</span>
+    <div>
+      <div class="brand-name">PJOK Praktik</div>
+      <div class="sub-brand">Materi Ujian Sekolah · SD Muhammadiyah 01 Kukusan · Kelas 6</div>
+    </div>
+  </div>
+  <a href="index.html" class="header-back">← Kembali</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-emoji">🏅</span>
+  <h1>Materi Ujian Praktik PJOK</h1>
+  <p>Pelajari teknik dasar, strategi, dan aturan untuk 4 cabang olahraga yang diujikan. Persiapkan dirimu untuk tampil percaya diri di hari ujian!</p>
+  <div class="hero-badges">
+    <span class="hero-badge">⚾ Bola Kecil</span>
+    <span class="hero-badge">🏀 Bola Besar</span>
+    <span class="hero-badge">🏃 Atletik</span>
+    <span class="hero-badge">🎯 Permainan Tradisional</span>
+    <span class="hero-badge">📅 6–15 Apr 2026</span>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="container">
+
+  <!-- INFO BOX -->
+  <div class="info-box">
+    <span class="icon">💡</span>
+    <div>
+      <strong>Cara Menggunakan Materi Ini</strong>
+      Setiap cabang olahraga memiliki <b>3 aspek penilaian</b>: Teknik Dasar (50%), Strategi &amp; Aturan (30%), dan Sportivitas (20%). KKM ujian praktik adalah <b>70</b>. Pelajari setiap langkah teknik dengan baik, lalu latih strategi dan tunjukkan sikap sportif saat ujian berlangsung.
+    </div>
+  </div>
+
+  <!-- QUICK NAV -->
+  <div class="toc">
+    <div class="toc-title">🗺️ Navigasi Cepat</div>
+    <div class="toc-grid">
+      <a href="#bola-kecil" class="toc-link green">⚾ Bola Kecil</a>
+      <a href="#bola-besar" class="toc-link blue">🏀 Bola Besar</a>
+      <a href="#atletik"    class="toc-link amber">🏃 Atletik</a>
+      <a href="#tradisional" class="toc-link purple">🎯 Permainan Tradisional</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       1. BOLA KECIL
+  ══════════════════════════════════════════ -->
+  <div class="section" id="bola-kecil">
+    <div class="section-header green">
+      <span class="section-icon">⚾</span>
+      <div>
+        <div class="section-title">Bola Kecil</div>
+        <div class="section-sub">Kasti · Bulu Tangkis</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!-- Rubrik -->
+      <div class="rubrik-row">
+        <div class="rubrik-card teknik">
+          <span class="rc-label">🎯 Teknik Dasar — 50%</span>
+          Memukul bola, melempar bola, menangkap bola, lari ke tiang hinggap (Kasti). Pegangan raket, servis, smash, footwork (Bulu Tangkis).
+        </div>
+        <div class="rubrik-card strategi">
+          <span class="rc-label">📋 Strategi &amp; Aturan — 30%</span>
+          Posisi bermain, rotasi pemain, memahami skor, aturan main permainan bola kecil yang dipilih.
+        </div>
+        <div class="rubrik-card sportvts">
+          <span class="rc-label">🤝 Sportivitas — 20%</span>
+          Fair play, menghargai wasit, kerja sama tim, menerima keputusan dengan lapang dada.
+        </div>
+      </div>
+
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--blue);border-color:var(--blue);background:var(--blue-light)">Teknik 50%</span>
+        <span class="bobot-chip" style="color:var(--green);border-color:var(--green);background:var(--green-light)">Strategi 30%</span>
+        <span class="bobot-chip" style="color:var(--orange);border-color:var(--orange);background:var(--orange-light)">Sportivitas 20%</span>
+        <span class="bobot-chip" style="color:#6b7280;border-color:#9ca3af;background:#f3f4f6">KKM: 70</span>
+      </div>
+
+      <!-- TABS -->
+      <div class="sport-tabs">
+        <button class="sport-tab active green" onclick="switchTab('bk','kasti',this)">⚾ Kasti</button>
+        <button class="sport-tab" onclick="switchTab('bk','bulutangkis',this)">🏸 Bulu Tangkis</button>
+      </div>
+
+      <!-- KASTI -->
+      <div class="sport-panel active" id="bk-kasti">
+
+        <div class="two-col">
+          <div class="mini-card green">
+            <div class="mc-title">📌 Tentang Kasti</div>
+            Kasti adalah permainan bola kecil beregu (2 tim). Tim pemukul berusaha mencetak poin dengan berlari memutari tiang hinggap setelah memukul bola. Tim penjaga berusaha mematikan pemukul.
+          </div>
+          <div class="mini-card orange">
+            <div class="mc-title">📏 Info Lapangan</div>
+            <ul>
+              <li>Lapangan berbentuk persegi panjang</li>
+              <li>Terdapat tiang hinggap &amp; tiang bebas</li>
+              <li>Tiap regu: 12 pemain</li>
+              <li>Lama permainan: 2 × 20 menit</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="steps-title">🎯 Teknik Memukul Bola</div>
+        <ul class="steps-list">
+          <li><span class="step-num green">1</span><div><b>Posisi awal:</b> Berdiri menyamping, kaki selebar bahu, pandangan ke arah bola yang dilempar pelempar.</div></li>
+          <li><span class="step-num green">2</span><div><b>Pegang pemukul:</b> Genggam pemukul kuat di tangan dominan, siku sedikit ditekuk ke belakang.</div></li>
+          <li><span class="step-num green">3</span><div><b>Ayunan:</b> Ayunkan pemukul ke depan secara horizontal saat bola mendekat. Putar pinggul untuk menambah tenaga.</div></li>
+          <li><span class="step-num green">4</span><div><b>Kontak bola:</b> Pukul bola tepat di depan badan. Jangan terlambat atau terlalu awal.</div></li>
+          <li><span class="step-num green">5</span><div><b>Follow-through:</b> Setelah memukul, lanjutkan ayunan dan segera berlari ke tiang hinggap.</div></li>
+        </ul>
+
+        <div class="steps-title">🏃 Teknik Melempar Bola</div>
+        <ul class="steps-list">
+          <li><span class="step-num green">1</span><div><b>Lempar atas (overhand):</b> Bola dipegang dengan 3–4 jari, lengan diayun dari belakang kepala ke depan. Digunakan untuk jarak jauh.</div></li>
+          <li><span class="step-num green">2</span><div><b>Lempar samping (sidearm):</b> Ayunan lengan horizontal dari samping tubuh. Digunakan untuk lemparan cepat jarak menengah.</div></li>
+          <li><span class="step-num green">3</span><div><b>Lempar bawah (underhand):</b> Ayunan lengan dari bawah ke atas. Untuk jarak dekat dan umpan pelempar.</div></li>
+          <li><span class="step-num green">4</span><div><b>Akurasi:</b> Arahkan bola ke tubuh lawan (di bawah kepala, di atas lutut) untuk mematikan pemain.</div></li>
+        </ul>
+
+        <div class="steps-title">🤲 Teknik Menangkap Bola</div>
+        <ul class="steps-list">
+          <li><span class="step-num green">1</span><div><b>Dua tangan:</b> Tangkap dengan kedua tangan, jari-jari terbuka membentuk mangkuk. Tarik tangan ke dada saat bola masuk agar tidak mental.</div></li>
+          <li><span class="step-num green">2</span><div><b>Posisi kaki:</b> Kaki sedikit ditekuk dan seimbang agar mudah bergerak setelah menangkap bola.</div></li>
+          <li><span class="step-num green">3</span><div><b>Pandangan:</b> Selalu fokus pada bola dari saat dilempar hingga masuk ke tangan.</div></li>
+        </ul>
+
+        <hr class="divider">
+
+        <div class="two-col">
+          <div class="mini-card green">
+            <div class="mc-title">📋 Strategi Tim Penjaga</div>
+            <ul>
+              <li>Posisi penjaga tersebar merata di lapangan</li>
+              <li>Komunikasi antar penjaga untuk mengoper</li>
+              <li>Penjaga dekat tiang siap mematikan pelari</li>
+              <li>Pelempar menjaga area sekitar pemukul</li>
+            </ul>
+          </div>
+          <div class="mini-card blue">
+            <div class="mc-title">📋 Strategi Tim Pemukul</div>
+            <ul>
+              <li>Pukul bola ke area yang jauh dari penjaga</li>
+              <li>Berlari cepat segera setelah memukul</li>
+              <li>Tunggu momen tepat untuk berlari ke ruang bebas</li>
+              <li>Komunikasikan gerakan antar pemain</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="highlight green">
+          <strong>⚠️ Aturan Penting Kasti</strong>
+          Pemukul dinyatakan mati jika: terkena lemparan bola saat berlari di luar tiang hinggap, pemukul tidak kena bola 3 kali berturut-turut (out), atau bola ditangkap saat dipukul langsung (fly ball). Nilai dicetak jika pemain berhasil kembali ke ruang bebas setelah memutari semua tiang.
+        </div>
+
+        <div class="tips-box">
+          <div class="tips-box-title">💡 Tips Ujian Praktik — Kasti</div>
+          <ul class="tips-list">
+            <li>Fokus pada akurasi pukulan, bukan sekadar keras — arahkan ke area kosong.</li>
+            <li>Saat berlari, lihat posisi penjaga dan pilih jalur yang aman.</li>
+            <li>Jika bola dekat, lempar bawah lebih cepat daripada lempar atas.</li>
+            <li>Tunjukkan komunikasi tim — guru penguji menilai kerja sama.</li>
+            <li>Selalu berdiri di tiang hinggap bila posisi tidak aman untuk berlari.</li>
+          </ul>
+        </div>
+
+      </div><!-- end bk-kasti -->
+
+      <!-- BULU TANGKIS -->
+      <div class="sport-panel" id="bk-bulutangkis">
+
+        <div class="two-col">
+          <div class="mini-card green">
+            <div class="mc-title">📌 Tentang Bulu Tangkis</div>
+            Bulu tangkis (badminton) adalah olahraga raket dengan kok (shuttlecock). Dimainkan tunggal (1v1) atau ganda (2v2) di atas lapangan dengan net di tengah. Tujuannya menjatuhkan kok di area lawan.
+          </div>
+          <div class="mini-card orange">
+            <div class="mc-title">📏 Info Lapangan</div>
+            <ul>
+              <li>Panjang lapangan: 13,4 m</li>
+              <li>Lebar (tunggal): 5,18 m</li>
+              <li>Tinggi net: 1,524 m di tengah</li>
+              <li>Sistem poin: 21 poin/set (rally point)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="steps-title">🏸 Teknik Pegangan Raket</div>
+        <ul class="steps-list">
+          <li><span class="step-num green">1</span><div><b>Forehand grip:</b> Pegang raket seperti berjabat tangan. Ibu jari dan jari telunjuk membentuk huruf V di sisi gagang. Digunakan untuk pukulan forehand.</div></li>
+          <li><span class="step-num green">2</span><div><b>Backhand grip:</b> Ibu jari diletakkan di sisi lebar gagang (sisi belakang). Digunakan untuk pukulan backhand.</div></li>
+          <li><span class="step-num green">3</span><div><b>Genggaman santai:</b> Jangan terlalu erat memegang raket — pergelangan tangan harus bisa bergerak bebas untuk menghasilkan tenaga pukulan.</div></li>
+        </ul>
+
+        <div class="steps-title">🎯 Teknik Servis</div>
+        <ul class="steps-list">
+          <li><span class="step-num green">1</span><div><b>Servis pendek (short serve):</b> Kok dipukul pelan dan rendah, melewati net dan jatuh dekat garis servis lawan. Digunakan untuk memulai rally pendek.</div></li>
+          <li><span class="step-num green">2</span><div><b>Servis panjang (long serve):</b> Kok dipukul tinggi dan jauh ke area belakang lapangan lawan. Digunakan pada permainan tunggal.</div></li>
+          <li><span class="step-num green">3</span><div><b>Aturan servis:</b> Saat memukul, raket harus di bawah pinggang. Kaki tidak boleh bergerak sebelum kok dipukul.</div></li>
+        </ul>
+
+        <div class="steps-title">💥 Teknik Pukulan Utama</div>
+        <ul class="steps-list">
+          <li><span class="step-num green">1</span><div><b>Lob / Clear:</b> Pukulan tinggi ke belakang lapangan lawan. Memberi waktu kembali ke posisi. Pukulan bertahan yang paling penting dikuasai.</div></li>
+          <li><span class="step-num green">2</span><div><b>Smash:</b> Pukulan keras ke bawah dari posisi atas. Pukulan menyerang paling kuat. Ayunkan raket dari belakang kepala ke depan-bawah dengan cepat.</div></li>
+          <li><span class="step-num green">3</span><div><b>Drop shot:</b> Pukulan pelan yang jatuh tepat di belakang net lawan. Digunakan untuk mengecoh lawan yang berada di belakang.</div></li>
+          <li><span class="step-num green">4</span><div><b>Drive:</b> Pukulan mendatar dan cepat sejajar net. Digunakan saat rally cepat di tengah lapangan.</div></li>
+        </ul>
+
+        <div class="steps-title">🦶 Footwork (Gerakan Kaki)</div>
+        <ul class="steps-list">
+          <li><span class="step-num green">1</span><div><b>Posisi siap (ready position):</b> Berdiri di tengah lapangan, kaki selebar bahu, lutut sedikit ditekuk, berat badan di ujung kaki — siap bergerak ke segala arah.</div></li>
+          <li><span class="step-num green">2</span><div><b>Gerakan ke depan:</b> Langkah lebar ke depan untuk kok pendek, kaki kanan depan (untuk pemain tangan kanan).</div></li>
+          <li><span class="step-num green">3</span><div><b>Kembali ke tengah:</b> Setelah memukul, segera kembali ke posisi tengah lapangan untuk siap menerima pukulan berikutnya.</div></li>
+        </ul>
+
+        <hr class="divider">
+
+        <div class="two-col">
+          <div class="mini-card green">
+            <div class="mc-title">📋 Strategi Menyerang</div>
+            <ul>
+              <li>Variasikan pukulan — smash, drop, lob bergantian</li>
+              <li>Arahkan kok ke sudut lapangan yang jauh</li>
+              <li>Gunakan smash saat lawan berada di depan net</li>
+              <li>Lakukan drop shot saat lawan di belakang</li>
+            </ul>
+          </div>
+          <div class="mini-card blue">
+            <div class="mc-title">📋 Strategi Bertahan</div>
+            <ul>
+              <li>Selalu kembali ke posisi tengah setelah memukul</li>
+              <li>Gunakan lob untuk memberi waktu bergerak</li>
+              <li>Pantau gerakan lawan sebelum menentukan pukulan</li>
+              <li>Jangan terburu-buru — tunggu posisi yang tepat</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="highlight green">
+          <strong>⚠️ Aturan Penting Bulu Tangkis</strong>
+          Poin didapat jika: kok jatuh di area lawan, lawan memukul kok keluar garis, lawan menyentuh net, atau lawan memukul kok dua kali. Servis harus diagonal. Jika skor 20-20, dilanjut hingga selisih 2 poin (max 30).
+        </div>
+
+        <div class="tips-box">
+          <div class="tips-box-title">💡 Tips Ujian Praktik — Bulu Tangkis</div>
+          <ul class="tips-list">
+            <li>Kuasai servis pendek forehand terlebih dahulu — ini yang paling sering diuji.</li>
+            <li>Selalu kembali ke posisi tengah setelah setiap pukulan.</li>
+            <li>Perlihatkan footwork yang aktif — guru akan melihat gerakan kakimu.</li>
+            <li>Tunjukkan variasi pukulan: lob, drop shot, dan smash.</li>
+            <li>Bersikap sopan dan sportif — jangan protes keputusan wasit.</li>
+          </ul>
+        </div>
+
+      </div><!-- end bk-bulutangkis -->
+
+    </div><!-- section body -->
+  </div><!-- /bola kecil -->
+
+
+  <!-- ══════════════════════════════════════════
+       2. BOLA BESAR
+  ══════════════════════════════════════════ -->
+  <div class="section" id="bola-besar">
+    <div class="section-header blue">
+      <span class="section-icon">🏀</span>
+      <div>
+        <div class="section-title">Bola Besar</div>
+        <div class="section-sub">Basket · Voli · Sepak Bola</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!-- Rubrik -->
+      <div class="rubrik-row">
+        <div class="rubrik-card teknik">
+          <span class="rc-label">🎯 Teknik Dasar — 50%</span>
+          Sepak Bola: Passing, dribbling, shooting. Voli: Passing atas/bawah, service, smash. Basket: Dribble, passing, shooting, lay-up.
+        </div>
+        <div class="rubrik-card strategi">
+          <span class="rc-label">📋 Strategi &amp; Aturan — 30%</span>
+          Formasi tim, posisi bermain, offside/foul, strategi serangan dan pertahanan.
+        </div>
+        <div class="rubrik-card sportvts">
+          <span class="rc-label">🤝 Sportivitas — 20%</span>
+          Tidak protes berlebihan, membantu teman jatuh, menerima kekalahan, fair play.
+        </div>
+      </div>
+
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--blue);border-color:var(--blue);background:var(--blue-light)">Teknik 50%</span>
+        <span class="bobot-chip" style="color:var(--green);border-color:var(--green);background:var(--green-light)">Strategi 30%</span>
+        <span class="bobot-chip" style="color:var(--orange);border-color:var(--orange);background:var(--orange-light)">Sportivitas 20%</span>
+        <span class="bobot-chip" style="color:#6b7280;border-color:#9ca3af;background:#f3f4f6">KKM: 70</span>
+      </div>
+
+      <!-- TABS -->
+      <div class="sport-tabs">
+        <button class="sport-tab active blue" onclick="switchTab('bb','basket',this)">🏀 Basket</button>
+        <button class="sport-tab" onclick="switchTab('bb','voli',this)">🏐 Voli</button>
+        <button class="sport-tab" onclick="switchTab('bb','sepakbola',this)">⚽ Sepak Bola</button>
+      </div>
+
+      <!-- BASKET -->
+      <div class="sport-panel active" id="bb-basket">
+
+        <div class="two-col">
+          <div class="mini-card blue">
+            <div class="mc-title">📌 Tentang Basket</div>
+            Bola basket dimainkan 5 lawan 5 di lapangan dengan 2 ring di kedua ujung. Tujuannya memasukkan bola ke ring lawan. Dribble wajib saat bergerak membawa bola.
+          </div>
+          <div class="mini-card orange">
+            <div class="mc-title">📏 Info Lapangan</div>
+            <ul>
+              <li>Panjang: 28 m, Lebar: 15 m</li>
+              <li>Tinggi ring: 3,05 m dari lantai</li>
+              <li>Nilai: 1 poin (free throw), 2 poin (dalam arc), 3 poin (luar arc)</li>
+              <li>Durasi: 4 × 10 menit (FIBA)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="steps-title">🏀 Teknik Dribble</div>
+        <ul class="steps-list">
+          <li><span class="step-num blue">1</span><div><b>Posisi tangan:</b> Jari-jari terbuka, pantulkan bola dengan telapak jari (bukan telapak tangan). Siku sedikit ditekuk.</div></li>
+          <li><span class="step-num blue">2</span><div><b>Ketinggian:</b> Pantulkan bola setinggi pinggang. Semakin rendah = semakin terkontrol. Saat cepat = lebih tinggi.</div></li>
+          <li><span class="step-num blue">3</span><div><b>Lindungi bola:</b> Gunakan tubuh dan tangan bebas untuk melindungi bola dari lawan. Selalu pantulkan di sisi jauh dari lawan.</div></li>
+          <li><span class="step-num blue">4</span><div><b>Pandangan:</b> Selalu lihat ke depan (ke arah ring/teman), bukan ke bola. Ini tanda kamu sudah mahir dribble.</div></li>
+        </ul>
+
+        <div class="steps-title">🎯 Teknik Passing</div>
+        <ul class="steps-list">
+          <li><span class="step-num blue">1</span><div><b>Chest pass (oper dada):</b> Pegang bola di depan dada dengan kedua tangan. Dorong lurus ke depan, jari mengarah ke penerima. Paling umum dan cepat.</div></li>
+          <li><span class="step-num blue">2</span><div><b>Bounce pass (oper pantul):</b> Lempar bola memantul ke lantai sekitar ⅔ jarak ke penerima. Efektif melewati penjaga yang tangannya terangkat.</div></li>
+          <li><span class="step-num blue">3</span><div><b>Overhead pass (oper atas kepala):</b> Bola dilempar dari atas kepala dengan kedua tangan. Digunakan untuk jarak jauh atau melewati lawan yang pendek.</div></li>
+        </ul>
+
+        <div class="steps-title">🏆 Teknik Shooting</div>
+        <ul class="steps-list">
+          <li><span class="step-num blue">1</span><div><b>Posisi BEEF:</b> Balance (kaki sejajar bahu, lutut ditekuk) — Eyes (fokus ke tepi atas ring) — Elbow (siku lurus ke depan) — Follow-through (jari mengarah ke ring setelah bola lepas).</div></li>
+          <li><span class="step-num blue">2</span><div><b>Jump shot:</b> Melompat lurus ke atas, lepaskan bola di titik tertinggi lompatan. Ini shooting paling umum.</div></li>
+          <li><span class="step-num blue">3</span><div><b>Lay-up:</b> Tembakan dekat ring setelah berlari. Langkah kanan-kiri-lompat (tangan kanan) atau kiri-kanan-lompat (tangan kiri). Lepaskan bola dengan satu tangan ke papan ring.</div></li>
+        </ul>
+
+        <hr class="divider">
+
+        <div class="two-col">
+          <div class="mini-card blue">
+            <div class="mc-title">📋 Formasi Penyerangan</div>
+            <ul>
+              <li>1-3-1: 1 point guard, 3 pemain tengah, 1 center</li>
+              <li>Gerak tanpa bola — ciptakan ruang kosong</li>
+              <li>Pick and roll: pemain pasang badan, teman lewat</li>
+              <li>Fast break: serangan cepat setelah merebut bola</li>
+            </ul>
+          </div>
+          <div class="mini-card green">
+            <div class="mc-title">📋 Aturan Penting</div>
+            <ul>
+              <li>Bola tidak boleh dibawa lebih dari 2 langkah (traveling)</li>
+              <li>Dribble tidak boleh berhenti lalu jalan lagi (double dribble)</li>
+              <li>Pemain tidak boleh mendorong/menabrak lawan (foul)</li>
+              <li>Bola harus masuk zona serang dalam 8 detik</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tips-box">
+          <div class="tips-box-title">💡 Tips Ujian Praktik — Basket</div>
+          <ul class="tips-list">
+            <li>Tunjukkan teknik dribble yang baik — pandangan ke depan, bukan ke bola.</li>
+            <li>Saat lay-up, ingat ritme langkah: kanan-kiri-lompat atau kiri-kanan-lompat.</li>
+            <li>Perlihatkan follow-through saat shooting — jari mengarah ke ring.</li>
+            <li>Komunikasikan dengan teman — teriak "kosong!" atau tunjuk arah.</li>
+            <li>Jangan takut gagal — bounce back dan terus bermain dengan semangat.</li>
+          </ul>
+        </div>
+
+      </div><!-- end bb-basket -->
+
+      <!-- VOLI -->
+      <div class="sport-panel" id="bb-voli">
+
+        <div class="two-col">
+          <div class="mini-card blue">
+            <div class="mc-title">📌 Tentang Voli</div>
+            Bola voli dimainkan 6 lawan 6 di lapangan dengan net di tengah. Tujuannya menjatuhkan bola di area lawan. Satu tim boleh menyentuh bola maksimal 3 kali sebelum melewati net.
+          </div>
+          <div class="mini-card orange">
+            <div class="mc-title">📏 Info Lapangan</div>
+            <ul>
+              <li>Panjang: 18 m, Lebar: 9 m</li>
+              <li>Tinggi net: 2,43 m (putra) / 2,24 m (putri)</li>
+              <li>Sistem poin: 25 (set 1-4), 15 (set 5) — rally point</li>
+              <li>Rotasi searah jarum jam setiap ganti servis</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="steps-title">🏐 Teknik Passing Bawah (Forearm Pass)</div>
+        <ul class="steps-list">
+          <li><span class="step-num blue">1</span><div><b>Posisi tangan:</b> Rapatkan kedua tangan — jari-jari saling mengait atau saling menggenggam. Ibu jari sejajar dan menempel.</div></li>
+          <li><span class="step-num blue">2</span><div><b>Posisi lengan:</b> Rentangkan lengan lurus ke depan, siku jangan ditekuk. Bagian dalam lengan bawah adalah bidang pukul.</div></li>
+          <li><span class="step-num blue">3</span><div><b>Posisi tubuh:</b> Lutut ditekuk, kaki selebar bahu, berat badan sedikit ke depan. Turunkan badan mendekati bola.</div></li>
+          <li><span class="step-num blue">4</span><div><b>Gerakan:</b> Ayunkan lengan dari bawah ke atas secara bersamaan dengan dorongan kaki. Jangan ayun terlalu keras — biarkan bola memantul dari lengan.</div></li>
+        </ul>
+
+        <div class="steps-title">🙌 Teknik Passing Atas (Overhead Pass / Set)</div>
+        <ul class="steps-list">
+          <li><span class="step-num blue">1</span><div><b>Posisi tangan:</b> Angkat kedua tangan di atas dahi. Jari-jari membentuk segitiga (ibu jari dan telunjuk berdekatan). Jarak antar telapak selebar bola.</div></li>
+          <li><span class="step-num blue">2</span><div><b>Kontak:</b> Sentuh bola hanya dengan jari-jari (terutama ruas pertama dan kedua). Jangan biarkan bola menyentuh telapak tangan — itu dianggap pelanggaran.</div></li>
+          <li><span class="step-num blue">3</span><div><b>Dorongan:</b> Dorong bola ke atas-depan secara halus menggunakan kekuatan pergelangan tangan dan jari, dibantu ekstensi siku dan lutut.</div></li>
+        </ul>
+
+        <div class="steps-title">⚡ Teknik Servis</div>
+        <ul class="steps-list">
+          <li><span class="step-num blue">1</span><div><b>Servis bawah (underhand serve):</b> Bola dipegang di tangan kiri (depan), pukul dengan kepalan tangan kanan dari bawah. Paling mudah dan cocok untuk pemula.</div></li>
+          <li><span class="step-num blue">2</span><div><b>Servis atas (overhand serve):</b> Lempar bola ke atas ±50 cm, pukul dengan telapak tangan terbuka dari atas kepala. Lebih keras dan sulit diterima lawan.</div></li>
+          <li><span class="step-num blue">3</span><div><b>Aturan servis:</b> Harus dilakukan dari belakang garis akhir. Bola harus melewati net dan masuk ke area lawan.</div></li>
+        </ul>
+
+        <hr class="divider">
+
+        <div class="two-col">
+          <div class="mini-card blue">
+            <div class="mc-title">📋 Pola Serangan (3 Sentuhan)</div>
+            <ul>
+              <li><b>Sentuhan 1:</b> Passing bawah (terima servis/smes)</li>
+              <li><b>Sentuhan 2:</b> Set/passing atas (atur bola untuk smash)</li>
+              <li><b>Sentuhan 3:</b> Smash/spike (serang ke area lawan)</li>
+            </ul>
+          </div>
+          <div class="mini-card green">
+            <div class="mc-title">📋 Aturan Penting</div>
+            <ul>
+              <li>Satu tim max 3 kali sentuhan sebelum ke net</li>
+              <li>Pemain tidak boleh menyentuh net</li>
+              <li>Bola tidak boleh jatuh di luar garis lapangan</li>
+              <li>Rotasi dilakukan setiap kali merebut servis</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tips-box">
+          <div class="tips-box-title">💡 Tips Ujian Praktik — Voli</div>
+          <ul class="tips-list">
+            <li>Kuasai passing bawah dulu — ini teknik paling sering diuji dan dinilai.</li>
+            <li>Jaga posisi lutut selalu ditekuk saat siap menerima bola.</li>
+            <li>Jangan "memeluk" bola saat passing atas — itu pelanggaran (double touch).</li>
+            <li>Bergeraklah aktif dan komunikasikan "aku!" saat mau ambil bola.</li>
+            <li>Tunjukkan rotasi yang benar — guru akan memperhatikan formasi tim.</li>
+          </ul>
+        </div>
+
+      </div><!-- end bb-voli -->
+
+      <!-- SEPAK BOLA -->
+      <div class="sport-panel" id="bb-sepakbola">
+
+        <div class="two-col">
+          <div class="mini-card blue">
+            <div class="mc-title">📌 Tentang Sepak Bola</div>
+            Sepak bola dimainkan 11 lawan 11 di lapangan rumput. Tujuannya mencetak gol ke gawang lawan. Semua pemain (kecuali kiper) hanya boleh menggunakan kaki, kepala, dan dada.
+          </div>
+          <div class="mini-card orange">
+            <div class="mc-title">📏 Info Lapangan</div>
+            <ul>
+              <li>Panjang: 90–120 m, Lebar: 45–90 m</li>
+              <li>Ukuran gawang: 7,32 m × 2,44 m</li>
+              <li>Durasi: 2 × 45 menit (senior)</li>
+              <li>Pemain SD biasanya lapangan mini (futsal)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="steps-title">⚽ Teknik Menendang (Passing &amp; Shooting)</div>
+        <ul class="steps-list">
+          <li><span class="step-num blue">1</span><div><b>Tendangan dalam kaki (inside kick):</b> Gunakan sisi dalam kaki untuk mengoper akurat jarak pendek-menengah. Kaki tumpu sejajar bola, kaki tendang ayun horizontal membentur bola.</div></li>
+          <li><span class="step-num blue">2</span><div><b>Tendangan punggung kaki (instep kick):</b> Gunakan punggung kaki untuk tembakan keras. Jari kaki diarahkan ke bawah, pukul bola dengan tulang punggung kaki.</div></li>
+          <li><span class="step-num blue">3</span><div><b>Tendangan luar kaki (outside kick):</b> Gunakan sisi luar kaki untuk umpan cepat atau umpan melengkung. Lebih sulit dikontrol, tapi bisa mengecoh lawan.</div></li>
+          <li><span class="step-num blue">4</span><div><b>Arah tendangan:</b> Kaki tumpu menunjuk ke arah target. Selalu lihat ke sasaran sebelum dan sesudah menendang.</div></li>
+        </ul>
+
+        <div class="steps-title">🏃 Teknik Menggiring (Dribbling)</div>
+        <ul class="steps-list">
+          <li><span class="step-num blue">1</span><div><b>Kontrol bola:</b> Jaga bola tetap dekat kaki — jangan terlalu jauh ke depan. Gunakan bagian dalam dan luar kaki secara bergantian.</div></li>
+          <li><span class="step-num blue">2</span><div><b>Kecepatan:</b> Sesuaikan kecepatan dribble dengan situasi — lambat saat banyak lawan, cepat saat area terbuka.</div></li>
+          <li><span class="step-num blue">3</span><div><b>Pandangan:</b> Sesekali lihat ke depan (ke area lapangan), bukan terus-menerus ke bola. Ini pertanda penguasaan bola yang baik.</div></li>
+          <li><span class="step-num blue">4</span><div><b>Perubahan arah:</b> Gunakan bagian dalam kaki untuk berbelok tajam. Tubuh sedikit merendah saat akan mengubah arah.</div></li>
+        </ul>
+
+        <div class="steps-title">🥅 Teknik Menghentikan Bola (Kontrol)</div>
+        <ul class="steps-list">
+          <li><span class="step-num blue">1</span><div><b>Dengan kaki bagian dalam:</b> Paling mudah dan akurat. Tarik kaki sedikit ke belakang saat bola datang untuk meredam tenaga bola.</div></li>
+          <li><span class="step-num blue">2</span><div><b>Dengan dada:</b> Untuk bola udara. Busungkan dada, saat bola menyentuh dada — tahan napas dan tarik dada ke belakang agar bola jatuh ke kaki.</div></li>
+          <li><span class="step-num blue">3</span><div><b>Dengan paha:</b> Untuk bola setinggi paha. Angkat paha, biarkan bola membentur paha yang "empuk", lalu jatuh ke kaki.</div></li>
+        </ul>
+
+        <hr class="divider">
+
+        <div class="two-col">
+          <div class="mini-card blue">
+            <div class="mc-title">📋 Formasi Dasar</div>
+            <ul>
+              <li><b>4-4-2:</b> 4 bek, 4 gelandang, 2 penyerang</li>
+              <li><b>4-3-3:</b> 4 bek, 3 gelandang, 3 penyerang</li>
+              <li>Bek = bertahan, Gelandang = penghubung, Striker = menyerang</li>
+              <li>Kiper = penjaga gawang (boleh pegang bola di kotak penalti)</li>
+            </ul>
+          </div>
+          <div class="mini-card green">
+            <div class="mc-title">📋 Aturan Penting</div>
+            <ul>
+              <li>Offside: penyerang tidak boleh lebih dekat ke gawang dari bola dan bek terakhir</li>
+              <li>Foul: tackling dari belakang, mendorong, memegang lawan</li>
+              <li>Kartu kuning = peringatan, merah = dikeluarkan</li>
+              <li>Tendangan bebas, penalti, dan sudut diberikan sesuai pelanggaran</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tips-box">
+          <div class="tips-box-title">💡 Tips Ujian Praktik — Sepak Bola</div>
+          <ul class="tips-list">
+            <li>Tunjukkan teknik passing dalam kaki yang bersih dan terarah.</li>
+            <li>Jaga bola tetap dekat saat dribble — jangan tendang terlalu jauh lalu kejar.</li>
+            <li>Komunikasikan pergerakan dengan teman — "sini!", "kosong!", dll.</li>
+            <li>Tunjukkan kontrol bola yang baik sebelum mengoper atau menembak.</li>
+            <li>Fair play: jangan protes keras, bantu teman jatuh, dan hormati wasit.</li>
+          </ul>
+        </div>
+
+      </div><!-- end bb-sepakbola -->
+
+    </div><!-- section body -->
+  </div><!-- /bola besar -->
+
+
+  <!-- ══════════════════════════════════════════
+       3. ATLETIK
+  ══════════════════════════════════════════ -->
+  <div class="section" id="atletik">
+    <div class="section-header amber">
+      <span class="section-icon">🏃</span>
+      <div>
+        <div class="section-title">Atletik</div>
+        <div class="section-sub">Lari Sprint · Lari Estafet</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!-- Rubrik -->
+      <div class="rubrik-row">
+        <div class="rubrik-card teknik">
+          <span class="rc-label">🎯 Teknik Dasar — 50%</span>
+          Lari: Start, ayunan lengan, langkah kaki, finish. Estafet: Teknik menerima dan memberikan tongkat antar pelari.
+        </div>
+        <div class="rubrik-card strategi">
+          <span class="rc-label">📋 Strategi &amp; Aturan — 30%</span>
+          Mengikuti aba-aba, tidak false start, area pergantian tongkat yang valid, memahami peraturan atletik.
+        </div>
+        <div class="rubrik-card sportvts">
+          <span class="rc-label">🤝 Sportivitas — 20%</span>
+          Menghargai lawan, tidak mengganggu konsentrasi, menerima hasil dengan lapang dada, fair play.
+        </div>
+      </div>
+
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--blue);border-color:var(--blue);background:var(--blue-light)">Teknik 50%</span>
+        <span class="bobot-chip" style="color:var(--green);border-color:var(--green);background:var(--green-light)">Strategi 30%</span>
+        <span class="bobot-chip" style="color:var(--orange);border-color:var(--orange);background:var(--orange-light)">Sportivitas 20%</span>
+        <span class="bobot-chip" style="color:#6b7280;border-color:#9ca3af;background:#f3f4f6">KKM: 70</span>
+      </div>
+
+      <!-- TABS -->
+      <div class="sport-tabs">
+        <button class="sport-tab active amber" onclick="switchTab('at','sprint',this)">⚡ Lari Sprint</button>
+        <button class="sport-tab" onclick="switchTab('at','estafet',this)">🏅 Lari Estafet</button>
+      </div>
+
+      <!-- SPRINT -->
+      <div class="sport-panel active" id="at-sprint">
+
+        <div class="two-col">
+          <div class="mini-card amber">
+            <div class="mc-title">📌 Tentang Lari Sprint</div>
+            Lari sprint adalah lari jarak pendek dengan kecepatan penuh dari start hingga finish. Jarak umum: 60 m, 80 m, atau 100 m. Teknik start, gerakan lari, dan fase akhir sangat penting.
+          </div>
+          <div class="mini-card orange">
+            <div class="mc-title">⚡ Fase Lari Sprint</div>
+            <ul>
+              <li>Fase 1: Start (reaksi &amp; dorongan awal)</li>
+              <li>Fase 2: Akselerasi (percepatan)</li>
+              <li>Fase 3: Kecepatan maksimal</li>
+              <li>Fase 4: Finish (mempertahankan kecepatan)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="steps-title">🔫 Teknik Start Jongkok (Crouch Start)</div>
+        <ul class="steps-list">
+          <li><span class="step-num amber">1</span><div><b>Aba-aba "Bersedia":</b> Kedua tangan di belakang garis start (lebar bahu), ujung jari menyentuh tanah. Kaki lebih kuat (kaki dominan) di belakang. Lutut depan kira-kira 90°, lutut belakang 120°.</div></li>
+          <li><span class="step-num amber">2</span><div><b>Aba-aba "Siap":</b> Angkat panggul setinggi bahu atau sedikit lebih tinggi. Berat badan pindah ke depan (ke tangan dan kaki depan). Pandangan ke bawah-depan, bukan ke atas.</div></li>
+          <li><span class="step-num amber">3</span><div><b>Aba-aba "Ya" / bunyi pistol:</b> Dorongkan kedua kaki sekuat mungkin dari blok start. Lengan berayun berlawanan dengan kaki. Badan condong ke depan sekitar 45° saat akselerasi.</div></li>
+          <li><span class="step-num amber">4</span><div><b>Penting:</b> Jangan angkat kepala sebelum bunyi aba-aba terakhir. Gerakan terlalu dini = false start → diskualifikasi!</div></li>
+        </ul>
+
+        <div class="steps-title">🏃 Teknik Gerakan Lari</div>
+        <ul class="steps-list">
+          <li><span class="step-num amber">1</span><div><b>Ayunan lengan:</b> Tekuk siku ±90°, ayun lengan maju-mundur (bukan silang ke depan). Tangan rileks, tidak menggenggam kuat. Ayunan lengan membantu akselerasi kaki.</div></li>
+          <li><span class="step-num amber">2</span><div><b>Gerakan kaki:</b> Angkat lutut tinggi ke depan (knee drive). Dorong kaki belakang sepenuhnya saat meninggalkan tanah. Mendarat dengan bagian depan kaki (bola kaki), bukan tumit.</div></li>
+          <li><span class="step-num amber">3</span><div><b>Postur tubuh:</b> Tubuh condong sedikit ke depan (bukan tegak lurus). Kepala segaris dengan tulang belakang. Bahu rileks, tidak tegang.</div></li>
+          <li><span class="step-num amber">4</span><div><b>Pernapasan:</b> Pada sprint pendek, tidak perlu atur napas khusus — kerahkan seluruh tenaga dari awal hingga finish.</div></li>
+        </ul>
+
+        <div class="steps-title">🏁 Teknik Finish</div>
+        <ul class="steps-list">
+          <li><span class="step-num amber">1</span><div><b>Jangan kurangi kecepatan:</b> Pertahankan kecepatan penuh hingga 1–2 meter melewati garis finish. Banyak pelari justru kalah karena memperlambat langkah sebelum finish.</div></li>
+          <li><span class="step-num amber">2</span><div><b>Merobohkan dada (lean):</b> Condongkan dada ke depan saat melewati garis finish untuk memenangkan selisih tipis. Kepala dan bahu ikut condong.</div></li>
+          <li><span class="step-num amber">3</span><div><b>Jangan melompat:</b> Tidak perlu melompat saat finish — ini justru memperlambat karena ada fase melayang tanpa dorongan.</div></li>
+        </ul>
+
+        <hr class="divider">
+
+        <div class="highlight amber">
+          <strong>⚠️ Aturan Penting Lari Sprint</strong>
+          Pelari harus tetap di lajurnya masing-masing dari start hingga finish (terutama sprint &lt;200 m). False start (bergerak sebelum aba-aba) pertama diberi peringatan, kedua langsung diskualifikasi (aturan IAAF). Finish ditentukan berdasarkan bagian tubuh (dada/torso) yang pertama menyentuh bidang finish.
+        </div>
+
+        <div class="tips-box">
+          <div class="tips-box-title">💡 Tips Ujian Praktik — Lari Sprint</div>
+          <ul class="tips-list">
+            <li>Latih start jongkok hingga refleks — posisi "Siap" harus konsisten setiap kali.</li>
+            <li>Fokus pada ayunan lengan yang benar — ini sangat mempengaruhi kecepatan.</li>
+            <li>Jangan lihat ke kanan-kiri saat berlari — fokus ke garis finish.</li>
+            <li>Berlari dengan ujung kaki (bola kaki), bukan tumit — terasa ringan dan cepat.</li>
+            <li>Tunjukkan finish yang kuat — condongkan dada, jangan melambat sebelum garis.</li>
+          </ul>
+        </div>
+
+      </div><!-- end at-sprint -->
+
+      <!-- ESTAFET -->
+      <div class="sport-panel" id="at-estafet">
+
+        <div class="two-col">
+          <div class="mini-card amber">
+            <div class="mc-title">📌 Tentang Lari Estafet</div>
+            Lari estafet adalah lomba lari beregu (4 orang) di mana tongkat estafet diteruskan dari satu pelari ke pelari berikutnya. Kemenangan ditentukan oleh kecepatan dan keakuratan pergantian tongkat.
+          </div>
+          <div class="mini-card orange">
+            <div class="mc-title">📏 Info Estafet</div>
+            <ul>
+              <li>4×100 m: sprint pendek, pergantian cepat</li>
+              <li>4×400 m: sprint menengah, stamina lebih penting</li>
+              <li>Zona pergantian: 20 m dari titik pergantian</li>
+              <li>Tongkat harus berpindah di dalam zona!</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="steps-title">🏅 Teknik Memberikan Tongkat</div>
+        <ul class="steps-list">
+          <li><span class="step-num amber">1</span><div><b>Pegang tongkat:</b> Pelari 1 pegang bagian bawah (±2/3 dari bawah). Sisakan ruang atas untuk pelari berikutnya memegang.</div></li>
+          <li><span class="step-num amber">2</span><div><b>Aba-aba:</b> Saat mendekati zona, sapa pelari penerima: "Hep!" atau "Go!" sebagai tanda siap menyerahkan tongkat.</div></li>
+          <li><span class="step-num amber">3</span><div><b>Gerakan tangan:</b> Julurkan tongkat ke atas-depan dengan gerakan menyodorkan. Jangan lempar tongkat — ini pelanggaran.</div></li>
+          <li><span class="step-num amber">4</span><div><b>Jangan berhenti:</b> Pelari pemberi tidak berhenti berlari saat memberikan tongkat. Terus berlari hingga tongkat benar-benar diterima.</div></li>
+        </ul>
+
+        <div class="steps-title">🤲 Teknik Menerima Tongkat</div>
+        <ul class="steps-list">
+          <li><span class="step-num amber">1</span><div><b>Posisi siap:</b> Berdiri di awal zona, badan menghadap arah lari, pandangan ke depan (bukan ke pemberi tongkat).</div></li>
+          <li><span class="step-num amber">2</span><div><b>Dengar aba-aba:</b> Saat mendengar "Hep!" dari pemberi tongkat, segera mulai berlari.</div></li>
+          <li><span class="step-num amber">3</span><div><b>Tangan penerima:</b> Julurkan tangan ke belakang dengan telapak terbuka menghadap atas (metode visual) atau bawah. Jari-jari rapat, ibu jari ke luar.</div></li>
+          <li><span class="step-num amber">4</span><div><b>Genggam dan pergi:</b> Saat tongkat dirasakan menyentuh tangan, genggam kuat dan segera akselerasi penuh.</div></li>
+        </ul>
+
+        <div class="two-col">
+          <div class="mini-card amber">
+            <div class="mc-title">📋 Metode Pergantian</div>
+            <ul>
+              <li><b>Metode non-visual (blind):</b> Penerima tidak melihat ke belakang, tangan dijulurkan ke belakang. Lebih cepat, dipakai atlet profesional.</li>
+              <li><b>Metode visual:</b> Penerima melihat sekilas ke belakang untuk memastikan tongkat. Lebih aman untuk pemula.</li>
+            </ul>
+          </div>
+          <div class="mini-card green">
+            <div class="mc-title">📋 Aturan Penting</div>
+            <ul>
+              <li>Tongkat harus diserahkan di dalam zona 20 m</li>
+              <li>Tongkat jatuh = pelari yang menjatuhkan harus mengambil</li>
+              <li>Berlari di luar jalur = diskualifikasi</li>
+              <li>Penerima tidak boleh mulai berlari sebelum zona</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="highlight amber">
+          <strong>🏃 Urutan Pelari dalam Estafet 4×100 m</strong>
+          Pelari 1 (P1): Start, biasanya yang paling kuat di tikungan. Pelari 2 (P2): Jalur lurus, kecepatan tinggi. Pelari 3 (P3): Tikungan, butuh teknik baik. Pelari 4 (P4): Anchor/penutup, biasanya pelari tercepat tim.
+        </div>
+
+        <div class="tips-box">
+          <div class="tips-box-title">💡 Tips Ujian Praktik — Lari Estafet</div>
+          <ul class="tips-list">
+            <li>Latih pergantian tongkat bersama timmu sebelum ujian — timing sangat krusial.</li>
+            <li>Saat menerima tongkat, mulailah berlari sebelum pemberi sampai — jangan tunggu.</li>
+            <li>Julurkan tangan penerima dengan mantap — jangan sampai tongkat jatuh.</li>
+            <li>Koordinasikan aba-aba "Hep!" agar konsisten digunakan semua anggota tim.</li>
+            <li>Jaga tongkat tetap di tangan — jika jatuh, ambil dan terus berlari.</li>
+          </ul>
+        </div>
+
+      </div><!-- end at-estafet -->
+
+    </div><!-- section body -->
+  </div><!-- /atletik -->
+
+
+  <!-- ══════════════════════════════════════════
+       4. PERMAINAN TRADISIONAL
+  ══════════════════════════════════════════ -->
+  <div class="section" id="tradisional">
+    <div class="section-header purple">
+      <span class="section-icon">🎯</span>
+      <div>
+        <div class="section-title">Permainan Tradisional</div>
+        <div class="section-sub">Gobak Sodor</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!-- Rubrik -->
+      <div class="rubrik-row">
+        <div class="rubrik-card teknik">
+          <span class="rc-label">🎯 Teknik Dasar — 50%</span>
+          Gobak Sodor: Gerakan menghindar, menjaga garis, kecepatan berlari, koordinasi tubuh, dan ketepatan dalam menyentuh lawan/garis.
+        </div>
+        <div class="rubrik-card strategi">
+          <span class="rc-label">📋 Strategi &amp; Aturan — 30%</span>
+          Memahami aturan tradisional, posisi jaga dan serang, strategi tim (kapan maju, kapan mundur), fair play.
+        </div>
+        <div class="rubrik-card sportvts">
+          <span class="rc-label">🤝 Sportivitas — 20%</span>
+          Menghargai permainan lokal, kerja sama tim, tidak curang, melestarikan budaya daerah.
+        </div>
+      </div>
+
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--blue);border-color:var(--blue);background:var(--blue-light)">Teknik 50%</span>
+        <span class="bobot-chip" style="color:var(--green);border-color:var(--green);background:var(--green-light)">Strategi 30%</span>
+        <span class="bobot-chip" style="color:var(--orange);border-color:var(--orange);background:var(--orange-light)">Sportivitas 20%</span>
+        <span class="bobot-chip" style="color:#6b7280;border-color:#9ca3af;background:#f3f4f6">KKM: 70</span>
+      </div>
+
+      <div class="two-col">
+        <div class="mini-card purple">
+          <div class="mc-title">📌 Tentang Gobak Sodor</div>
+          Gobak Sodor (Hadang) adalah permainan tradisional Indonesia yang dimainkan 2 regu di atas lapangan berpetak. Tim penyerang berusaha melewati semua garis, tim penjaga berusaha menyentuh penyerang. Dikenal juga sebagai "Galasin" di Jawa Barat.
+        </div>
+        <div class="mini-card orange">
+          <div class="mc-title">📏 Info Lapangan</div>
+          <ul>
+            <li>Lapangan berpetak (biasanya 9 m × 4–5 m)</li>
+            <li>Jumlah petak: 4–5 petak horizontal</li>
+            <li>Tiap regu: 3–6 pemain (menyesuaikan)</li>
+            <li>Pemenang: tim yang berhasil melewati semua petak pulang-pergi</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="steps-title">🗺️ Struktur Lapangan Gobak Sodor</div>
+      <div class="highlight purple">
+        <strong>Gambaran Lapangan</strong>
+        Lapangan dibagi menjadi beberapa petak oleh garis-garis horizontal (melintang). Setiap garis dijaga oleh 1 penjaga yang hanya boleh bergerak sepanjang garis tersebut. Ada juga 1 penjaga "sodor" yang menjaga garis tengah vertikal dan boleh bergerak maju-mundur.
+      </div>
+
+      <div class="steps-title">🏃 Peran Tim Penyerang (Melewati Garis)</div>
+      <ul class="steps-list">
+        <li><span class="step-num purple">1</span><div><b>Tujuan:</b> Semua anggota tim harus berhasil melewati semua garis penjaga (pergi ke ujung lapangan) dan kembali lagi ke garis start tanpa tersentuh penjaga.</div></li>
+        <li><span class="step-num purple">2</span><div><b>Teknik menghindar:</b> Bergerak cepat ke kanan/kiri saat penjaga mendekati. Gunakan gerak tipu (feint) — pura-pura mau ke kiri lalu belok kanan mendadak.</div></li>
+        <li><span class="step-num purple">3</span><div><b>Timing yang tepat:</b> Tunggu momen saat penjaga bergerak ke sisi berlawanan, lalu segera terobos celah yang terbuka.</div></li>
+        <li><span class="step-num purple">4</span><div><b>Komunikasi:</b> Beri tahu teman mana garis yang aman. Teman bisa mengalihkan perhatian penjaga sementara yang lain menerobos.</div></li>
+        <li><span class="step-num purple">5</span><div><b>Jika tersentuh:</b> Giliran berganti — tim penjaga menjadi penyerang dan sebaliknya. Jaga agar jangan sampai tersentuh!</div></li>
+      </ul>
+
+      <div class="steps-title">🛡️ Peran Tim Penjaga (Menjaga Garis)</div>
+      <ul class="steps-list">
+        <li><span class="step-num purple">1</span><div><b>Tujuan:</b> Menyentuh salah satu penyerang sehingga tim berganti peran. Penjaga hanya boleh bergerak di sepanjang garis yang ditugaskan.</div></li>
+        <li><span class="step-num purple">2</span><div><b>Posisi penjaga garis:</b> Berdiri di tengah garis, siap bergerak ke kanan atau kiri. Jaga agar penyerang tidak bisa melewati tanpa tersentuh.</div></li>
+        <li><span class="step-num purple">3</span><div><b>Posisi sodor:</b> Penjaga sodor (garis tengah vertikal) bisa bergerak maju-mundur di tengah lapangan. Ini posisi paling strategis — bisa membantu seluruh barisan.</div></li>
+        <li><span class="step-num purple">4</span><div><b>Koordinasi tim:</b> Penjaga garis depan dan belakang harus berkomunikasi — jika penyerang lolos dari garis depan, garis berikutnya harus siap.</div></li>
+        <li><span class="step-num purple">5</span><div><b>Sentuhan sah:</b> Penjaga harus menyentuh badan penyerang dengan tangan saat kakinya masih di atas garis yang dijaga. Kaki tidak boleh melewati garis.</div></li>
+      </ul>
+
+      <hr class="divider">
+
+      <div class="two-col">
+        <div class="mini-card purple">
+          <div class="mc-title">📋 Strategi Penyerang</div>
+          <ul>
+            <li>Gunakan gerak tipu (feint) sebelum menerobos</li>
+            <li>Terobos saat penjaga bergerak ke sisi lain</li>
+            <li>Serang secara bersamaan — pecah perhatian penjaga</li>
+            <li>Satu orang menjadi "umpan", yang lain menerobos</li>
+            <li>Perhatikan posisi penjaga sodor — ini ancaman terbesar</li>
+          </ul>
+        </div>
+        <div class="mini-card blue">
+          <div class="mc-title">📋 Strategi Penjaga</div>
+          <ul>
+            <li>Penjaga sodor berposisi di tengah — bisa ke mana saja</li>
+            <li>Penjaga garis selalu kembali ke tengah garis setelah bergerak</li>
+            <li>Perhatikan gerakan penyerang — antisipasi arah geraknya</li>
+            <li>Komunikasi antar penjaga: "Kiri!" "Kanan!" "Sini!"</li>
+            <li>Jangan tergoda feint — perhatikan kaki penyerang</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight purple">
+        <strong>⚠️ Aturan Penting Gobak Sodor</strong>
+        Penjaga wajib berdiri dengan satu kaki di atas garis yang dijaganya — kaki tidak boleh melewati garis. Penyerang dinyatakan kena jika tersentuh oleh tangan penjaga saat kedua kaki penyerang masih di area lapangan. Penyerang boleh kembali ke belakang garis untuk menghindar. Penyerang yang kakinya keluar dari batas lapangan dianggap kena.
+      </div>
+
+      <!-- Skala Nilai -->
+      <div class="steps-title">📊 Skala Penilaian Gobak Sodor</div>
+      <table class="skala-table">
+        <thead>
+          <tr>
+            <th>Nilai</th>
+            <th>Kategori</th>
+            <th>Teknik Dasar</th>
+            <th>Strategi</th>
+            <th>Sportivitas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge-nilai badge-sb">4 (Sangat Baik)</span></td>
+            <td><b>90–100</b></td>
+            <td>Gerak tipu sempurna, timing terobos tepat, agility tinggi</td>
+            <td>Koordinasi tim sangat baik, memahami posisi sodor</td>
+            <td>Sportif penuh, antusias lestarikan budaya</td>
+          </tr>
+          <tr>
+            <td><span class="badge-nilai badge-b">3 (Baik)</span></td>
+            <td><b>70–89</b></td>
+            <td>Gerak tipu cukup baik, mampu menerobos garis dengan timing</td>
+            <td>Paham aturan dasar, ada koordinasi tim</td>
+            <td>Tidak protes, menerima aturan dengan baik</td>
+          </tr>
+          <tr>
+            <td><span class="badge-nilai badge-c">2 (Cukup)</span></td>
+            <td><b>50–69</b></td>
+            <td>Bergerak tetapi kurang agil, sering terkena sentuhan penjaga</td>
+            <td>Kurang paham posisi, strategi masih pasif</td>
+            <td>Kadang protes, perlu diingatkan aturan</td>
+          </tr>
+          <tr>
+            <td><span class="badge-nilai badge-pp">1 (Perlu Perbaikan)</span></td>
+            <td><b>&lt;50</b></td>
+            <td>Pasif, tidak berani menerobos, mudah tersentuh</td>
+            <td>Tidak memahami aturan, tidak ada strategi</td>
+            <td>Tidak sportif, sering melanggar aturan</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips Ujian Praktik — Gobak Sodor</div>
+        <ul class="tips-list">
+          <li>Tunjukkan gerak tipu sebelum menerobos — ini yang membedakan nilai 3 dan 4.</li>
+          <li>Jika jadi penjaga, selalu kembali ke tengah garis setelah bergerak.</li>
+          <li>Komunikasikan posisi musuh kepada tim dengan suara — guru menilai kerja sama.</li>
+          <li>Tunjukkan semangat dan antusiasme bermain — ini bagian dari sportivitas.</li>
+          <li>Hormati permainan tradisional ini — tunjukkan bahwa kamu bangga dengan budaya Indonesia.</li>
+        </ul>
+      </div>
+
+    </div><!-- section body -->
+  </div><!-- /permainan tradisional -->
+
+
+  <!-- ══════════════════════════════════════════
+       SKALA NILAI UMUM
+  ══════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header" style="background: linear-gradient(135deg, #1f2937, #374151);">
+      <span class="section-icon">📊</span>
+      <div>
+        <div class="section-title">Skala Penilaian Umum &amp; Cara Hitung Nilai</div>
+        <div class="section-sub">Berlaku untuk semua cabang olahraga praktik PJOK</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="two-col">
+        <div>
+          <div class="steps-title">🔢 Cara Menghitung Nilai</div>
+          <div class="highlight blue">
+            <strong>Rumus Nilai Akhir</strong>
+            Nilai = (Teknik/4 × 50) + (Strategi/4 × 30) + (Sportivitas/4 × 20)
+            <br><br>
+            <b>Contoh:</b> Teknik = 3, Strategi = 3, Sportivitas = 4<br>
+            = (3/4×50) + (3/4×30) + (4/4×20)<br>
+            = 37,5 + 22,5 + 20 = <b>80 ✅ Lulus</b>
+          </div>
+        </div>
+        <div>
+          <div class="steps-title">🎯 Skala Nilai (1–4)</div>
+          <table class="skala-table">
+            <thead>
+              <tr><th>Skor</th><th>Rentang</th><th>Kategori</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="badge-nilai badge-sb">4</span></td><td>3,75–4,00</td><td>Sangat Baik</td></tr>
+              <tr><td><span class="badge-nilai badge-b">3</span></td><td>2,75–3,74</td><td>Baik</td></tr>
+              <tr><td><span class="badge-nilai badge-c">2</span></td><td>1,75–2,74</td><td>Cukup</td></tr>
+              <tr><td><span class="badge-nilai badge-pp">1</span></td><td>1,00–1,74</td><td>Perlu Perbaikan</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="steps-title">🤝 Panduan Aspek Sportivitas (Berlaku Semua Cabang)</div>
+      <table class="skala-table">
+        <thead>
+          <tr>
+            <th>Nilai 4 – Sangat Baik</th>
+            <th>Nilai 3 – Baik</th>
+            <th>Nilai 2 – Cukup</th>
+            <th>Nilai 1 – Perlu Perbaikan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Selalu berjabat tangan, tidak pernah protes, aktif membantu tim, menghargai keputusan wasit sepenuhnya</td>
+            <td>Umumnya sportif, sesekali kecewa tetapi bisa mengendalikan diri, kerja sama tim cukup baik</td>
+            <td>Kadang protes keputusan wasit, pasif dalam tim, perlu diingatkan untuk sportif</td>
+            <td>Sering protes, memperlihatkan emosi negatif, tidak mau kerja sama dengan tim</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+
+  <!-- NAVIGASI BAWAH -->
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;margin-bottom:12px;">
+    <div style="font-family:'Baloo 2',cursive;font-size:0.88rem;font-weight:800;color:var(--orange-dark);margin-bottom:10px;">🔗 Navigasi Materi</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+      <a href="materi-pjok.html" style="padding:6px 14px;border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:0.72rem;font-weight:700;color:var(--text-muted);transition:all 0.15s;">⚽ PJOK Teori</a>
+      <a href="index.html" style="padding:6px 14px;border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:0.72rem;font-weight:700;color:var(--text-muted);transition:all 0.15s;">📚 Semua Materi</a>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  SD Muhammadiyah 01 Kukusan · Materi Ujian Praktik PJOK Kelas 6 · Tahun Pelajaran 2025/2026 🤸
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Kembali ke atas">↑</button>
+
+<script>
+// ─── SPORT TAB SWITCHER ───
+function switchTab(sectionId, panelId, btn) {
+  // Deactivate all panels in section
+  const panels = document.querySelectorAll(`[id^="${sectionId}-"]`);
+  panels.forEach(p => p.classList.remove('active'));
+
+  // Deactivate all tabs in the same tab group
+  const tabs = btn.parentElement.querySelectorAll('.sport-tab');
+  const colorClass = btn.classList.contains('green') || [...tabs].some(t=>t.classList.contains('green')) ? 'green'
+    : btn.classList.contains('blue') || [...tabs].some(t=>t.classList.contains('blue')) ? 'blue'
+    : btn.classList.contains('amber') || [...tabs].some(t=>t.classList.contains('amber')) ? 'amber'
+    : 'purple';
+
+  // Determine the active color from the current active tab
+  const activeTab = btn.parentElement.querySelector('.sport-tab.active');
+  const activeColor = activeTab ? (activeTab.classList.contains('green') ? 'green' : activeTab.classList.contains('blue') ? 'blue' : activeTab.classList.contains('amber') ? 'amber' : 'purple') : colorClass;
+
+  tabs.forEach(t => {
+    t.classList.remove('active', 'green', 'blue', 'amber', 'purple');
+  });
+  btn.classList.add('active', activeColor);
+
+  // Activate the selected panel
+  const panel = document.getElementById(`${sectionId}-${panelId}`);
+  if (panel) panel.classList.add('active');
+}
+
+// Fix: Color detection per tab group
+document.querySelectorAll('.sport-tabs').forEach(tabGroup => {
+  const section = tabGroup.closest('.section');
+  if (!section) return;
+  const header = section.querySelector('.section-header');
+  const color = header.classList.contains('green') ? 'green'
+    : header.classList.contains('blue') ? 'blue'
+    : header.classList.contains('amber') ? 'amber'
+    : 'purple';
+
+  tabGroup.querySelectorAll('.sport-tab').forEach(tab => {
+    tab.dataset.color = color;
+    if (tab.classList.contains('active')) tab.classList.add(color);
+  });
+
+  // Override onclick to use correct color
+  tabGroup.querySelectorAll('.sport-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      tabGroup.querySelectorAll('.sport-tab').forEach(t => t.classList.remove('active', color));
+      this.classList.add('active', color);
+    });
+  });
+});
+
+// ─── BACK TO TOP ───
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('visible', window.scrollY > 300);
+});
+
+// ─── SMOOTH ANCHOR LINKS ───
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const offset = 70;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
