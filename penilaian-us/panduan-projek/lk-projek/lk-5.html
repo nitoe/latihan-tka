@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LK Tahap 5 – Refleksi & Pembelajaran | Projek Student-Driven Inquiry</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --amber: #d97706; --amber-dark: #92400e; --amber-deep: #78350f;
+  --amber-light: #fef3c7; --amber-pale: #fffbeb;
+  --green: #065f46; --green-light: #d1fae5; --green-pale: #f0fdf4;
+  --purple: #5b21b6; --purple-light: #ede9fe; --purple-pale: #f5f3ff;
+  --text: #1f2937; --muted: #6b7280; --border: #d1d5db; --white: #ffffff;
+}
+body { font-family: 'Nunito', sans-serif; font-size: 11pt; color: var(--text); background: #fff; line-height: 1.6; }
+.screen-nav { background: linear-gradient(135deg, var(--amber-deep), var(--amber)); color: #fff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+.screen-nav a { color: #fff; text-decoration: none; font-size: 0.82rem; font-weight: 700; opacity: 0.85; }
+.screen-nav a:hover { opacity: 1; }
+.screen-nav-right { display: flex; gap: 10px; }
+.btn-print { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+.doc { max-width: 794px; margin: 24px auto; padding: 40px 48px; background: #fff; box-shadow: 0 0 40px rgba(0,0,0,0.12); }
+.letterhead { display: flex; align-items: center; gap: 20px; padding-bottom: 16px; border-bottom: 3px solid var(--amber-deep); }
+.school-logo { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--amber-deep), var(--amber)); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
+.school-info { flex: 1; }
+.school-name { font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 800; color: var(--amber-deep); line-height: 1.2; }
+.school-sub { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+.lk-badge { text-align: right; }
+.lk-badge-number { font-family: 'Baloo 2', cursive; font-size: 2.5rem; font-weight: 800; color: var(--amber); line-height: 1; }
+.lk-badge-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.doc-title-block { text-align: center; padding: 14px 0 18px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+.tahap-label { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--amber); margin-bottom: 4px; }
+.doc-title { font-family: 'Baloo 2', cursive; font-size: 1.4rem; font-weight: 800; color: var(--amber-deep); }
+.doc-subtitle { font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-top: 4px; }
+.student-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; background: var(--amber-pale); border: 1.5px solid #fde68a; border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; }
+.info-field { display: flex; flex-direction: column; gap: 3px; }
+.info-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--amber-dark); }
+.info-line { border-bottom: 1.5px solid var(--amber); min-height: 22px; }
+.info-field.full { grid-column: 1 / -1; }
+.section { margin-bottom: 22px; }
+.section-header { display: flex; align-items: center; gap: 10px; background: linear-gradient(90deg, var(--amber-deep), var(--amber-dark)); color: #fff; padding: 8px 14px; border-radius: 8px 8px 0 0; }
+.section-icon { font-size: 1rem; }
+.section-title { font-family: 'Baloo 2', cursive; font-size: 0.92rem; font-weight: 800; }
+.section-body { border: 1.5px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; padding: 18px; }
+.question { margin-bottom: 18px; }
+.question:last-child { margin-bottom: 0; }
+.q-label { font-size: 0.8rem; font-weight: 700; color: var(--amber-dark); margin-bottom: 5px; display: flex; gap: 8px; }
+.q-num { background: var(--amber-light); color: var(--amber-dark); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; flex-shrink: 0; }
+.q-text { flex: 1; }
+.q-hint { font-size: 0.7rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; font-style: italic; padding-left: 30px; }
+.write-lines { display: flex; flex-direction: column; gap: 8px; margin-left: 30px; }
+.write-line { border-bottom: 1px solid #d1d5db; min-height: 26px; }
+.write-box { border: 1px dashed var(--border); border-radius: 6px; background: #fafafa; min-height: 72px; margin-left: 30px; padding: 8px 12px; }
+.check-list { margin-left: 30px; display: flex; flex-direction: column; gap: 8px; }
+.check-item { display: flex; align-items: flex-start; gap: 10px; }
+.check-box { width: 16px; height: 16px; border: 1.5px solid var(--border); border-radius: 3px; flex-shrink: 0; margin-top: 3px; background: #fff; }
+.check-text { font-size: 0.8rem; color: var(--text); line-height: 1.5; }
+.check-sub { font-size: 0.72rem; color: var(--muted); font-style: italic; }
+.lk-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.lk-table th { background: var(--amber-light); color: var(--amber-dark); font-weight: 800; padding: 7px 10px; text-align: left; border: 1px solid #fde68a; font-size: 0.72rem; }
+.lk-table td { border: 1px solid var(--border); padding: 6px 8px; vertical-align: top; }
+.lk-table .tall-row td { height: 44px; }
+.callout { display: flex; gap: 12px; align-items: flex-start; border-radius: 8px; padding: 12px 16px; margin-bottom: 18px; }
+.callout-tip { background: #eff6ff; border-left: 4px solid #3b82f6; }
+.callout-purple { background: var(--purple-pale); border-left: 4px solid var(--purple); }
+.callout-icon { font-size: 1.1rem; margin-top: 1px; flex-shrink: 0; }
+.callout-body strong { font-size: 0.78rem; font-weight: 800; display: block; margin-bottom: 2px; }
+.callout-body p, .callout-body ul { font-size: 0.76rem; color: #374151; line-height: 1.6; }
+.callout-body ul { margin-left: 16px; }
+.signoff { background: var(--green-pale); border: 1.5px solid #6ee7b7; border-radius: 10px; padding: 18px 20px; margin-top: 24px; }
+.signoff-title { font-family: 'Baloo 2', cursive; font-size: 0.9rem; font-weight: 800; color: var(--green); margin-bottom: 12px; }
+.sign-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.sign-field { display: flex; flex-direction: column; gap: 4px; }
+.sign-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--green); }
+.sign-line { border-bottom: 1.5px solid #6ee7b7; min-height: 36px; }
+.sign-name-line { border-bottom: 1px solid #a7f3d0; min-height: 22px; margin-top: 6px; }
+.doc-footer { text-align: center; margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.65rem; color: var(--muted); font-weight: 600; }
+/* KOMPETENCY GRID */
+.competency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-left: 30px; }
+.comp-card { border: 1.5px solid var(--border); border-radius: 8px; padding: 12px; }
+.comp-subject { font-size: 0.72rem; font-weight: 800; color: var(--amber-dark); margin-bottom: 6px; }
+.comp-line { border-bottom: 1px solid #e5e7eb; min-height: 22px; margin-top: 4px; }
+/* EMOTION SCALE */
+.emotion-scale { display: flex; gap: 8px; margin-left: 30px; flex-wrap: wrap; }
+.emotion-item { text-align: center; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 14px; cursor: pointer; }
+.emotion-emoji { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+.emotion-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); }
+.emotion-box { width: 20px; height: 20px; border: 1.5px solid var(--amber); border-radius: 3px; margin: 6px auto 0; }
+/* LETTER TO SELF */
+.letter-box {
+  border: 2px solid var(--purple); border-radius: 12px;
+  background: var(--purple-pale); padding: 20px 24px;
+  margin-left: 30px;
+}
+.letter-header { font-family: 'Baloo 2', cursive; font-size: 0.85rem; font-weight: 800; color: var(--purple); margin-bottom: 14px; }
+.letter-line { border-bottom: 1px solid #c4b5fd; min-height: 26px; margin-bottom: 6px; }
+.letter-footer { text-align: right; margin-top: 14px; }
+.letter-footer-line { border-bottom: 1px solid #c4b5fd; min-height: 22px; display: inline-block; min-width: 180px; }
+/* FINAL CELEBRATION */
+.celebration-box {
+  text-align: center; border: 2px solid var(--amber);
+  border-radius: 12px; background: var(--amber-pale);
+  padding: 20px; margin-top: 16px;
+}
+.celebration-emoji { font-size: 2.5rem; margin-bottom: 8px; display: block; }
+.celebration-title { font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 800; color: var(--amber-dark); margin-bottom: 4px; }
+.celebration-sub { font-size: 0.76rem; color: var(--muted); }
+@media print {
+  .screen-nav { display: none; }
+  body { font-size: 10pt; }
+  .doc { max-width: 100%; margin: 0; padding: 20px 28px; box-shadow: none; }
+  .section { page-break-inside: avoid; }
+  .question { page-break-inside: avoid; }
+  .letter-box { page-break-inside: avoid; }
+  @page { size: A4; margin: 1.8cm 1.5cm; }
+}
+@media (max-width: 600px) {
+  .doc { padding: 20px 16px; margin: 0; }
+  .student-info-grid, .sign-grid, .competency-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="screen-nav">
+  <a href="../">← Kembali ke Panduan Projek</a>
+  <div class="screen-nav-right">
+    <a href="index.html">📁 Semua LK</a>
+    <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+  </div>
+</nav>
+
+<div class="doc">
+
+  <div class="letterhead">
+    <div class="school-logo">📘</div>
+    <div class="school-info">
+      <div class="school-name">SD Muhammadiyah 01 Kukusan</div>
+      <div class="school-sub">Projek Student-Driven Inquiry · Kelas 6 · TP 2025/2026</div>
+    </div>
+    <div class="lk-badge">
+      <div class="lk-badge-number">LK5</div>
+      <div class="lk-badge-label">Lembar Kerja</div>
+    </div>
+  </div>
+
+  <div class="doc-title-block">
+    <div class="tahap-label">Tahap 5 dari 5 · Student-Driven Inquiry</div>
+    <div class="doc-title">🌱 Refleksi &amp; Pembelajaran</div>
+    <div class="doc-subtitle">Merenungkan perjalanan projek dan mengenali pertumbuhan diri yang telah terjadi</div>
+  </div>
+
+  <div class="student-info-grid">
+    <div class="info-field">
+      <div class="info-label">Nama Siswa / Anggota Kelompok</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Kelas</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field full">
+      <div class="info-label">Judul / Topik Projek</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field full">
+      <div class="info-label">Pertanyaan Penelitian</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Tanggal Mulai Projek</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Tanggal Selesai Projek</div>
+      <div class="info-line"></div>
+    </div>
+  </div>
+
+  <div class="callout callout-purple">
+    <span class="callout-icon">🪞</span>
+    <div class="callout-body">
+      <strong>Tentang Refleksi</strong>
+      <p>Refleksi bukan tentang mengatakan hal yang "benar" atau yang menurut kamu disukai guru. Tulislah dengan jujur — pengalaman nyata, perasaan sesungguhnya, dan hal-hal yang benar-benar kamu pelajari. Kejujuran dalam refleksi adalah tanda kedewasaan berpikir.</p>
+    </div>
+  </div>
+
+  <!-- A: REFLEKSI PROSES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🔄</span>
+      <span class="section-title">Bagian A — Refleksi Proses Projek</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">1</span>
+          <span class="q-text">Apa hal paling penting yang kamu pelajari dari projek ini? (Bukan hanya tentang topiknya, tapi juga tentang cara belajar)</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">2</span>
+          <span class="q-text">Apa yang paling mengejutkan atau mengubah pikiranmu selama proses projek ini berlangsung?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">3</span>
+          <span class="q-text">Jika kamu bisa mengulang projek ini dari awal, apa yang akan kamu lakukan secara berbeda? Mengapa?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- B: REFLEKSI TANTANGAN -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">💪</span>
+      <span class="section-title">Bagian B — Refleksi Tantangan &amp; Ketangguhan</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">4</span>
+          <span class="q-text">Apa hambatan atau tantangan terbesar yang kamu hadapi selama projek ini?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">5</span>
+          <span class="q-text">Bagaimana perasaanmu saat pertama kali menghadapi tantangan itu? Bagaimana kamu akhirnya mengatasinya?</span>
+        </div>
+        <div class="q-hint">Boleh jujur — perasaan frustrasi, bingung, atau ingin menyerah adalah hal yang manusiawi.</div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">6</span>
+          <span class="q-text">Apa yang kamu pelajari tentang dirimu sendiri dari cara kamu menghadapi tantangan tersebut?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">7</span>
+          <span class="q-text">Bagaimana perasaanmu saat berhasil melewati tantangan tersebut?</span>
+        </div>
+        <div class="emotion-scale">
+          <div class="emotion-item">
+            <span class="emotion-emoji">😤</span>
+            <div class="emotion-label">Masih kesal</div>
+            <div class="emotion-box"></div>
+          </div>
+          <div class="emotion-item">
+            <span class="emotion-emoji">😌</span>
+            <div class="emotion-label">Lega</div>
+            <div class="emotion-box"></div>
+          </div>
+          <div class="emotion-item">
+            <span class="emotion-emoji">😊</span>
+            <div class="emotion-label">Senang</div>
+            <div class="emotion-box"></div>
+          </div>
+          <div class="emotion-item">
+            <span class="emotion-emoji">🤩</span>
+            <div class="emotion-label">Bangga</div>
+            <div class="emotion-box"></div>
+          </div>
+          <div class="emotion-item">
+            <span class="emotion-emoji">💪</span>
+            <div class="emotion-label">Lebih kuat</div>
+            <div class="emotion-box"></div>
+          </div>
+        </div>
+        <div style="margin-top:10px;">
+          <div class="write-lines">
+            <div class="write-line"></div>
+            <div class="write-line"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- C: KOMPETENSI -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">📚</span>
+      <span class="section-title">Bagian C — Refleksi Kompetensi &amp; Keterampilan</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">8</span>
+          <span class="q-text">Mata pelajaran apa yang paling membantumu dalam mengerjakan projek ini? Jelaskan bagaimana pelajaran itu membantumu.</span>
+        </div>
+        <div class="competency-grid">
+          <div class="comp-card">
+            <div class="comp-subject">📖 Bahasa Indonesia</div>
+            <div style="font-size:0.7rem; color:var(--muted);">Bagaimana membantu?</div>
+            <div class="comp-line"></div>
+            <div class="comp-line"></div>
+          </div>
+          <div class="comp-card">
+            <div class="comp-subject">🔢 Matematika</div>
+            <div style="font-size:0.7rem; color:var(--muted);">Bagaimana membantu?</div>
+            <div class="comp-line"></div>
+            <div class="comp-line"></div>
+          </div>
+          <div class="comp-card">
+            <div class="comp-subject">🌿 IPA</div>
+            <div style="font-size:0.7rem; color:var(--muted);">Bagaimana membantu?</div>
+            <div class="comp-line"></div>
+            <div class="comp-line"></div>
+          </div>
+          <div class="comp-card">
+            <div class="comp-subject">🗺️ IPS</div>
+            <div style="font-size:0.7rem; color:var(--muted);">Bagaimana membantu?</div>
+            <div class="comp-line"></div>
+            <div class="comp-line"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">9</span>
+          <span class="q-text">Keterampilan baru apa yang kamu dapatkan atau kembangkan selama projek ini?</span>
+        </div>
+        <div class="q-hint">Contoh: wawancara, mencatat data, berbicara di depan umum, berpikir kritis, kerja sama tim, dll.</div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">10</span>
+          <span class="q-text">Pada skala 1–5, nilai kemampuanmu sebelum dan sesudah projek ini:</span>
+        </div>
+        <table class="lk-table" style="margin-top:8px;">
+          <thead>
+            <tr>
+              <th style="width:40%">Keterampilan</th>
+              <th style="width:30%">Sebelum Projek (1–5)</th>
+              <th style="width:30%">Sesudah Projek (1–5)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Bertanya yang baik (merumuskan pertanyaan)</td><td></td><td></td></tr>
+            <tr><td>Mencari dan mengumpulkan informasi</td><td></td><td></td></tr>
+            <tr><td>Menganalisis dan menyimpulkan</td><td></td><td></td></tr>
+            <tr><td>Menyajikan hasil kepada orang lain</td><td></td><td></td></tr>
+            <tr><td>Bekerja sama dalam kelompok</td><td></td><td></td></tr>
+            <tr><td>Menghadapi kesulitan tanpa menyerah</td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- D: MANFAAT UNTUK ORANG LAIN -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🤝</span>
+      <span class="section-title">Bagian D — Refleksi Manfaat untuk Sesama</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">11</span>
+          <span class="q-text">Siapa saja yang menurutmu mendapat manfaat dari hasil projekmu?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">12</span>
+          <span class="q-text">Bagaimana caranya hasil projekmu bisa terus bermanfaat setelah projek ini selesai?</span>
+        </div>
+        <div class="q-hint">Apakah ada yang bisa dilanjutkan, disebarluaskan, atau diterapkan di kehidupan nyata?</div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">13</span>
+          <span class="q-text">Projek ini mengajarkanmu tentang nilai-nilai penting dalam hidup. Apa satu nilai yang paling kamu rasakan?</span>
+        </div>
+        <div class="check-list">
+          <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>Ketekunan</strong> — terus berusaha walau ada rintangan</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>Rasa ingin tahu</strong> — selalu ingin belajar hal baru</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>Kepedulian</strong> — projek ini dibuat karena peduli pada sesama</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>Kejujuran</strong> — melaporkan data apa adanya</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>Tanggung jawab</strong> — menyelesaikan apa yang sudah dimulai</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Lainnya: <span style="border-bottom:1px solid #d1d5db; display:inline-block; min-width:160px;">&nbsp;</span></div></div>
+        </div>
+        <div style="margin-top:12px;">
+          <div class="q-hint">Ceritakan mengapa kamu memilih nilai tersebut:</div>
+          <div class="write-lines">
+            <div class="write-line"></div>
+            <div class="write-line"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- E: SURAT UNTUK DIRI SENDIRI -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">✉️</span>
+      <span class="section-title">Bagian E — Surat untuk Diri Sendiri</span>
+    </div>
+    <div class="section-body">
+
+      <div class="callout callout-purple" style="margin-bottom:16px;">
+        <span class="callout-icon">💌</span>
+        <div class="callout-body">
+          <strong>Pesan untuk Diri Sendiri di Masa Depan</strong>
+          <p>Tulis surat singkat untuk dirimu sendiri setelah menyelesaikan projek ini. Ceritakan apa yang kamu alami, pelajari, dan rasakan. Kelak ketika kamu membacanya lagi, kamu akan ingat perjalanan hebat yang telah kamu lalui.</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">14</span>
+          <span class="q-text">Tulis surat singkatmu di bawah ini:</span>
+        </div>
+        <div class="letter-box">
+          <div class="letter-header">Kepada diriku sendiri,</div>
+          <div class="letter-line"></div>
+          <div class="letter-line"></div>
+          <div class="letter-line"></div>
+          <div class="letter-line"></div>
+          <div class="letter-line"></div>
+          <div class="letter-line"></div>
+          <div class="letter-line"></div>
+          <div class="letter-line"></div>
+          <div class="letter-line"></div>
+          <div class="letter-footer">
+            <div style="font-size:0.72rem; color:var(--purple); margin-bottom:4px;">Dari,</div>
+            <div class="letter-footer-line"></div>
+            <div style="font-size:0.65rem; color:var(--muted); margin-top:3px;">Nama &amp; Tanggal</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CELEBRATION + SIGN OFF -->
+  <div class="celebration-box">
+    <span class="celebration-emoji">🎉</span>
+    <div class="celebration-title">Selamat! Kamu Telah Menyelesaikan Projek Student-Driven Inquiry!</div>
+    <div class="celebration-sub">Kamu telah melewati 5 tahap — dari merumuskan pertanyaan hingga refleksi mendalam. Ini adalah pencapaian luar biasa yang patut dibanggakan.</div>
+  </div>
+
+  <div class="signoff">
+    <div class="signoff-title">✅ Persetujuan Penyelesaian Seluruh Projek</div>
+    <p style="font-size:0.78rem; color:#374151; margin-bottom:14px;">
+      Dengan menandatangani lembar ini, saya menyatakan telah menyelesaikan seluruh rangkaian Projek Student-Driven Inquiry secara penuh dan jujur, dari Tahap 1 hingga Tahap 5.
+    </p>
+    <div class="sign-grid">
+      <div class="sign-field">
+        <div class="sign-label">Tanda Tangan Siswa</div>
+        <div class="sign-line"></div>
+        <div class="sign-name-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Nama &amp; Tanda Tangan</div>
+      </div>
+      <div class="sign-field">
+        <div class="sign-label">Paraf Guru Pendamping</div>
+        <div class="sign-line"></div>
+        <div class="sign-name-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Nama &amp; Paraf</div>
+      </div>
+      <div class="sign-field">
+        <div class="sign-label">Tanggal Selesai</div>
+        <div class="sign-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Tanggal / Bulan / Tahun</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    SD Muhammadiyah 01 Kukusan · LK Tahap 5: Refleksi &amp; Pembelajaran · Projek Student-Driven Inquiry · TP 2025/2026
+  </div>
+
+</div>
+</body>
+</html>

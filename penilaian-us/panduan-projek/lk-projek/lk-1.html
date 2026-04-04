@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LK Tahap 1 – Perumusan Pertanyaan | Projek Student-Driven Inquiry</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+/* ── BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --amber: #d97706; --amber-dark: #92400e; --amber-deep: #78350f;
+  --amber-light: #fef3c7; --amber-pale: #fffbeb;
+  --green: #065f46; --green-light: #d1fae5; --green-pale: #f0fdf4;
+  --red-light: #fee2e2; --red: #991b1b;
+  --blue-light: #dbeafe; --blue: #1e40af;
+  --text: #1f2937; --muted: #6b7280; --border: #d1d5db;
+  --white: #ffffff;
+}
+body {
+  font-family: 'Nunito', sans-serif;
+  font-size: 11pt;
+  color: var(--text);
+  background: #fff;
+  line-height: 1.6;
+}
+
+/* ── SCREEN-ONLY NAV ── */
+.screen-nav {
+  background: linear-gradient(135deg, var(--amber-deep), var(--amber));
+  color: #fff;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.screen-nav a {
+  color: #fff; text-decoration: none; font-size: 0.82rem; font-weight: 700;
+  opacity: 0.85; transition: opacity 0.2s;
+}
+.screen-nav a:hover { opacity: 1; }
+.screen-nav-right { display: flex; gap: 10px; }
+.btn-print {
+  background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
+  color: #fff; padding: 6px 16px; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 700; cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-print:hover { background: rgba(255,255,255,0.35); }
+
+/* ── DOCUMENT WRAPPER ── */
+.doc {
+  max-width: 794px;
+  margin: 24px auto;
+  padding: 40px 48px;
+  background: #fff;
+  box-shadow: 0 0 40px rgba(0,0,0,0.12);
+}
+
+/* ── LETTERHEAD ── */
+.letterhead {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid var(--amber-deep);
+  margin-bottom: 6px;
+}
+.school-logo {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--amber-deep), var(--amber));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem; flex-shrink: 0;
+}
+.school-info { flex: 1; }
+.school-name {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1rem; font-weight: 800;
+  color: var(--amber-deep); line-height: 1.2;
+}
+.school-sub { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+.lk-badge {
+  text-align: right;
+}
+.lk-badge-number {
+  font-family: 'Baloo 2', cursive;
+  font-size: 2.5rem; font-weight: 800;
+  color: var(--amber); line-height: 1;
+}
+.lk-badge-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── DOC TITLE ── */
+.doc-title-block {
+  text-align: center;
+  padding: 14px 0 18px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.tahap-label {
+  font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--amber); margin-bottom: 4px;
+}
+.doc-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.4rem; font-weight: 800;
+  color: var(--amber-deep); line-height: 1.2;
+}
+.doc-subtitle {
+  font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-top: 4px;
+}
+
+/* ── STUDENT INFO ── */
+.student-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 24px;
+  background: var(--amber-pale);
+  border: 1.5px solid #fde68a;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+.info-field { display: flex; flex-direction: column; gap: 3px; }
+.info-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--amber-dark); }
+.info-line { border-bottom: 1.5px solid var(--amber); min-height: 22px; }
+.info-field.full { grid-column: 1 / -1; }
+
+/* ── SECTIONS ── */
+.section { margin-bottom: 22px; }
+.section-header {
+  display: flex; align-items: center; gap: 10px;
+  background: linear-gradient(90deg, var(--amber-deep), var(--amber-dark));
+  color: #fff; padding: 8px 14px; border-radius: 8px 8px 0 0;
+  margin-bottom: 0;
+}
+.section-icon { font-size: 1rem; }
+.section-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 0.92rem; font-weight: 800;
+}
+.section-body {
+  border: 1.5px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 18px;
+}
+
+/* ── QUESTIONS ── */
+.question { margin-bottom: 18px; }
+.question:last-child { margin-bottom: 0; }
+.q-label {
+  font-size: 0.8rem; font-weight: 700;
+  color: var(--amber-dark); margin-bottom: 5px;
+  display: flex; gap: 8px;
+}
+.q-num {
+  background: var(--amber-light); color: var(--amber-dark);
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 800; flex-shrink: 0;
+}
+.q-text { flex: 1; }
+.q-hint { font-size: 0.7rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; font-style: italic; padding-left: 30px; }
+
+.write-lines { display: flex; flex-direction: column; gap: 8px; margin-left: 30px; }
+.write-line { border-bottom: 1px solid #d1d5db; min-height: 26px; }
+
+.write-box {
+  border: 1px dashed var(--border); border-radius: 6px;
+  background: #fafafa; min-height: 72px;
+  margin-left: 30px; padding: 8px 12px;
+}
+
+/* ── CHECKBOX LIST ── */
+.check-list { margin-left: 30px; display: flex; flex-direction: column; gap: 8px; }
+.check-item { display: flex; align-items: flex-start; gap: 10px; }
+.check-box {
+  width: 16px; height: 16px; border: 1.5px solid var(--border);
+  border-radius: 3px; flex-shrink: 0; margin-top: 3px;
+  background: #fff;
+}
+.check-text { font-size: 0.8rem; color: var(--text); line-height: 1.5; }
+.check-sub { font-size: 0.72rem; color: var(--muted); font-style: italic; }
+.check-fill { border-bottom: 1px solid var(--border); display: inline-block; min-width: 120px; }
+
+/* ── TABLE ── */
+.lk-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-left: 0; }
+.lk-table th {
+  background: var(--amber-light); color: var(--amber-dark);
+  font-weight: 800; padding: 7px 10px; text-align: left;
+  border: 1px solid #fde68a; font-size: 0.72rem;
+}
+.lk-table td {
+  border: 1px solid var(--border); padding: 7px 10px;
+  vertical-align: top; min-height: 28px;
+}
+.lk-table .write-row td { height: 32px; }
+.lk-table .tall-row td { height: 44px; }
+
+/* ── CALLOUT BOXES ── */
+.callout {
+  display: flex; gap: 12px; align-items: flex-start;
+  border-radius: 8px; padding: 12px 16px; margin-bottom: 18px;
+}
+.callout-tip { background: #eff6ff; border-left: 4px solid #3b82f6; }
+.callout-warn { background: var(--red-light); border-left: 4px solid #ef4444; }
+.callout-success { background: var(--green-light); border-left: 4px solid #22c55e; }
+.callout-icon { font-size: 1.1rem; margin-top: 1px; flex-shrink: 0; }
+.callout-body strong { font-size: 0.78rem; font-weight: 800; display: block; margin-bottom: 2px; }
+.callout-body p, .callout-body ul { font-size: 0.76rem; color: #374151; line-height: 1.6; }
+.callout-body ul { margin-left: 16px; }
+
+/* ── SELF-CHECK ── */
+.selfcheck-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-left: 30px; }
+.selfcheck-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.76rem; background: var(--amber-pale);
+  border: 1px solid #fde68a; border-radius: 6px; padding: 7px 10px;
+}
+
+/* ── SIGN OFF ── */
+.signoff {
+  background: var(--green-pale);
+  border: 1.5px solid #6ee7b7; border-radius: 10px;
+  padding: 18px 20px; margin-top: 24px;
+}
+.signoff-title {
+  font-family: 'Baloo 2', cursive; font-size: 0.9rem; font-weight: 800;
+  color: var(--green); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sign-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.sign-field { display: flex; flex-direction: column; gap: 4px; }
+.sign-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--green); }
+.sign-line { border-bottom: 1.5px solid #6ee7b7; min-height: 36px; }
+.sign-name-line { border-bottom: 1px solid #a7f3d0; min-height: 22px; margin-top: 6px; }
+
+/* ── FOOTER ── */
+.doc-footer {
+  text-align: center; margin-top: 28px;
+  padding-top: 14px; border-top: 1px solid var(--border);
+  font-size: 0.65rem; color: var(--muted); font-weight: 600;
+}
+
+/* ── DIVIDER ── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* ── PAGE NUMBERS ── */
+.page-tag {
+  text-align: right; font-size: 0.65rem; color: var(--muted);
+  font-weight: 600; margin-bottom: 6px;
+}
+
+/* ── PRINT ── */
+@media print {
+  .screen-nav { display: none; }
+  body { font-size: 10pt; }
+  .doc {
+    max-width: 100%; margin: 0; padding: 20px 28px;
+    box-shadow: none;
+  }
+  .section { page-break-inside: avoid; }
+  .signoff { page-break-inside: avoid; }
+  .question { page-break-inside: avoid; }
+  @page { size: A4; margin: 1.8cm 1.5cm; }
+}
+@media (max-width: 600px) {
+  .doc { padding: 20px 16px; margin: 0; }
+  .student-info-grid { grid-template-columns: 1fr; }
+  .sign-grid { grid-template-columns: 1fr; }
+  .selfcheck-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- SCREEN NAV -->
+<nav class="screen-nav">
+  <a href="../">← Kembali ke Panduan Projek</a>
+  <div class="screen-nav-right">
+    <a href="index.html">📁 Semua LK</a>
+    <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+  </div>
+</nav>
+
+<!-- DOCUMENT -->
+<div class="doc">
+
+  <!-- LETTERHEAD -->
+  <div class="letterhead">
+    <div class="school-logo">📘</div>
+    <div class="school-info">
+      <div class="school-name">SD Muhammadiyah 01 Kukusan</div>
+      <div class="school-sub">Projek Student-Driven Inquiry · Kelas 6 · TP 2025/2026</div>
+    </div>
+    <div class="lk-badge">
+      <div class="lk-badge-number">LK1</div>
+      <div class="lk-badge-label">Lembar Kerja</div>
+    </div>
+  </div>
+
+  <!-- DOC TITLE -->
+  <div class="doc-title-block">
+    <div class="tahap-label">Tahap 1 dari 5 · Student-Driven Inquiry</div>
+    <div class="doc-title">🔍 Perumusan Pertanyaan Penelitian</div>
+    <div class="doc-subtitle">Menemukan topik yang membuatku penasaran dan menyusun pertanyaan penelitian yang baik</div>
+  </div>
+
+  <!-- STUDENT INFO -->
+  <div class="student-info-grid">
+    <div class="info-field">
+      <div class="info-label">Nama Siswa / Anggota Kelompok</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Kelas</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Nama Kelompok (jika ada)</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Tanggal Pengerjaan</div>
+      <div class="info-line"></div>
+    </div>
+  </div>
+
+  <!-- CALLOUT: PETUNJUK UMUM -->
+  <div class="callout callout-tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <strong>Petunjuk Pengerjaan</strong>
+      <p>Kerjakan lembar ini dengan jujur sesuai pikiranmu sendiri. Tidak ada jawaban yang salah — semua ide bagus asalkan datang dari rasa ingin tahumu. Jangan menyalin dari teman. Guru akan membantumu bila kamu bingung.</p>
+    </div>
+  </div>
+
+  <!-- SECTION A: EKSPLORASI IDE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">💭</span>
+      <span class="section-title">Bagian A — Eksplorasi Ide &amp; Rasa Ingin Tahu</span>
+    </div>
+    <div class="section-body">
+
+      <div class="callout callout-tip" style="margin-bottom:16px;">
+        <span class="callout-icon">🧭</span>
+        <div class="callout-body">
+          <strong>Apa yang perlu kamu lakukan di Bagian A?</strong>
+          <p>Eksplorasi berarti menjelajahi semua kemungkinan sebelum memilih satu. Di bagian ini, tulis sebanyak-banyaknya hal yang membuatmu penasaran. Belum perlu memilih topik — cukup keluarkan semua idenya!</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">1</span>
+          <span class="q-text">Apa hal-hal yang akhir-akhir ini membuatmu penasaran, bingung, atau ingin kamu pelajari lebih dalam? Tulis minimal 3 hal!</span>
+        </div>
+        <div class="q-hint">Bisa tentang apa saja: alam, teknologi, kebiasaan manusia, makanan, permainan, lingkungan, dll.</div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">2</span>
+          <span class="q-text">Apa masalah di sekitarmu (di rumah, sekolah, atau lingkungan) yang ingin kamu selesaikan atau pahami?</span>
+        </div>
+        <div class="q-hint">Pikirkan: apa yang membuat kamu atau orang di sekitarmu tidak nyaman? Apa yang bisa diperbaiki?</div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">3</span>
+          <span class="q-text">Dari semua ide di atas, mana yang paling membuatmu bersemangat untuk diselidiki? Lingkari atau tandai, lalu tuliskan di sini.</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION B: MEMILIH TOPIK -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🎯</span>
+      <span class="section-title">Bagian B — Menentukan Topik Projekku</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">4</span>
+          <span class="q-text">Tulis topik projekmu dalam satu kalimat pendek:</span>
+        </div>
+        <div class="q-hint">Contoh cara memulai: "Aku ingin menyelidiki...", "Aku penasaran tentang...", "Aku ingin memahami..."</div>
+        <div class="write-box"></div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">5</span>
+          <span class="q-text">Mengapa topik ini penting bagimu? Ceritakan alasanmu secara jujur.</span>
+        </div>
+        <div class="q-hint">Tidak perlu terdengar "keren" — alasan pribadi yang nyata jauh lebih baik.</div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">6</span>
+          <span class="q-text">Siapa yang menurutmu akan mendapat manfaat jika kamu berhasil menjawab pertanyaanmu?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION C: MENYUSUN PERTANYAAN -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">❓</span>
+      <span class="section-title">Bagian C — Menyusun Pertanyaan Penelitian</span>
+    </div>
+    <div class="section-body">
+
+      <div class="callout callout-tip" style="margin-bottom:16px;">
+        <span class="callout-icon">📌</span>
+        <div class="callout-body">
+          <strong>Ciri Pertanyaan Penelitian yang Baik</strong>
+          <ul>
+            <li><strong>Spesifik</strong> — jelas apa yang ditanyakan, bukan terlalu luas.</li>
+            <li><strong>Bisa diselidiki</strong> — bisa dicari jawabannya melalui observasi, wawancara, atau percobaan.</li>
+            <li><strong>Orisinal</strong> — berasal dari rasa ingin tahumu sendiri, bukan salinan dari contoh guru.</li>
+            <li><strong>Terbuka</strong> — tidak bisa dijawab hanya dengan "ya" atau "tidak".</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">7</span>
+          <span class="q-text">Pertanyaan penelitian awalku adalah:</span>
+        </div>
+        <div class="q-hint">Mulai dengan kata tanya seperti: Bagaimana? Mengapa? Apa yang menyebabkan? Seberapa besar? Apa perbedaan antara...?</div>
+        <div class="write-box" style="min-height:56px;"></div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">8</span>
+          <span class="q-text">Bacakan pertanyaanmu kepada temanmu. Apakah temanmu memahaminya? Jika tidak, bagian mana yang perlu diperjelas?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">9</span>
+          <span class="q-text">Setelah mendapat masukan, tulis pertanyaan penelitianmu yang sudah diperbaiki (versi final):</span>
+        </div>
+        <div class="write-box" style="min-height:56px; border: 2px solid var(--amber); background: var(--amber-pale);"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION D: SELF CHECK -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">✅</span>
+      <span class="section-title">Bagian D — Uji Kelayakan Pertanyaan (Self-Check)</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">10</span>
+          <span class="q-text">Centang setiap kotak jika pertanyaanmu sudah memenuhi kriteria di bawah ini:</span>
+        </div>
+        <div class="check-list">
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">
+              <strong>Pertanyaanku jelas dan spesifik</strong>
+              <div class="check-sub">Orang yang membaca bisa langsung tahu apa yang sedang diselidiki.</div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">
+              <strong>Pertanyaanku bisa diselidiki</strong>
+              <div class="check-sub">Ada cara nyata untuk mencari jawabannya (observasi, wawancara, eksperimen, riset).</div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">
+              <strong>Pertanyaanku tidak bisa dijawab hanya dengan "ya" atau "tidak"</strong>
+              <div class="check-sub">Pertanyaan yang baik membutuhkan penjelasan yang mendalam.</div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">
+              <strong>Topik ini benar-benar menarik bagiku</strong>
+              <div class="check-sub">Aku bersemangat untuk menyelidikinya selama beberapa minggu ke depan.</div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">
+              <strong>Ide ini murni berasal dari diriku sendiri</strong>
+              <div class="check-sub">Bukan hasil meniru contoh guru atau menyalin dari teman.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">11</span>
+          <span class="q-text">Jika ada kotak yang belum bisa kamu centang, tuliskan bagian mana yang perlu kamu perbaiki dan bagaimana rencana perbaikannya:</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION E: GAMBARAN AWAL -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🗺️</span>
+      <span class="section-title">Bagian E — Gambaran Awal Projekku</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">12</span>
+          <span class="q-text">Apa yang sudah kamu ketahui tentang topik ini sebelum memulai projek?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">13</span>
+          <span class="q-text">Apa yang belum kamu ketahui dan ingin kamu pelajari dari projek ini?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">14</span>
+          <span class="q-text">Bagaimana gambaranmu tentang cara mencari jawaban atas pertanyaanmu? (Boleh masih kasar — ini hanya gambaran awal)</span>
+        </div>
+        <div class="q-hint">Apakah kamu akan bertanya kepada seseorang? Melakukan percobaan? Membaca? Mengamati sesuatu?</div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SIGN OFF -->
+  <div class="signoff">
+    <div class="signoff-title">✅ Persetujuan Penyelesaian Tahap 1</div>
+    <p style="font-size:0.78rem; color:#374151; margin-bottom:14px;">
+      Dengan menandatangani lembar ini, saya menyatakan bahwa pertanyaan penelitian di atas adalah hasil pemikiran saya sendiri dan saya siap melanjutkan ke Tahap 2: Perencanaan Proposal.
+    </p>
+    <div class="sign-grid">
+      <div class="sign-field">
+        <div class="sign-label">Tanda Tangan Siswa</div>
+        <div class="sign-line"></div>
+        <div class="sign-name-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Nama &amp; Tanda Tangan</div>
+      </div>
+      <div class="sign-field">
+        <div class="sign-label">Paraf Guru Pendamping</div>
+        <div class="sign-line"></div>
+        <div class="sign-name-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Nama &amp; Paraf</div>
+      </div>
+      <div class="sign-field">
+        <div class="sign-label">Tanggal Selesai</div>
+        <div class="sign-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Tanggal / Bulan / Tahun</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    SD Muhammadiyah 01 Kukusan · LK Tahap 1: Perumusan Pertanyaan · Projek Student-Driven Inquiry · TP 2025/2026
+  </div>
+
+</div><!-- /doc -->
+</body>
+</html>

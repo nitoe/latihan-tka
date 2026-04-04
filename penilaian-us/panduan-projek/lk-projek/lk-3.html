@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LK Tahap 3 – Pelaksanaan & Pengumpulan Data | Projek Student-Driven Inquiry</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --amber: #d97706; --amber-dark: #92400e; --amber-deep: #78350f;
+  --amber-light: #fef3c7; --amber-pale: #fffbeb;
+  --green: #065f46; --green-light: #d1fae5; --green-pale: #f0fdf4;
+  --text: #1f2937; --muted: #6b7280; --border: #d1d5db; --white: #ffffff;
+}
+body { font-family: 'Nunito', sans-serif; font-size: 11pt; color: var(--text); background: #fff; line-height: 1.6; }
+.screen-nav { background: linear-gradient(135deg, var(--amber-deep), var(--amber)); color: #fff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+.screen-nav a { color: #fff; text-decoration: none; font-size: 0.82rem; font-weight: 700; opacity: 0.85; }
+.screen-nav a:hover { opacity: 1; }
+.screen-nav-right { display: flex; gap: 10px; }
+.btn-print { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+.doc { max-width: 794px; margin: 24px auto; padding: 40px 48px; background: #fff; box-shadow: 0 0 40px rgba(0,0,0,0.12); }
+.letterhead { display: flex; align-items: center; gap: 20px; padding-bottom: 16px; border-bottom: 3px solid var(--amber-deep); }
+.school-logo { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--amber-deep), var(--amber)); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
+.school-info { flex: 1; }
+.school-name { font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 800; color: var(--amber-deep); line-height: 1.2; }
+.school-sub { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+.lk-badge { text-align: right; }
+.lk-badge-number { font-family: 'Baloo 2', cursive; font-size: 2.5rem; font-weight: 800; color: var(--amber); line-height: 1; }
+.lk-badge-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.doc-title-block { text-align: center; padding: 14px 0 18px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+.tahap-label { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--amber); margin-bottom: 4px; }
+.doc-title { font-family: 'Baloo 2', cursive; font-size: 1.4rem; font-weight: 800; color: var(--amber-deep); }
+.doc-subtitle { font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-top: 4px; }
+.student-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; background: var(--amber-pale); border: 1.5px solid #fde68a; border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; }
+.info-field { display: flex; flex-direction: column; gap: 3px; }
+.info-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--amber-dark); }
+.info-line { border-bottom: 1.5px solid var(--amber); min-height: 22px; }
+.info-field.full { grid-column: 1 / -1; }
+.section { margin-bottom: 22px; }
+.section-header { display: flex; align-items: center; gap: 10px; background: linear-gradient(90deg, var(--amber-deep), var(--amber-dark)); color: #fff; padding: 8px 14px; border-radius: 8px 8px 0 0; }
+.section-icon { font-size: 1rem; }
+.section-title { font-family: 'Baloo 2', cursive; font-size: 0.92rem; font-weight: 800; }
+.section-body { border: 1.5px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; padding: 18px; }
+.question { margin-bottom: 18px; }
+.question:last-child { margin-bottom: 0; }
+.q-label { font-size: 0.8rem; font-weight: 700; color: var(--amber-dark); margin-bottom: 5px; display: flex; gap: 8px; }
+.q-num { background: var(--amber-light); color: var(--amber-dark); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; flex-shrink: 0; }
+.q-text { flex: 1; }
+.q-hint { font-size: 0.7rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; font-style: italic; padding-left: 30px; }
+.write-lines { display: flex; flex-direction: column; gap: 8px; margin-left: 30px; }
+.write-line { border-bottom: 1px solid #d1d5db; min-height: 26px; }
+.write-box { border: 1px dashed var(--border); border-radius: 6px; background: #fafafa; min-height: 72px; margin-left: 30px; padding: 8px 12px; }
+.check-list { margin-left: 30px; display: flex; flex-direction: column; gap: 8px; }
+.check-item { display: flex; align-items: flex-start; gap: 10px; }
+.check-box { width: 16px; height: 16px; border: 1.5px solid var(--border); border-radius: 3px; flex-shrink: 0; margin-top: 3px; background: #fff; }
+.check-text { font-size: 0.8rem; color: var(--text); line-height: 1.5; }
+.check-sub { font-size: 0.72rem; color: var(--muted); font-style: italic; }
+.lk-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.lk-table th { background: var(--amber-light); color: var(--amber-dark); font-weight: 800; padding: 7px 10px; text-align: left; border: 1px solid #fde68a; font-size: 0.72rem; }
+.lk-table td { border: 1px solid var(--border); padding: 6px 8px; vertical-align: top; }
+.lk-table .tall-row td { height: 44px; }
+.callout { display: flex; gap: 12px; align-items: flex-start; border-radius: 8px; padding: 12px 16px; margin-bottom: 18px; }
+.callout-tip { background: #eff6ff; border-left: 4px solid #3b82f6; }
+.callout-warn { background: #fee2e2; border-left: 4px solid #ef4444; }
+.callout-icon { font-size: 1.1rem; margin-top: 1px; flex-shrink: 0; }
+.callout-body strong { font-size: 0.78rem; font-weight: 800; display: block; margin-bottom: 2px; }
+.callout-body p, .callout-body ul { font-size: 0.76rem; color: #374151; line-height: 1.6; }
+.callout-body ul { margin-left: 16px; }
+.signoff { background: var(--green-pale); border: 1.5px solid #6ee7b7; border-radius: 10px; padding: 18px 20px; margin-top: 24px; }
+.signoff-title { font-family: 'Baloo 2', cursive; font-size: 0.9rem; font-weight: 800; color: var(--green); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.sign-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.sign-field { display: flex; flex-direction: column; gap: 4px; }
+.sign-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--green); }
+.sign-line { border-bottom: 1.5px solid #6ee7b7; min-height: 36px; }
+.sign-name-line { border-bottom: 1px solid #a7f3d0; min-height: 22px; margin-top: 6px; }
+.doc-footer { text-align: center; margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.65rem; color: var(--muted); font-weight: 600; }
+/* LOGBOOK SPECIFIC */
+.logbook-entry { border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
+.logbook-entry-header { display: flex; gap: 16px; margin-bottom: 12px; }
+.entry-field { flex: 1; }
+.entry-field-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; color: var(--amber-dark); margin-bottom: 3px; }
+.entry-field-line { border-bottom: 1.5px solid var(--amber); min-height: 22px; }
+.entry-notes-label { font-size: 0.72rem; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+.entry-notes-area { display: flex; flex-direction: column; gap: 7px; }
+.entry-note-line { border-bottom: 1px solid #e5e7eb; min-height: 22px; }
+/* DAILY PROGRESS */
+.daily-check-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-left: 30px; }
+.day-cell { text-align: center; border: 1px solid var(--border); border-radius: 6px; padding: 6px 4px; }
+.day-cell-num { font-size: 0.65rem; font-weight: 800; color: var(--amber-dark); }
+.day-cell-box { width: 20px; height: 20px; border: 1.5px solid var(--amber); border-radius: 3px; margin: 4px auto 2px; }
+.day-cell-date { font-size: 0.6rem; color: var(--muted); border-bottom: 1px solid var(--border); min-height: 16px; }
+@media print {
+  .screen-nav { display: none; }
+  body { font-size: 10pt; }
+  .doc { max-width: 100%; margin: 0; padding: 20px 28px; box-shadow: none; }
+  .section { page-break-inside: avoid; }
+  .logbook-entry { page-break-inside: avoid; }
+  .question { page-break-inside: avoid; }
+  @page { size: A4; margin: 1.8cm 1.5cm; }
+}
+@media (max-width: 600px) {
+  .doc { padding: 20px 16px; margin: 0; }
+  .student-info-grid, .sign-grid, .daily-check-grid { grid-template-columns: repeat(3,1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav class="screen-nav">
+  <a href="../">← Kembali ke Panduan Projek</a>
+  <div class="screen-nav-right">
+    <a href="index.html">📁 Semua LK</a>
+    <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+  </div>
+</nav>
+
+<div class="doc">
+
+  <div class="letterhead">
+    <div class="school-logo">📘</div>
+    <div class="school-info">
+      <div class="school-name">SD Muhammadiyah 01 Kukusan</div>
+      <div class="school-sub">Projek Student-Driven Inquiry · Kelas 6 · TP 2025/2026</div>
+    </div>
+    <div class="lk-badge">
+      <div class="lk-badge-number">LK3</div>
+      <div class="lk-badge-label">Lembar Kerja</div>
+    </div>
+  </div>
+
+  <div class="doc-title-block">
+    <div class="tahap-label">Tahap 3 dari 5 · Student-Driven Inquiry</div>
+    <div class="doc-title">🔬 Pelaksanaan &amp; Pengumpulan Data</div>
+    <div class="doc-subtitle">Mendokumentasikan proses pengumpulan data dan temuan selama riset berlangsung</div>
+  </div>
+
+  <div class="student-info-grid">
+    <div class="info-field">
+      <div class="info-label">Nama Siswa / Anggota Kelompok</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Kelas</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field full">
+      <div class="info-label">Pertanyaan Penelitian</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Tanggal Mulai Pengumpulan Data</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Tanggal Selesai Pengumpulan Data</div>
+      <div class="info-line"></div>
+    </div>
+  </div>
+
+  <div class="callout callout-tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <strong>Petunjuk Pengerjaan</strong>
+      <p>LK ini digunakan selama kamu mengumpulkan data — bukan hanya di akhir. Catat setiap kegiatan secepatnya, jangan tunggu sampai lupa. Kejujuran dalam mencatat data (termasuk saat gagal) adalah bagian dari ilmu pengetahuan yang sesungguhnya.</p>
+    </div>
+  </div>
+
+  <!-- A: LOGBOOK -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">📓</span>
+      <span class="section-title">Bagian A — Logbook Pengumpulan Data</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">1</span>
+          <span class="q-text">Catat setiap kegiatan pengumpulan data yang kamu lakukan. Isi setiap kali selesai satu kegiatan.</span>
+        </div>
+
+        <div class="logbook-entry">
+          <div class="logbook-entry-header">
+            <div class="entry-field">
+              <div class="entry-field-label">Tanggal</div>
+              <div class="entry-field-line"></div>
+            </div>
+            <div class="entry-field" style="flex:2;">
+              <div class="entry-field-label">Kegiatan yang Dilakukan</div>
+              <div class="entry-field-line"></div>
+            </div>
+            <div class="entry-field">
+              <div class="entry-field-label">Metode</div>
+              <div class="entry-field-line"></div>
+            </div>
+          </div>
+          <div class="entry-notes-label">Hasil / Temuan:</div>
+          <div class="entry-notes-area">
+            <div class="entry-note-line"></div>
+            <div class="entry-note-line"></div>
+            <div class="entry-note-line"></div>
+          </div>
+          <div style="margin-top:8px; font-size:0.7rem; color:var(--muted);">Bukti yang dikumpulkan (foto, catatan, rekaman, dll): <span style="border-bottom:1px solid #d1d5db; display:inline-block; min-width:200px;">&nbsp;</span></div>
+        </div>
+
+        <div class="logbook-entry">
+          <div class="logbook-entry-header">
+            <div class="entry-field">
+              <div class="entry-field-label">Tanggal</div>
+              <div class="entry-field-line"></div>
+            </div>
+            <div class="entry-field" style="flex:2;">
+              <div class="entry-field-label">Kegiatan yang Dilakukan</div>
+              <div class="entry-field-line"></div>
+            </div>
+            <div class="entry-field">
+              <div class="entry-field-label">Metode</div>
+              <div class="entry-field-line"></div>
+            </div>
+          </div>
+          <div class="entry-notes-label">Hasil / Temuan:</div>
+          <div class="entry-notes-area">
+            <div class="entry-note-line"></div>
+            <div class="entry-note-line"></div>
+            <div class="entry-note-line"></div>
+          </div>
+          <div style="margin-top:8px; font-size:0.7rem; color:var(--muted);">Bukti yang dikumpulkan: <span style="border-bottom:1px solid #d1d5db; display:inline-block; min-width:240px;">&nbsp;</span></div>
+        </div>
+
+        <div class="logbook-entry">
+          <div class="logbook-entry-header">
+            <div class="entry-field">
+              <div class="entry-field-label">Tanggal</div>
+              <div class="entry-field-line"></div>
+            </div>
+            <div class="entry-field" style="flex:2;">
+              <div class="entry-field-label">Kegiatan yang Dilakukan</div>
+              <div class="entry-field-line"></div>
+            </div>
+            <div class="entry-field">
+              <div class="entry-field-label">Metode</div>
+              <div class="entry-field-line"></div>
+            </div>
+          </div>
+          <div class="entry-notes-label">Hasil / Temuan:</div>
+          <div class="entry-notes-area">
+            <div class="entry-note-line"></div>
+            <div class="entry-note-line"></div>
+            <div class="entry-note-line"></div>
+          </div>
+          <div style="margin-top:8px; font-size:0.7rem; color:var(--muted);">Bukti yang dikumpulkan: <span style="border-bottom:1px solid #d1d5db; display:inline-block; min-width:240px;">&nbsp;</span></div>
+        </div>
+
+        <div class="logbook-entry">
+          <div class="logbook-entry-header">
+            <div class="entry-field">
+              <div class="entry-field-label">Tanggal</div>
+              <div class="entry-field-line"></div>
+            </div>
+            <div class="entry-field" style="flex:2;">
+              <div class="entry-field-label">Kegiatan yang Dilakukan</div>
+              <div class="entry-field-line"></div>
+            </div>
+            <div class="entry-field">
+              <div class="entry-field-label">Metode</div>
+              <div class="entry-field-line"></div>
+            </div>
+          </div>
+          <div class="entry-notes-label">Hasil / Temuan:</div>
+          <div class="entry-notes-area">
+            <div class="entry-note-line"></div>
+            <div class="entry-note-line"></div>
+            <div class="entry-note-line"></div>
+          </div>
+          <div style="margin-top:8px; font-size:0.7rem; color:var(--muted);">Bukti yang dikumpulkan: <span style="border-bottom:1px solid #d1d5db; display:inline-block; min-width:240px;">&nbsp;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- B: CATATAN WAWANCARA / OBSERVASI -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">📝</span>
+      <span class="section-title">Bagian B — Catatan Wawancara / Observasi / Eksperimen</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">2</span>
+          <span class="q-text">Jika kamu melakukan wawancara, catat informasi berikut:</span>
+        </div>
+        <table class="lk-table" style="margin-top:8px;">
+          <thead>
+            <tr>
+              <th style="width:25%">Nama Narasumber</th>
+              <th style="width:20%">Pekerjaan / Keahlian</th>
+              <th style="width:55%">Poin-poin Penting dari Jawaban Narasumber</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tall-row"><td></td><td></td><td></td></tr>
+            <tr class="tall-row"><td></td><td></td><td></td></tr>
+            <tr class="tall-row"><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">3</span>
+          <span class="q-text">Jika kamu melakukan observasi atau eksperimen, catat hasil pengamatanmu:</span>
+        </div>
+        <table class="lk-table" style="margin-top:8px;">
+          <thead>
+            <tr>
+              <th style="width:20%">Tanggal</th>
+              <th style="width:30%">Yang Diamati / Dilakukan</th>
+              <th style="width:25%">Hasil / Data</th>
+              <th style="width:25%">Catatan Tambahan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tall-row"><td></td><td></td><td></td><td></td></tr>
+            <tr class="tall-row"><td></td><td></td><td></td><td></td></tr>
+            <tr class="tall-row"><td></td><td></td><td></td><td></td></tr>
+            <tr class="tall-row"><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">4</span>
+          <span class="q-text">Adakah temuan yang mengejutkan atau tidak kamu duga sebelumnya? Ceritakan!</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- C: ANALISIS AWAL -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🧠</span>
+      <span class="section-title">Bagian C — Analisis Awal Data</span>
+    </div>
+    <div class="section-body">
+
+      <div class="callout callout-tip" style="margin-bottom:16px;">
+        <span class="callout-icon">🔎</span>
+        <div class="callout-body">
+          <strong>Apa itu Analisis?</strong>
+          <p>Analisis berarti melihat data yang sudah kamu kumpulkan dan mencari pola, kesamaan, atau jawaban dari pertanyaanmu. Kamu tidak perlu menunggu semua data terkumpul untuk mulai berpikir tentang maknanya.</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">5</span>
+          <span class="q-text">Setelah mengumpulkan data, apa pola atau kesamaan yang kamu lihat dari data-data tersebut?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">6</span>
+          <span class="q-text">Apakah data yang kamu dapatkan sudah cukup untuk menjawab pertanyaan penelitianmu? Jelaskan!</span>
+        </div>
+        <div class="check-list">
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text"><strong>Ya, sudah cukup</strong> — data yang saya miliki bisa menjawab pertanyaan penelitian.</div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text"><strong>Belum cukup</strong> — saya masih perlu mengumpulkan: <span style="border-bottom:1px solid #d1d5db; display:inline-block; min-width:200px;">&nbsp;</span></div>
+          </div>
+        </div>
+        <div style="margin-top: 12px;">
+          <div class="write-lines">
+            <div class="write-line"></div>
+            <div class="write-line"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">7</span>
+          <span class="q-text">Berdasarkan data yang sudah terkumpul, apa kesimpulan sementara (jawaban awal) dari pertanyaan penelitianmu?</span>
+        </div>
+        <div class="q-hint">Ini adalah kesimpulan awal yang boleh berubah setelah analisis lebih lanjut.</div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- D: HAMBATAN -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">⚡</span>
+      <span class="section-title">Bagian D — Hambatan &amp; Solusi</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">8</span>
+          <span class="q-text">Apa hambatan atau kesulitan yang kamu hadapi selama pengumpulan data? Bagaimana kamu mengatasinya?</span>
+        </div>
+        <table class="lk-table" style="margin-top:8px;">
+          <thead>
+            <tr>
+              <th style="width:40%">Hambatan yang Dihadapi</th>
+              <th style="width:40%">Cara Mengatasinya</th>
+              <th style="width:20%">Berhasil?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tall-row"><td></td><td></td><td style="text-align:center;">☐ Ya &nbsp; ☐ Belum</td></tr>
+            <tr class="tall-row"><td></td><td></td><td style="text-align:center;">☐ Ya &nbsp; ☐ Belum</td></tr>
+            <tr class="tall-row"><td></td><td></td><td style="text-align:center;">☐ Ya &nbsp; ☐ Belum</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">9</span>
+          <span class="q-text">Apa yang kamu pelajari tentang dirimu sendiri saat menghadapi hambatan tersebut?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- E: CHECKLIST HARIAN -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">✅</span>
+      <span class="section-title">Bagian E — Checklist Progres Harian</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">10</span>
+          <span class="q-text">Beri tanda ✓ pada setiap hari saat kamu telah menyelesaikan kegiatan pengumpulan data:</span>
+        </div>
+        <div class="daily-check-grid">
+          <div class="day-cell">
+            <div class="day-cell-num">Hari 1</div>
+            <div class="day-cell-date"></div>
+            <div class="day-cell-box"></div>
+            <div style="font-size:0.6rem; color:var(--muted);">Selesai</div>
+          </div>
+          <div class="day-cell">
+            <div class="day-cell-num">Hari 2</div>
+            <div class="day-cell-date"></div>
+            <div class="day-cell-box"></div>
+            <div style="font-size:0.6rem; color:var(--muted);">Selesai</div>
+          </div>
+          <div class="day-cell">
+            <div class="day-cell-num">Hari 3</div>
+            <div class="day-cell-date"></div>
+            <div class="day-cell-box"></div>
+            <div style="font-size:0.6rem; color:var(--muted);">Selesai</div>
+          </div>
+          <div class="day-cell">
+            <div class="day-cell-num">Hari 4</div>
+            <div class="day-cell-date"></div>
+            <div class="day-cell-box"></div>
+            <div style="font-size:0.6rem; color:var(--muted);">Selesai</div>
+          </div>
+          <div class="day-cell">
+            <div class="day-cell-num">Hari 5</div>
+            <div class="day-cell-date"></div>
+            <div class="day-cell-box"></div>
+            <div style="font-size:0.6rem; color:var(--muted);">Selesai</div>
+          </div>
+          <div class="day-cell">
+            <div class="day-cell-num">Hari 6</div>
+            <div class="day-cell-date"></div>
+            <div class="day-cell-box"></div>
+            <div style="font-size:0.6rem; color:var(--muted);">Selesai</div>
+          </div>
+          <div class="day-cell">
+            <div class="day-cell-num">Hari 7</div>
+            <div class="day-cell-date"></div>
+            <div class="day-cell-box"></div>
+            <div style="font-size:0.6rem; color:var(--muted);">Selesai</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="question" style="margin-top:16px;">
+        <div class="q-label">
+          <span class="q-num">11</span>
+          <span class="q-text">Centang pernyataan berikut saat kamu siap lanjut ke Tahap 4:</span>
+        </div>
+        <div class="check-list">
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">Saya sudah mengumpulkan data yang cukup untuk menjawab pertanyaan penelitian saya.</div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">Semua data sudah dicatat dengan rapi di logbook dan LK ini.</div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">Saya sudah menyimpan bukti-bukti pengumpulan data (foto, catatan, rekaman).</div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">Saya sudah memiliki gambaran awal tentang kesimpulan dari projek saya.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SIGN OFF -->
+  <div class="signoff">
+    <div class="signoff-title">✅ Persetujuan Penyelesaian Tahap 3</div>
+    <p style="font-size:0.78rem; color:#374151; margin-bottom:14px;">
+      Dengan menandatangani lembar ini, saya menyatakan bahwa seluruh data di atas adalah hasil pengumpulan saya sendiri dan saya siap melanjutkan ke Tahap 4: Penyajian Hasil.
+    </p>
+    <div class="sign-grid">
+      <div class="sign-field">
+        <div class="sign-label">Tanda Tangan Siswa</div>
+        <div class="sign-line"></div>
+        <div class="sign-name-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Nama &amp; Tanda Tangan</div>
+      </div>
+      <div class="sign-field">
+        <div class="sign-label">Paraf Guru Pendamping</div>
+        <div class="sign-line"></div>
+        <div class="sign-name-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Nama &amp; Paraf</div>
+      </div>
+      <div class="sign-field">
+        <div class="sign-label">Tanggal Selesai</div>
+        <div class="sign-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Tanggal / Bulan / Tahun</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    SD Muhammadiyah 01 Kukusan · LK Tahap 3: Pelaksanaan &amp; Pengumpulan Data · Projek Student-Driven Inquiry · TP 2025/2026
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LK Tahap 4 – Penyajian Hasil | Projek Student-Driven Inquiry</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --amber: #d97706; --amber-dark: #92400e; --amber-deep: #78350f;
+  --amber-light: #fef3c7; --amber-pale: #fffbeb;
+  --green: #065f46; --green-light: #d1fae5; --green-pale: #f0fdf4;
+  --text: #1f2937; --muted: #6b7280; --border: #d1d5db; --white: #ffffff;
+}
+body { font-family: 'Nunito', sans-serif; font-size: 11pt; color: var(--text); background: #fff; line-height: 1.6; }
+.screen-nav { background: linear-gradient(135deg, var(--amber-deep), var(--amber)); color: #fff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+.screen-nav a { color: #fff; text-decoration: none; font-size: 0.82rem; font-weight: 700; opacity: 0.85; }
+.screen-nav a:hover { opacity: 1; }
+.screen-nav-right { display: flex; gap: 10px; }
+.btn-print { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+.doc { max-width: 794px; margin: 24px auto; padding: 40px 48px; background: #fff; box-shadow: 0 0 40px rgba(0,0,0,0.12); }
+.letterhead { display: flex; align-items: center; gap: 20px; padding-bottom: 16px; border-bottom: 3px solid var(--amber-deep); }
+.school-logo { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--amber-deep), var(--amber)); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
+.school-info { flex: 1; }
+.school-name { font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 800; color: var(--amber-deep); line-height: 1.2; }
+.school-sub { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+.lk-badge { text-align: right; }
+.lk-badge-number { font-family: 'Baloo 2', cursive; font-size: 2.5rem; font-weight: 800; color: var(--amber); line-height: 1; }
+.lk-badge-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.doc-title-block { text-align: center; padding: 14px 0 18px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+.tahap-label { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--amber); margin-bottom: 4px; }
+.doc-title { font-family: 'Baloo 2', cursive; font-size: 1.4rem; font-weight: 800; color: var(--amber-deep); }
+.doc-subtitle { font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-top: 4px; }
+.student-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; background: var(--amber-pale); border: 1.5px solid #fde68a; border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; }
+.info-field { display: flex; flex-direction: column; gap: 3px; }
+.info-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--amber-dark); }
+.info-line { border-bottom: 1.5px solid var(--amber); min-height: 22px; }
+.info-field.full { grid-column: 1 / -1; }
+.section { margin-bottom: 22px; }
+.section-header { display: flex; align-items: center; gap: 10px; background: linear-gradient(90deg, var(--amber-deep), var(--amber-dark)); color: #fff; padding: 8px 14px; border-radius: 8px 8px 0 0; }
+.section-icon { font-size: 1rem; }
+.section-title { font-family: 'Baloo 2', cursive; font-size: 0.92rem; font-weight: 800; }
+.section-body { border: 1.5px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; padding: 18px; }
+.question { margin-bottom: 18px; }
+.question:last-child { margin-bottom: 0; }
+.q-label { font-size: 0.8rem; font-weight: 700; color: var(--amber-dark); margin-bottom: 5px; display: flex; gap: 8px; }
+.q-num { background: var(--amber-light); color: var(--amber-dark); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; flex-shrink: 0; }
+.q-text { flex: 1; }
+.q-hint { font-size: 0.7rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; font-style: italic; padding-left: 30px; }
+.write-lines { display: flex; flex-direction: column; gap: 8px; margin-left: 30px; }
+.write-line { border-bottom: 1px solid #d1d5db; min-height: 26px; }
+.write-box { border: 1px dashed var(--border); border-radius: 6px; background: #fafafa; min-height: 72px; margin-left: 30px; padding: 8px 12px; }
+.check-list { margin-left: 30px; display: flex; flex-direction: column; gap: 8px; }
+.check-item { display: flex; align-items: flex-start; gap: 10px; }
+.check-box { width: 16px; height: 16px; border: 1.5px solid var(--border); border-radius: 3px; flex-shrink: 0; margin-top: 3px; background: #fff; }
+.check-text { font-size: 0.8rem; color: var(--text); line-height: 1.5; }
+.check-sub { font-size: 0.72rem; color: var(--muted); font-style: italic; }
+.check-fill { border-bottom: 1px solid var(--border); display: inline-block; min-width: 120px; }
+.lk-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.lk-table th { background: var(--amber-light); color: var(--amber-dark); font-weight: 800; padding: 7px 10px; text-align: left; border: 1px solid #fde68a; font-size: 0.72rem; }
+.lk-table td { border: 1px solid var(--border); padding: 6px 8px; vertical-align: top; }
+.lk-table .tall-row td { height: 44px; }
+.callout { display: flex; gap: 12px; align-items: flex-start; border-radius: 8px; padding: 12px 16px; margin-bottom: 18px; }
+.callout-tip { background: #eff6ff; border-left: 4px solid #3b82f6; }
+.callout-warn { background: #fee2e2; border-left: 4px solid #ef4444; }
+.callout-icon { font-size: 1.1rem; margin-top: 1px; flex-shrink: 0; }
+.callout-body strong { font-size: 0.78rem; font-weight: 800; display: block; margin-bottom: 2px; }
+.callout-body p, .callout-body ul { font-size: 0.76rem; color: #374151; line-height: 1.6; }
+.callout-body ul { margin-left: 16px; }
+.signoff { background: var(--green-pale); border: 1.5px solid #6ee7b7; border-radius: 10px; padding: 18px 20px; margin-top: 24px; }
+.signoff-title { font-family: 'Baloo 2', cursive; font-size: 0.9rem; font-weight: 800; color: var(--green); margin-bottom: 12px; }
+.sign-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.sign-field { display: flex; flex-direction: column; gap: 4px; }
+.sign-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--green); }
+.sign-line { border-bottom: 1.5px solid #6ee7b7; min-height: 36px; }
+.sign-name-line { border-bottom: 1px solid #a7f3d0; min-height: 22px; margin-top: 6px; }
+.doc-footer { text-align: center; margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.65rem; color: var(--muted); font-weight: 600; }
+/* STORYBOARD */
+.storyboard { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-left: 30px; }
+.story-card { border: 1.5px solid var(--border); border-radius: 8px; padding: 12px; }
+.story-card-num { font-size: 0.65rem; font-weight: 800; color: var(--amber-dark); text-transform: uppercase; margin-bottom: 6px; }
+.story-card-title-line { border-bottom: 1.5px solid var(--amber); min-height: 22px; margin-bottom: 8px; }
+.story-card-content { border: 1px dashed var(--border); border-radius: 4px; min-height: 60px; padding: 6px; font-size: 0.7rem; color: var(--muted); font-style: italic; }
+/* QA SECTION */
+.qa-item { border: 1.5px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
+.qa-q { font-size: 0.72rem; font-weight: 800; color: var(--amber-dark); margin-bottom: 6px; }
+.qa-a { font-size: 0.72rem; color: var(--muted); font-style: italic; margin-bottom: 6px; }
+.qa-lines { display: flex; flex-direction: column; gap: 6px; }
+.qa-line { border-bottom: 1px solid #e5e7eb; min-height: 22px; }
+@media print {
+  .screen-nav { display: none; }
+  body { font-size: 10pt; }
+  .doc { max-width: 100%; margin: 0; padding: 20px 28px; box-shadow: none; }
+  .section { page-break-inside: avoid; }
+  .question { page-break-inside: avoid; }
+  .storyboard { page-break-inside: avoid; }
+  @page { size: A4; margin: 1.8cm 1.5cm; }
+}
+@media (max-width: 600px) {
+  .doc { padding: 20px 16px; margin: 0; }
+  .student-info-grid, .sign-grid, .storyboard { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="screen-nav">
+  <a href="../">← Kembali ke Panduan Projek</a>
+  <div class="screen-nav-right">
+    <a href="index.html">📁 Semua LK</a>
+    <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+  </div>
+</nav>
+
+<div class="doc">
+
+  <div class="letterhead">
+    <div class="school-logo">📘</div>
+    <div class="school-info">
+      <div class="school-name">SD Muhammadiyah 01 Kukusan</div>
+      <div class="school-sub">Projek Student-Driven Inquiry · Kelas 6 · TP 2025/2026</div>
+    </div>
+    <div class="lk-badge">
+      <div class="lk-badge-number">LK4</div>
+      <div class="lk-badge-label">Lembar Kerja</div>
+    </div>
+  </div>
+
+  <div class="doc-title-block">
+    <div class="tahap-label">Tahap 4 dari 5 · Student-Driven Inquiry</div>
+    <div class="doc-title">🎤 Penyajian Hasil Projek</div>
+    <div class="doc-subtitle">Merancang dan mempersiapkan cara terbaik menyampaikan temuan kepada audiens</div>
+  </div>
+
+  <div class="student-info-grid">
+    <div class="info-field">
+      <div class="info-label">Nama Siswa / Anggota Kelompok</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Kelas</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field full">
+      <div class="info-label">Judul / Topik Projek</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field full">
+      <div class="info-label">Pertanyaan Penelitian</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Tanggal Penyajian Direncanakan</div>
+      <div class="info-line"></div>
+    </div>
+    <div class="info-field">
+      <div class="info-label">Format Penyajian</div>
+      <div class="info-line"></div>
+    </div>
+  </div>
+
+  <div class="callout callout-tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <strong>Petunjuk Pengerjaan</strong>
+      <p>Penyajian yang baik bukan tentang seberapa bagus desain poster atau videomu, melainkan seberapa jelas kamu bisa menyampaikan temuanmu. Fokus pada isi dan pesan — bukan penampilan semata.</p>
+    </div>
+  </div>
+
+  <!-- A: PERENCANAAN -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🗺️</span>
+      <span class="section-title">Bagian A — Perencanaan Penyajian</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">1</span>
+          <span class="q-text">Dalam bentuk apa kamu akan menyajikan hasil projekmu? (Pilih dan beri tanda ✓)</span>
+        </div>
+        <div class="check-list">
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text"><strong>📊 Poster / Infografis</strong> — cocok untuk menampilkan data visual dan diagram</div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text"><strong>🎤 Presentasi Lisan</strong> — cocok untuk menyampaikan cerita dan argumen langsung</div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text"><strong>🎬 Video Dokumentasi</strong> — cocok untuk menunjukkan proses secara visual</div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text"><strong>📄 Laporan Tertulis</strong> — cocok untuk menjelaskan secara mendalam dan terstruktur</div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text"><strong>🛠️ Produk / Demo Langsung</strong> — cocok untuk projek yang menghasilkan solusi nyata</div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">Lainnya: <span class="check-fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">2</span>
+          <span class="q-text">Mengapa kamu memilih format tersebut? Apa yang membuatmu yakin format ini paling tepat untuk projekmu?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">3</span>
+          <span class="q-text">Siapa audiensmu? Apa yang sudah mereka ketahui tentang topikmu, dan apa yang perlu dijelaskan lebih detail?</span>
+        </div>
+        <table class="lk-table" style="margin-top:8px;">
+          <thead>
+            <tr>
+              <th style="width:33%">Audiens</th>
+              <th style="width:33%">Yang Sudah Mereka Ketahui</th>
+              <th style="width:34%">Yang Perlu Dijelaskan Khusus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tall-row"><td></td><td></td><td></td></tr>
+            <tr class="tall-row"><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- B: STRUKTUR PENYAJIAN -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">📐</span>
+      <span class="section-title">Bagian B — Struktur &amp; Alur Penyajian</span>
+    </div>
+    <div class="section-body">
+
+      <div class="callout callout-tip" style="margin-bottom:16px;">
+        <span class="callout-icon">🏗️</span>
+        <div class="callout-body">
+          <strong>Struktur Penyajian yang Kuat</strong>
+          <ul>
+            <li><strong>Pembuka</strong> — Tarik perhatian audiens dengan pertanyaan, fakta menarik, atau cerita pendek.</li>
+            <li><strong>Isi / Temuan</strong> — Jelaskan data dan temuan secara logis dan mudah dipahami.</li>
+            <li><strong>Kesimpulan</strong> — Jawab pertanyaan penelitianmu dengan jelas berdasarkan data.</li>
+            <li><strong>Penutup</strong> — Sampaikan apa yang bisa diambil manfaatnya oleh audiens.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">4</span>
+          <span class="q-text">Rancang struktur penyajianmu — apa yang akan kamu sampaikan di setiap bagian?</span>
+        </div>
+        <div class="storyboard">
+          <div class="story-card">
+            <div class="story-card-num">🎬 Bagian 1: Pembuka</div>
+            <div style="font-size:0.7rem; color:var(--muted); margin-bottom:4px;">Judul / Kalimat Pembuka:</div>
+            <div class="story-card-title-line"></div>
+            <div style="font-size:0.7rem; color:var(--muted); margin-top:8px; margin-bottom:4px;">Cara menarik perhatian audiens:</div>
+            <div class="story-card-content"></div>
+          </div>
+          <div class="story-card">
+            <div class="story-card-num">📊 Bagian 2: Temuan Utama</div>
+            <div style="font-size:0.7rem; color:var(--muted); margin-bottom:4px;">Data / fakta utama yang disajikan:</div>
+            <div class="story-card-title-line"></div>
+            <div style="font-size:0.7rem; color:var(--muted); margin-top:8px; margin-bottom:4px;">Format tampilan data:</div>
+            <div class="story-card-content"></div>
+          </div>
+          <div class="story-card">
+            <div class="story-card-num">🧩 Bagian 3: Analisis &amp; Makna</div>
+            <div style="font-size:0.7rem; color:var(--muted); margin-bottom:4px;">Apa arti temuan ini? Apa pola yang terlihat?</div>
+            <div class="story-card-title-line"></div>
+            <div style="font-size:0.7rem; color:var(--muted); margin-top:8px; margin-bottom:4px;">Hubungan dengan pertanyaan penelitian:</div>
+            <div class="story-card-content"></div>
+          </div>
+          <div class="story-card">
+            <div class="story-card-num">✅ Bagian 4: Kesimpulan &amp; Penutup</div>
+            <div style="font-size:0.7rem; color:var(--muted); margin-bottom:4px;">Jawaban atas pertanyaan penelitianmu:</div>
+            <div class="story-card-title-line"></div>
+            <div style="font-size:0.7rem; color:var(--muted); margin-top:8px; margin-bottom:4px;">Manfaat / rekomendasi untuk audiens:</div>
+            <div class="story-card-content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">5</span>
+          <span class="q-text">Berapa lama rencana waktu penyajianmu?</span>
+        </div>
+        <table class="lk-table" style="margin-top:8px;">
+          <thead>
+            <tr>
+              <th>Bagian Penyajian</th>
+              <th style="width:25%">Estimasi Waktu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Pembuka</td><td></td></tr>
+            <tr><td>Temuan Utama</td><td></td></tr>
+            <tr><td>Analisis &amp; Makna</td><td></td></tr>
+            <tr><td>Kesimpulan &amp; Penutup</td><td></td></tr>
+            <tr><td>Tanya Jawab</td><td></td></tr>
+            <tr><td style="font-weight:800; background:var(--amber-pale);">TOTAL WAKTU</td><td style="font-weight:800; background:var(--amber-pale);"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- C: DATA & BUKTI -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">📊</span>
+      <span class="section-title">Bagian C — Data &amp; Bukti yang Akan Ditampilkan</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">6</span>
+          <span class="q-text">Tuliskan data atau bukti utama yang akan kamu tampilkan untuk mendukung kesimpulanmu:</span>
+        </div>
+        <table class="lk-table" style="margin-top:8px;">
+          <thead>
+            <tr>
+              <th style="width:40%">Data / Bukti</th>
+              <th style="width:30%">Sumber / Asal Data</th>
+              <th style="width:30%">Cara Menampilkan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tall-row"><td></td><td></td><td></td></tr>
+            <tr class="tall-row"><td></td><td></td><td></td></tr>
+            <tr class="tall-row"><td></td><td></td><td></td></tr>
+            <tr class="tall-row"><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">7</span>
+          <span class="q-text">Bagaimana kamu akan menampilkan data agar mudah dipahami audiens?</span>
+        </div>
+        <div class="check-list">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">📊 Tabel / Diagram batang</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">📈 Grafik garis / pie chart</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">📷 Foto dokumentasi</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">💬 Kutipan dari narasumber</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">📋 Daftar poin-poin penting</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Lainnya: <span class="check-fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- D: Q&A -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🙋</span>
+      <span class="section-title">Bagian D — Persiapan Tanya Jawab</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">8</span>
+          <span class="q-text">Prediksi 3 pertanyaan yang mungkin ditanyakan audiens setelah presentasimu, dan siapkan jawabannya:</span>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-q">Pertanyaan 1 yang mungkin ditanyakan:</div>
+          <div class="qa-lines"><div class="qa-line"></div></div>
+          <div class="qa-a" style="margin-top:8px;">Jawabanku:</div>
+          <div class="qa-lines"><div class="qa-line"></div><div class="qa-line"></div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-q">Pertanyaan 2 yang mungkin ditanyakan:</div>
+          <div class="qa-lines"><div class="qa-line"></div></div>
+          <div class="qa-a" style="margin-top:8px;">Jawabanku:</div>
+          <div class="qa-lines"><div class="qa-line"></div><div class="qa-line"></div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-q">Pertanyaan 3 yang mungkin ditanyakan:</div>
+          <div class="qa-lines"><div class="qa-line"></div></div>
+          <div class="qa-a" style="margin-top:8px;">Jawabanku:</div>
+          <div class="qa-lines"><div class="qa-line"></div><div class="qa-line"></div></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">9</span>
+          <span class="q-text">Apa yang akan kamu lakukan jika ada pertanyaan yang tidak bisa kamu jawab saat itu?</span>
+        </div>
+        <div class="write-lines">
+          <div class="write-line"></div>
+          <div class="write-line"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- E: CHECKLIST -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">✅</span>
+      <span class="section-title">Bagian E — Checklist Kesiapan Penyajian</span>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">10</span>
+          <span class="q-text">Centang semua yang sudah siap sebelum kamu tampil:</span>
+        </div>
+        <div class="check-list">
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">
+              <strong>Konten sudah lengkap</strong>
+              <div class="check-sub">Semua bagian penyajian (pembuka, isi, kesimpulan, penutup) sudah disiapkan.</div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">
+              <strong>Data dan bukti sudah disiapkan</strong>
+              <div class="check-sub">Semua data, foto, tabel, atau diagram sudah siap ditampilkan.</div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">
+              <strong>Sudah berlatih minimal 1 kali</strong>
+              <div class="check-sub">Sudah mencoba menyajikan kepada teman atau guru untuk mendapat masukan.</div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">
+              <strong>Siap menjawab pertanyaan audiens</strong>
+              <div class="check-sub">Sudah memikirkan kemungkinan pertanyaan dan jawabannya.</div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div class="check-text">
+              <strong>Waktu penyajian sudah diperkirakan</strong>
+              <div class="check-sub">Tidak terlalu singkat (terburu-buru) atau terlalu lama (membosankan).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="q-label">
+          <span class="q-num">11</span>
+          <span class="q-text">Apa satu hal yang paling ingin kamu sampaikan kepada audiens dari seluruh projekmu?</span>
+        </div>
+        <div class="q-hint">Ini adalah pesan utama ("takeaway") yang ingin selalu diingat audiensmu.</div>
+        <div class="write-box" style="min-height:56px; border: 2px solid var(--amber); background: var(--amber-pale);"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SIGN OFF -->
+  <div class="signoff">
+    <div class="signoff-title">✅ Persetujuan Penyelesaian Tahap 4</div>
+    <p style="font-size:0.78rem; color:#374151; margin-bottom:14px;">
+      Dengan menandatangani lembar ini, saya menyatakan bahwa saya sudah mempersiapkan penyajian hasil projek dan siap melanjutkan ke Tahap 5: Refleksi &amp; Pembelajaran.
+    </p>
+    <div class="sign-grid">
+      <div class="sign-field">
+        <div class="sign-label">Tanda Tangan Siswa</div>
+        <div class="sign-line"></div>
+        <div class="sign-name-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Nama &amp; Tanda Tangan</div>
+      </div>
+      <div class="sign-field">
+        <div class="sign-label">Paraf Guru Pendamping</div>
+        <div class="sign-line"></div>
+        <div class="sign-name-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Nama &amp; Paraf</div>
+      </div>
+      <div class="sign-field">
+        <div class="sign-label">Tanggal Selesai</div>
+        <div class="sign-line"></div>
+        <div style="font-size:0.65rem; color:var(--muted);">Tanggal / Bulan / Tahun</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    SD Muhammadiyah 01 Kukusan · LK Tahap 4: Penyajian Hasil · Projek Student-Driven Inquiry · TP 2025/2026
+  </div>
+
+</div>
+</body>
+</html>
