@@ -28,6 +28,14 @@ body { font-family: 'Nunito', sans-serif; font-size: 11pt; color: var(--text); b
   font-size: 0.78rem; font-weight: 700; cursor: pointer;
 }
 .btn-print:hover { background: rgba(255,255,255,0.35); }
+.btn-docx {
+  background: #f0fdf4; border: 1px solid #6ee7b7;
+  color: #065f46; padding: 6px 16px; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 700; text-decoration: none;
+  transition: background 0.2s;
+}
+.btn-docx:hover { background: #d1fae5; }
+
 .doc { max-width: 794px; margin: 24px auto; padding: 40px 48px; background: #fff; box-shadow: 0 0 40px rgba(0,0,0,0.12); }
 .letterhead { display: flex; align-items: center; gap: 20px; padding-bottom: 16px; border-bottom: 3px solid var(--amber-deep); }
 .school-logo { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--amber-deep), var(--amber)); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
@@ -115,6 +123,7 @@ body { font-family: 'Nunito', sans-serif; font-size: 11pt; color: var(--text); b
   <div class="screen-nav-right">
     <a href="index.html">📁 Semua LK</a>
     <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+    <a class="btn-docx" href="lk-2.docx" download>📄 Unduh .docx</a>
   </div>
 </nav>
 

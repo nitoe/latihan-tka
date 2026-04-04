@@ -48,6 +48,14 @@ body {
   transition: background 0.2s;
 }
 .btn-print:hover { background: rgba(255,255,255,0.35); }
+.btn-docx {
+  background: #f0fdf4; border: 1px solid #6ee7b7;
+  color: #065f46; padding: 6px 16px; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 700; text-decoration: none;
+  transition: background 0.2s;
+}
+.btn-docx:hover { background: #d1fae5; }
+
 
 /* ── DOCUMENT WRAPPER ── */
 .doc {
@@ -281,6 +289,7 @@ body {
   <div class="screen-nav-right">
     <a href="index.html">📁 Semua LK</a>
     <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+    <a class="btn-docx" href="lk-1.docx" download>📄 Unduh .docx</a>
   </div>
 </nav>
 

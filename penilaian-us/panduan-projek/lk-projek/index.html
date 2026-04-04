@@ -80,6 +80,14 @@
   .step-text { font-size: 0.82rem; color: var(--text); line-height: 1.5; }
   .step-text strong { color: var(--amber-dark); }
 
+
+  .lk-card-downloads { display: flex; flex-direction: column; gap: 6px; padding: 0 14px; border-left: 1px solid var(--border); align-items: center; justify-content: center; flex-shrink: 0; }
+  .btn-dl { display: flex; align-items: center; gap: 5px; padding: 6px 13px; border-radius: 8px; font-size: 0.68rem; font-weight: 800; text-decoration: none; white-space: nowrap; transition: background 0.15s; }
+  .btn-dl-html { background: var(--amber-light); color: var(--amber-dark); border: 1.5px solid #fde68a; }
+  .btn-dl-html:hover { background: #fde68a; }
+  .btn-dl-docx { background: #f0fdf4; color: #065f46; border: 1.5px solid #6ee7b7; }
+  .btn-dl-docx:hover { background: #d1fae5; }
+  .dl-label { font-size: 0.58rem; color: var(--text-muted); font-weight: 600; text-align: center; }
   /* LK CARDS */
   .lk-cards { display: flex; flex-direction: column; gap: 14px; }
   .lk-card {
@@ -157,7 +165,7 @@
     to   { opacity: 1; transform: translateY(0); }
   }
   @media (max-width: 480px) {
-    .lk-card-cta { display: none; }
+    .lk-card-downloads { display: none; }
   }
 </style>
 </head>
@@ -193,7 +201,7 @@
       </div>
       <div class="how-to-step">
         <div class="step-bullet">2</div>
-        <div class="step-text"><strong>Klik tombol "Cetak / Simpan PDF"</strong> di bagian atas halaman, atau tekan <code>Ctrl+P</code> (Windows) / <code>⌘+P</code> (Mac).</div>
+        <div class="step-text"><strong>Pilih format yang diinginkan:</strong> klik <em>Buka &amp; Cetak</em> untuk tampilan web (PDF-friendly), atau klik <em>Unduh .docx</em> untuk mendapatkan file Word yang bisa diedit sebelum dicetak.</div>
       </div>
       <div class="how-to-step">
         <div class="step-bullet">3</div>
@@ -226,10 +234,10 @@
           <span class="lk-tag">5 Bagian</span>
         </div>
       </div>
-      <div class="lk-card-cta">
-        <div class="cta-icon">🔍</div>
-        <div class="cta-btn">Buka &amp; Cetak</div>
-        <div class="cta-sub">Klik untuk membuka</div>
+      <div class="lk-card-downloads">
+        <a class="btn-dl btn-dl-html" href="lk-1.html" title="Buka tampilan web untuk dicetak">🖨️ Buka &amp; Cetak</a>
+        <a class="btn-dl btn-dl-docx" href="lk-1.docx" download title="Unduh file Word (.docx)">📄 Unduh .docx</a>
+        <div class="dl-label">Word · Siap edit</div>
       </div>
     </a>
 
@@ -249,10 +257,10 @@
           <span class="lk-tag">5 Bagian</span>
         </div>
       </div>
-      <div class="lk-card-cta">
-        <div class="cta-icon">📋</div>
-        <div class="cta-btn">Buka &amp; Cetak</div>
-        <div class="cta-sub">Klik untuk membuka</div>
+      <div class="lk-card-downloads">
+        <a class="btn-dl btn-dl-html" href="lk-2.html" title="Buka tampilan web untuk dicetak">🖨️ Buka &amp; Cetak</a>
+        <a class="btn-dl btn-dl-docx" href="lk-2.docx" download title="Unduh file Word (.docx)">📄 Unduh .docx</a>
+        <div class="dl-label">Word · Siap edit</div>
       </div>
     </a>
 
@@ -272,10 +280,10 @@
           <span class="lk-tag">5 Bagian</span>
         </div>
       </div>
-      <div class="lk-card-cta">
-        <div class="cta-icon">🔬</div>
-        <div class="cta-btn">Buka &amp; Cetak</div>
-        <div class="cta-sub">Klik untuk membuka</div>
+      <div class="lk-card-downloads">
+        <a class="btn-dl btn-dl-html" href="lk-3.html" title="Buka tampilan web untuk dicetak">🖨️ Buka &amp; Cetak</a>
+        <a class="btn-dl btn-dl-docx" href="lk-3.docx" download title="Unduh file Word (.docx)">📄 Unduh .docx</a>
+        <div class="dl-label">Word · Siap edit</div>
       </div>
     </a>
 
@@ -295,10 +303,10 @@
           <span class="lk-tag">5 Bagian</span>
         </div>
       </div>
-      <div class="lk-card-cta">
-        <div class="cta-icon">🎤</div>
-        <div class="cta-btn">Buka &amp; Cetak</div>
-        <div class="cta-sub">Klik untuk membuka</div>
+      <div class="lk-card-downloads">
+        <a class="btn-dl btn-dl-html" href="lk-4.html" title="Buka tampilan web untuk dicetak">🖨️ Buka &amp; Cetak</a>
+        <a class="btn-dl btn-dl-docx" href="lk-4.docx" download title="Unduh file Word (.docx)">📄 Unduh .docx</a>
+        <div class="dl-label">Word · Siap edit</div>
       </div>
     </a>
 
@@ -318,10 +326,10 @@
           <span class="lk-tag">5 Bagian</span>
         </div>
       </div>
-      <div class="lk-card-cta">
-        <div class="cta-icon">🌱</div>
-        <div class="cta-btn">Buka &amp; Cetak</div>
-        <div class="cta-sub">Klik untuk membuka</div>
+      <div class="lk-card-downloads">
+        <a class="btn-dl btn-dl-html" href="lk-5.html" title="Buka tampilan web untuk dicetak">🖨️ Buka &amp; Cetak</a>
+        <a class="btn-dl btn-dl-docx" href="lk-5.docx" download title="Unduh file Word (.docx)">📄 Unduh .docx</a>
+        <div class="dl-label">Word · Siap edit</div>
       </div>
     </a>
 
