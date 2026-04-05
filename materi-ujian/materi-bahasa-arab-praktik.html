@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Bahasa Arab Praktik – Ujian Sekolah Kelas 6</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky:       #0284c7;
+      --sky-dark:  #0369a1;
+      --sky-xdark: #075985;
+      --sky-light: #e0f2fe;
+      --sky-pale:  #f0f9ff;
+      --teal:      #0d9488;
+      --teal-light:#ccfbf1;
+      --amber:     #d97706;
+      --amber-light:#fef3c7;
+      --green:     #059669;
+      --green-light:#d1fae5;
+      --purple:    #7c3aed;
+      --purple-light:#f5f3ff;
+      --red:       #dc2626;
+      --red-light: #fef2f2;
+      --orange:    #ea580c;
+      --orange-light:#fff7ed;
+      --blue:      #2563eb;
+      --blue-light:#dbeafe;
+      --emerald:   #059669;
+      --emerald-light:#d1fae5;
+      --text:      #1f2a37;
+      --text-muted:#6b7280;
+      --bg:        #f0f9ff;
+      --white:     #ffffff;
+      --border:    #e5e7eb;
+      --radius:    14px;
+      --shadow:    0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: clamp(14px, 3.2vw, 16px); scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.75;
+    }
+
+    /* ─── ARABIC TEXT ─── */
+    .arabic {
+      font-family: 'Arial', 'Times New Roman', serif;
+      direction: rtl;
+      unicode-bidi: bidi-override;
+      font-size: 1.3em;
+      line-height: 1.9;
+      color: var(--sky-xdark);
+    }
+    .arabic-sm {
+      font-family: 'Arial', 'Times New Roman', serif;
+      direction: rtl;
+      unicode-bidi: bidi-override;
+      font-size: 1.1em;
+      line-height: 1.9;
+    }
+    .arabic-lg {
+      font-family: 'Arial', 'Times New Roman', serif;
+      direction: rtl;
+      unicode-bidi: bidi-override;
+      font-size: 1.6em;
+      line-height: 2;
+      color: var(--sky-xdark);
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: linear-gradient(135deg, #075985, #0369a1 50%, #0284c7);
+      color: white;
+      padding: 0 20px;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .header-brand { display: flex; align-items: center; gap: 10px; }
+    .logo { font-size: 1.5rem; }
+    .brand-name {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(0.82rem, 2.6vw, 1rem);
+      font-weight: 800; line-height: 1.1;
+    }
+    .sub-brand { font-size: 0.62rem; opacity: 0.8; font-weight: 600; }
+    .header-back {
+      display: flex; align-items: center; gap: 5px;
+      color: white; text-decoration: none;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.72rem; font-weight: 700;
+      transition: background 0.2s;
+    }
+    .header-back:hover { background: rgba(255,255,255,0.3); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(160deg, #075985 0%, #0369a1 40%, #0284c7 100%);
+      color: white;
+      padding: 40px 20px 48px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-arabic {
+      font-family: 'Arial', 'Times New Roman', serif;
+      font-size: clamp(1.8rem, 6vw, 2.8rem);
+      direction: rtl;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 10px;
+      position: relative;
+      animation: float 3s ease-in-out infinite;
+      letter-spacing: 4px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+    .hero h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.3rem, 4vw, 1.9rem);
+      font-weight: 800; margin-bottom: 6px; position: relative;
+    }
+    .hero p {
+      font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+      opacity: 0.88; font-weight: 600;
+      max-width: 540px; margin: 0 auto;
+      position: relative; line-height: 1.6;
+    }
+    .hero-badges {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      justify-content: center; margin-top: 16px; position: relative;
+    }
+    .hero-badge {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.72rem; font-weight: 700;
+    }
+
+    /* ─── MAIN ─── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 16px 60px;
+    }
+
+    /* ─── INFO BOX ─── */
+    .info-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--sky);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 28px;
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 0.82rem; line-height: 1.6;
+    }
+    .info-box .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .info-box strong { display: block; color: var(--sky-dark); font-size: 0.88rem; margin-bottom: 2px; }
+
+    /* ─── QUICK NAV ─── */
+    .toc {
+      background: var(--white);
+      border: 2px solid var(--sky-light);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      margin-bottom: 28px;
+    }
+    .toc-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.9rem; font-weight: 800;
+      color: var(--sky-dark);
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    @media (min-width: 600px) { .toc-grid { grid-template-columns: repeat(4, 1fr); } }
+    .toc-link {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 10px; border-radius: 10px;
+      text-decoration: none; font-size: 0.76rem; font-weight: 700;
+      transition: all 0.15s;
+    }
+    .toc-link.sky    { background: var(--sky-light);    color: var(--sky-dark); }
+    .toc-link.teal   { background: var(--teal-light);   color: var(--teal); }
+    .toc-link.amber  { background: var(--amber-light);  color: var(--amber); }
+    .toc-link.purple { background: var(--purple-light); color: var(--purple); }
+    .toc-link:hover  { filter: brightness(0.92); transform: translateY(-1px); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── SECTION ─── */
+    .section {
+      margin-bottom: 44px;
+      animation: fadeUp 0.5s ease both;
+    }
+    .section:nth-child(2) { animation-delay: 0.08s; }
+    .section:nth-child(3) { animation-delay: 0.16s; }
+    .section:nth-child(4) { animation-delay: 0.24s; }
+    .section:nth-child(5) { animation-delay: 0.32s; }
+
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      color: white;
+    }
+    .section-header.sky    { background: linear-gradient(135deg, var(--sky-xdark), var(--sky)); }
+    .section-header.teal   { background: linear-gradient(135deg, #0f766e, var(--teal)); }
+    .section-header.amber  { background: linear-gradient(135deg, #b45309, var(--amber)); }
+    .section-header.purple { background: linear-gradient(135deg, #5b21b6, var(--purple)); }
+    .section-header.dark   { background: linear-gradient(135deg, #111827, #374151); }
+
+    .section-icon { font-size: 1.8rem; }
+    .section-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.05rem; font-weight: 800;
+      line-height: 1.2;
+    }
+    .section-arabtitle {
+      font-family: 'Arial', 'Times New Roman', serif;
+      font-size: 1rem; opacity: 0.85;
+      direction: rtl;
+    }
+    .section-sub { font-size: 0.7rem; opacity: 0.8; font-weight: 600; }
+    .bobot-pill {
+      background: rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 12px;
+      padding: 2px 10px; font-size: 0.68rem; font-weight: 800;
+      margin-left: auto; flex-shrink: 0;
+    }
+
+    .section-body {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 20px 18px;
+    }
+
+    /* ─── TWO COL ─── */
+    .two-col {
+      display: grid; grid-template-columns: 1fr;
+      gap: 12px; margin-bottom: 16px;
+    }
+    @media (min-width: 580px) { .two-col { grid-template-columns: 1fr 1fr; } }
+    .three-col {
+      display: grid; grid-template-columns: 1fr;
+      gap: 12px; margin-bottom: 16px;
+    }
+    @media (min-width: 580px) { .three-col { grid-template-columns: 1fr 1fr 1fr; } }
+
+    /* ─── MINI CARD ─── */
+    .mini-card {
+      border-radius: 10px; padding: 12px 14px;
+      font-size: 0.8rem; line-height: 1.6;
+    }
+    .mini-card .mc-title {
+      font-weight: 800; margin-bottom: 5px; font-size: 0.82rem;
+    }
+    .mini-card ul { padding-left: 16px; }
+    .mini-card li { margin-bottom: 2px; }
+    .mini-card.sky    { background: var(--sky-light);    }
+    .mini-card.sky    .mc-title { color: var(--sky-dark); }
+    .mini-card.teal   { background: var(--teal-light);   }
+    .mini-card.teal   .mc-title { color: var(--teal); }
+    .mini-card.amber  { background: var(--amber-light);  }
+    .mini-card.amber  .mc-title { color: var(--amber); }
+    .mini-card.purple { background: var(--purple-light); }
+    .mini-card.purple .mc-title { color: var(--purple); }
+    .mini-card.green  { background: var(--green-light);  }
+    .mini-card.green  .mc-title { color: var(--green); }
+    .mini-card.orange { background: var(--orange-light); }
+    .mini-card.orange .mc-title { color: var(--orange); }
+
+    /* ─── STEPS ─── */
+    .steps-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.9rem; font-weight: 800;
+      color: var(--text);
+      margin: 16px 0 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .steps-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 6px;
+      margin-bottom: 14px;
+    }
+    .steps-list li {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 0.82rem; line-height: 1.55;
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 8px 11px;
+    }
+    .step-num {
+      flex-shrink: 0; width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 900; color: white;
+    }
+    .step-num.sky    { background: var(--sky); }
+    .step-num.teal   { background: var(--teal); }
+    .step-num.amber  { background: var(--amber); }
+    .step-num.purple { background: var(--purple); }
+
+    /* ─── HURUF TABLE ─── */
+    .huruf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .huruf-card {
+      background: var(--sky-pale);
+      border: 1px solid var(--sky-light);
+      border-radius: 10px;
+      padding: 8px 4px;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .huruf-card:hover {
+      background: var(--sky-light);
+      transform: translateY(-1px);
+    }
+    .huruf-arab {
+      font-family: 'Arial', 'Times New Roman', serif;
+      font-size: 1.5rem;
+      color: var(--sky-xdark);
+      direction: rtl;
+      line-height: 1.4;
+    }
+    .huruf-latin {
+      font-size: 0.62rem; font-weight: 800;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .huruf-name {
+      font-size: 0.58rem; font-weight: 700;
+      color: var(--sky-dark);
+    }
+
+    /* ─── HARAKAT TABLE ─── */
+    .harakat-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.8rem; margin-bottom: 16px;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .harakat-table th {
+      background: var(--sky-dark); color: white;
+      padding: 8px 10px; font-size: 0.72rem; font-weight: 700;
+    }
+    .harakat-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #f3f4f6;
+      vertical-align: middle;
+    }
+    .harakat-table tr:last-child td { border-bottom: none; }
+    .harakat-table tr:nth-child(even) td { background: #f9fafb; }
+
+    /* ─── MAKHRAJ TABLE ─── */
+    .makhraj-grid {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .makhraj-row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 10px;
+      background: #f9fafb;
+      border-radius: 10px;
+      padding: 10px 12px;
+      align-items: start;
+      border: 1px solid var(--border);
+    }
+    .makhraj-label {
+      font-weight: 800; font-size: 0.78rem;
+      color: var(--sky-dark);
+    }
+    .makhraj-huruf {
+      font-family: 'Arial', 'Times New Roman', serif;
+      font-size: 1.2rem;
+      direction: rtl;
+      color: var(--sky-xdark);
+      line-height: 1.7;
+      letter-spacing: 8px;
+    }
+    .makhraj-tip {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ─── VOCAB GRID ─── */
+    .vocab-group {
+      margin-bottom: 18px;
+    }
+    .vocab-group-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.86rem; font-weight: 800;
+      color: var(--sky-dark);
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    @media (min-width: 500px) { .vocab-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 700px) { .vocab-grid { grid-template-columns: repeat(4, 1fr); } }
+    .vocab-card {
+      background: var(--sky-pale);
+      border: 1px solid var(--sky-light);
+      border-radius: 9px;
+      padding: 8px 10px;
+      text-align: center;
+    }
+    .vocab-arab {
+      font-family: 'Arial', 'Times New Roman', serif;
+      font-size: 1.15rem;
+      direction: rtl;
+      color: var(--sky-xdark);
+      line-height: 1.8;
+      display: block;
+    }
+    .vocab-latin {
+      font-size: 0.68rem; font-weight: 700;
+      color: var(--sky-dark);
+    }
+    .vocab-arti {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+
+    /* ─── PERCAKAPAN ─── */
+    .percakapan {
+      background: var(--sky-pale);
+      border: 1px solid var(--sky-light);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .pcq-label {
+      font-size: 0.68rem; font-weight: 800;
+      color: var(--sky-dark);
+      margin-bottom: 8px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .pcq-row {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .pcq-line {
+      display: grid;
+      grid-template-columns: 60px 1fr 1fr;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+    .pcq-who {
+      font-weight: 800; font-size: 0.7rem;
+      color: var(--sky);
+    }
+    .pcq-arab {
+      font-family: 'Arial', 'Times New Roman', serif;
+      direction: rtl;
+      font-size: 1rem;
+      color: var(--sky-xdark);
+      line-height: 1.7;
+      text-align: right;
+    }
+    .pcq-indo {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ─── HIGHLIGHT ─── */
+    .highlight {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid;
+      border-radius: 8px;
+      padding: 10px 13px;
+      font-size: 0.8rem; line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .highlight.sky    { border-left-color: var(--sky); }
+    .highlight.teal   { border-left-color: var(--teal); }
+    .highlight.amber  { border-left-color: var(--amber); }
+    .highlight.purple { border-left-color: var(--purple); }
+    .highlight strong { display: block; margin-bottom: 3px; font-size: 0.83rem; }
+    .highlight.sky    strong { color: var(--sky-dark); }
+    .highlight.teal   strong { color: var(--teal); }
+    .highlight.amber  strong { color: var(--amber); }
+    .highlight.purple strong { color: var(--purple); }
+
+    /* ─── TIPS BOX ─── */
+    .tips-box {
+      background: linear-gradient(135deg, var(--sky-pale), #e0f2fe);
+      border: 1px solid var(--sky-light);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-top: 14px;
+    }
+    .tips-box-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.88rem; font-weight: 800;
+      color: var(--sky-dark);
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .tips-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .tips-list li {
+      font-size: 0.8rem; line-height: 1.5;
+      display: flex; gap: 7px; align-items: flex-start;
+    }
+    .tips-list li::before {
+      content: '✓';
+      color: var(--sky);
+      font-weight: 900; flex-shrink: 0;
+    }
+
+    /* ─── SKALA ─── */
+    .skala-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.78rem; margin-bottom: 14px;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .skala-table th {
+      background: #1f2937; color: white;
+      padding: 7px 10px; text-align: left;
+      font-size: 0.72rem; font-weight: 700;
+    }
+    .skala-table td {
+      padding: 7px 10px;
+      border-bottom: 1px solid #f3f4f6;
+      vertical-align: top;
+    }
+    .skala-table tr:last-child td { border-bottom: none; }
+    .skala-table tr:nth-child(even) td { background: #f9fafb; }
+    .badge-nilai {
+      display: inline-block; padding: 1px 8px; border-radius: 6px;
+      font-weight: 800; font-size: 0.7rem;
+    }
+    .badge-sb { background: var(--emerald-light); color: var(--emerald); }
+    .badge-b  { background: var(--blue-light);    color: var(--blue); }
+    .badge-c  { background: var(--amber-light);   color: var(--amber); }
+    .badge-pp { background: var(--red-light);      color: var(--red); }
+
+    /* ─── DIVIDER ─── */
+    .divider { border: none; border-top: 2px dashed #e5e7eb; margin: 18px 0; }
+
+    /* ─── BOBOT BAR ─── */
+    .bobot-bar {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px;
+    }
+    .bobot-chip {
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 0.7rem; font-weight: 800;
+      border: 1px solid currentColor;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    /* ─── BACK TO TOP ─── */
+    .back-top {
+      position: fixed; bottom: 20px; right: 16px;
+      background: var(--sky); color: white;
+      border: none; border-radius: 50%;
+      width: 40px; height: 40px;
+      font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(2,132,199,0.4);
+      opacity: 0; transition: opacity 0.3s;
+      z-index: 50;
+    }
+    .back-top.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <span class="logo">🌙</span>
+    <div>
+      <div class="brand-name">Bahasa Arab – Praktik Maharah</div>
+      <div class="sub-brand">Materi Ujian Praktik · SD Muhammadiyah 01 Kukusan · Kelas 6</div>
+    </div>
+  </div>
+  <a href="index.html" class="header-back">← Kembali</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-arabic">مَهَارَةُ اللُّغَةِ الْعَرَبِيَّةِ</div>
+  <h1>Materi Ujian Praktik Bahasa Arab</h1>
+  <p>Pelajari empat keterampilan berbahasa Arab: Mendengar, Menulis, Membaca, dan Berbicara. Ujian dinilai dari kemampuan berkomunikasi nyata, bukan sekadar hafalan.</p>
+  <div class="hero-badges">
+    <span class="hero-badge">👂 Mendengar–Menulis (50%)</span>
+    <span class="hero-badge">🗣️ Membaca–Berbicara (30%)</span>
+    <span class="hero-badge">🙏 Apresiasi &amp; Sikap (20%)</span>
+    <span class="hero-badge">KKM: 70</span>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="container">
+
+  <!-- INFO -->
+  <div class="info-box">
+    <span class="icon">💡</span>
+    <div>
+      <strong>Fokus Ujian Praktik Bahasa Arab</strong>
+      Ujian dinilai berdasarkan <b>keterampilan berkomunikasi</b> (maharah), bukan hafalan kosakata. Tiga aspek penilaian: Mendengar-Menulis (50%), Membaca-Berbicara (30%), dan Apresiasi Bahasa &amp; Sikap (20%). KKM adalah <b>70</b>.
+    </div>
+  </div>
+
+  <!-- QUICK NAV -->
+  <div class="toc">
+    <div class="toc-title">🗺️ Navigasi Cepat</div>
+    <div class="toc-grid">
+      <a href="#mendengar-menulis" class="toc-link sky">👂 Mendengar &amp; Menulis</a>
+      <a href="#membaca-berbicara" class="toc-link teal">🗣️ Membaca &amp; Berbicara</a>
+      <a href="#apresiasi" class="toc-link amber">🙏 Apresiasi &amp; Sikap</a>
+      <a href="#mufradat" class="toc-link purple">📖 Mufradat Penting</a>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       ASPEK 1: MENDENGAR–MENULIS (50%)
+  ══════════════════════════════════════ -->
+  <div class="section" id="mendengar-menulis">
+    <div class="section-header sky">
+      <span class="section-icon">👂</span>
+      <div>
+        <div class="section-title">Mendengar &amp; Menulis</div>
+        <div class="section-arabtitle">مَهَارَةُ الاِسْتِمَاعِ وَالْكِتَابَةِ</div>
+        <div class="section-sub">Maharah Al-Istima' wa Al-Kitabah</div>
+      </div>
+      <span class="bobot-pill">50%</span>
+    </div>
+    <div class="section-body">
+
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--sky);border-color:var(--sky);background:var(--sky-light)">Bobot Terbesar: 50%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Ketepatan tangkap informasi lisan</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Akurasi penulisan huruf Arab</span>
+      </div>
+
+      <!-- HURUF HIJAIYAH -->
+      <div class="steps-title">🔤 Huruf Hijaiyah (الْحُرُوفُ الْهِجَائِيَّة)</div>
+      <div class="huruf-grid">
+        <div class="huruf-card"><div class="huruf-arab">أ</div><div class="huruf-latin">A</div><div class="huruf-name">Alif</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ب</div><div class="huruf-latin">B</div><div class="huruf-name">Ba</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ت</div><div class="huruf-latin">T</div><div class="huruf-name">Ta</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ث</div><div class="huruf-latin">Ts</div><div class="huruf-name">Tsa</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ج</div><div class="huruf-latin">J</div><div class="huruf-name">Jim</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ح</div><div class="huruf-latin">H</div><div class="huruf-name">Ha</div></div>
+        <div class="huruf-card"><div class="huruf-arab">خ</div><div class="huruf-latin">Kh</div><div class="huruf-name">Kha</div></div>
+        <div class="huruf-card"><div class="huruf-arab">د</div><div class="huruf-latin">D</div><div class="huruf-name">Dal</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ذ</div><div class="huruf-latin">Dz</div><div class="huruf-name">Dzal</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ر</div><div class="huruf-latin">R</div><div class="huruf-name">Ra</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ز</div><div class="huruf-latin">Z</div><div class="huruf-name">Zai</div></div>
+        <div class="huruf-card"><div class="huruf-arab">س</div><div class="huruf-latin">S</div><div class="huruf-name">Sin</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ش</div><div class="huruf-latin">Sy</div><div class="huruf-name">Syin</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ص</div><div class="huruf-latin">Sh</div><div class="huruf-name">Shad</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ض</div><div class="huruf-latin">Dh</div><div class="huruf-name">Dhad</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ط</div><div class="huruf-latin">Th</div><div class="huruf-name">Tha</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ظ</div><div class="huruf-latin">Zh</div><div class="huruf-name">Zha</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ع</div><div class="huruf-latin">'</div><div class="huruf-name">Ain</div></div>
+        <div class="huruf-card"><div class="huruf-arab">غ</div><div class="huruf-latin">Gh</div><div class="huruf-name">Ghain</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ف</div><div class="huruf-latin">F</div><div class="huruf-name">Fa</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ق</div><div class="huruf-latin">Q</div><div class="huruf-name">Qaf</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ك</div><div class="huruf-latin">K</div><div class="huruf-name">Kaf</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ل</div><div class="huruf-latin">L</div><div class="huruf-name">Lam</div></div>
+        <div class="huruf-card"><div class="huruf-arab">م</div><div class="huruf-latin">M</div><div class="huruf-name">Mim</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ن</div><div class="huruf-latin">N</div><div class="huruf-name">Nun</div></div>
+        <div class="huruf-card"><div class="huruf-arab">و</div><div class="huruf-latin">W</div><div class="huruf-name">Waw</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ه</div><div class="huruf-latin">H</div><div class="huruf-name">Ha</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ء</div><div class="huruf-latin">'</div><div class="huruf-name">Hamzah</div></div>
+        <div class="huruf-card"><div class="huruf-arab">ي</div><div class="huruf-latin">Y</div><div class="huruf-name">Ya</div></div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- HARAKAT -->
+      <div class="steps-title">🔴 Harakat / Tanda Baca (الْحَرَكَات)</div>
+      <table class="harakat-table">
+        <thead>
+          <tr>
+            <th>Harakat</th>
+            <th>Simbol</th>
+            <th>Contoh</th>
+            <th>Bunyi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Fathah</b> (فَتْحَة)</td>
+            <td><span class="arabic-sm">ـَ</span></td>
+            <td><span class="arabic-sm">كَتَبَ</span></td>
+            <td>Bunyi <b>A</b> — ka-ta-ba</td>
+          </tr>
+          <tr>
+            <td><b>Kasrah</b> (كَسْرَة)</td>
+            <td><span class="arabic-sm">ـِ</span></td>
+            <td><span class="arabic-sm">كِتَاب</span></td>
+            <td>Bunyi <b>I</b> — ki-taab</td>
+          </tr>
+          <tr>
+            <td><b>Dhammah</b> (ضَمَّة)</td>
+            <td><span class="arabic-sm">ـُ</span></td>
+            <td><span class="arabic-sm">كُتُب</span></td>
+            <td>Bunyi <b>U</b> — ku-tub</td>
+          </tr>
+          <tr>
+            <td><b>Tanwin Fathah</b> (تَنْوِين)</td>
+            <td><span class="arabic-sm">ـً</span></td>
+            <td><span class="arabic-sm">كِتَابًا</span></td>
+            <td>Bunyi <b>-an</b> — kitaaban</td>
+          </tr>
+          <tr>
+            <td><b>Tanwin Kasrah</b></td>
+            <td><span class="arabic-sm">ـٍ</span></td>
+            <td><span class="arabic-sm">كِتَابٍ</span></td>
+            <td>Bunyi <b>-in</b> — kitaabin</td>
+          </tr>
+          <tr>
+            <td><b>Tanwin Dhammah</b></td>
+            <td><span class="arabic-sm">ـٌ</span></td>
+            <td><span class="arabic-sm">كِتَابٌ</span></td>
+            <td>Bunyi <b>-un</b> — kitaabun</td>
+          </tr>
+          <tr>
+            <td><b>Sukun</b> (سُكُون)</td>
+            <td><span class="arabic-sm">ـْ</span></td>
+            <td><span class="arabic-sm">مَكْتَب</span></td>
+            <td>Huruf mati — mak-tab</td>
+          </tr>
+          <tr>
+            <td><b>Syaddah / Tasydid</b> (شَدَّة)</td>
+            <td><span class="arabic-sm">ـّ</span></td>
+            <td><span class="arabic-sm">مُعَلِّم</span></td>
+            <td>Huruf dobel — mu-'al-lim</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr class="divider">
+
+      <!-- HURUF SAMBUNG -->
+      <div class="steps-title">✍️ Huruf Sambung vs. Huruf Pisah</div>
+      <div class="two-col">
+        <div class="mini-card sky">
+          <div class="mc-title">Huruf yang Tidak Bisa Disambung ke Kanan</div>
+          <p style="font-size:0.8rem;margin-bottom:6px;">Huruf berikut hanya bisa disambung dari kiri (tidak ke kanan):</p>
+          <div style="font-family:'Arial',serif;direction:rtl;font-size:1.3rem;letter-spacing:12px;color:var(--sky-xdark);line-height:2;">
+            أ د ذ ر ز و
+          </div>
+          <p style="font-size:0.74rem;color:var(--text-muted);margin-top:4px;">Alif · Dal · Dzal · Ra · Zai · Waw</p>
+        </div>
+        <div class="mini-card teal">
+          <div class="mc-title">Contoh Perubahan Bentuk Huruf</div>
+          <table style="width:100%;font-size:0.76rem;border-collapse:collapse;">
+            <tr>
+              <th style="text-align:left;padding:3px 0;font-weight:800;color:var(--teal)">Huruf</th>
+              <th style="text-align:center;font-weight:800;color:var(--teal)">Awal</th>
+              <th style="text-align:center;font-weight:800;color:var(--teal)">Tengah</th>
+              <th style="text-align:center;font-weight:800;color:var(--teal)">Akhir</th>
+            </tr>
+            <tr><td>Ba (ب)</td>
+              <td style="text-align:center;font-family:Arial;font-size:1.1rem;direction:rtl">بـ</td>
+              <td style="text-align:center;font-family:Arial;font-size:1.1rem;direction:rtl">ـبـ</td>
+              <td style="text-align:center;font-family:Arial;font-size:1.1rem;direction:rtl">ـب</td>
+            </tr>
+            <tr><td>Ain (ع)</td>
+              <td style="text-align:center;font-family:Arial;font-size:1.1rem;direction:rtl">عـ</td>
+              <td style="text-align:center;font-family:Arial;font-size:1.1rem;direction:rtl">ـعـ</td>
+              <td style="text-align:center;font-family:Arial;font-size:1.1rem;direction:rtl">ـع</td>
+            </tr>
+            <tr><td>Mim (م)</td>
+              <td style="text-align:center;font-family:Arial;font-size:1.1rem;direction:rtl">مـ</td>
+              <td style="text-align:center;font-family:Arial;font-size:1.1rem;direction:rtl">ـمـ</td>
+              <td style="text-align:center;font-family:Arial;font-size:1.1rem;direction:rtl">ـم</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- TEKNIK MENDENGAR -->
+      <div class="steps-title">👂 Teknik Mendengarkan Bahasa Arab</div>
+      <ul class="steps-list">
+        <li><span class="step-num sky">1</span><div><b>Fokus pada kata kunci:</b> Saat mendengar kalimat Arab, tangkap kata benda dan kata kerja utamanya dulu. Contoh: dalam "<span class="arabic-sm">أَنَا أَذْهَبُ إِلَى الْمَدْرَسَةِ</span>" — kata kuncinya adalah <em>adzhabu</em> (pergi) dan <em>madrasa</em> (sekolah).</div></li>
+        <li><span class="step-num sky">2</span><div><b>Kenali pola kalimat:</b> Kalimat Arab umumnya berpola <b>Mubtada' – Khabar</b> (subjek–predikat) atau <b>Fi'il – Fa'il – Maf'ul</b> (kata kerja – pelaku – objek). Pola ini membantu menebak makna.</div></li>
+        <li><span class="step-num sky">3</span><div><b>Jangan panik jika tidak tahu satu kata:</b> Tangkap konteksnya. Jika mendengar angka, nama tempat, atau kata yang mirip Indonesia/Inggris, itu sudah petunjuk besar.</div></li>
+        <li><span class="step-num sky">4</span><div><b>Minta diulang dengan sopan:</b> Jika guru/penguji mengucapkan sesuatu dan kamu kurang jelas, katakan: <span class="arabic-sm">أَعِدْ مِنْ فَضْلِكَ</span> <em>(a'id min fadhlika)</em> — "Tolong ulangi."</div></li>
+      </ul>
+
+      <!-- TEKNIK MENULIS ARAB -->
+      <div class="steps-title">✍️ Teknik Menulis Huruf Arab dengan Benar</div>
+      <ul class="steps-list">
+        <li><span class="step-num sky">1</span><div><b>Tulis dari kanan ke kiri:</b> Ini aturan dasar tulisan Arab. Biasakan menulis dari sisi kanan kertas menuju kiri. Angka Arab ditulis kiri ke kanan.</div></li>
+        <li><span class="step-num sky">2</span><div><b>Perhatikan harakat:</b> Tulis harakat (fathah, kasrah, dhammah) di atas/bawah huruf setelah hurufnya selesai ditulis. Harakat menentukan bacaan dan makna.</div></li>
+        <li><span class="step-num sky">3</span><div><b>Sambungkan huruf yang tepat:</b> Pastikan huruf-huruf dalam satu kata tersambung dengan benar, kecuali 6 huruf pisah (alif, dal, dzal, ra, zai, waw).</div></li>
+        <li><span class="step-num sky">4</span><div><b>Perhatikan titik huruf:</b> Banyak huruf Arab yang mirip bentuknya tapi beda karena titiknya. Contoh: ب (ba/1 titik bawah), ت (ta/2 titik atas), ث (tsa/3 titik atas). Jangan sampai salah titik!</div></li>
+        <li><span class="step-num sky">5</span><div><b>Latih dikte (imla'):</b> Cara terbaik mempersiapkan mendengar-menulis adalah berlatih imla' — minta seseorang membacakan kata/kalimat Arab, lalu tuliskan tanpa melihat.</div></li>
+      </ul>
+
+      <div class="highlight sky">
+        <strong>⚠️ Huruf yang Sering Tertukar</strong>
+        <div class="two-col" style="margin-top:8px;margin-bottom:0;">
+          <div style="font-size:0.78rem;">
+            <span class="arabic-sm">ح ج خ</span> — Ha, Jim, Kha (mirip bentuk, beda titik)<br>
+            <span class="arabic-sm">ع غ</span> — Ain, Ghain (beda titik)<br>
+            <span class="arabic-sm">س ش</span> — Sin, Syin (beda titik)<br>
+            <span class="arabic-sm">ص ض</span> — Shad, Dhad (beda titik)
+          </div>
+          <div style="font-size:0.78rem;">
+            <span class="arabic-sm">ط ظ</span> — Tha, Zha (mirip, beda titik)<br>
+            <span class="arabic-sm">ر ز</span> — Ra, Zai (beda titik)<br>
+            <span class="arabic-sm">د ذ</span> — Dal, Dzal (beda titik)<br>
+            <span class="arabic-sm">ه ة</span> — Ha, Ta Marbuthah (akhir kata)
+          </div>
+        </div>
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips Ujian — Mendengar-Menulis</div>
+        <ul class="tips-list">
+          <li>Perbanyak latihan imla' (dikte) — minta orang tua atau teman membacakan kata Arab dan kamu tulis.</li>
+          <li>Pastikan titik-titik huruf ditulis dengan jelas dan benar — ini dinilai dalam akurasi penulisan.</li>
+          <li>Tulis harakat jika diminta, jangan dilewatkan — harakat menunjukkan pemahaman mendalam.</li>
+          <li>Jika ragu bunyi sebuah kata, tuliskan yang terdengar paling jelas, lalu pikirkan harakat-nya.</li>
+          <li>Latihan mendengar: dengarkan surah-surah pendek Al-Qur'an dan coba tulis beberapa katanya.</li>
+        </ul>
+      </div>
+
+    </div><!-- section body -->
+  </div><!-- /mendengar-menulis -->
+
+
+  <!-- ══════════════════════════════════════
+       ASPEK 2: MEMBACA–BERBICARA (30%)
+  ══════════════════════════════════════ -->
+  <div class="section" id="membaca-berbicara">
+    <div class="section-header teal">
+      <span class="section-icon">🗣️</span>
+      <div>
+        <div class="section-title">Membaca &amp; Berbicara</div>
+        <div class="section-arabtitle">مَهَارَةُ الْقِرَاءَةِ وَالْكَلَامِ</div>
+        <div class="section-sub">Maharah Al-Qira'ah wa Al-Kalam</div>
+      </div>
+      <span class="bobot-pill">30%</span>
+    </div>
+    <div class="section-body">
+
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--teal);border-color:var(--teal);background:var(--teal-light)">Bobot: 30%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Makhraj huruf</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Kelancaran membaca</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Keberanian berbicara</span>
+      </div>
+
+      <!-- MAKHRAJ HURUF -->
+      <div class="steps-title">👄 Makhraj Huruf (مَخَارِجُ الْحُرُوف)</div>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px;line-height:1.6;">Makhraj adalah tempat keluarnya suara huruf. Ketepatan makhraj sangat dinilai dalam ujian membaca dan berbicara. Huruf-huruf Arab tidak semuanya ada padanannya dalam Bahasa Indonesia — berikut yang perlu diperhatikan khusus:</p>
+
+      <div class="makhraj-grid">
+        <div class="makhraj-row">
+          <div>
+            <div class="makhraj-label">🔴 Tenggorokan Dalam</div>
+            <div class="makhraj-tip">Hambat aliran udara di tenggorokan paling dalam</div>
+          </div>
+          <div>
+            <div class="makhraj-huruf">ء   ه</div>
+            <div class="makhraj-tip">Hamzah (') dan Ha (h) — seperti bunyi "ha" yang keluar dari dada</div>
+          </div>
+        </div>
+        <div class="makhraj-row">
+          <div>
+            <div class="makhraj-label">🟠 Tenggorokan Tengah</div>
+            <div class="makhraj-tip">Tengah tenggorokan, terasa "berat"</div>
+          </div>
+          <div>
+            <div class="makhraj-huruf">ع   ح</div>
+            <div class="makhraj-tip">Ain (') dan Ha (h khusus) — <b>Ain</b>: suara serak dari tenggorokan, seperti mencekik udara. <b>Ha</b>: hembusan panas dari tenggorokan.</div>
+          </div>
+        </div>
+        <div class="makhraj-row">
+          <div>
+            <div class="makhraj-label">🟡 Tenggorokan Atas</div>
+            <div class="makhraj-tip">Atas tenggorokan / pangkal lidah belakang</div>
+          </div>
+          <div>
+            <div class="makhraj-huruf">غ   خ</div>
+            <div class="makhraj-tip">Ghain (gh) dan Kha (kh) — suara seperti berkumur/mendengkur lembut. Ghain = seperti "r" Prancis. Kha = seperti "ch" dalam Bahasa Jerman.</div>
+          </div>
+        </div>
+        <div class="makhraj-row">
+          <div>
+            <div class="makhraj-label">🟢 Pangkal Lidah</div>
+            <div class="makhraj-tip">Lidah bagian paling belakang</div>
+          </div>
+          <div>
+            <div class="makhraj-huruf">ق   ك</div>
+            <div class="makhraj-tip">Qaf (q) dan Kaf (k) — <b>Qaf</b>: lebih dalam dari K, seperti K yang ditekan ke belakang mulut. <b>Kaf</b>: sama dengan "k" Indonesia.</div>
+          </div>
+        </div>
+        <div class="makhraj-row">
+          <div>
+            <div class="makhraj-label">🔵 Ujung Lidah ke Gigi</div>
+            <div class="makhraj-tip">Lidah menyentuh gigi depan</div>
+          </div>
+          <div>
+            <div class="makhraj-huruf">ث   ذ   ظ</div>
+            <div class="makhraj-tip">Tsa, Dzal, Zha — ujung lidah sedikit keluar di antara gigi atas dan bawah. Seperti bunyi "th" dalam Bahasa Inggris ("think" / "this").</div>
+          </div>
+        </div>
+        <div class="makhraj-row">
+          <div>
+            <div class="makhraj-label">🟣 Huruf Tebal (Mufakhkham)</div>
+            <div class="makhraj-tip">Diucapkan dengan lidah menebal</div>
+          </div>
+          <div>
+            <div class="makhraj-huruf">ص   ض   ط   ظ</div>
+            <div class="makhraj-tip">Shad, Dhad, Tha, Zha — versi "berat" dari S, D, T, Z. Lidah mendatar dan tebal. Contoh: <span class="arabic-sm">صَبَر</span> (shabar) berbeda dengan <span class="arabic-sm">سَبَر</span> (sabar).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight teal">
+        <strong>🎯 Huruf Paling Sering Salah oleh Siswa Indonesia</strong>
+        Urutan dari yang paling sulit: <b>ع (Ain)</b> → <b>ح (Ha)</b> → <b>غ (Ghain)</b> → <b>خ (Kha)</b> → <b>ق (Qaf)</b> → <b>ث ذ ظ (Huruf "Th")</b> → <b>ص ض ط (Huruf tebal)</b>. Fokuskan latihan pada huruf-huruf ini.
+      </div>
+
+      <hr class="divider">
+
+      <!-- MEMBACA -->
+      <div class="steps-title">📖 Teknik Membaca Teks Arab (القِرَاءَة)</div>
+      <ul class="steps-list">
+        <li><span class="step-num teal">1</span><div><b>Baca bismillah terlebih dahulu:</b> Sebelum membaca teks Arab, awali dengan <span class="arabic-sm">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</span>. Ini juga menunjukkan adab dan apresiasi terhadap bahasa Arab sebagai bahasa Al-Qur'an.</div></li>
+        <li><span class="step-num teal">2</span><div><b>Baca perlahan tapi fasih:</b> Lebih baik membaca pelan tapi tepat dari pada cepat tapi salah makhraj. Guru penguji menilai ketepatan pengucapan, bukan kecepatan.</div></li>
+        <li><span class="step-num teal">3</span><div><b>Perhatikan harakat:</b> Harakat menentukan bunyi huruf (a/i/u) dan menentukan makna. Baca setiap harakat dengan benar.</div></li>
+        <li><span class="step-num teal">4</span><div><b>Waqaf (berhenti) yang tepat:</b> Berhentilah di akhir kalimat (titik) atau di tanda waqaf. Jangan berhenti di tengah kata atau frasa yang masih menyatu maknanya.</div></li>
+        <li><span class="step-num teal">5</span><div><b>Intonasi:</b> Kalimat pernyataan dibaca dengan intonasi menurun di akhir. Kalimat tanya <span class="arabic-sm">(هَلْ / مَنْ / مَا / أَيْنَ)</span> dibaca dengan intonasi naik di awal, lalu sedikit turun di akhir.</div></li>
+      </ul>
+
+      <div class="two-col">
+        <div class="mini-card teal">
+          <div class="mc-title">📖 Kata Tanya (أَدَوَاتُ الاِسْتِفْهَام)</div>
+          <table style="width:100%;font-size:0.76rem;border-collapse:collapse;">
+            <tr><td style="padding:3px 0;"><span class="arabic-sm">مَنْ</span></td><td>Man</td><td>Siapa?</td></tr>
+            <tr><td style="padding:3px 0;"><span class="arabic-sm">مَا / مَاذَا</span></td><td>Maa / Maadza</td><td>Apa?</td></tr>
+            <tr><td style="padding:3px 0;"><span class="arabic-sm">أَيْنَ</span></td><td>Aina</td><td>Di mana?</td></tr>
+            <tr><td style="padding:3px 0;"><span class="arabic-sm">مَتَى</span></td><td>Mataa</td><td>Kapan?</td></tr>
+            <tr><td style="padding:3px 0;"><span class="arabic-sm">كَيْفَ</span></td><td>Kaifa</td><td>Bagaimana?</td></tr>
+            <tr><td style="padding:3px 0;"><span class="arabic-sm">كَمْ</span></td><td>Kam</td><td>Berapa?</td></tr>
+            <tr><td style="padding:3px 0;"><span class="arabic-sm">هَلْ / أَ</span></td><td>Hal / A</td><td>Apakah?</td></tr>
+            <tr><td style="padding:3px 0;"><span class="arabic-sm">لِمَاذَا</span></td><td>Limaadza</td><td>Mengapa?</td></tr>
+          </table>
+        </div>
+        <div class="mini-card sky">
+          <div class="mc-title">🔤 Pola Kalimat Dasar</div>
+          <div style="font-size:0.78rem;line-height:1.9;">
+            <b>Kalimat Nominal (Mubtada'–Khabar):</b><br>
+            <span class="arabic-sm">أَنَا تِلْمِيذٌ</span> = Saya adalah murid<br>
+            <span class="arabic-sm">هَذَا كِتَابٌ</span> = Ini adalah buku<br><br>
+            <b>Kalimat Verbal (Fi'il–Fa'il):</b><br>
+            <span class="arabic-sm">ذَهَبَ أَحْمَدُ</span> = Ahmad pergi<br>
+            <span class="arabic-sm">تَكْتُبُ فَاطِمَةُ</span> = Fatimah sedang menulis
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- BERBICARA -->
+      <div class="steps-title">🎤 Teknik Berbicara Bahasa Arab (الْكَلَام)</div>
+      <ul class="steps-list">
+        <li><span class="step-num teal">1</span><div><b>Mulai dengan bismillah dan salam:</b> <span class="arabic-sm">بِسْمِ اللهِ، اَلسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ</span>. Ini menunjukkan adab dan langsung menambah kesan baik ke penguji.</div></li>
+        <li><span class="step-num teal">2</span><div><b>Berani dan percaya diri:</b> Meski tidak sempurna, berbicara dengan percaya diri menunjukkan kemampuan komunikasi. Penguji menilai keberanian berbicara, bukan kesempurnaan.</div></li>
+        <li><span class="step-num teal">3</span><div><b>Gunakan kalimat sederhana tapi benar:</b> Lebih baik berkata <span class="arabic-sm">أَنَا مِنْ جَاكَرْتَا</span> (saya dari Jakarta) dengan benar daripada mencoba kalimat panjang yang salah.</div></li>
+        <li><span class="step-num teal">4</span><div><b>Jika tidak tahu, katakan dengan Arab:</b> <span class="arabic-sm">لَا أَعْرِفُ</span> (laa a'rifu — saya tidak tahu) atau <span class="arabic-sm">أَعِدْ مِنْ فَضْلِكَ</span> (a'id min fadhlika — tolong ulangi). Ini lebih baik dari diam total.</div></li>
+        <li><span class="step-num teal">5</span><div><b>Tutup dengan salam:</b> Setelah selesai berbicara/presentasi, tutup dengan <span class="arabic-sm">وَاللهُ أَعْلَمُ، شُكْرًا جَزِيلًا</span> (Wallahu a'lam, syukran jazilan — Allah lebih mengetahui, terima kasih banyak).</div></li>
+      </ul>
+
+      <!-- CONTOH PERCAKAPAN -->
+      <div class="steps-title">💬 Contoh Percakapan (مُحَادَثَة)</div>
+
+      <div class="percakapan">
+        <div class="pcq-label">📌 Perkenalan Diri (التَّعَارُف)</div>
+        <div class="pcq-row">
+          <div class="pcq-line">
+            <div class="pcq-who">Guru:</div>
+            <div class="pcq-arab">مَنِ اسْمُكَ؟</div>
+            <div class="pcq-indo">Siapa namamu?</div>
+          </div>
+          <div class="pcq-line">
+            <div class="pcq-who">Siswa:</div>
+            <div class="pcq-arab">اِسْمِي أَحْمَدُ</div>
+            <div class="pcq-indo">Namaku Ahmad.</div>
+          </div>
+          <div class="pcq-line">
+            <div class="pcq-who">Guru:</div>
+            <div class="pcq-arab">مِنْ أَيْنَ أَنْتَ؟</div>
+            <div class="pcq-indo">Kamu dari mana?</div>
+          </div>
+          <div class="pcq-line">
+            <div class="pcq-who">Siswa:</div>
+            <div class="pcq-arab">أَنَا مِنْ دِيبُوكْ</div>
+            <div class="pcq-indo">Saya dari Depok.</div>
+          </div>
+          <div class="pcq-line">
+            <div class="pcq-who">Guru:</div>
+            <div class="pcq-arab">كَمْ عُمْرُكَ؟</div>
+            <div class="pcq-indo">Berapa umurmu?</div>
+          </div>
+          <div class="pcq-line">
+            <div class="pcq-who">Siswa:</div>
+            <div class="pcq-arab">عُمْرِي اِثْنَا عَشَرَ سَنَةً</div>
+            <div class="pcq-indo">Umurku dua belas tahun.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="percakapan">
+        <div class="pcq-label">📌 Di Lingkungan Sekolah (فِي الْمَدْرَسَة)</div>
+        <div class="pcq-row">
+          <div class="pcq-line">
+            <div class="pcq-who">Guru:</div>
+            <div class="pcq-arab">أَيْنَ تَدْرُسُ؟</div>
+            <div class="pcq-indo">Di mana kamu belajar?</div>
+          </div>
+          <div class="pcq-line">
+            <div class="pcq-who">Siswa:</div>
+            <div class="pcq-arab">أَنَا أَدْرُسُ فِي الْمَدْرَسَةِ الاِبْتِدَائِيَّةِ الْمُحَمَّدِيَّةِ</div>
+            <div class="pcq-indo">Saya belajar di SD Muhammadiyah.</div>
+          </div>
+          <div class="pcq-line">
+            <div class="pcq-who">Guru:</div>
+            <div class="pcq-arab">مَا دَرْسُكَ الْمُفَضَّلُ؟</div>
+            <div class="pcq-indo">Apa mata pelajaran favoritmu?</div>
+          </div>
+          <div class="pcq-line">
+            <div class="pcq-who">Siswa:</div>
+            <div class="pcq-arab">دَرْسِي الْمُفَضَّلُ اللُّغَةُ الْعَرَبِيَّةُ</div>
+            <div class="pcq-indo">Pelajaran favoritku adalah Bahasa Arab.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="percakapan">
+        <div class="pcq-label">📌 Kegiatan Sehari-hari (الْأَنْشِطَةُ الْيَوْمِيَّة)</div>
+        <div class="pcq-row">
+          <div class="pcq-line">
+            <div class="pcq-who">Guru:</div>
+            <div class="pcq-arab">مَاذَا تَفْعَلُ كُلَّ يَوْمٍ؟</div>
+            <div class="pcq-indo">Apa yang kamu lakukan setiap hari?</div>
+          </div>
+          <div class="pcq-line">
+            <div class="pcq-who">Siswa:</div>
+            <div class="pcq-arab">أَنَا أَذْهَبُ إِلَى الْمَدْرَسَةِ وَأَدْرُسُ وَأُصَلِّي</div>
+            <div class="pcq-indo">Saya pergi ke sekolah, belajar, dan shalat.</div>
+          </div>
+          <div class="pcq-line">
+            <div class="pcq-who">Guru:</div>
+            <div class="pcq-arab">هَلْ تَقْرَأُ الْقُرْآنَ كُلَّ يَوْمٍ؟</div>
+            <div class="pcq-indo">Apakah kamu membaca Al-Qur'an setiap hari?</div>
+          </div>
+          <div class="pcq-line">
+            <div class="pcq-who">Siswa:</div>
+            <div class="pcq-arab">نَعَمْ، أَقْرَأُ الْقُرْآنَ بَعْدَ الصَّلَاةِ</div>
+            <div class="pcq-indo">Ya, saya membaca Al-Qur'an setelah shalat.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips Ujian — Membaca-Berbicara</div>
+        <ul class="tips-list">
+          <li>Latih makhraj huruf ع (ain) dan ح (ha) khusus setiap hari — ini paling sering menjadi penilaian.</li>
+          <li>Rekam suaramu saat membaca, lalu dengarkan — ini cara terbaik mendeteksi kesalahan makhraj.</li>
+          <li>Hafal percakapan perkenalan diri dengan lancar — hampir selalu ditanyakan dalam ujian berbicara.</li>
+          <li>Jangan diam jika tidak tahu — ucapkan <span class="arabic-sm">لَا أَعْرِفُ</span> atau minta diulangi, ini menunjukkan kemampuan berkomunikasi.</li>
+          <li>Perhatikan intonasi kalimat tanya vs pernyataan saat membaca teks.</li>
+        </ul>
+      </div>
+
+    </div><!-- section body -->
+  </div><!-- /membaca-berbicara -->
+
+
+  <!-- ══════════════════════════════════════
+       ASPEK 3: APRESIASI (20%)
+  ══════════════════════════════════════ -->
+  <div class="section" id="apresiasi">
+    <div class="section-header amber">
+      <span class="section-icon">🙏</span>
+      <div>
+        <div class="section-title">Apresiasi Bahasa &amp; Sikap</div>
+        <div class="section-arabtitle">تَقْدِيرُ اللُّغَةِ وَالأَخْلَاق</div>
+        <div class="section-sub">Adab berbahasa Arab · Kepercayaan diri · Menghargai bahasa Al-Qur'an</div>
+      </div>
+      <span class="bobot-pill">20%</span>
+    </div>
+    <div class="section-body">
+
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--amber);border-color:var(--amber);background:var(--amber-light)">Bobot: 20%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Adab berbahasa</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Kepercayaan diri</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Menghargai bahasa Al-Qur'an</span>
+      </div>
+
+      <!-- UNGKAPAN ISLAMI -->
+      <div class="steps-title">🌙 Ungkapan Islami dalam Bahasa Arab (التَّعْبِيرَاتُ الإِسْلَامِيَّة)</div>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px;">Menggunakan ungkapan-ungkapan ini secara tepat dan natural menunjukkan apresiasi terhadap bahasa Arab sebagai bahasa Islam.</p>
+
+      <table class="harakat-table">
+        <thead>
+          <tr><th>Ungkapan</th><th>Arab</th><th>Latin</th><th>Digunakan saat</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Bismillah</b></td>
+            <td><span class="arabic-sm">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيم</span></td>
+            <td>Bismillahirrahmanirrahim</td>
+            <td>Memulai setiap kegiatan</td>
+          </tr>
+          <tr>
+            <td><b>Salam</b></td>
+            <td><span class="arabic-sm">اَلسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ</span></td>
+            <td>Assalamu'alaikum warahmatullahi wabarakatuh</td>
+            <td>Bertemu seseorang, memulai berbicara</td>
+          </tr>
+          <tr>
+            <td><b>Alhamdulillah</b></td>
+            <td><span class="arabic-sm">اَلْحَمْدُ للهِ</span></td>
+            <td>Alhamdulillah</td>
+            <td>Selesai sesuatu, bersyukur</td>
+          </tr>
+          <tr>
+            <td><b>Insya Allah</b></td>
+            <td><span class="arabic-sm">إِنْ شَاءَ اللهُ</span></td>
+            <td>In syaa Allah</td>
+            <td>Berencana melakukan sesuatu</td>
+          </tr>
+          <tr>
+            <td><b>Subhanallah</b></td>
+            <td><span class="arabic-sm">سُبْحَانَ اللهِ</span></td>
+            <td>Subhanallah</td>
+            <td>Kagum akan keindahan ciptaan Allah</td>
+          </tr>
+          <tr>
+            <td><b>Masya Allah</b></td>
+            <td><span class="arabic-sm">مَا شَاءَ اللهُ</span></td>
+            <td>Maa syaa Allah</td>
+            <td>Kagum melihat sesuatu yang baik</td>
+          </tr>
+          <tr>
+            <td><b>Astaghfirullah</b></td>
+            <td><span class="arabic-sm">أَسْتَغْفِرُ اللهَ</span></td>
+            <td>Astaghfirullah</td>
+            <td>Merasa bersalah, minta ampunan</td>
+          </tr>
+          <tr>
+            <td><b>Syukran</b></td>
+            <td><span class="arabic-sm">شُكْرًا جَزِيلًا</span></td>
+            <td>Syukran jazilan</td>
+            <td>Berterima kasih</td>
+          </tr>
+          <tr>
+            <td><b>Afwan</b></td>
+            <td><span class="arabic-sm">عَفْوًا</span></td>
+            <td>Afwan</td>
+            <td>Minta maaf / Sama-sama</td>
+          </tr>
+          <tr>
+            <td><b>Wallahu A'lam</b></td>
+            <td><span class="arabic-sm">وَاللهُ أَعْلَمُ</span></td>
+            <td>Wallahu a'lam</td>
+            <td>Mengakhiri pernyataan (Allah lebih tahu)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr class="divider">
+
+      <!-- ADAB BERBAHASA -->
+      <div class="steps-title">📋 Adab Berbahasa Arab yang Dinilai</div>
+      <ul class="steps-list">
+        <li><span class="step-num amber">1</span><div><b>Awali dengan bismillah dan salam:</b> Sebelum berbicara atau membaca, ucapkan bismillah dan salam. Ini bukan sekadar formalitas — ini menunjukkan kesadaran bahwa bahasa Arab adalah bahasa Al-Qur'an dan bahasa umat Islam.</div></li>
+        <li><span class="step-num amber">2</span><div><b>Berbicara dengan sopan dan tenang:</b> Gunakan nada bicara yang hormat kepada penguji. Jangan berbicara terburu-buru atau kasar. Bahasa Arab adalah bahasa mulia yang harus diucapkan dengan penuh hormat.</div></li>
+        <li><span class="step-num amber">3</span><div><b>Tunjukkan kepercayaan diri:</b> Berdiri/duduk tegak, pandang mata penguji, ucapkan dengan jelas. Kepercayaan diri menunjukkan kamu menghargai dirimu sendiri dan kemampuanmu.</div></li>
+        <li><span class="step-num amber">4</span><div><b>Gunakan ungkapan islami secara natural:</b> Sisipkan <em>insya Allah, alhamdulillah, syukran</em> di tempat yang tepat dalam percakapan — bukan diucapkan secara terpaksa atau sembarangan.</div></li>
+        <li><span class="step-num amber">5</span><div><b>Tutup dengan baik:</b> Akhiri ujian dengan <span class="arabic-sm">شُكْرًا جَزِيلًا، وَاللهُ أَعْلَمُ</span> dan salam penutup. Ini meninggalkan kesan yang sangat baik pada penguji.</div></li>
+      </ul>
+
+      <!-- SKALA NILAI APRESIASI -->
+      <div class="steps-title">📊 Skala Nilai Apresiasi Bahasa &amp; Sikap</div>
+      <table class="skala-table">
+        <thead>
+          <tr>
+            <th>Nilai</th>
+            <th>Kategori</th>
+            <th>Ciri-ciri</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge-nilai badge-sb">4 – Sangat Baik</span></td>
+            <td><b>90–100</b></td>
+            <td>Menggunakan salam, bismillah, dan ungkapan islami secara natural dan tepat. Sangat percaya diri, adab sempurna, jelas menghargai bahasa Arab sebagai bahasa Al-Qur'an.</td>
+          </tr>
+          <tr>
+            <td><span class="badge-nilai badge-b">3 – Baik</span></td>
+            <td><b>70–89</b></td>
+            <td>Menggunakan salam dan bismillah. Cukup percaya diri saat berbicara. Sesekali menggunakan ungkapan islami. Sikap sopan dan menghargai ujian.</td>
+          </tr>
+          <tr>
+            <td><span class="badge-nilai badge-c">2 – Cukup</span></td>
+            <td><b>50–69</b></td>
+            <td>Menggunakan salam tapi kurang lengkap. Kurang percaya diri, sering ragu-ragu. Jarang menggunakan ungkapan islami secara spontan.</td>
+          </tr>
+          <tr>
+            <td><span class="badge-nilai badge-pp">1 – Perlu Perbaikan</span></td>
+            <td><b>&lt;50</b></td>
+            <td>Tidak menggunakan salam sama sekali. Tidak percaya diri, banyak diam. Tidak menunjukkan apresiasi terhadap bahasa Arab.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips Ujian — Apresiasi &amp; Sikap</div>
+        <ul class="tips-list">
+          <li>Hafal urutan pembuka: Bismillah → Salam → perkenalan. Lakukan ini tanpa perlu diingatkan.</li>
+          <li>Tatap mata penguji saat berbicara — ini tanda kepercayaan diri yang paling mudah ditunjukkan.</li>
+          <li>Sisipkan "syukran" saat penguji memberi giliran atau menjelaskan sesuatu — ini natural dan sopan.</li>
+          <li>Ingat: penguji menilai sikapmu sejak kamu memasuki ruangan — tersenyum dan beri salam segera.</li>
+          <li>Tutup dengan "Wallahu a'lam, syukran jazilan" — ini penutup yang elegan dan menunjukkan adab.</li>
+        </ul>
+      </div>
+
+    </div><!-- section body -->
+  </div><!-- /apresiasi -->
+
+
+  <!-- ══════════════════════════════════════
+       MUFRADAT PENTING
+  ══════════════════════════════════════ -->
+  <div class="section" id="mufradat">
+    <div class="section-header purple">
+      <span class="section-icon">📖</span>
+      <div>
+        <div class="section-title">Mufradat Penting (الْمُفْرَدَات)</div>
+        <div class="section-arabtitle">الْكَلِمَاتُ الأَسَاسِيَّة</div>
+        <div class="section-sub">Kosakata tema-tema utama yang sering muncul dalam ujian</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!-- Di Sekolah -->
+      <div class="vocab-group">
+        <div class="vocab-group-title">🏫 Di Sekolah (فِي الْمَدْرَسَة)</div>
+        <div class="vocab-grid">
+          <div class="vocab-card"><span class="vocab-arab">مَدْرَسَة</span><div class="vocab-latin">Madrasah</div><div class="vocab-arti">Sekolah</div></div>
+          <div class="vocab-card"><span class="vocab-arab">فَصْل</span><div class="vocab-latin">Fashl</div><div class="vocab-arti">Kelas</div></div>
+          <div class="vocab-card"><span class="vocab-arab">كِتَاب</span><div class="vocab-latin">Kitaab</div><div class="vocab-arti">Buku</div></div>
+          <div class="vocab-card"><span class="vocab-arab">قَلَم</span><div class="vocab-latin">Qalam</div><div class="vocab-arti">Pena/Pensil</div></div>
+          <div class="vocab-card"><span class="vocab-arab">مَكْتَب</span><div class="vocab-latin">Maktab</div><div class="vocab-arti">Meja</div></div>
+          <div class="vocab-card"><span class="vocab-arab">كُرْسِي</span><div class="vocab-latin">Kursi</div><div class="vocab-arti">Kursi</div></div>
+          <div class="vocab-card"><span class="vocab-arab">سَبُّورَة</span><div class="vocab-latin">Sabburah</div><div class="vocab-arti">Papan tulis</div></div>
+          <div class="vocab-card"><span class="vocab-arab">مُعَلِّم</span><div class="vocab-latin">Mu'allim</div><div class="vocab-arti">Guru (laki)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">مُعَلِّمَة</span><div class="vocab-latin">Mu'allimah</div><div class="vocab-arti">Guru (perempuan)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">تِلْمِيذ</span><div class="vocab-latin">Tilmiidz</div><div class="vocab-arti">Murid (laki)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">تِلْمِيذَة</span><div class="vocab-latin">Tilmiidzah</div><div class="vocab-arti">Murid (perempuan)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">دَرْس</span><div class="vocab-latin">Dars</div><div class="vocab-arti">Pelajaran</div></div>
+        </div>
+      </div>
+
+      <!-- Keluarga -->
+      <div class="vocab-group">
+        <div class="vocab-group-title">👨‍👩‍👧 Keluarga (الأُسْرَة)</div>
+        <div class="vocab-grid">
+          <div class="vocab-card"><span class="vocab-arab">أَب</span><div class="vocab-latin">Ab</div><div class="vocab-arti">Ayah</div></div>
+          <div class="vocab-card"><span class="vocab-arab">أُمّ</span><div class="vocab-latin">Umm</div><div class="vocab-arti">Ibu</div></div>
+          <div class="vocab-card"><span class="vocab-arab">أَخ</span><div class="vocab-latin">Akh</div><div class="vocab-arti">Kakak/Adik laki</div></div>
+          <div class="vocab-card"><span class="vocab-arab">أُخْت</span><div class="vocab-latin">Ukht</div><div class="vocab-arti">Kakak/Adik prp</div></div>
+          <div class="vocab-card"><span class="vocab-arab">جَدّ</span><div class="vocab-latin">Jadd</div><div class="vocab-arti">Kakek</div></div>
+          <div class="vocab-card"><span class="vocab-arab">جَدَّة</span><div class="vocab-latin">Jaddah</div><div class="vocab-arti">Nenek</div></div>
+          <div class="vocab-card"><span class="vocab-arab">عَمّ</span><div class="vocab-latin">'Amm</div><div class="vocab-arti">Paman (saudara ayah)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">خَال</span><div class="vocab-latin">Khaal</div><div class="vocab-arti">Paman (saudara ibu)</div></div>
+        </div>
+      </div>
+
+      <!-- Kata Kerja Sehari-hari -->
+      <div class="vocab-group">
+        <div class="vocab-group-title">🏃 Kata Kerja Sehari-hari (الأَفْعَال)</div>
+        <div class="vocab-grid">
+          <div class="vocab-card"><span class="vocab-arab">ذَهَبَ</span><div class="vocab-latin">Dzahaba</div><div class="vocab-arti">Pergi (lalu)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">يَذْهَبُ</span><div class="vocab-latin">Yadz-habu</div><div class="vocab-arti">Pergi (sedang)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">كَتَبَ</span><div class="vocab-latin">Kataba</div><div class="vocab-arti">Menulis (lalu)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">يَكْتُبُ</span><div class="vocab-latin">Yaktubu</div><div class="vocab-arti">Menulis (sedang)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">قَرَأَ</span><div class="vocab-latin">Qara'a</div><div class="vocab-arti">Membaca (lalu)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">يَقْرَأُ</span><div class="vocab-latin">Yaqra'u</div><div class="vocab-arti">Membaca (sedang)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">أَكَلَ</span><div class="vocab-latin">Akala</div><div class="vocab-arti">Makan (lalu)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">شَرِبَ</span><div class="vocab-latin">Syariba</div><div class="vocab-arti">Minum (lalu)</div></div>
+          <div class="vocab-card"><span class="vocab-arab">صَلَّى</span><div class="vocab-latin">Shalla</div><div class="vocab-arti">Shalat</div></div>
+          <div class="vocab-card"><span class="vocab-arab">نَامَ</span><div class="vocab-latin">Naama</div><div class="vocab-arti">Tidur</div></div>
+          <div class="vocab-card"><span class="vocab-arab">جَلَسَ</span><div class="vocab-latin">Jalasa</div><div class="vocab-arti">Duduk</div></div>
+          <div class="vocab-card"><span class="vocab-arab">سَمِعَ</span><div class="vocab-latin">Sami'a</div><div class="vocab-arti">Mendengar</div></div>
+        </div>
+      </div>
+
+      <!-- Angka -->
+      <div class="vocab-group">
+        <div class="vocab-group-title">🔢 Angka (الأَعْدَاد) 1–20</div>
+        <div class="vocab-grid">
+          <div class="vocab-card"><span class="vocab-arab">وَاحِد</span><div class="vocab-latin">Waahid</div><div class="vocab-arti">1</div></div>
+          <div class="vocab-card"><span class="vocab-arab">اِثْنَان</span><div class="vocab-latin">Itsnaani</div><div class="vocab-arti">2</div></div>
+          <div class="vocab-card"><span class="vocab-arab">ثَلَاثَة</span><div class="vocab-latin">Tsalaatsah</div><div class="vocab-arti">3</div></div>
+          <div class="vocab-card"><span class="vocab-arab">أَرْبَعَة</span><div class="vocab-latin">Arba'ah</div><div class="vocab-arti">4</div></div>
+          <div class="vocab-card"><span class="vocab-arab">خَمْسَة</span><div class="vocab-latin">Khamsah</div><div class="vocab-arti">5</div></div>
+          <div class="vocab-card"><span class="vocab-arab">سِتَّة</span><div class="vocab-latin">Sittah</div><div class="vocab-arti">6</div></div>
+          <div class="vocab-card"><span class="vocab-arab">سَبْعَة</span><div class="vocab-latin">Sab'ah</div><div class="vocab-arti">7</div></div>
+          <div class="vocab-card"><span class="vocab-arab">ثَمَانِيَة</span><div class="vocab-latin">Tsaaniyah</div><div class="vocab-arti">8</div></div>
+          <div class="vocab-card"><span class="vocab-arab">تِسْعَة</span><div class="vocab-latin">Tis'ah</div><div class="vocab-arti">9</div></div>
+          <div class="vocab-card"><span class="vocab-arab">عَشَرَة</span><div class="vocab-latin">'Asyarah</div><div class="vocab-arti">10</div></div>
+          <div class="vocab-card"><span class="vocab-arab">أَحَدَ عَشَرَ</span><div class="vocab-latin">Ahada 'asyar</div><div class="vocab-arti">11</div></div>
+          <div class="vocab-card"><span class="vocab-arab">اِثْنَا عَشَرَ</span><div class="vocab-latin">Itsnaa 'asyar</div><div class="vocab-arti">12</div></div>
+          <div class="vocab-card"><span class="vocab-arab">ثَلَاثَةَ عَشَرَ</span><div class="vocab-latin">Tsalaatsat 'asyar</div><div class="vocab-arti">13</div></div>
+          <div class="vocab-card"><span class="vocab-arab">عِشْرُون</span><div class="vocab-latin">'Asyruun</div><div class="vocab-arti">20</div></div>
+        </div>
+      </div>
+
+      <!-- Hari dan Waktu -->
+      <div class="vocab-group">
+        <div class="vocab-group-title">📅 Hari &amp; Waktu (الأَيَّام وَالأَوْقَات)</div>
+        <div class="vocab-grid">
+          <div class="vocab-card"><span class="vocab-arab">الأَحَد</span><div class="vocab-latin">Al-Ahad</div><div class="vocab-arti">Minggu</div></div>
+          <div class="vocab-card"><span class="vocab-arab">الاِثْنَيْن</span><div class="vocab-latin">Al-Itsnayn</div><div class="vocab-arti">Senin</div></div>
+          <div class="vocab-card"><span class="vocab-arab">الثُّلَاثَاء</span><div class="vocab-latin">Ats-Tsulatsaa'</div><div class="vocab-arti">Selasa</div></div>
+          <div class="vocab-card"><span class="vocab-arab">الأَرْبِعَاء</span><div class="vocab-latin">Al-Arbi'aa'</div><div class="vocab-arti">Rabu</div></div>
+          <div class="vocab-card"><span class="vocab-arab">الخَمِيس</span><div class="vocab-latin">Al-Khamiis</div><div class="vocab-arti">Kamis</div></div>
+          <div class="vocab-card"><span class="vocab-arab">الجُمُعَة</span><div class="vocab-latin">Al-Jumu'ah</div><div class="vocab-arti">Jumat</div></div>
+          <div class="vocab-card"><span class="vocab-arab">السَّبْت</span><div class="vocab-latin">As-Sabt</div><div class="vocab-arti">Sabtu</div></div>
+          <div class="vocab-card"><span class="vocab-arab">صَبَاح</span><div class="vocab-latin">Shabaah</div><div class="vocab-arti">Pagi</div></div>
+          <div class="vocab-card"><span class="vocab-arab">ظُهْر</span><div class="vocab-latin">Zhuhur</div><div class="vocab-arti">Siang/Dzuhur</div></div>
+          <div class="vocab-card"><span class="vocab-arab">مَسَاء</span><div class="vocab-latin">Masaa'</div><div class="vocab-arti">Sore/Malam</div></div>
+          <div class="vocab-card"><span class="vocab-arab">اللَّيْل</span><div class="vocab-latin">Al-Layl</div><div class="vocab-arti">Malam</div></div>
+          <div class="vocab-card"><span class="vocab-arab">الآن</span><div class="vocab-latin">Al-Aan</div><div class="vocab-arti">Sekarang</div></div>
+        </div>
+      </div>
+
+    </div><!-- section body -->
+  </div><!-- /mufradat -->
+
+
+  <!-- ══════════════════════════════════════
+       RINGKASAN PENILAIAN
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header dark">
+      <span class="section-icon">📊</span>
+      <div>
+        <div class="section-title">Ringkasan Penilaian &amp; Cara Hitung Nilai</div>
+        <div class="section-sub">Berlaku untuk Ujian Praktik Bahasa Arab – Maharah</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="two-col">
+        <div>
+          <div class="steps-title">🔢 Rumus Nilai Akhir</div>
+          <div class="highlight sky">
+            <strong>Formula Perhitungan</strong>
+            Nilai = (Mendengar-Menulis / 4 × 50) + (Membaca-Berbicara / 4 × 30) + (Apresiasi / 4 × 20)
+            <br><br>
+            <b>Contoh:</b> Mendengar-Menulis = 3, Membaca = 3, Apresiasi = 4<br>
+            = (3/4×50) + (3/4×30) + (4/4×20)<br>
+            = 37,5 + 22,5 + 20 = <b>80 ✅ Lulus</b>
+          </div>
+        </div>
+        <div>
+          <div class="steps-title">🎯 Skala Nilai (1–4)</div>
+          <table class="skala-table">
+            <thead><tr><th>Skor</th><th>Rentang</th><th>Kategori</th></tr></thead>
+            <tbody>
+              <tr><td><span class="badge-nilai badge-sb">4</span></td><td>3,75–4,00</td><td>Sangat Baik</td></tr>
+              <tr><td><span class="badge-nilai badge-b">3</span></td><td>2,75–3,74</td><td>Baik</td></tr>
+              <tr><td><span class="badge-nilai badge-c">2</span></td><td>1,75–2,74</td><td>Cukup</td></tr>
+              <tr><td><span class="badge-nilai badge-pp">1</span></td><td>1,00–1,74</td><td>Perlu Perbaikan</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="steps-title">📋 Checklist Persiapan Ujian</div>
+      <div class="three-col">
+        <div class="mini-card sky">
+          <div class="mc-title">👂 Mendengar-Menulis (50%)</div>
+          <ul>
+            <li>Hafal 29 huruf hijaiyah &amp; bentuknya</li>
+            <li>Kuasai semua harakat</li>
+            <li>Latihan imla' (dikte) setiap hari</li>
+            <li>Kuasai huruf yang sering tertukar</li>
+            <li>Pahami pola kalimat Arab dasar</li>
+          </ul>
+        </div>
+        <div class="mini-card teal">
+          <div class="mc-title">🗣️ Membaca-Berbicara (30%)</div>
+          <ul>
+            <li>Latih makhraj huruf ع ح غ خ ق</li>
+            <li>Hafal percakapan perkenalan diri</li>
+            <li>Latihan membaca teks berharakat</li>
+            <li>Kuasai kata tanya Arab</li>
+            <li>Berani berbicara walau tidak sempurna</li>
+          </ul>
+        </div>
+        <div class="mini-card amber">
+          <div class="mc-title">🙏 Apresiasi &amp; Sikap (20%)</div>
+          <ul>
+            <li>Hafal urutan pembuka: bismillah + salam</li>
+            <li>Kuasai 10 ungkapan islami</li>
+            <li>Tatap mata penguji saat berbicara</li>
+            <li>Tutup dengan syukran + salam</li>
+            <li>Bersikap hormat sejak masuk ruangan</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NAV BAWAH -->
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;margin-bottom:12px;">
+    <div style="font-family:'Baloo 2',cursive;font-size:0.88rem;font-weight:800;color:var(--sky-dark);margin-bottom:10px;">🔗 Navigasi Materi</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+      <a href="materi-bahasa-arab.html" style="padding:6px 14px;border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:0.72rem;font-weight:700;color:var(--text-muted);">🕋 Bahasa Arab Teori</a>
+      <a href="index.html" style="padding:6px 14px;border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:0.72rem;font-weight:700;color:var(--text-muted);">📚 Semua Materi</a>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  SD Muhammadiyah 01 Kukusan · Materi Ujian Praktik Bahasa Arab Kelas 6 · Tahun Pelajaran 2025/2026 🌙
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Kembali ke atas">↑</button>
+
+<script>
+// Back to top
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('visible', window.scrollY > 300);
+});
+
+// Smooth anchors
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
